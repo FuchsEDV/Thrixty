@@ -1,0 +1,202 @@
+/* Firefox Height 100% Fix */
+/*html { height: 100%; }*/
+/*body { height: 100%; margin:0; padding:0; }*/
+.thrixty-player div,
+.thrixty-player img,
+.thrixty-player button,
+.thrixty-player canvas{
+	box-sizing: border-box;
+}
+.thrixty_player img{ width: 100% }
+
+
+
+
+
+
+.thrixty-player{
+	width: 100%;
+	/*height: 100%;*/
+	position: relative;
+}
+	.thrixty-player .error{
+		width: 100%;
+		color: red;
+		font-size: 20px;
+		font-family: verdana, arial;
+		border: 3px double red;
+		padding: 15px;
+		margin: 0;
+	}
+	.thrixty-player .pictures{
+		width: 100%;
+		height: auto;
+		padding: 0;
+		margin: 0;
+		position: relative;
+		/*border-bottom: 1px solid gray;*/
+		/*background: green;*/
+		text-align: center;
+	}
+		.thrixty-player #main_canvas{
+			cursor: crosshair;
+			height: 100%;
+			/*width: auto;*/
+			/*max-width: 100%;*/
+			max-height: 100%;
+			margin: 0 auto;
+		}
+		.thrixty-player .progress_container{
+			width: 80%;
+			/*height: 20px;*/
+			background: #aaaaaa;
+			border-radius: 5px;
+			position: absolute;
+			bottom: 15px;
+			left: 10%;
+		}
+			.thrixty-player .progress_bar_small{
+				/*width: X%;     X calculated by the ThrixtyPlayer.*/
+				height: 10px;
+				background: #00d000;
+				border-radius: 5px;
+			}
+				.thrixty-player .progress_bar_small[state=unloaded]{
+					display: none;
+				}
+				.thrixty-player .progress_bar_small[state=loading]{
+					display: block;
+				}
+				.thrixty-player .progress_bar_small[state=loaded]{
+					display: none;
+				}
+			.thrixty-player .progress_bar_large{
+				/*width: X%;     X calculated by the ThrixtyPlayer.*/
+				height: 10px;
+				background: #0000d0;
+				border-radius: 5px;
+			}
+				.thrixty-player .progress_bar_large[state=unloaded]{
+					display: none;
+				}
+				.thrixty-player .progress_bar_large[state=loading]{
+					display: none;
+				}
+				.thrixty-player .progress_bar_large[state=loaded]{
+					display: none;
+				}
+	.thrixty-player .controls{
+		width: 100%;
+		height: 50px;
+		padding: 5px 10% 5px 10%;
+	}
+		.thrixty-player .control_container_center{
+			height: 40px;
+			width: 250px;
+			padding: 0;
+			margin: 0 auto;
+		}
+		.thrixty-player .control_container_left{
+			height: 40px;
+			float: left;
+			padding: 0;
+			margin: 0;
+		}
+		.thrixty-player .control_container_right{
+			height: 40px;
+			float: right;
+			padding: 0;
+			margin: 0;
+		}
+			.thrixty-player .ctrl_buttons{
+				width: 40px;
+				height: 40px;
+				background-color: white;
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 80% 80%;
+				border: 1px solid transparent;
+				border-radius: 50%;
+				margin: 0px 5px;
+				padding: 0;
+			}
+			.thrixty-player .ctrl_buttons:hover{
+				/*border-color: dodgerblue;*/
+			}
+			.thrixty-player .ctrl_buttons:disabled{
+				/*border-color: red;*/
+				/*background-color: red;*/
+			}
+			.thrixty-player .ctrl_buttons:active{
+				border-width: 3px;
+			}
+			.thrixty-player #prev_btn{
+				background-position: 1px center;
+				background-image: url(images/zurueck.svg);
+			}
+				.thrixty-player #prev_btn:hover{
+					background-image: url(images/zurueck_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #play_btn[state=play]{
+				background-position: 7px center;
+				background-image: url(images/play.svg);
+			}
+				.thrixty-player #play_btn[state=play]:hover{
+					background-image: url(images/play_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #play_btn[state=pause]{
+				background-position: 4px center;
+				background-image: url(images/pause.svg);
+			}
+				.thrixty-player #play_btn[state=pause]:hover{
+					background-image: url(images/pause_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #next_btn{
+				background-position: 7px center;
+				background-image: url(images/vorwaertz.svg);
+			}
+				.thrixty-player #next_btn:hover{
+					background-image: url(images/vorwaertz_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #zoom_btn[state=zoomin]{
+				background-image: url(images/plus.svg);
+			}
+				.thrixty-player #zoom_btn[state=zoomin]:hover{
+					background-image: url(images/plus_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #zoom_btn[state=zoomout]{
+				background-image: url(images/minus.svg);
+			}
+				.thrixty-player #zoom_btn[state=zoomout]:hover{
+					background-image: url(images/minus_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #size_btn[state=fullpage]{
+				background-image: url(images/expand.svg);
+			}
+				.thrixty-player #size_btn[state=fullpage]:hover{
+					background-image: url(images/expand_w.svg);
+					background-color: black;
+				}
+			.thrixty-player #size_btn[state=normalsize]{
+				background-image: url(images/shrink.svg);
+			}
+				.thrixty-player #size_btn[state=normalsize]:hover{
+					background-image: url(images/shrink_w.svg);
+					background-color: black;
+				}
+		.thrixty-player #zoombox_canvas{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 0px;
+			width: 0px;
+			z-index: 9999;
+			cursor: crosshair;
+				background: white;
+		}

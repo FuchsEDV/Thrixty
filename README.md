@@ -1,7 +1,6 @@
 # Thrixty
 360° Photography Player
 
-
 ToC:
 * 1.: Thrixty Player
 * 2.: Example
@@ -15,7 +14,7 @@ ToC:
 The Thrixty Player is a tool to show off your 360° Photography.
 It is using HTML5 canvas elements to display your sequence.
 
-## 2.) Example
+### 2.) Example
 To view an example, download [these](https://github.com/FuchsEDV/Thrixty_example) two files.
 Unzip them in the same folder as the corefiles.
 
@@ -80,8 +79,7 @@ Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+the Free Software Foundation version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of

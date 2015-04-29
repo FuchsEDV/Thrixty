@@ -2,7 +2,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.0
+ *  @version dev1.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */

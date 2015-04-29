@@ -62,6 +62,8 @@ Then only copy the filelists and object folders, as they are the only files bein
 [[Will come...](www.fuchs-edv.de)]
 
 ###6.) Change Log
+* V1.1:
+    * Changes in Error Handling and Reporting
 * V1.0 (Release):
     * Play&Pause
     * Step forward

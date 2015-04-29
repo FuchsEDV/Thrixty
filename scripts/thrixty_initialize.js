@@ -2,7 +2,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.0
+ *  @version dev1.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -73,7 +73,7 @@
 					// continue
 				} else {
 					// INVALID Selector
-					throw new Error("no proper box found");
+					throw new Error("no proper box found", 0, 0);
 				}
 
 				// init a player for all boxes
@@ -81,7 +81,10 @@
 				selector.each(function(index, element){
 					// new ThrixtyPlayer
 					var new_player = new ThrixtyPlayer.MainClass(jQuery_2_1_3(element));
-					new_player.setup();
+					// Trigger new processes for each initialize, so a single error will not stop the whole init
+					setTimeout(function(){
+						new_player.setup();
+					}, 10);
 
 					all_players.push(new_player);
 				});

@@ -1,20 +1,26 @@
-/* thrixty_initialize.js */
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.1
+ *  @version dev1.2
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
 
+var thrixty_version = "1.2";
 (function(){
 	// 1.: get this scripts path || This must be executed at file-load!!!
+	// [returns the basepath of the thrixtyplayer with a trailing slash]
 	var basepath = (function(){
 		var scripts = document.getElementsByTagName('script');
-		var path = scripts[scripts.length - 1].src;
-		return path.substring(0, path.lastIndexOf("/")+1);
+		var filepath = scripts[scripts.length - 1].src;
+		var parts = filepath.split("/");
+		parts.pop(); // remove "[filename].[ext]"
+		parts.pop(); // remove "scripts"
+		var basepath = parts.join("/")+"/";
+		return basepath;
+		// OLD: return filepath.substring(0, path.lastIndexOf("/")+1);
 	})();
-	console.log(basepath);
+	log(basepath);
 
 
 	// 2.: define ThrixtyPlayer Namespace
@@ -31,18 +37,22 @@
 
 
 	// 3.: load jQuery 2.1.3 and assign new global variable jQuery_2_1_3
-	load_script(basepath+"jquery-2.1.3.js", function(){
-		window.jQuery_2_1_3 = jQuery.noConflict(true);
-		load_includes(basepath);
-	});
+	load_script(
+		basepath+"scripts/jquery-2.1.3.js",
+		function(){
+			window.jQuery_2_1_3 = jQuery.noConflict(true);
+			// go to 4th step
+			load_includes(basepath);
+		}
+	);
 
 
 	// 4.: load_includes
 	function load_includes(basepath){
 		var includes = [
-			basepath+"thrixty_main_class.js",
-			basepath+"thrixty_eventhandler_class.js",
-			basepath+"thrixty_drawinghandler_class.js",
+			basepath+"scripts/thrixty_main_class.js",
+			basepath+"scripts/thrixty_eventhandler_class.js",
+			basepath+"scripts/thrixty_drawinghandler_class.js",
 		];
 		var includes_count = includes.length;
 		var loaded_count = 0;
@@ -80,7 +90,7 @@
 				var all_players = [];
 				selector.each(function(index, element){
 					// new ThrixtyPlayer
-					var new_player = new ThrixtyPlayer.MainClass(jQuery_2_1_3(element));
+					var new_player = new ThrixtyPlayer.MainClass(jQuery_2_1_3(element), basepath);
 					// Trigger new processes for each initialize, so a single error will not stop the whole init
 					setTimeout(function(){
 						new_player.setup();
@@ -139,4 +149,3 @@ function load_script( url, callback ){
     // Start the loading
     head.appendChild(script);
 }
-/* thrixty_initialize.js */

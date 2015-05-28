@@ -8,7 +8,8 @@ ToC:
 * 4.: Installation Tutorial
 * 5.: Documentation
 * 6.: Change Log
-* 7.: License
+* 7.: Planned Features and Changes
+* 8.: License
 
 ### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.
@@ -23,7 +24,7 @@ Unzip them in the same folder as the corefiles.
 ```txt
 [Click/Tap](single) => Play/Pause
 [Click/Tap](double) => Zoom on/off
-[Drag/Swipe] => Stop automatic rotation and turn the object. Works also in Zoom mode.
+[Drag/Swipe] => Stop automatic rotation and turn the object. Also works in Zoom mode.
 ```
 ######Keboard:
 (To use these, the Player needs to be focused - click once inside the Player.)
@@ -41,9 +42,8 @@ Unzip them in the same folder as the corefiles.
 * Thrixty consists of two parts, that are to be integrated into your Website: "scripts" and "style".
 * Create a folder "thrixty" somewhere central in your website folder and copy those two folders in.
 (We suggest the folder "[website-root]/thrixty".)
-* (When you used the 360Shots Software to generate these files, you SHOULD NOT just copy and paste the whole folder for every object.
-Instead, make sure, that your centrally placed "thrixty"-folder is up to date.
-Then only copy the filelists and object folders, as they are the only files being needed.)
+* When using the 360Shots Software to generate these files, you SHOULD NOT just copy and paste the whole folder for every object.
+Instead, only copy the object folders and filelists, as they are the only files being needed.
 * The two files "thrixty_initialize.js" and "thrixty_styles.css" are to be included in your head section like this:
 
     ```html
@@ -51,17 +51,22 @@ Then only copy the filelists and object folders, as they are the only files bein
     <script id="test" type="text/javascript" src="[path]scripts/thrixty_initialize.js"></script>
     <link type="text/css" rel="stylesheet" href="[path]style/thrixty_styles.css">
 </head>
-[path] should be the path, those ressource have when called from outside!
+[path] is the path, customers will use to access these ressources.
 ```
+
 * The file "thrixty_initialize.js" will get its own path and start loading the class files.
 * You need to make sure all files in "scripts" and "style" are accessible and none are missing.
 * If you use any CMS, those files need to be hooked to the script- and style-section.
-* ######Are you using Wordpress? Look at our Wordpress Plugin: [github link]
+######Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress).
 
 ###5.) Documentation
-[[Will come...](www.fuchs-edv.de)]
+[[Not yet done](http://www.fuchs-edv.de)]
 
 ###6.) Change Log
+* V1.2:
+    * Changes in initialization
+    * Removed Yoda-Conditions
+    * Changes in Readme.md
 * V1.1:
     * Changes in Error Handling and Reporting
 * V1.0 (Release):
@@ -73,9 +78,12 @@ Then only copy the filelists and object folders, as they are the only files bein
     * Keyboard Shortcuts
     * Drag Rotation
 
+###7.) Planned Features and Changes
+* Responsiveness improvement. Especially in Fullpage Mode.
+* Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
+* Settings File or similiar instead of an overload of html attributes. => Required for more Options
 
-
-###7.) License
+###8.) License
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 

@@ -1,8 +1,7 @@
-/* thrixty_eventhandler_class.js */
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.1
+ *  @version dev1.2
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */
@@ -42,23 +41,23 @@
 	 */
 	ThrixtyPlayer.EventHandler.prototype.assign_events = function(){
 		// This is important, as no keydown events will be fired on onfocused elements.
-		this.player.main_box.on("mousedown touchstart", function(){
+		this.player.DOM_obj.main_box.on("mousedown touchstart", function(){
 			this.focus();
 		});
 
 		// Keypresses:
-		this.player.main_box.on("keydown", this.main_box_event_keys.bind(this));
+		this.player.DOM_obj.main_box.on("keydown", this.main_box_event_keys.bind(this));
 
 		// Scrolling:
-		this.player.main_box.on("wheel", this.scroll_event.bind(this));
+		this.player.DOM_obj.main_box.on("wheel", this.scroll_event.bind(this));
 
 		// Buttons:
-		this.player.size_btn.on("click", this.size_button_event_click.bind(this));
-		this.player.prev_btn.on("click", this.prev_button_event_click.bind(this));
-		this.player.play_btn.on("click", this.play_button_event_click.bind(this));
-		this.player.next_btn.on("click", this.next_button_event_click.bind(this));
-		this.player.zoom_btn.on("click", this.zoom_button_event_click.bind(this));
-		this.player.main_canvas.on("dblclick", this.main_canvas_event_dblclick.bind(this));
+		this.player.DOM_obj.size_btn.on("click", this.size_button_event_click.bind(this));
+		this.player.DOM_obj.prev_btn.on("click", this.prev_button_event_click.bind(this));
+		this.player.DOM_obj.play_btn.on("click", this.play_button_event_click.bind(this));
+		this.player.DOM_obj.next_btn.on("click", this.next_button_event_click.bind(this));
+		this.player.DOM_obj.zoom_btn.on("click", this.zoom_button_event_click.bind(this));
+		this.player.DOM_obj.main_canvas.on("dblclick", this.main_canvas_event_dblclick.bind(this));
 
 		// Document:
 		jQuery(document).on("mousedown", this.event_mousedown.bind(this));
@@ -82,17 +81,17 @@
 			case 32:  // SPACEBAR
 				key_event.preventDefault();
 				// correlate to click on play/pause button
-				this.player.play_btn.click();
+				this.player.DOM_obj.play_btn.click();
 				break;
 			case 37:  // LEFT ARROW
 				key_event.preventDefault();
 				// correlate to click on left button
-				this.player.prev_btn.click();
+				this.player.DOM_obj.prev_btn.click();
 				break;
 			case 39:  // RIGHT ARROW
 				key_event.preventDefault();
 				// correlate to click on right button
-				this.player.next_btn.click();
+				this.player.DOM_obj.next_btn.click();
 				break;
 			case 38:  // UP ARROW
 				key_event.preventDefault();
@@ -100,9 +99,9 @@
 
 						// TODO: das folgende in die player klasse umlagern
 						var small_frequency = this.player.small.frequency;
-						if( 100 >= small_frequency ){
+						if( small_frequency <= 100 ){
 							small_frequency += 5;
-							if( 100 < small_frequency ){
+							if( small_frequency > 100 ){
 								small_frequency = 100;
 							}
 							this.player.small.frequency = small_frequency;
@@ -118,9 +117,9 @@
 
 						// TODO: das folgende in die player klasse umlagern
 						var small_frequency = this.player.small.frequency;
-						if( 1 < small_frequency ){
+						if( small_frequency > 1 ){
 							small_frequency -= 5;
-							if( 1 > small_frequency ){
+							if( small_frequency < 1 ){
 								small_frequency = 1;
 							}
 							this.player.small.frequency = small_frequency;
@@ -140,7 +139,7 @@
 			case 70:  // F
 				key_event.preventDefault();
 				// correlate to click on fullscreen button
-				this.player.size_btn.click();
+				this.player.DOM_obj.size_btn.click();
 				break;
 			case 33:  // PAGEUP
 			case 34:  // PAGEDOWN
@@ -200,7 +199,7 @@
 	 */
 	ThrixtyPlayer.EventHandler.prototype.event_touchstart = function(touchstart_event){
 		// this is only valid, when targeted on the player
-		if( touchstart_event.originalEvent.target == this.player.main_canvas[0] ){
+		if( touchstart_event.originalEvent.target == this.player.DOM_obj.main_canvas[0] ){
 			// prevent default actions for this event
 			touchstart_event.preventDefault();
 			// memorize x coordinate
@@ -213,7 +212,7 @@
 	 */
 	ThrixtyPlayer.EventHandler.prototype.event_mousedown = function(mousedown_event){
 		// this is only valid, when targeted on the player AND left clicked
-		if( mousedown_event.originalEvent.target == this.player.main_canvas[0]  &&  mousedown_event.which == 1 ){
+		if( (mousedown_event.originalEvent.target == this.player.DOM_obj.main_canvas[0])  &&  (mousedown_event.which == 1) ){
 			// memorize x coordinate
 			this.start_x = mousedown_event.pageX;
 			// prevent default actions for this event
@@ -246,7 +245,8 @@
 			// get event coordinates and start function to deal with them.
 			var current_x = touchmove_event.originalEvent.changedTouches[0].pageX;
 			var current_y = touchmove_event.originalEvent.changedTouches[0].pageY;
-			this.player.move_zoom(current_x, current_y);
+			this.player.drawing_handler.set_mouseposition(current_x, current_y);
+			this.player.drawing_handler.draw_current_image();
 
 		// do rotation, when touching the image (AND NOT in zoom)
 		} else if( this.is_mousedown ){
@@ -274,7 +274,8 @@
 			// get event coordinates and start function to deal with them.
 			var current_x = mousemove_event.pageX;
 			var current_y = mousemove_event.pageY;
-			this.player.move_zoom(current_x, current_y);
+			this.player.drawing_handler.set_mouseposition(current_x, current_y);
+			this.player.drawing_handler.draw_current_image();
 		}
 	};
 	/**
@@ -320,7 +321,7 @@
 		// if this is still considered a click, simulate a play button click.
 		if( this.is_click ){
 			this.is_click = false;
-			this.player.play_btn.click();
+			this.player.DOM_obj.play_btn.click();
 		}
 	};
 	/**
@@ -330,7 +331,6 @@
 		// prevent default action
 		dblclick_event.preventDefault();
 		// simulate zoom button click
-		this.player.zoom_btn.click();
+		this.player.DOM_obj.zoom_btn.click();
 	};
 })(jQuery_2_1_3);
-/* /thrixty_eventhandler_class.js */

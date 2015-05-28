@@ -1,8 +1,7 @@
-/* thrixty_drawinghandler_class.js */
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.1
+ *  @version dev1.2
  *  @license GPLv3
  *  @module ThrixtyPlayer.DrawingHandler
  */
@@ -96,7 +95,8 @@
 		var main_canvas = this.player.get_main_canvas_dimensions();
 		// check for loading state of image and draw it when it is ready
 		// TODO: dies muss überarbeitet werden, da diese überprüfungslogik hier gar nicht hingehört
-		if( true === this.player.small.images[this.player.small.active_image_id].elem_loaded ){
+		if( this.player.small.images[this.player.small.active_image_id].elem_loaded === true ){
+			main_canvas.context.clearRect(0, 0, main_canvas.w, main_canvas.h);
 			main_canvas.context.drawImage(image, 0, 0);
 		}
 	};
@@ -217,6 +217,8 @@
 			h: small_dimensions.h * ( small_dimensions.h / large_dimensions.h ) * ( small_dimensions.h / large_dimensions.h ),
 		}
 
+		main_canvas.context.clearRect(0, 0, main_canvas.w, main_canvas.h);
+
 		// apply the calculated values
 		// draw the large image on the main canvas
 		main_canvas.context.drawImage(large_image, 0, 0, large_image.naturalWidth, large_image.naturalHeight, -zoom_img_offset.x, -zoom_img_offset.y, large_dimensions.w, large_dimensions.h);
@@ -225,9 +227,34 @@
 		main_canvas.context.globalAlpha = 0.5;
 			// draw the small image as the minimap
 			main_canvas.context.drawImage(small_image, 0, 0, small_image.naturalWidth, small_image.naturalHeight, minimap.x, minimap.y, minimap.w, minimap.h);
-			// the color of the marker is now red and will be an option
-			main_canvas.context.strokeStyle = "rgb(255,0,0)";
-			main_canvas.context.strokeRect(minimap_marker.x, minimap_marker.y, minimap_marker.w, minimap_marker.h);
+
+
+
+				// the marker will be transparent inside a gray-transparent box
+				main_canvas.context.fillStyle = "black";
+				main_canvas.context.beginPath();
+
+				// ctx.rect(0, 0, 400, 400);
+				// ctx.arc(200, 200, 100, -0.5 * Math.PI, 1.5 * Math.PI, true);
+				// ctx.rect(10+60, 50, -60, 60);
+
+				main_canvas.context.rect(0, 0, minimap.w, minimap.h);
+				main_canvas.context.rect(minimap_marker.x+minimap_marker.w, minimap_marker.y, -minimap_marker.w, minimap_marker.h);
+				// main_canvas.context.rect(minimap_marker.x, minimap_marker.y, minimap_marker.w, minimap_marker.h);
+				main_canvas.context.fill();
+				// main_canvas.context.arc(
+				// 	(minimap_marker.x + minimap_marker.w/2),
+				// 	(minimap_marker.y + minimap_marker.h/2),
+				// 	...
+				// 	);
+
+
+				// the color of the marker is now red and will be an option
+				// main_canvas.context.strokeStyle = "rgb(255,0,0)";
+				// main_canvas.context.strokeRect(minimap_marker.x, minimap_marker.y, minimap_marker.w, minimap_marker.h);
+
+
+
 		main_canvas.context.globalAlpha = 1;
 	};
 	/**
@@ -318,4 +345,3 @@
 		this.large_dimensions.h = image_jq_obj[0].naturalHeight;
 	};
 })(jQuery_2_1_3);
-/* /thrixty_drawinghandler_class.js */

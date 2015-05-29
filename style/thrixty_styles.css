@@ -53,8 +53,8 @@
 			left: 0;
 			top: 0;
 			z-index: 1;
-			/*background-color: #eeeeee;*/
-			background-color: white;
+			background-color: #eeeeee;
+			/*background-color: white;*/
 		}
 		.thrixty-player #main_canvas{
 			width: 100%;
@@ -64,15 +64,16 @@
 			z-index: 2;
 		}
 		.thrixty-player #minimap_canvas{
-			width: 50%;
-			height: 50%;
+			width: 100%;
+			height: 100%;
 			position: absolute;
 			left: 0;
 			top: 0;
 			opacity: 0.5;
 			z-index: 3;
+			pointer-events: none;
 			/*display: none;*/
-			background: red;
+			/*background: red;*/
 		}
 		.thrixty-player .progress_container{
 			width: 80%;

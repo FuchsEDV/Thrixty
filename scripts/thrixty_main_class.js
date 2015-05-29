@@ -89,7 +89,8 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 			seconds_per_turn: 5,
 			sensitivity_x: 20,
 			sensitivity_y: 50,
-			zoom_mode: "inbox_minimap",
+			zoom_mode: "inbox",
+			zoom_position_indicator: "minimap",
 		};
 		// The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"!
 
@@ -255,14 +256,31 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 					}
 					break;
 				case "thrixty-zoom-mode":
-					if( attr.value != "" ){
-						this.settings.zoom_mode = String(attr.value);
+					// proper values:  -inbox -outbox -none(|empty)
+					if( attr.value == "inbox" ){
+						this.settings.zoom_mode = "inbox";
+					} else if( attr.value == "outbox" ){
+						this.settings.zoom_mode = "outbox";
+					} else if( attr.value == "none" || attr.value == "" ){
+						this.settings.zoom_mode = "";
+					}
+					break;
+				case "thrixty-zoom-position-indicator":
+				// proper values: -minimap -marker -none(|empty)
+					if( attr.value == "minimap" ){
+						this.settings.zoom_position_indicator = "minimap";
+					} else if( attr.value == "marker" ){
+						this.settings.zoom_position_indicator = "marker";
+					} else if( attr.value == "none" || attr.value == "" ){
+						this.settings.zoom_position_indicator = "";
 					}
 					break;
 				default:
 					break;
 			}
 		}
+		log(this.settings.zoom_mode);
+		log(this.settings.zoom_position_indicator);
 	};
 	/**
 	 *  @description This function generates HTML-Code and keeps track of generated elements.
@@ -873,6 +891,7 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 			default:
 				// make the box invisible
 				this.DOM_obj.zoom_box.hide();
+				this.DOM_obj.minimap_canvas.show();
 				break;
 		}
 	};
@@ -886,6 +905,8 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 
 		// hide zoombox
 		this.DOM_obj.zoom_box.hide();
+		// hide minimap_box
+		this.DOM_obj.minimap_canvas.hide();
 		// draw unzoomed picture
 		this.drawing_handler.draw_current_image();
 	};
@@ -1112,7 +1133,9 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 				x: this.DOM_obj.bg_canvas.offset().left,
 				y: this.DOM_obj.bg_canvas.offset().top,
 				w: this.DOM_obj.bg_canvas.width(),
+				// w: this.DOM_obj.bg_canvas[0].width,
 				h: this.DOM_obj.bg_canvas.height(),
+				// h: this.DOM_obj.bg_canvas[0].height,
 				context: this.DOM_obj.bg_canvas[0].getContext("2d"),
 			}
 		};
@@ -1125,7 +1148,9 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 				x: this.DOM_obj.main_canvas.offset().left,
 				y: this.DOM_obj.main_canvas.offset().top,
 				w: this.DOM_obj.main_canvas.width(),
+				// w: this.DOM_obj.main_canvas[0].width,
 				h: this.DOM_obj.main_canvas.height(),
+				// h: this.DOM_obj.main_canvas[0].height,
 				context: this.DOM_obj.main_canvas[0].getContext("2d"),
 			}
 		};
@@ -1138,7 +1163,9 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 				x: this.DOM_obj.minimap_canvas.offset().left,
 				y: this.DOM_obj.minimap_canvas.offset().top,
 				w: this.DOM_obj.minimap_canvas.width(),
+				// w: this.DOM_obj.minimap_canvas[0].width,
 				h: this.DOM_obj.minimap_canvas.height(),
+				// h: this.DOM_obj.minimap_canvas[0].height,
 				context: this.DOM_obj.minimap_canvas[0].getContext("2d"),
 			}
 		};
@@ -1151,7 +1178,9 @@ mm_ctx.drawImage(main, 0, 0, main.width, main.height);
 				x: this.DOM_obj.zoom_box.offset().left,
 				y: this.DOM_obj.zoom_box.offset().top,
 				w: this.DOM_obj.zoom_box.width(),
+				// w: this.DOM_obj.zoom_box[0].width,
 				h: this.DOM_obj.zoom_box.height(),
+				// h: this.DOM_obj.zoom_box[0].height,
 				context: this.DOM_obj.zoom_box[0].getContext("2d"),
 			}
 		};

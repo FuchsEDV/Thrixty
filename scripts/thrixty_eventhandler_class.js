@@ -40,6 +40,18 @@
 	 *  @description This function initializes the GUI events.
 	 */
 	ThrixtyPlayer.EventHandler.prototype.assign_events = function(){
+		var root = this;
+
+
+		// // TEST resize event
+		// jQuery(window).on(
+		// 	"resize",
+		// 	function(resize_event){
+		// 		// root.player.drawing_handler.draw_current_image();
+		// 	}
+		// );
+
+
 		// This is important, as no keydown events will be fired on onfocused elements.
 		this.player.DOM_obj.main_box.on("mousedown touchstart", function(){
 			this.focus();

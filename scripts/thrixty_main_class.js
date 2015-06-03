@@ -1,22 +1,7 @@
-/*
-jQ = jQuery_2_1_3;
-
-var main = jQ("#main_canvas")[0];
-var main_ctx = main.getContext("2d");
-main_ctx.fillRect(0, 0, main.width, main.height);
-
-var mm = jQ("#minimap_canvas")[0];
-var mm_ctx = mm.getContext("2d");
-mm_ctx.drawImage(main, 0, 0, main.width, main.height);
-
-
-
-*/
-
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.2
+ *  @version 1.2
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */

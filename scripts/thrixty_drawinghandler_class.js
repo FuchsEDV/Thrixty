@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.2
+ *  @version 1.2
  *  @license GPLv3
  *  @module ThrixtyPlayer.DrawingHandler
  */

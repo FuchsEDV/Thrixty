@@ -34,8 +34,29 @@
 		this.start_x = 0;
 		// assign events to the parents elements
 		this.assign_events();
-	};
 
+
+		// declaration of properties used by methods
+		this.minimap = {
+			is_mousedown: false,
+			is_click: false,
+			start_x: 0,
+				start_y: 0, // unused
+		};
+		this.marker = {
+			is_mousedown: false,
+			is_click: false,
+			start_x: 0,
+				start_y: 0, // unused
+		};
+		this.main = {
+			is_mousedown: false,
+			is_click: false,
+			start_x: 0,
+				start_y: 0, // unused
+		};
+		this.is_touch = false; // to be implemented
+	};
 	/**
 	 *  @description This function initializes the GUI events.
 	 */
@@ -50,6 +71,9 @@
 		// 		// root.player.drawing_handler.draw_current_image();
 		// 	}
 		// );
+
+
+
 
 
 		// This is important, as no keydown events will be fired on onfocused elements.
@@ -72,12 +96,14 @@
 		this.player.DOM_obj.main_canvas.on("dblclick", this.main_canvas_event_dblclick.bind(this));
 
 		// Document:
-		jQuery(document).on("mousedown", this.event_mousedown.bind(this));
-		jQuery(document).on("touchstart", this.event_touchstart.bind(this));
-		jQuery(document).on("mousemove", this.event_mousemove.bind(this));
-		jQuery(document).on("touchmove", this.event_touchmove.bind(this));
-		jQuery(document).on("mouseup", this.event_mouseup.bind(this));
-		jQuery(document).on("touchend", this.event_touchend.bind(this));
+		jQuery(document).on("mousedown",  this.mousedown_event_document.bind(this)  );
+		jQuery(document).on("touchstart", this.touchstart_event_document.bind(this) );
+
+		jQuery(document).on("mousemove",  this.mousemove_event_document.bind(this)  );
+		jQuery(document).on("touchmove",  this.touchmove_event_document.bind(this)  );
+
+		jQuery(document).on("mouseup",    this.mouseup_event_document.bind(this)    );
+		jQuery(document).on("touchend",   this.touchend_event_document.bind(this)   );
 	};
 	/**
 	 *  @description This function manages the keypress events.
@@ -206,9 +232,292 @@
 		this.player.toggle_fullscreen();
 	};
 
+
+
+
+
+	ThrixtyPlayer.EventHandler.prototype.touchstart_event_document = function(touchstart_event){
+		this.is_touch = true;
+		this.mousedown_event_document(touchstart_event);
+		this.is_touch = false;
+	};
+	ThrixtyPlayer.EventHandler.prototype.mousedown_event_document = function(mousedown_event){
+		// Emuliere Weitergabe von Events an die Canvas'e.
+		// Das unterschiedliche Verhalten der Teile sollte eigentlich dazu führen, dass unterschiedliche Events durchgegeben werden können oder nicht.
+		//   Die Settings würden zusammen mit dem Zustand darüber entscheiden, wann es aktiviert wird und wann nicht.
+
+		// Emulate (...)
+
+		var main_canvas = this.player.DOM_obj.main_canvas;
+		var click_in_main_canvas = this.check_boundaries(main_canvas, mousedown_event.pageX, mousedown_event.pageY);
+
+		if( this.player.settings.zoom_control == "progressive" ){
+			// completely ignore minimap events in progressive control mode
+			// completely ignore marker events in progressive control mode
+			// if mousedown within main_canvas boundaries, trigger its mousedown event
+			if( click_in_main_canvas ){
+				// prevent default actions for this event
+				mousedown_event.preventDefault();
+				this.mousedown_event_main_canvas(mousedown_event);
+			}
+		} else if( this.player.settings.zoom_control == "classic" ){
+			// click in minimap?
+			var minimap_canvas = this.player.DOM_obj.minimap_canvas;
+			var click_in_minimap_canvas = this.check_boundaries(minimap_canvas, mousedown_event.pageX, mousedown_event.pageY);
+
+			// click in marker?
+			var marker = this.player.DOM_obj.marker;
+			var click_in_marker = this.check_boundaries(marker, mousedown_event.pageX, mousedown_event.pageY);
+
+			if( !click_in_main_canvas ){
+				// IGNORE, as this click event has nothing to do with the player
+			} else { // click in main_canvas area
+				mousedown_event.preventDefault();
+				// is this click targeted on minimap?
+				if( click_in_marker ){
+					// do marker stuff
+					this.mousedown_event_marker(mousedown_event);
+				} else if( click_in_minimap_canvas ){
+					// do minimap stuff
+					this.mousedown_event_minimap_canvas(mousedown_event);
+				} else {
+					// do main_canvas stuff
+					this.mousedown_event_main_canvas(mousedown_event);
+				}
+			}
+		}
+	};
+	ThrixtyPlayer.EventHandler.prototype.mousedown_event_minimap_canvas = function(mousedown_event){
+		// left click?
+		if( mousedown_event.which == 1 ){
+			// memorize state
+			this.minimap.is_mousedown = true;
+			this.minimap.is_click = true;
+			// memorize coordinates
+			this.minimap.start_x = mousedown_event.pageX;
+			this.minimap.start_y = mousedown_event.pageY;
+		}
+	};
+	ThrixtyPlayer.EventHandler.prototype.mousedown_event_marker = function(mousedown_event){
+		// left click?
+		if( mousedown_event.which == 1 ){
+			// memorize state
+			this.marker.is_mousedown = true;
+			this.marker.is_click = true;
+			// memorize coordinates
+			this.marker.start_x = mousedown_event.pageX;
+			this.marker.start_y = mousedown_event.pageY;
+		}
+	}
+	ThrixtyPlayer.EventHandler.prototype.mousedown_event_main_canvas = function(mousedown_event){
+		// left click?
+		if( mousedown_event.which == 1 ){
+			// memorize state
+			this.main.is_mousedown = true;
+			this.main.is_click = true;
+			// memorize coordinates
+			this.main.start_x = mousedown_event.pageX;
+			this.main.start_y = mousedown_event.pageY;
+		}
+	};
+
+
+
+
+	ThrixtyPlayer.EventHandler.prototype.touchmove_event_document = function(touchmove_event){
+		this.is_touch = true;
+		this.mousemove_event_document(touchmove_event);
+		this.is_touch = false;
+	};
+	ThrixtyPlayer.EventHandler.prototype.mousemove_event_document = function(mousemove_event){
+		if( this.player.settings.zoom_control == "progressive" ){
+			if( this.main.is_mousedown ){
+				this.do_main_move(mousemove_event);
+			} else {
+				this.do_progressive_zoom_move(mousemove_event);
+			}
+		} else {
+			if( this.marker.is_mousedown ){
+				this.do_classic_marker_move(mousemove_event);
+			}
+			if( this.minimap.is_mousedown ){
+				this.do_classic_minimap_move(mousemove_event);
+			}
+			if( this.main.is_mousedown ){
+				this.do_main_move(mousemove_event);
+			}
+		}
+	};
 	/**
-	 *  @description This function reacts on the touchstart event with memorizing the starting position.
+	 *  @description Description. | This function is the same for both zoom controls.
 	 */
+	ThrixtyPlayer.EventHandler.prototype.do_main_move = function(move_event){
+		//
+		var distance_x = move_event.pageX - this.main.start_x;
+
+		// when the mouse is at any point father away from the starting click position, then the sensitivity settings allows, ...
+		if( this.main.is_click && (Math.abs(distance_x) > this.player.settings.sensitivity_x) ){
+			// ... stop this click sequence to execute a click event.
+			this.main.is_click = false;
+		}
+
+		//
+		if( !this.main.is_click ){
+			// stop animation
+			this.player.stop_rotation();
+			// distance_x set, so use that to do the turns
+			var rest = this.player.distance_rotation(distance_x);
+			// aktualisiere start_x zu momentaner position minus rest
+			this.main.start_x = move_event.pageX - rest;
+		}
+	};
+
+	ThrixtyPlayer.EventHandler.prototype.do_progressive_zoom_move = function(move_event){
+		// EXECUTED ON MAIN
+		// if zoomed
+		if( this.player.is_zoomed ){
+			// inform drawing handler of this mouse position
+			this.player.drawing_handler.set_absolute_mouseposition( move_event.pageX, move_event.pageY );
+			// draw curent image
+			this.player.drawing_handler.draw_current_image();
+		} else {
+			// do nothing
+		}
+	};
+
+	ThrixtyPlayer.EventHandler.prototype.do_classic_marker_move = function(move_event){
+		// do marker move
+		this.marker.is_click = false;
+		//
+		this.player.drawing_handler.set_absolute_mouseposition( move_event.pageX, move_event.pageY );
+		this.player.drawing_handler.draw_current_image();
+	}
+	ThrixtyPlayer.EventHandler.prototype.do_classic_minimap_move = function(move_event){
+		// do minimap move
+		this.minimap.is_click = false;
+		// update the minimap position in the same way, as the marker does, but smaller
+		// this.player.drawing_handler.update_mouseposition_upon
+		var X = ( ( move_event.pageX - this.player.DOM_obj.minimap_canvas.offset().left ) * ( this.player.DOM_obj.main_canvas.width()  / this.player.DOM_obj.minimap_canvas.width()  ) ) + this.player.DOM_obj.minimap_canvas.offset().left;
+		var Y = ( ( move_event.pageY - this.player.DOM_obj.minimap_canvas.offset().top  ) * ( this.player.DOM_obj.main_canvas.height() / this.player.DOM_obj.minimap_canvas.height() ) ) + this.player.DOM_obj.minimap_canvas.offset().top;
+		this.player.drawing_handler.set_absolute_mouseposition( X, Y );
+		this.player.drawing_handler.draw_current_image();
+	};
+
+
+
+
+
+
+	ThrixtyPlayer.EventHandler.prototype.touchend_event_document = function(touchend_event){
+		this.is_touch = true;
+		this.mouseup_event_document(touchend_event);
+		this.is_touch = false;
+	};
+	ThrixtyPlayer.EventHandler.prototype.mouseup_event_document = function(mouseup_event){
+		this.mouseup_event_marker(mouseup_event);
+		this.mouseup_event_minimap_canvas(mouseup_event);
+		this.mouseup_event_main_canvas(mouseup_event);
+	};
+
+
+
+
+	ThrixtyPlayer.EventHandler.prototype.mouseup_event_marker = function(up_event){
+		if( this.marker.is_mousedown ){
+			// if this is still a click, move zoom to clicked position
+			if( this.marker.is_click ){
+				// this.do_classic_marker_move(up_event);
+				this.player.toggle_rotation();
+			}
+		}
+
+		// mousedown reset
+		this.marker.is_mousedown = false;
+		this.marker.is_click = false;
+		this.marker.start_x = 0;
+		this.marker.start_y = 0;
+	};
+	ThrixtyPlayer.EventHandler.prototype.mouseup_event_minimap_canvas = function(up_event){
+		if( this.minimap.is_mousedown ){
+			// if this is still a click, move zoom to clicked position
+			if( this.minimap.is_click ){
+				this.do_classic_minimap_move(up_event);
+			}
+		}
+
+		// mousedown reset
+		this.minimap.is_mousedown = false;
+		this.minimap.is_click = false;
+		this.minimap.start_x = 0;
+		this.minimap.start_y = 0;
+	};
+	ThrixtyPlayer.EventHandler.prototype.mouseup_event_main_canvas = function(up_event){
+		if( this.main.is_mousedown ){
+			// toggle rotation if this is still a click
+			if( this.main.is_click ){
+				this.player.toggle_rotation();
+			}
+		}
+
+		// mousedown reset
+		this.main.is_mousedown = false;
+		this.main.is_click = false;
+		this.main.start_x = 0;
+		this.main.start_y = 0;
+	};
+
+
+
+
+
+
+
+
+
+
+	ThrixtyPlayer.EventHandler.prototype.check_boundaries = function(jQ_element, X, Y){
+		var offset = jQ_element.offset();
+		offset.right = offset.left + jQ_element.width();
+		offset.bottom = offset.top + jQ_element.height();
+		if( ( jQ_element.css("display") != "none" )
+		&&  ( offset.left <= X )
+		&&  ( X <= offset.right )
+		&&  ( offset.top <= Y )
+		&&  ( Y <= offset.bottom )
+		){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	ThrixtyPlayer.EventHandler.prototype.event_touchstart = function(touchstart_event){
 		// this is only valid, when targeted on the player
 		if( touchstart_event.originalEvent.target == this.player.DOM_obj.main_canvas[0] ){
@@ -219,9 +528,6 @@
 			this.do_clickstart();
 		}
 	};
-	/**
-	 *  @description This function reacts on the mousedown event with memorizing the starting position.
-	 */
 	ThrixtyPlayer.EventHandler.prototype.event_mousedown = function(mousedown_event){
 		// this is only valid, when targeted on the player AND left clicked
 		if( (mousedown_event.originalEvent.target == this.player.DOM_obj.main_canvas[0])  &&  (mousedown_event.which == 1) ){
@@ -232,9 +538,6 @@
 			this.do_clickstart();
 		}
 	};
-	/**
-	 *  @description This function wraps, what both clickstart-variants do.
-	 */
 	ThrixtyPlayer.EventHandler.prototype.do_clickstart = function(){
 		// for click event
 		this.is_mousedown = true;
@@ -243,90 +546,21 @@
 		// reset turns
 		this.player.turned_x = 0;
 	};
-	/**
-	 *  @description This function reacts to the finger movement after touching.
-	 */
-	ThrixtyPlayer.EventHandler.prototype.event_touchmove = function(touchmove_event){
-		// different behaviors for zoom and unzoomed state
-		// do zoom move, when touching the image AND in zoom state
-		if( this.player.is_zoomed && this.is_mousedown ){
-			// prevent default action
-			touchmove_event.preventDefault();
-			// as the player is in zoom mode, this touch CANNOT be treated as a click
-			this.is_click = false;
-			// get event coordinates and start function to deal with them.
-			var current_x = touchmove_event.originalEvent.changedTouches[0].pageX;
-			var current_y = touchmove_event.originalEvent.changedTouches[0].pageY;
-			this.player.drawing_handler.set_mouseposition(current_x, current_y);
-			this.player.drawing_handler.draw_current_image();
 
-		// do rotation, when touching the image (AND NOT in zoom)
-		} else if( this.is_mousedown ){
-			// prevent default action
-			touchmove_event.preventDefault();
-			// get event coordinates and start function to deal with them.
-			var current_x = touchmove_event.originalEvent.changedTouches[0].pageX;
-			this.do_rotation(current_x);
-		}
-	};
-	/**
-	 *  @description This function reacts to the mouse movement after clicking.
-	 */
-	ThrixtyPlayer.EventHandler.prototype.event_mousemove = function(mousemove_event){
-		// moving the mouse after holding the mouse button ("swipe")
-		if( this.is_mousedown ){
-			// prevent default action
-			mousemove_event.preventDefault();
-			// rotate considering these coordinates.
-			this.do_rotation(mousemove_event.pageX);
-		// do zoom move, when zoom is on
-		} else if( this.player.is_zoomed ){
-			// prevent default action
-			mousemove_event.preventDefault();
-			// get event coordinates and start function to deal with them.
-			var current_x = mousemove_event.pageX;
-			var current_y = mousemove_event.pageY;
-			this.player.drawing_handler.set_mouseposition(current_x, current_y);
-			this.player.drawing_handler.draw_current_image();
-		}
-	};
-	/**
-	 *  @description This function gets called, whenever an event handler decides on roating the visible object.
-	 */
-	ThrixtyPlayer.EventHandler.prototype.do_rotation = function(current_x){
-		// Get distance between current and startig x-position.
-		var distance_x = ( current_x - this.start_x );
-		// check for this being a drag operation - which exceedes the sensitivity setting.
-		if( this.is_click && (Math.abs(distance_x) > this.player.settings.sensitivity_x) ){
-			this.is_click = false;
-		}
-		// only rotate the object, when this cycle is not considered as a click.
-		if( !this.is_click ){
-			// distance_x set, so use that to do the turns
-			this.player.distance_rotation(distance_x);
-			// also stop animation
-			this.player.stop_rotation();
-		}
-	};
-	/**
-	 *  @description This function reacts to the touchend event to end the click cycle.
-	 */
+
+
+
+
 	ThrixtyPlayer.EventHandler.prototype.event_touchend = function(touchend_event){
 		// prevent default action
 		touchend_event.preventDefault();
 		this.do_clickend();
 	};
-	/**
-	 *  @description This function reacts to the mouseup event to end the click cycle.
-	 */
 	ThrixtyPlayer.EventHandler.prototype.event_mouseup = function(mouseup_event){
 		// prevent default action
 		mouseup_event.preventDefault();
 		this.do_clickend();
 	};
-	/**
-	 *  @description This function wraps, what both clickend-variants do.
-	 */
 	ThrixtyPlayer.EventHandler.prototype.do_clickend = function(mouseup_event){
 		// mousebutton not pressed anymore
 		this.is_mousedown = false;
@@ -336,9 +570,19 @@
 			this.player.DOM_obj.play_btn.click();
 		}
 	};
-	/**
-	 *  @description This function reacts to doubleclicks.
-	 */
+
+
+
+
+
+
+
+
+
+
+
+
+
 	ThrixtyPlayer.EventHandler.prototype.main_canvas_event_dblclick = function(dblclick_event){
 		// prevent default action
 		dblclick_event.preventDefault();

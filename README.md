@@ -13,7 +13,7 @@ ToC:
 
 ### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.
-It is using HTML5 canvas elements to display your sequence.
+It is using HTML5 CANVAS elements to display sequences.
 
 ### 2.) Example
 To view an example, download [these](https://github.com/FuchsEDV/Thrixty_example) two files.
@@ -24,7 +24,7 @@ Unzip them in the same folder as the corefiles.
 ```txt
 [Click/Tap](single) => Play/Pause
 [Click/Tap](double) => Zoom on/off
-[Drag/Swipe] => Stop automatic rotation and turn the object. Also works in Zoom mode.
+[Drag/Swipe] => Stop automatic rotation and turn the object. Also works in Zoom mode. | Drag the marker or minimap in classic mode to move the expanded area.
 ```
 ######Keboard:
 (To use these, the Player needs to be focused - click once inside the Player.)
@@ -57,13 +57,20 @@ Instead, only copy the object folders and filelists, as they are the only files 
 * The file "thrixty_initialize.js" will get its own path and start loading the class files.
 * You need to make sure all files in "scripts" and "style" are accessible and none are missing.
 * If you use any CMS, those files need to be hooked to the script- and style-section.
-######Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress).
+* ######Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress).
+
+* After every PageLoad the Player Script will now look for any div-tags with the class "thrixty-player" and will initialize itself on each found instance.
+* You can customize the player by adding attributes to these intial div-tags.
+* (A list of possible options and their standard values will be added.)
 
 ###5.) Documentation
 [[Not yet done](http://www.fuchs-edv.de)]
 
 ###6.) Change Log
 * V1.2:
+    * Introduced the new position indicator "marker" and made the "minimap" look less grabable
+    * New options "zoom-control" and "outbox-position"
+    * Splitted up the zoom options like "inbox_minimap" into seperate options
     * Changes in initialization
     * Removed Yoda-Conditions
     * Changes in Readme.md
@@ -81,7 +88,8 @@ Instead, only copy the object folders and filelists, as they are the only files 
 ###7.) Planned Features and Changes
 * Responsiveness improvement. Especially in Fullpage Mode.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
-* Settings File or similiar instead of an overload of html attributes. => Required for more Options
+* Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
+* Minimap Mask crossbrowser compatibility. (The reverse-drawing of a filled rectangle will only work in webkit browsers.)
 
 ###8.) License
 ```txt

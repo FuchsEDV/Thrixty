@@ -412,32 +412,29 @@
 			this.minimap_canvas.draw_h
 		);
 
-		// second draw image
+		// secondly draw image
 		this.minimap_canvas.ctx.drawImage(
 			small_image,
 			0,
 			0
 		);
 
-		// third draw cutout
+		// thirdly draw cutout
 		this.minimap_canvas.ctx.globalAlpha = 0.5;
 			this.minimap_canvas.ctx.fillStyle = "black";
 			this.minimap_canvas.ctx.beginPath();
-				// draw mask
-				this.minimap_canvas.ctx.rect(
-					0,
-					0,
-					this.small_image_size.w,
-					this.small_image_size.h
-				);
-				// "undraw" cutout
-				// TODO: find a way to do this cross browser
-				this.minimap_canvas.ctx.rect(
-					cutout_x + cutout_w,
-					cutout_y,
-					-cutout_w,
-					cutout_h
-				);
+				// draw mask (rectangle clockwise)
+					this.minimap_canvas.ctx.moveTo(0, 0);
+					this.minimap_canvas.ctx.lineTo(this.small_image_size.w, 0);
+					this.minimap_canvas.ctx.lineTo(this.small_image_size.w, this.small_image_size.h);
+					this.minimap_canvas.ctx.lineTo(0, this.small_image_size.h);
+					this.minimap_canvas.ctx.lineTo(0, 0);
+				// "undraw" cutout (rectangle counterclockwise)
+					this.minimap_canvas.ctx.moveTo(cutout_x+0, cutout_y+0);
+					this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+cutout_h);
+					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+cutout_h);
+					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+0);
+					this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+0);
 			this.minimap_canvas.ctx.fill();
 		this.minimap_canvas.ctx.globalAlpha = 1;
 	};

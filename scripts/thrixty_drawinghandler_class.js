@@ -5,8 +5,7 @@
  *  @license GPLv3
  *  @module ThrixtyPlayer.DrawingHandler
  */
-
-(function(jQuery){
+;(function(jQuery){
 
 	/**
 	 *  @description ThrixtyPlayer Application

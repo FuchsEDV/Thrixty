@@ -5,8 +5,7 @@
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */
-
-(function(jQuery){
+;(function(jQuery){
 
 	/**
 	 *  @description ThrixtyPlayer Application

@@ -5,8 +5,7 @@
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
-
-(function(jQuery){
+;(function(jQuery){
 
 	/**
 	 *  @description ThrixtyPlayer Application
@@ -313,7 +312,7 @@
 			this.DOM_obj.main_box.append(this.DOM_obj.zoom_canvas);
 
 			// these will store the image preloads
-			this.DOM_obj.main_box.append(this.DOM_obj.controls_cache);
+			// this.DOM_obj.main_box.append(this.DOM_obj.controls_cache);
 				// cache control icons
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/expand.svg\">")      );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/pause.svg\">")       );
@@ -331,8 +330,8 @@
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/play_w.svg\">")      );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/shrink_w.svg\">")    );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/zurueck_w.svg\">")   );
-			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_small);
-			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_large);
+			// this.DOM_obj.main_box.append(this.DOM_obj.image_cache_small);
+			// this.DOM_obj.main_box.append(this.DOM_obj.image_cache_large);
 
 		// no errors (?)
 		return true;
@@ -996,6 +995,19 @@
 		}
 	};
 
+
+
+
+	/**
+	 *  @description Destroy this instance to stop the Player from playing.
+	 */
+	ThrixtyPlayer.MainClass.prototype.destroy_player = function(){
+		this.stop_rotation();
+		this.stop_zoom();
+		this.quit_fullpage();
+		console.log(this);
+		destroy_me = this;
+	};
 
 
 

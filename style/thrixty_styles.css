@@ -23,6 +23,7 @@
 }
 	.thrixty-player .error{
 		width: 100%;
+		/*height: 100%;*/
 		color: red;
 		font-size: 20px;
 		font-family: verdana, arial;
@@ -32,7 +33,7 @@
 	}
 	.thrixty-player .showroom{
 		width: 100%;
-		height: calc(100% - 50px);
+		/*height: calc(100% - 50px);*/
 		padding: 0;
 		margin: 0;
 		/*border-bottom: 1px solid gray;*/
@@ -48,8 +49,8 @@
 			background: transparent;
 		}
 		.thrixty-player #bg_canvas{
-			min-width: 100%;
-			min-height: 100%;
+			width: 100%;
+			height: 100%;
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -59,7 +60,10 @@
 		}
 		.thrixty-player #main_canvas{
 			width: 100%;
+			height: 100%;
+			/*position: absolute;*/
 			position: relative;
+				display: block;
 			left: 0;
 			top: 0;
 			z-index: 2;

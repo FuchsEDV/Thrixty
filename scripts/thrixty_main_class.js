@@ -330,7 +330,7 @@
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/play_w.svg\">")      );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/shrink_w.svg\">")    );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/zurueck_w.svg\">")   );
-			// this.DOM_obj.main_box.append(this.DOM_obj.image_cache_small);
+			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_small);
 			// this.DOM_obj.main_box.append(this.DOM_obj.image_cache_large);
 
 		// no errors (?)
@@ -459,13 +459,12 @@
 								this.DOM_obj.zoom_canvas[0].width = current_elem.jq_elem[0].naturalWidth;
 								this.DOM_obj.zoom_canvas[0].height = current_elem.jq_elem[0].naturalHeight;
 
-
 								current_elem.jq_elem.hide();
 							}.bind(this);
 
 					// and give the dimensions to the drawing handler.
 					this.drawing_handler.set_small_image_size(current_elem.jq_elem);
-					// calc imension ratio
+					// calc dimension ratio
 					this.drawing_handler.calculate_image_size_ratio();
 
 					// The whole purpose of the following block is to make sure,
@@ -662,7 +661,7 @@
 	 */
 	ThrixtyPlayer.MainClass.prototype.all_images_loaded = function(){
 		// start rotation for startup.
-		// autostart
+		// autostart / autoplay
 		// this.start_rotation();
 	};
 
@@ -954,7 +953,7 @@
 		this.DOM_obj.size_btn.attr('state', 'normalsize');
 		this.is_fullscreen = true;
 
-		this.stop_zoom();
+		// this.stop_zoom();
 
 		this.DOM_obj.main_box.css('position', 'fixed');
 		this.DOM_obj.main_box.css('top', '5px');
@@ -963,6 +962,8 @@
 		this.DOM_obj.main_box.css('left', '5px');
 		this.DOM_obj.main_box.css('background', 'white');
 		this.DOM_obj.main_box.css('z-index', '9999');
+		this.DOM_obj.main_box.css('max-width', 'calc(100% - 10px)');
+		this.DOM_obj.main_box.css('max-height', 'calc(100% - 10px)');
 		this.DOM_obj.showroom.css('height', 'calc(100% - '+this.DOM_obj.controls.outerHeight()+'px)');
 	};
 	/**
@@ -982,6 +983,8 @@
 		this.DOM_obj.main_box.css('left', '');
 		this.DOM_obj.main_box.css('background', '');
 		this.DOM_obj.main_box.css('z-index', '');
+		this.DOM_obj.main_box.css('max-width', '');
+		this.DOM_obj.main_box.css('max-height', '');
 		this.DOM_obj.showroom.css('height', '');
 	};
 	/**

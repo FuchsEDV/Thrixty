@@ -51,7 +51,7 @@ Instead, only copy the object folders and filelists, as they are the only files 
     <script id="test" type="text/javascript" src="[path]scripts/thrixty_initialize.js"></script>
     <link type="text/css" rel="stylesheet" href="[path]style/thrixty_styles.css">
 </head>
-[path] is the path, customers will use to access these ressources.
+[path] is the path customers browsers will use to access these ressources.
 ```
 
 * The file "thrixty_initialize.js" will get its own path and start loading the class files.
@@ -90,6 +90,9 @@ Instead, only copy the object folders and filelists, as they are the only files 
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
 * Minimap Mask crossbrowser compatibility. (The reverse-drawing of a filled rectangle will only work in webkit browsers.)
+
+Errors:
+* Fullpagemode is not working properly, as there were changes to the CSS. This needs to be fixed, before creating a new version.
 
 ###8.) License
 ```txt

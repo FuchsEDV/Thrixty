@@ -221,9 +221,9 @@
 						// outbox zoom ist unfertig... !
 						this.outbox_zoom();
 			}
-			if( this.player.settings.zoom_position_indicator == "minimap" ){
+			if( this.player.settings.position_indicator == "minimap" ){
 				this.draw_minimap();
-			} else if( this.player.settings.zoom_position_indicator == "marker" ){
+			} else if( this.player.settings.position_indicator == "marker" ){
 				this.set_marker_position();
 			}
 		}

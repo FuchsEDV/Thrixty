@@ -75,9 +75,9 @@
 			sensitivity_x: 20,
 			sensitivity_y: 50,
 			zoom_mode: "inbox",
-			outbox_position: "right",
-			zoom_position_indicator: "minimap",
 			zoom_control: "progressive",
+			outbox_position: "right",
+			position_indicator: "minimap",
 		};
 		// The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"!
 
@@ -243,8 +243,16 @@
 						this.settings.zoom_mode = "inbox";
 					} else if( attr.value == "outbox" ){
 						this.settings.zoom_mode = "outbox";
+					// TODO; dies muss noch benutzt werden...
 					} else if( attr.value == "none" || attr.value == "" ){
 						this.settings.zoom_mode = "";
+					}
+					break;
+				case "thrixty-zoom-control":
+					if( attr.value == "classic" ){
+						this.settings.zoom_control = "classic";
+					} else {
+						this.settings.zoom_control = "progressive";
 					}
 					break;
 				case "thrixty-outbox-position":
@@ -259,21 +267,14 @@
 						this.settings.outbox_position = "bottom";
 					}
 					break;
-				case "thrixty-zoom-position-indicator":
+				case "thrixty-position-indicator":
 					// proper values: -minimap -marker -none(|empty)
 					if( attr.value == "minimap" ){
-						this.settings.zoom_position_indicator = "minimap";
+						this.settings.position_indicator = "minimap";
 					} else if( attr.value == "marker" ){
-						this.settings.zoom_position_indicator = "marker";
+						this.settings.position_indicator = "marker";
 					} else if( attr.value == "none" || attr.value == "" ){
-						this.settings.zoom_position_indicator = "";
-					}
-					break;
-				case "thrixty-zoom-control":
-					if( attr.value == "classic" ){
-						this.settings.zoom_control = "classic";
-					} else {
-						this.settings.zoom_control = "progressive";
+						this.settings.position_indicator = "";
 					}
 					break;
 				default:
@@ -662,7 +663,7 @@
 	ThrixtyPlayer.MainClass.prototype.all_images_loaded = function(){
 		// start rotation for startup.
 		// autostart / autoplay
-		// this.start_rotation();
+		this.start_rotation();
 	};
 
 
@@ -857,9 +858,9 @@
 			this.drawing_handler.set_absolute_mouseposition(click_x, click_y);
 
 			// check for position indicator wanted (for example a minimap)
-			if( this.settings.zoom_position_indicator == "minimap" ){
+			if( this.settings.position_indicator == "minimap" ){
 				this.DOM_obj.minimap_canvas.show();
-			} else if( this.settings.zoom_position_indicator == "marker" ){
+			} else if( this.settings.position_indicator == "marker" ){
 				this.DOM_obj.minimap_canvas.show();
 				this.DOM_obj.marker.show();
 			}
@@ -953,7 +954,7 @@
 		this.DOM_obj.size_btn.attr('state', 'normalsize');
 		this.is_fullscreen = true;
 
-		// this.stop_zoom();
+		this.stop_zoom();
 
 		this.DOM_obj.main_box.css('position', 'fixed');
 		this.DOM_obj.main_box.css('top', '5px');

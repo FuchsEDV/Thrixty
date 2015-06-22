@@ -66,7 +66,7 @@ Instead, only copy the object folders and filelists, as they are the only files 
 ###5.) Documentation
 [[Not yet done](http://www.fuchs-edv.de)]
 
-###6.) Change Log
+### 6.) Change Log
 * V1.2:
     * Introduced the new position indicator "marker" and made the "minimap" look less grabable
     * New options "zoom-control" and "outbox-position"
@@ -85,16 +85,15 @@ Instead, only copy the object folders and filelists, as they are the only files 
     * Keyboard Shortcuts
     * Drag Rotation
 
-###7.) Planned Features and Changes
+### 7.) Planned Features and Changes
 * Responsiveness improvement. Especially in Fullpage Mode.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Minimap Mask crossbrowser compatibility. (The reverse-drawing of a filled rectangle will only work in webkit browsers.)
 
 Errors:
 * Fullpagemode is not working properly, as there were changes to the CSS. This needs to be fixed, before creating a new version.
 
-###8.) License
+### 8.) License
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 

@@ -437,7 +437,7 @@
 					load_obj.first_loaded_image_id = current_elem.id;
 
 							var vogl = function(){
-								// TODO: Dies in eine Funktion verpacken. Diese Programmlogik gehört hier eigentlich nicht hin.
+								// TODO: Dies in eine Methode verpacken. Diese Programmlogik gehört hier eigentlich nicht hin. Zu welcher Klasse soll dies gehören?
 								// set main_canvas dimensions to those of the first element
 								// show and hide is being used because of reasons (the reasons are - what else could it be - Internet Explorer)
 								current_elem.jq_elem.show();
@@ -591,7 +591,7 @@
 			this.large.is_loaded = true;
 		}
 		this.refresh_progress(this.DOM_obj.progress_bar_large, large_loaded_percentage);
-		// TODO: Diesen oberen Teil überdenken - Wofür wird (noch) ein Ladezustand benötigt?
+		// TODO: Diesen oberen Teil überdenken - Wofür wird noch ein Ladezustand benötigt?
 
 
 

@@ -91,7 +91,7 @@ Instead, only copy the object folders and filelists, as they are the only files 
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
 
 Errors:
-* Fullpagemode is not working properly, as there were changes to the CSS. This needs to be fixed, before creating a new version.
+* The Fullpagemode Images are distorted. This needs to be fixed, before finishing this version.
 
 ### 8.) License
 ```txt

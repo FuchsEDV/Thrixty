@@ -132,7 +132,6 @@
 	 *  @description This function sets the image_size_ratio [ small : large ].
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.calculate_image_size_ratio = function(){
-		// TODO: minimap_canvas kram entfernen und eigenen workflow geben...
 		this.minimap_canvas = this.player.get_minimap_canvas_dimensions();
 		this.minimap_canvas.self.css("left", "0");
 		this.minimap_canvas.self.css("top", "0");
@@ -186,12 +185,11 @@
 		this.relative_mouse.y = cursor_y;
 	};
 	/**
-	 *  @description This function alculates the offsets used in inbox zoom.
+	 *  @description This function calculates the offsets used in inbox zoom.
 	 *    Diese Methode bezieht sich auf this.relative_mouse, this.main_canvas, this.large_image_size und this.small_image_size.
 	 *    (Diese sollten also vorher aktualisiert werden!)
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.get_zoom_offsets = function(){
-		// TODO: What is this method doing? Add comments.
 		var position_percentage_x = ( this.relative_mouse.x / this.main_canvas.vp_w );
 		var position_percentage_y = ( this.relative_mouse.y / this.main_canvas.vp_h );
 		return {

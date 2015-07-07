@@ -1,12 +1,11 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.2
+ *  @version 1.3
  *  @license GPLv3
  *  @module ThrixtyPlayer.DrawingHandler
  */
-
-(function(jQuery){
+;(function(jQuery){
 
 	/**
 	 *  @description ThrixtyPlayer Application
@@ -133,7 +132,6 @@
 	 *  @description This function sets the image_size_ratio [ small : large ].
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.calculate_image_size_ratio = function(){
-		// TODO: minimap_canvas kram entfernen und eigenen workflow geben...
 		this.minimap_canvas = this.player.get_minimap_canvas_dimensions();
 		this.minimap_canvas.self.css("left", "0");
 		this.minimap_canvas.self.css("top", "0");
@@ -187,12 +185,11 @@
 		this.relative_mouse.y = cursor_y;
 	};
 	/**
-	 *  @description This function alculates the offsets used in inbox zoom.
+	 *  @description This function calculates the offsets used in inbox zoom.
 	 *    Diese Methode bezieht sich auf this.relative_mouse, this.main_canvas, this.large_image_size und this.small_image_size.
 	 *    (Diese sollten also vorher aktualisiert werden!)
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.get_zoom_offsets = function(){
-		// TODO: What is this method doing? Add comments.
 		var position_percentage_x = ( this.relative_mouse.x / this.main_canvas.vp_w );
 		var position_percentage_y = ( this.relative_mouse.y / this.main_canvas.vp_h );
 		return {
@@ -222,9 +219,9 @@
 						// outbox zoom ist unfertig... !
 						this.outbox_zoom();
 			}
-			if( this.player.settings.zoom_position_indicator == "minimap" ){
+			if( this.player.settings.position_indicator == "minimap" ){
 				this.draw_minimap();
-			} else if( this.player.settings.zoom_position_indicator == "marker" ){
+			} else if( this.player.settings.position_indicator == "marker" ){
 				this.set_marker_position();
 			}
 		}
@@ -412,32 +409,29 @@
 			this.minimap_canvas.draw_h
 		);
 
-		// second draw image
+		// secondly draw image
 		this.minimap_canvas.ctx.drawImage(
 			small_image,
 			0,
 			0
 		);
 
-		// third draw cutout
+		// thirdly draw cutout
 		this.minimap_canvas.ctx.globalAlpha = 0.5;
 			this.minimap_canvas.ctx.fillStyle = "black";
 			this.minimap_canvas.ctx.beginPath();
-				// draw mask
-				this.minimap_canvas.ctx.rect(
-					0,
-					0,
-					this.small_image_size.w,
-					this.small_image_size.h
-				);
-				// "undraw" cutout
-				// TODO: find a way to do this cross browser
-				this.minimap_canvas.ctx.rect(
-					cutout_x + cutout_w,
-					cutout_y,
-					-cutout_w,
-					cutout_h
-				);
+				// draw mask (rectangle clockwise)
+					this.minimap_canvas.ctx.moveTo(0, 0);
+					this.minimap_canvas.ctx.lineTo(this.small_image_size.w, 0);
+					this.minimap_canvas.ctx.lineTo(this.small_image_size.w, this.small_image_size.h);
+					this.minimap_canvas.ctx.lineTo(0, this.small_image_size.h);
+					this.minimap_canvas.ctx.lineTo(0, 0);
+				// "undraw" cutout (rectangle counterclockwise)
+					this.minimap_canvas.ctx.moveTo(cutout_x+0, cutout_y+0);
+					this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+cutout_h);
+					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+cutout_h);
+					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+0);
+					this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+0);
 			this.minimap_canvas.ctx.fill();
 		this.minimap_canvas.ctx.globalAlpha = 1;
 	};

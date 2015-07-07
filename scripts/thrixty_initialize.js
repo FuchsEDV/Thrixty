@@ -1,12 +1,11 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.2
+ *  @version 1.3
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
-
-var thrixty_version = "1.2";
+;var thrixty_version = "1.3";
 (function(){
 	// 1.: get this scripts path || This must be executed at file-load!!!
 	// [returns the basepath of the thrixtyplayer with a trailing slash]
@@ -104,7 +103,7 @@ var thrixty_version = "1.2";
 			log(ThrixtyPlayer.initialized_players);
 		});
 	}
-})()
+})();
 
 
 

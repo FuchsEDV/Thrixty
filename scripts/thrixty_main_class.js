@@ -1,12 +1,11 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.2
+ *  @version 1.3
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
-
-(function(jQuery){
+;(function(jQuery){
 
 	/**
 	 *  @description ThrixtyPlayer Application
@@ -76,9 +75,9 @@
 			sensitivity_x: 20,
 			sensitivity_y: 50,
 			zoom_mode: "inbox",
-			outbox_position: "right",
-			zoom_position_indicator: "minimap",
 			zoom_control: "progressive",
+			outbox_position: "right",
+			position_indicator: "minimap",
 		};
 		// The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"!
 
@@ -244,8 +243,16 @@
 						this.settings.zoom_mode = "inbox";
 					} else if( attr.value == "outbox" ){
 						this.settings.zoom_mode = "outbox";
+					// TODO; dies muss noch benutzt werden...
 					} else if( attr.value == "none" || attr.value == "" ){
 						this.settings.zoom_mode = "";
+					}
+					break;
+				case "thrixty-zoom-control":
+					if( attr.value == "classic" ){
+						this.settings.zoom_control = "classic";
+					} else {
+						this.settings.zoom_control = "progressive";
 					}
 					break;
 				case "thrixty-outbox-position":
@@ -260,21 +267,14 @@
 						this.settings.outbox_position = "bottom";
 					}
 					break;
-				case "thrixty-zoom-position-indicator":
+				case "thrixty-position-indicator":
 					// proper values: -minimap -marker -none(|empty)
 					if( attr.value == "minimap" ){
-						this.settings.zoom_position_indicator = "minimap";
+						this.settings.position_indicator = "minimap";
 					} else if( attr.value == "marker" ){
-						this.settings.zoom_position_indicator = "marker";
+						this.settings.position_indicator = "marker";
 					} else if( attr.value == "none" || attr.value == "" ){
-						this.settings.zoom_position_indicator = "";
-					}
-					break;
-				case "thrixty-zoom-control":
-					if( attr.value == "classic" ){
-						this.settings.zoom_control = "classic";
-					} else {
-						this.settings.zoom_control = "progressive";
+						this.settings.position_indicator = "";
 					}
 					break;
 				default:
@@ -313,7 +313,7 @@
 			this.DOM_obj.main_box.append(this.DOM_obj.zoom_canvas);
 
 			// these will store the image preloads
-			this.DOM_obj.main_box.append(this.DOM_obj.controls_cache);
+			// this.DOM_obj.main_box.append(this.DOM_obj.controls_cache);
 				// cache control icons
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/expand.svg\">")      );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/pause.svg\">")       );
@@ -332,7 +332,7 @@
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/shrink_w.svg\">")    );
 				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+this.playerpath+"style/images/zurueck_w.svg\">")   );
 			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_small);
-			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_large);
+			// this.DOM_obj.main_box.append(this.DOM_obj.image_cache_large);
 
 		// no errors (?)
 		return true;
@@ -437,7 +437,7 @@
 					load_obj.first_loaded_image_id = current_elem.id;
 
 							var vogl = function(){
-								// TODO: Dies in eine Funktion verpacken. Diese Programmlogik gehört hier eigentlich nicht hin.
+								// TODO: Dies in eine Methode verpacken. Diese Programmlogik gehört hier eigentlich nicht hin. Zu welcher Klasse soll dies gehören?
 								// set main_canvas dimensions to those of the first element
 								// show and hide is being used because of reasons (the reasons are - what else could it be - Internet Explorer)
 								current_elem.jq_elem.show();
@@ -460,13 +460,12 @@
 								this.DOM_obj.zoom_canvas[0].width = current_elem.jq_elem[0].naturalWidth;
 								this.DOM_obj.zoom_canvas[0].height = current_elem.jq_elem[0].naturalHeight;
 
-
 								current_elem.jq_elem.hide();
 							}.bind(this);
 
 					// and give the dimensions to the drawing handler.
 					this.drawing_handler.set_small_image_size(current_elem.jq_elem);
-					// calc imension ratio
+					// calc dimension ratio
 					this.drawing_handler.calculate_image_size_ratio();
 
 					// The whole purpose of the following block is to make sure,
@@ -592,7 +591,7 @@
 			this.large.is_loaded = true;
 		}
 		this.refresh_progress(this.DOM_obj.progress_bar_large, large_loaded_percentage);
-		// TODO: Diesen oberen Teil überdenken - Wofür wird (noch) ein Ladezustand benötigt?
+		// TODO: Diesen oberen Teil überdenken - Wofür wird noch ein Ladezustand benötigt?
 
 
 
@@ -663,8 +662,8 @@
 	 */
 	ThrixtyPlayer.MainClass.prototype.all_images_loaded = function(){
 		// start rotation for startup.
-		// autostart
-		// this.start_rotation();
+		// autostart / autoplay
+		this.start_rotation();
 	};
 
 
@@ -859,9 +858,9 @@
 			this.drawing_handler.set_absolute_mouseposition(click_x, click_y);
 
 			// check for position indicator wanted (for example a minimap)
-			if( this.settings.zoom_position_indicator == "minimap" ){
+			if( this.settings.position_indicator == "minimap" ){
 				this.DOM_obj.minimap_canvas.show();
-			} else if( this.settings.zoom_position_indicator == "marker" ){
+			} else if( this.settings.position_indicator == "marker" ){
 				this.DOM_obj.minimap_canvas.show();
 				this.DOM_obj.marker.show();
 			}
@@ -964,6 +963,8 @@
 		this.DOM_obj.main_box.css('left', '5px');
 		this.DOM_obj.main_box.css('background', 'white');
 		this.DOM_obj.main_box.css('z-index', '9999');
+		this.DOM_obj.main_box.css('max-width', 'calc(100% - 10px)');
+		this.DOM_obj.main_box.css('max-height', 'calc(100% - 10px)');
 		this.DOM_obj.showroom.css('height', 'calc(100% - '+this.DOM_obj.controls.outerHeight()+'px)');
 	};
 	/**
@@ -983,6 +984,8 @@
 		this.DOM_obj.main_box.css('left', '');
 		this.DOM_obj.main_box.css('background', '');
 		this.DOM_obj.main_box.css('z-index', '');
+		this.DOM_obj.main_box.css('max-width', '');
+		this.DOM_obj.main_box.css('max-height', '');
 		this.DOM_obj.showroom.css('height', '');
 	};
 	/**
@@ -996,6 +999,19 @@
 		}
 	};
 
+
+
+
+	/**
+	 *  @description Destroy this instance to stop the Player from playing.
+	 */
+	ThrixtyPlayer.MainClass.prototype.destroy_player = function(){
+		this.stop_rotation();
+		this.stop_zoom();
+		this.quit_fullpage();
+		console.log(this);
+		destroy_me = this;
+	};
 
 
 

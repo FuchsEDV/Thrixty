@@ -1,12 +1,11 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.2
+ *  @version 1.3
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */
-
-(function(jQuery){
+;(function(jQuery){
 
 	/**
 	 *  @description ThrixtyPlayer Application

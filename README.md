@@ -67,7 +67,16 @@ Instead, only copy the object folders and filelists, as they are the only files 
 [[Not yet done](http://www.fuchs-edv.de)]
 
 ###6.) Change Log
+* V1.4 (planned):
+    * Complete fullpage mode.
+    * Check compatibility on windows systems. (What happens, when deleting whitespace?)
 * V1.3:
+    * Re-encoding of line-endings to windows format.
+    * Safari drawing error resolved.
+    * Rewritten drawinghandler.
+    * Full-page mostly fixed. To fix this completely will be the first thing to do in Version 1.4.
+    * Split up the param "zoom-mode" into "zoom-mode", "zoom-control" and "position-indicator".
+    * Prepended semicolons.
 * V1.2:
     * Introduced the new position indicator "marker" and made the "minimap" look less grabable
     * New options "zoom-control" and "outbox-position"

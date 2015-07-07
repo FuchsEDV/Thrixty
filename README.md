@@ -67,6 +67,7 @@ Instead, only copy the object folders and filelists, as they are the only files 
 [[Not yet done](http://www.fuchs-edv.de)]
 
 ###6.) Change Log
+* V1.3:
 * V1.2:
     * Introduced the new position indicator "marker" and made the "minimap" look less grabable
     * New options "zoom-control" and "outbox-position"

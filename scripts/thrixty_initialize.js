@@ -1,11 +1,11 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.3
+ *  @version dev1.4
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
-;var thrixty_version = "dev1.3";
+;var thrixty_version = "dev1.4";
 (function(){
 	// 1.: get this scripts path || This must be executed at file-load!!!
 	// [returns the basepath of the thrixtyplayer with a trailing slash]

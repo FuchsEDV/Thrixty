@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.3
+ *  @version 1.3.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -39,10 +39,11 @@
 		this.DOM_obj = {
 			main_box: this.selector,
 				showroom: jQuery("<div class=\"showroom\"></div>"),
-					bg_canvas: jQuery("<canvas id=\"bg_canvas\" class=\"canvas\" width=\"0\" height=\"0\"></canvas>"),
-					main_canvas: jQuery("<canvas id=\"main_canvas\" class=\"canvas\" width=\"0\" height=\"0\"></canvas>"),
-					minimap_canvas: jQuery("<canvas id=\"minimap_canvas\" class=\"canvas\" width=\"0\" height=\"0\" style=\"display:none;\"></canvas>"),
-					marker: jQuery("<div id=\"marker\" style=\"display:none;\"></div>"),
+					canvas_container: jQuery("<div class=\"canvas_container\"></div>"),
+						bg_canvas: jQuery("<canvas id=\"bg_canvas\" class=\"canvas\" width=\"0\" height=\"0\"></canvas>"),
+						main_canvas: jQuery("<canvas id=\"main_canvas\" class=\"canvas\" width=\"0\" height=\"0\"></canvas>"),
+						minimap_canvas: jQuery("<canvas id=\"minimap_canvas\" class=\"canvas\" width=\"0\" height=\"0\" style=\"display:none;\"></canvas>"),
+						marker: jQuery("<div id=\"marker\" style=\"display:none;\"></div>"),
 					progress_container: jQuery("<div class=\"progress_container\" ></div>"),
 						progress_bar_small: jQuery("<div class=\"progress_bar_small\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
 						progress_bar_large: jQuery("<div class=\"progress_bar_large\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
@@ -135,7 +136,7 @@
 		this.loading_state = "none"; // none|loading|playable|zoomable
 		this.is_rotating = false;
 		this.is_zoomed = false;
-		this.is_fullscreen = false;
+		this.is_fullpage = false;
 
 
 
@@ -291,10 +292,11 @@
 		this.DOM_obj.main_box.attr("tabindex", "0");
 		this.DOM_obj.main_box.css("outline", "none");
 			this.DOM_obj.main_box.append(this.DOM_obj.showroom);
-				this.DOM_obj.showroom.append(this.DOM_obj.bg_canvas);
-				this.DOM_obj.showroom.append(this.DOM_obj.main_canvas);
-				this.DOM_obj.showroom.append(this.DOM_obj.minimap_canvas);
-				this.DOM_obj.showroom.append(this.DOM_obj.marker);
+				this.DOM_obj.showroom.append(this.DOM_obj.canvas_container);
+					this.DOM_obj.canvas_container.append(this.DOM_obj.bg_canvas);
+					this.DOM_obj.canvas_container.append(this.DOM_obj.main_canvas);
+					this.DOM_obj.canvas_container.append(this.DOM_obj.minimap_canvas);
+					this.DOM_obj.canvas_container.append(this.DOM_obj.marker);
 				this.DOM_obj.showroom.append(this.DOM_obj.progress_container);
 					this.DOM_obj.progress_container.append(this.DOM_obj.progress_bar_small);
 					this.DOM_obj.progress_container.append(this.DOM_obj.progress_bar_large);
@@ -466,7 +468,7 @@
 					// and give the dimensions to the drawing handler.
 					this.drawing_handler.set_small_image_size(current_elem.jq_elem);
 					// calc dimension ratio
-					this.drawing_handler.calculate_image_size_ratio();
+					this.drawing_handler.calculate_image_ratio();
 
 					// The whole purpose of the following block is to make sure,
 					//   that the starting image WILL be loaded.
@@ -529,7 +531,7 @@
 					// and give the dimensions to the drawing handler.
 					this.drawing_handler.set_large_image_size(current_elem.jq_elem);
 					// calc imension ratio
-					this.drawing_handler.calculate_image_size_ratio();
+					this.drawing_handler.calculate_image_ratio();
 				}
 
 				// When this image is current, redraw the current image.
@@ -733,11 +735,6 @@
 			this.start_rotation();
 		}
 	};
-
-
-
-
-
 	/**
 	 *  @description This function rotates the object until the given distance is travelled.
 	 *  @param  {Integer} distance_x The distance in x dimension, how far the mouse travelled from its starting position.
@@ -784,6 +781,11 @@
 
 		return rest_distanz;
 	};
+
+
+
+
+
 	/**
 	 *  @description This function is rendering the next Image.
 	 */
@@ -840,7 +842,6 @@
 
 
 
-
 	/**
 	 *  @description This function switches the player over to the zoom state.
 	 */
@@ -849,29 +850,31 @@
 		this.is_zoomed = true;
 
 		// do main_class's part of start_zoom routine:
-			// set zoom button to zoomout
-			this.DOM_obj.zoom_btn.attr('state', 'zoomout');
+		// set zoom button to zoomout
+		this.DOM_obj.zoom_btn.attr('state', 'zoomout');
 
-			// simulate zoom start at the center of the canvas
-			var click_x = this.DOM_obj.main_canvas.offset().left + ( this.DOM_obj.main_canvas.width() / 2 );
-			var click_y = this.DOM_obj.main_canvas.offset().top + ( this.DOM_obj.main_canvas.height() / 2 );
-			this.drawing_handler.set_absolute_mouseposition(click_x, click_y);
+		// simulate zoom start at the center of the canvas
+		var click_x = this.DOM_obj.main_canvas.offset().left + ( this.DOM_obj.main_canvas.width() / 2 );
+		var click_y = this.DOM_obj.main_canvas.offset().top + ( this.DOM_obj.main_canvas.height() / 2 );
+		this.drawing_handler.set_absolute_mouseposition(click_x, click_y);
 
-			// check for position indicator wanted (for example a minimap)
-			if( this.settings.position_indicator == "minimap" ){
-				this.DOM_obj.minimap_canvas.show();
-			} else if( this.settings.position_indicator == "marker" ){
-				this.DOM_obj.minimap_canvas.show();
-				this.DOM_obj.marker.show();
-			}
+		// check for position indicator wanted (for example a minimap)
+		if( this.settings.position_indicator == "minimap" ){
+			this.DOM_obj.minimap_canvas.show();
+		} else if( this.settings.position_indicator == "marker" ){
+			this.DOM_obj.minimap_canvas.show();
+			this.DOM_obj.marker.show();
+		}
 
-			// if zoom mode is outbox and not in fullscreen mode
-			if( this.settings.zoom_mode == "outbox" && !this.is_fullscreen ){
+		if( this.settings.zoom_mode == "outbox" ){
+			// only setup zoom outbox, when not in fullpage mode
+			if( !this.is_fullpage ){
 				this.setup_outbox();
 			}
+		}
 
-			// draw current picture
-			this.drawing_handler.draw_current_image();
+		// draw current picture
+		this.drawing_handler.draw_current_image();
 	};
 	/**
 	 *  @description This function switches the player back to the unzoomed state.
@@ -909,53 +912,65 @@
 			// }
 		}
 	};
+				/**
+				 * @description blabla
+				 */
+				ThrixtyPlayer.MainClass.prototype.setup_outbox = function(){
+					// show zoom box at the selected position
+					this.DOM_obj.zoom_canvas.show();
+
+					// get main_canvas info
+					var main_canvas = this.get_main_canvas_dimensions();
+
+					// set zoom_canvas width
+					this.DOM_obj.zoom_canvas[0].height = main_canvas.draw_h;
+					this.DOM_obj.zoom_canvas[0].width  = main_canvas.draw_w;
+					this.DOM_obj.zoom_canvas.height( main_canvas.vp_h );
+					this.DOM_obj.zoom_canvas.width( main_canvas.vp_w );
+
+					// set zoom_canvas position
+					if( this.settings.outbox_position == "right" ){
+						this.DOM_obj.zoom_canvas.css('top', 0);
+						this.DOM_obj.zoom_canvas.css('left', main_canvas.vp_w );
+					} else if( this.settings.outbox_position == "left" ){
+						this.DOM_obj.zoom_canvas.css('top', 0);
+						this.DOM_obj.zoom_canvas.css('left', main_canvas.vp_w * -1 );
+					} else if( this.settings.outbox_position == "top" ){
+						this.DOM_obj.zoom_canvas.css('top', main_canvas.vp_h * -1);
+						this.DOM_obj.zoom_canvas.css('left', 0 );
+					} else if( this.settings.outbox_position == "bottom" ){
+						// respect the control bar...
+						this.DOM_obj.zoom_canvas.css('top', this.DOM_obj.main_box.height() );
+						this.DOM_obj.zoom_canvas.css('left', 0 );
+					}
+				};
 
 
 
 
 
 	/**
-	 * @description blabla
+	 *  @description Toggles between fullpage size and normal size.
 	 */
-	ThrixtyPlayer.MainClass.prototype.setup_outbox = function(){
-		// show zoom box at the selected position
-		this.DOM_obj.zoom_canvas.show();
-
-		// get main_canvas info
-		var main_canvas = this.get_main_canvas_dimensions();
-
-		// set zoom_canvas width
-		this.DOM_obj.zoom_canvas[0].height = main_canvas.draw_h;
-		this.DOM_obj.zoom_canvas[0].width  = main_canvas.draw_w;
-		this.DOM_obj.zoom_canvas.height( main_canvas.vp_h );
-		this.DOM_obj.zoom_canvas.width( main_canvas.vp_w );
-
-		// set zoom_canvas position
-		if( this.settings.outbox_position == "right" ){
-			this.DOM_obj.zoom_canvas.css('top', 0);
-			this.DOM_obj.zoom_canvas.css('left', main_canvas.vp_w );
-		} else if( this.settings.outbox_position == "left" ){
-			this.DOM_obj.zoom_canvas.css('top', 0);
-			this.DOM_obj.zoom_canvas.css('left', main_canvas.vp_w * -1 );
-		} else if( this.settings.outbox_position == "top" ){
-			this.DOM_obj.zoom_canvas.css('top', main_canvas.vp_h * -1);
-			this.DOM_obj.zoom_canvas.css('left', 0 );
-		} else if( this.settings.outbox_position == "bottom" ){
-			// respect the control bar...
-			this.DOM_obj.zoom_canvas.css('top', this.DOM_obj.main_box.height() );
-			this.DOM_obj.zoom_canvas.css('left', 0 );
+	ThrixtyPlayer.MainClass.prototype.toggle_fullpage = function(){
+		if( this.is_fullpage ){
+			this.quit_fullpage();
+		} else {
+			this.enter_fullpage();
 		}
 	};
 	/**
 	 *  @description This function adjusts the canvas to a full page size.
 	 */
 	ThrixtyPlayer.MainClass.prototype.enter_fullpage = function(){
-
-		this.DOM_obj.size_btn.attr('state', 'normalsize');
-		this.is_fullscreen = true;
-
 		this.stop_zoom();
 
+		// set fullpage state
+		this.is_fullpage = true;
+		this.DOM_obj.size_btn.attr('state', 'normalsize');
+
+
+		// set main_box fullscreeen-styles
 		this.DOM_obj.main_box.css('position', 'fixed');
 		this.DOM_obj.main_box.css('top', '5px');
 		this.DOM_obj.main_box.css('right', '5px');
@@ -965,18 +980,24 @@
 		this.DOM_obj.main_box.css('z-index', '9999');
 		this.DOM_obj.main_box.css('max-width', 'calc(100% - 10px)');
 		this.DOM_obj.main_box.css('max-height', 'calc(100% - 10px)');
+
+		// set showrooms height and consider the button height
 		this.DOM_obj.showroom.css('height', 'calc(100% - '+this.DOM_obj.controls.outerHeight()+'px)');
+
+		// set refreshing styles at start
+		this.set_fullpage_canvas_dimensions();
 	};
 	/**
 	 *  @description This function reverts the fullpage sized canvas to a normal size.
 	 */
 	ThrixtyPlayer.MainClass.prototype.quit_fullpage = function(){
-
-		this.DOM_obj.size_btn.attr('state', 'fullpage');
-		this.is_fullscreen = false;
-
 		this.stop_zoom();
 
+		// reset fullpage state
+		this.is_fullpage = false;
+		this.DOM_obj.size_btn.attr('state', 'fullpage');
+
+		// unset main_box fullscreeen-styles
 		this.DOM_obj.main_box.css('position', '');
 		this.DOM_obj.main_box.css('top', '');
 		this.DOM_obj.main_box.css('right', '');
@@ -986,32 +1007,64 @@
 		this.DOM_obj.main_box.css('z-index', '');
 		this.DOM_obj.main_box.css('max-width', '');
 		this.DOM_obj.main_box.css('max-height', '');
+
+		// unset showrooms height
 		this.DOM_obj.showroom.css('height', '');
+
+		// unset canvas_container size modification
+		this.DOM_obj.canvas_container.css('width', '');
+		this.DOM_obj.canvas_container.css('height', '');
+		this.DOM_obj.canvas_container.css('margin-left', '');
+		this.DOM_obj.canvas_container.css('margin-right', '');
 	};
 	/**
-	 *  @description Toggles between fullpage size and normal size.
+	 *  @description Sets the dimensions of the canvas_container.
 	 */
-	ThrixtyPlayer.MainClass.prototype.toggle_fullscreen = function(){
-		if( this.is_fullscreen ){
-			this.quit_fullpage();
-		} else {
-			this.enter_fullpage();
+	ThrixtyPlayer.MainClass.prototype.set_fullpage_canvas_dimensions = function(){
+		// dont do anything, when not even in fullpage
+		if( this.is_fullpage ){
+
+			// gather basic information
+			var showroom_width = this.DOM_obj.showroom.width();
+			var showroom_height = this.DOM_obj.showroom.height();
+			if( !this.is_zoomed ){
+				var image_aspect_ratio = this.drawing_handler.image_aspect_ratio.small;
+			} else {
+				var image_aspect_ratio = this.drawing_handler.image_aspect_ratio.large;
+			}
+
+			// calculate dimensions
+			var current_showroom_aspect_ratio = showroom_width / showroom_height;
+			if( current_showroom_aspect_ratio <= image_aspect_ratio ){ // portrait orientation
+				var canvas_container_width  = showroom_width;
+				var canvas_container_height = showroom_width/image_aspect_ratio;
+
+				var canvas_container_x      = 0;
+				var canvas_container_y      = (showroom_height-canvas_container_height)/2;
+
+			} else { // landscape orientation
+				var canvas_container_width  = showroom_height*image_aspect_ratio;
+				var canvas_container_height = showroom_height;
+
+				var canvas_container_x      = (showroom_width-canvas_container_width)/2;
+				var canvas_container_y      = 0
+			}
+
+			// assign canvas dimensions
+			this.DOM_obj.canvas_container.css('width', canvas_container_width+'px');
+			this.DOM_obj.canvas_container.css('height', canvas_container_height+'px');
+
+			this.DOM_obj.canvas_container.css('margin-left', canvas_container_x+'px');
+			this.DOM_obj.canvas_container.css('margin-top', canvas_container_y+'px');
+
 		}
 	};
 
 
 
 
-	/**
-	 *  @description Destroy this instance to stop the Player from playing.
-	 */
-	ThrixtyPlayer.MainClass.prototype.destroy_player = function(){
-		this.stop_rotation();
-		this.stop_zoom();
-		this.quit_fullpage();
-		console.log(this);
-		destroy_me = this;
-	};
+
+
 
 
 

@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.3
+ *  @version 1.3.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -32,7 +32,11 @@
 	 */
 	ThrixtyPlayer = {
 		initialized_players: [],
+		feature_detection: {
+			transformable: null,
+		},
 	};
+
 
 
 	// 3.: load jQuery 2.1.3 and assign new global variable jQuery_2_1_3
@@ -71,6 +75,9 @@
 	// 5.: init ThrixtyPlayer
 	function initialize_ThrixtyPlayer(){
 		jQuery_2_1_3(document).ready(function(){
+			//// feature detection
+			// ThrixtyPlayer.feature_detection.transformable = ( 'WebkitTransform' in document.body.style || 'MozTransform' in document.body.style || 'OTransform' in document.body.style || 'transform' in document.body.style );
+			//// initialize players
 			ThrixtyPlayer.initialized_players = (function(){
 				// start with selecting all boxes
 				var selector = jQuery_2_1_3("div.thrixty-player");

@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.3
+ *  @version 1.3.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */
@@ -62,19 +62,6 @@
 	ThrixtyPlayer.EventHandler.prototype.assign_events = function(){
 		var root = this;
 
-
-		// // TEST resize event
-		// jQuery(window).on(
-		// 	"resize",
-		// 	function(resize_event){
-		// 		// root.player.drawing_handler.draw_current_image();
-		// 	}
-		// );
-
-
-
-
-
 		// This is important, as no keydown events will be fired on onfocused elements.
 		this.player.DOM_obj.main_box.on("mousedown touchstart", function(){
 			this.focus();
@@ -103,7 +90,25 @@
 
 		jQuery(document).on("mouseup",    this.mouseup_event_document.bind(this)    );
 		jQuery(document).on("touchend",   this.touchend_event_document.bind(this)   );
+
+		jQuery(window).on("resize",       this.resize_window_event.bind(this)       );
 	};
+
+
+
+			/**
+			 * @description
+			 */
+			ThrixtyPlayer.EventHandler.prototype.resize_window_event = function(resize_event){
+				if( this.player.is_fullpage ){
+					this.player.set_fullpage_canvas_dimensions();
+				}
+			};
+
+
+
+
+
 	/**
 	 *  @description This function manages the keypress events.
 	 */
@@ -175,15 +180,15 @@
 				break;
 			case 70:  // F
 				key_event.preventDefault();
-				// correlate to click on fullscreen button
+				// correlate to click on fullpage button
 				this.player.DOM_obj.size_btn.click();
 				break;
 			case 33:  // PAGEUP
 			case 34:  // PAGEDOWN
 			case 35:  // END
 			case 36:  // HOME
-				// prevent scrolling, when in fullscreen mode
-				if( this.player.is_fullscreen ){
+				// prevent scrolling, when in fullpage mode
+				if( this.player.is_fullpage ){
 					key_event.preventDefault();
 				}
 				break;
@@ -193,8 +198,8 @@
 	 *  @description This function manages the scroll events.
 	 */
 	ThrixtyPlayer.EventHandler.prototype.scroll_event = function(e){
-		// prevent the User from scrolling the content while in fullscreen
-		if( this.player.is_fullscreen ){
+		// prevent the User from scrolling the content while in fullpage
+		if( this.player.is_fullpage ){
 			e.preventDefault();
 		}
 	};
@@ -228,7 +233,7 @@
 	 *  @description This function manages the click events on the "size"-button.
 	 */
 	ThrixtyPlayer.EventHandler.prototype.size_button_event_click = function(click_event){
-		this.player.toggle_fullscreen();
+		this.player.toggle_fullpage();
 	};
 
 

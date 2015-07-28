@@ -68,12 +68,13 @@ Instead, only copy the object folders and filelists, as they are the only files 
 
 ###6.) Change Log
 * V1.4 (planned):
-    * Complete fullpage mode.
-    * Check compatibility on windows systems. (What happens, when deleting whitespace?)
+    * Check compatibility on windows systems. (What happens when deleting whitespace?)
+* V1.3.1:
+    * Fixed Fullpage Mode.
 * V1.3:
     * Re-encoding of line-endings to windows format.
     * Safari drawing error resolved.
-    * Rewritten drawinghandler.
+    * Rewritten DrawingHandler.
     * Full-page mostly fixed. To fix this completely will be the first thing to do in Version 1.4.
     * Split up the param "zoom-mode" into "zoom-mode", "zoom-control" and "position-indicator".
     * Prepended semicolons.
@@ -96,10 +97,9 @@ Instead, only copy the object folders and filelists, as they are the only files 
     * Drag Rotation
 
 ###7.) Planned Features and Changes
-* Responsiveness improvement. Especially in Fullpage Mode.
+* Responsiveness improvements.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Minimap Mask crossbrowser compatibility. (The reverse-drawing of a filled rectangle will only work in webkit browsers.)
 
 ###8.) License
 ```txt

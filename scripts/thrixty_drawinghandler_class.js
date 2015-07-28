@@ -45,6 +45,12 @@
 			h: null,
 		};
 
+		//
+		this.image_aspect_ratio = {
+			small: null,
+			large: null,
+		}
+
 		// this is the calculated dimension ratio from small to large images
 		// it gets calculated when both initial images are loaded
 		this.image_size_ratio = {
@@ -58,7 +64,7 @@
 			y: 0,
 		};
 
-		//
+		// current mouseposition relative to the main_canvas's upper-left-hand-corner
 		this.relative_mouse = {
 			x: 0,
 			y: 0,
@@ -131,23 +137,35 @@
 	/**
 	 *  @description This function sets the image_size_ratio [ small : large ].
 	 */
-	ThrixtyPlayer.DrawingHandler.prototype.calculate_image_size_ratio = function(){
+	ThrixtyPlayer.DrawingHandler.prototype.calculate_image_ratio = function(){
 		this.minimap_canvas = this.player.get_minimap_canvas_dimensions();
 		this.minimap_canvas.self.css("left", "0");
 		this.minimap_canvas.self.css("top", "0");
 
 
+		// calculate aspect ratio
+		if( this.small_image_size.w != null && this.small_image_size.h != null ){
+			this.image_aspect_ratio.small = this.small_image_size.w / this.small_image_size.h;
+		}
+		if( this.large_image_size.w != null && this.large_image_size.h != null ){
+			this.image_aspect_ratio.large = this.large_image_size.w / this.large_image_size.h;
+		}
 
+
+		// calculate size ratio
 		if( this.small_image_size.w != null && this.large_image_size.w != null ){
 			this.image_size_ratio.w = ( this.small_image_size.w / this.large_image_size.w );
-			// entfernen...
-			this.minimap_canvas.self.css("width", (this.image_size_ratio.w*100)+"%");
+			// entfernen; gehört hier nicht hin. Die Breite muss dennoch als Folge dieser Berechnung gesetzt werden.
+				this.minimap_canvas.self.css("width", (this.image_size_ratio.w*100)+"%");
 		}
 		if( this.small_image_size.h != null && this.large_image_size.h != null ){
 			this.image_size_ratio.h = ( this.small_image_size.h / this.large_image_size.h );
-			// entfernen...
-			this.minimap_canvas.self.css("height", (this.image_size_ratio.h*100)+"%");
+			// entfernen; gehört hier nicht hin. Die Höhe muss dennoch als Folge dieser Berechnung gesetzt werden.
+				this.minimap_canvas.self.css("height", (this.image_size_ratio.h*100)+"%");
 		}
+
+
+
 	};
 	/**
 	 *  @description This function refreshes the mouse position saved in DrawingHandler.mouse.
@@ -216,8 +234,11 @@
 			if( this.player.settings.zoom_mode == "inbox" ){
 				this.inbox_zoom();
 			} else if( this.player.settings.zoom_mode == "outbox" ){
-						// outbox zoom ist unfertig... !
-						this.outbox_zoom();
+				if( !this.player.is_fullpage ){
+					this.outbox_zoom();
+				} else {
+					this.inbox_zoom();
+				}
 			}
 			if( this.player.settings.position_indicator == "minimap" ){
 				this.draw_minimap();

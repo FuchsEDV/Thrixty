@@ -66,9 +66,18 @@ Instead, only copy the object folders and filelists, as they are the only files 
 ###5.) Documentation
 [[Not yet done](http://www.fuchs-edv.de)]
 
-### 6.) Change Log
-* V1.4:
+###6.) Change Log
+* V1.4 (planned):
+    * Check compatibility on windows systems. (What happens when deleting whitespace?)
+* V1.3.1:
+    * Fixed Fullpage Mode.
 * V1.3:
+    * Re-encoding of line-endings to windows format.
+    * Safari drawing error resolved.
+    * Rewritten DrawingHandler.
+    * Full-page mostly fixed. To fix this completely will be the first thing to do in Version 1.4.
+    * Split up the param "zoom-mode" into "zoom-mode", "zoom-control" and "position-indicator".
+    * Prepended semicolons.
 * V1.2:
     * Introduced the new position indicator "marker" and made the "minimap" look less grabable
     * New options "zoom-control" and "outbox-position"
@@ -87,15 +96,12 @@ Instead, only copy the object folders and filelists, as they are the only files 
     * Keyboard Shortcuts
     * Drag Rotation
 
-### 7.) Planned Features and Changes
-* Responsiveness improvement. Especially in Fullpage Mode.
+###7.) Planned Features and Changes
+* Responsiveness improvements.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
 
-Errors:
-* The Fullpagemode Images are distorted. This needs to be fixed, before finishing this version.
-
-### 8.) License
+###8.) License
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 

@@ -67,8 +67,17 @@ Instead, only copy the object folders and filelists, as they are the only files 
 [[Not yet done](http://www.fuchs-edv.de)]
 
 ###6.) Change Log
-* V1.4 (planned):
-    * Check compatibility on windows systems. (What happens when deleting whitespace?)
+* V1.4:
+    * Saving bandwidth on mobile devices (detected by user-agent) by showing a load button instead of auto loading.
+    * Changes in state management.
+    * Zoom Mode can now be "none" for disabling zoom. (Will automatically trigger, when large filelist was not found.)
+    * Rebuilt Autostart.
+    * Let the Player talk into a log object. (Spam Console Log is annoying...)
+    * Introduced a log-object in Namespace. ('console.log(ThrixtyPlayer.logs);')
+    * Rebuilt the initialize functionality.
+    * Path- and file-name conventions.
+    * Reinforced compatibility on windows systems.
+    * Use of strict-mode.
 * V1.3.1:
     * Fixed Fullpage Mode.
 * V1.3:
@@ -97,6 +106,9 @@ Instead, only copy the object folders and filelists, as they are the only files 
     * Drag Rotation
 
 ###7.) Planned Features and Changes
+* Adjust behavior when images werent found. (small instead of large, blank instead of small)
+* Log export for debugging purposes.
+* Preview picture (the first small image).
 * Responsiveness improvements.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.

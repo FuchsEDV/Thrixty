@@ -5,18 +5,17 @@
  *  @license GPLv3
  *  @module ThrixtyPlayer.DrawingHandler
  */
-;(function(jQuery){
+;"use strict";
 
-	/**
-	 *  @description ThrixtyPlayer Application
-	 *  @name ThrixtyPlayer
-	 *
-	 *  @namespace ThrixtyPlayer The Thrixty Player is a 360 degree Product Presentation designed in HTML 5.
-	 */
-	ThrixtyPlayer = ThrixtyPlayer || {};
+/**
+ *  @description ThrixtyPlayer Application
+ *  @name ThrixtyPlayer
+ *
+ *  @namespace ThrixtyPlayer The Thrixty Player is a 360 degree Product Presentation designed in HTML 5.
+ */
+var ThrixtyPlayer = ThrixtyPlayer || {};
 
-
-
+(function(jQuery){
 	/**
 	 *  @description DrawingHandler of the Thrixty Player managing the drawing calculations and areas.
 	 *  @name ThrixtyPlayer.DrawingHandler
@@ -33,56 +32,58 @@
 	ThrixtyPlayer.DrawingHandler = function(parent){
 		this.player = parent;
 
-		// this keeps track of the small image size and gets set when the first small image is loaded
+		/* this keeps track of the small image size and gets set when the first small image is loaded */
 		this.small_image_size = {
 			w: null,
 			h: null,
 		};
 
-		// this keeps track of the large image size and gets set when the first large image is loaded
+		/* this keeps track of the large image size and gets set when the first large image is loaded */
 		this.large_image_size = {
 			w: null,
 			h: null,
 		};
 
-		//
+		/* */
 		this.image_aspect_ratio = {
 			small: null,
 			large: null,
 		}
 
-		// this is the calculated dimension ratio from small to large images
-		// it gets calculated when both initial images are loaded
+		/* this is the calculated dimension ratio from small to large images */
+		/* it gets calculated when both initial images are loaded */
 		this.image_size_ratio = {
 			w: 0,
 			h: 0,
 		};
 
-		// current mouseposition to calculate drawing positions from - fed from EventHandler
+		/* current mouseposition to calculate drawing positions from - fed from EventHandler */
 		this.absolute_mouse = {
 			x: 0,
 			y: 0,
 		};
 
-		// current mouseposition relative to the main_canvas's upper-left-hand-corner
+		/* current mouseposition relative to the main_canvas's upper-left-hand-corner */
 		this.relative_mouse = {
 			x: 0,
 			y: 0,
 		};
 
-		// // unused so far
-		// this.bg_canvas = {
-		// 	self: null,
-		// 	ctx: null,
-		// 	x: 0,
-		// 	y: 0,
-		// 	draw_w: 0,
-		// 	draw_h: 0,
-		// 	vp_w: 0,
-		// 	vp_h: 0,
-		// };
+		/**
+		 * unused so far
+		 * this.bg_canvas = {
+		 * 	self: null,
+		 * 	ctx: null,
+		 * 	x: 0,
+		 * 	y: 0,
+		 * 	draw_w: 0,
+		 * 	draw_h: 0,
+		 * 	vp_w: 0,
+		 * 	vp_h: 0,
+		 * };
+		 */
 
-		//
+		/*  */
 		this.main_canvas = {
 			self: null,
 			ctx: null,
@@ -94,7 +95,7 @@
 			vp_h: 0,
 		};
 
-		//
+		/*  */
 		this.minimap_canvas = {
 			self: null,
 			ctx: null,
@@ -108,7 +109,7 @@
 
 		this.marker = null;
 
-		//
+		/*  */
 		this.zoom_canvas = {
 			self: null,
 			ctx: null,
@@ -143,29 +144,20 @@
 		this.minimap_canvas.self.css("top", "0");
 
 
-		// calculate aspect ratio
+		/* set ratio sizes */
 		if( this.small_image_size.w != null && this.small_image_size.h != null ){
 			this.image_aspect_ratio.small = this.small_image_size.w / this.small_image_size.h;
-		}
-		if( this.large_image_size.w != null && this.large_image_size.h != null ){
-			this.image_aspect_ratio.large = this.large_image_size.w / this.large_image_size.h;
-		}
 
+			if( this.large_image_size.w != null && this.large_image_size.h != null ){
+				this.image_aspect_ratio.large = this.large_image_size.w / this.large_image_size.h;
 
-		// calculate size ratio
-		if( this.small_image_size.w != null && this.large_image_size.w != null ){
-			this.image_size_ratio.w = ( this.small_image_size.w / this.large_image_size.w );
-			// entfernen; gehört hier nicht hin. Die Breite muss dennoch als Folge dieser Berechnung gesetzt werden.
+				this.image_size_ratio.w = ( this.small_image_size.w / this.large_image_size.w );
 				this.minimap_canvas.self.css("width", (this.image_size_ratio.w*100)+"%");
-		}
-		if( this.small_image_size.h != null && this.large_image_size.h != null ){
-			this.image_size_ratio.h = ( this.small_image_size.h / this.large_image_size.h );
-			// entfernen; gehört hier nicht hin. Die Höhe muss dennoch als Folge dieser Berechnung gesetzt werden.
+
+				this.image_size_ratio.h = ( this.small_image_size.h / this.large_image_size.h );
 				this.minimap_canvas.self.css("height", (this.image_size_ratio.h*100)+"%");
+			}
 		}
-
-
-
 	};
 	/**
 	 *  @description This function refreshes the mouse position saved in DrawingHandler.mouse.
@@ -181,11 +173,11 @@
 	 *    (Diese sollten also vorher aktualisiert werden!)
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.calculate_relative_mouse_position = function(){
-		// calculate relative mouse position
+		/* calculate relative mouse position */
 		var cursor_x = (this.absolute_mouse.x - this.main_canvas.x);
 		var cursor_y = (this.absolute_mouse.y - this.main_canvas.y);
 
-		// Borders - min and max values - reset, when overstepped
+		/* Borders - min and max values - reset, when overstepped */
 		if( cursor_x < 0 ){
 			cursor_x = 0;
 		}
@@ -198,7 +190,7 @@
 		if( cursor_y > this.main_canvas.vp_h ){
 			cursor_y = this.main_canvas.vp_h;
 		}
-		// assign calculated values
+		/* assign calculated values */
 		this.relative_mouse.x = cursor_x;
 		this.relative_mouse.y = cursor_y;
 	};
@@ -221,6 +213,29 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ *  TODO:
+ *    current large image not found -> draw small version
+ *    current small image not found -> draw blank
+ */
 
 
 
@@ -251,22 +266,22 @@
 	 *  @description This function draws an unzoomed picture inside the main canvas.
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.unzoomed = function(){
-		// Task: Draw the unzoomed image on the canvas
+		/* Task: Draw the unzoomed image on the canvas */
 
-		// refresh main_canvas information (in case smt changed in viewport size)
+		/* refresh main_canvas information (in case smt changed in viewport size) */
 		this.main_canvas = this.player.get_main_canvas_dimensions();
 
-		// get current small image
+		/* get current small image */
 		var small_image = this.player.get_current_small_image();
 
-		// clear
+		/* clear */
 		this.main_canvas.ctx.clearRect(
 			0,
 			0,
 			this.main_canvas.draw_w,
 			this.main_canvas.draw_h
 		);
-		// draw current small image
+		/* draw current small image */
 		this.main_canvas.ctx.drawImage(
 			small_image,
 			0,
@@ -277,21 +292,21 @@
 	 *  @description This function draws a zoomed picture inside the main canvas.
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.inbox_zoom = function(){
-		// Task: Draw the enlarged image on the canvas
+		/* Task: Draw the enlarged image on the canvas */
 
-		// refresh main_canvas information (in case smt changed in viewport size)
+		/* refresh main_canvas information (in case smt changed in viewport size) */
 		this.main_canvas = this.player.get_main_canvas_dimensions();
 
-		// refresh class-variable relative_mouse
+		/* refresh class-variable relative_mouse */
 		this.calculate_relative_mouse_position();
 
-		// get current offsets
+		/* get current offsets */
 		var offsets = this.get_zoom_offsets();
 
-		// get current image
+		/* get current image */
 		var large_image = this.player.get_current_large_image();
 
-		// clear canvas
+		/* clear canvas */
 		this.main_canvas.ctx.clearRect(
 			0,
 			0,
@@ -299,13 +314,13 @@
 			this.main_canvas.draw_h
 		);
 
-		// draw current image
+		/* draw current image */
 		this.main_canvas.ctx.drawImage(
 			large_image,
 			0,
 			0,
-			large_image.naturalWidth, // this needs to be calculated by the picture, as this varies from small to large
-			large_image.naturalHeight, // this needs to be calculated by the picture, as this varies from small to large
+			large_image.naturalWidth, /* this needs to be calculated by the picture, as this varies from small to large */
+			large_image.naturalHeight, /* this needs to be calculated by the picture, as this varies from small to large */
 			-offsets.x,
 			-offsets.y,
 			this.large_image_size.w,
@@ -317,25 +332,25 @@
 	 *  @description This function draws a zoomed picture on a special outbox canvas and the normal picture on the main.
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.outbox_zoom = function(){
-		// Task: draw the elarged image on the zoom_canvas and the small image on the main_canvas
+		/* Task: draw the elarged image on the zoom_canvas and the small image on the main_canvas */
 
-		// refresh main_canvas and zoom_canvas information (in case smt changed in viewport size)
+		/* refresh main_canvas and zoom_canvas information (in case smt changed in viewport size) */
 		this.main_canvas = this.player.get_main_canvas_dimensions();
 		this.zoom_canvas = this.player.get_zoom_canvas_dimensions();
 
-		// refresh class-variable relative_mouse
+		/* refresh class-variable relative_mouse */
 		this.calculate_relative_mouse_position();
 
-		// get current offsets
+		/* get current offsets */
 		var offsets = this.get_zoom_offsets();
 
-		// get current image
+		/* get current image */
 		var small_image = this.player.get_current_small_image();
 		var large_image = this.player.get_current_large_image();
 
 
 
-		// clear main_canvas and zoom_canvas
+		/* clear main_canvas and zoom_canvas */
 		this.main_canvas.ctx.clearRect(
 			0,
 			0,
@@ -349,15 +364,15 @@
 			this.zoom_canvas.draw_h
 		);
 
-		// draw small_image on main_canvas
+		/* draw small_image on main_canvas */
 		this.main_canvas.ctx.drawImage(
 			small_image,
 			0,
 			0
 		);
-		// main_canvas.ctx.drawImage(small_image, 0, 0, small_image.naturalWidth, small_image.naturalHeight, 0, 0, small_image_size.w, small_image_size.h);
+		/* main_canvas.ctx.drawImage(small_image, 0, 0, small_image.naturalWidth, small_image.naturalHeight, 0, 0, small_image_size.w, small_image_size.h); */
 
-		// draw large_image on zoom_canvas
+		/* draw large_image on zoom_canvas */
 		this.zoom_canvas.ctx.drawImage(
 			large_image,
 			0,
@@ -369,26 +384,28 @@
 			this.large_image_size.w,
 			this.large_image_size.h
 		);
-		// zoom_canvas.ctx.drawImage(
-		// 	large_image,
-		// 	0,
-		// 	0,
-		// 	large_image.naturalWidth,
-		// 	large_image.naturalHeight,
-		// 	-zoom_img_offset.x,
-		// 	-zoom_img_offset.y,
-		// 	large_image_size.w,
-		// 	large_image_size.h
-		// );
+		/**
+		 * zoom_canvas.ctx.drawImage(
+		 * 	large_image,
+		 * 	0,
+		 * 	0,
+		 * 	large_image.naturalWidth,
+		 * 	large_image.naturalHeight,
+		 * 	-zoom_img_offset.x,
+		 * 	-zoom_img_offset.y,
+		 * 	large_image_size.w,
+		 * 	large_image_size.h
+		 * );
+		 */
 	};
 	/**
 	 *  @description This function draws a rectangle as a position marker on the main_canvas.
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.set_marker_position = function(){
-		// Task: Draw the marker on the main_canvas
+		/* Task: Draw the marker on the main_canvas */
 
-		// main_canvas should already be loaded - code staying here for reference
-		// this.main_canvas = this.player.get_main_canvas_dimensions();
+		/* main_canvas should already be loaded - code staying here for reference */
+		/* this.main_canvas = this.player.get_main_canvas_dimensions(); */
 
 		var W = this.main_canvas.draw_w * this.image_size_ratio.w;
 		var H = this.main_canvas.draw_h * this.image_size_ratio.h;
@@ -404,17 +421,17 @@
 	 *  @description This function draws a minimap in the upper lefthand corner of the minimap canvas.
 	 */
 	ThrixtyPlayer.DrawingHandler.prototype.draw_minimap = function(){
-		// Task: Draw the minimap on the minimap_canvas
+		/* Task: Draw the minimap on the minimap_canvas */
 
-		// width and height are already set globally in the HTML as inline-CSS.
+		/* width and height are already set globally in the HTML as inline-CSS. */
 
-		// refresh minimap_canvas information (in case smt changed in viewport size)
+		/* refresh minimap_canvas information (in case smt changed in viewport size) */
 		this.minimap_canvas = this.player.get_minimap_canvas_dimensions();
 
-		// get image
+		/* get image */
 		var small_image = this.player.get_current_small_image();
 
-		// calculate cutout dimensions
+		/* calculate cutout dimensions */
 		cutout_w = this.minimap_canvas.draw_w * this.image_size_ratio.w;
 		cutout_h = this.minimap_canvas.draw_h * this.image_size_ratio.h;
 		cutout_x = ( this.relative_mouse.x / this.main_canvas.vp_w ) * ( this.minimap_canvas.draw_w - cutout_w );
@@ -422,7 +439,7 @@
 
 
 
-		// first clear canvas
+		/* first clear canvas */
 		this.minimap_canvas.ctx.clearRect(
 			0,
 			0,
@@ -430,24 +447,24 @@
 			this.minimap_canvas.draw_h
 		);
 
-		// secondly draw image
+		/* secondly draw image */
 		this.minimap_canvas.ctx.drawImage(
 			small_image,
 			0,
 			0
 		);
 
-		// thirdly draw cutout
+		/* thirdly draw cutout */
 		this.minimap_canvas.ctx.globalAlpha = 0.5;
 			this.minimap_canvas.ctx.fillStyle = "black";
 			this.minimap_canvas.ctx.beginPath();
-				// draw mask (rectangle clockwise)
+				/* draw mask (rectangle clockwise) */
 					this.minimap_canvas.ctx.moveTo(0, 0);
 					this.minimap_canvas.ctx.lineTo(this.small_image_size.w, 0);
 					this.minimap_canvas.ctx.lineTo(this.small_image_size.w, this.small_image_size.h);
 					this.minimap_canvas.ctx.lineTo(0, this.small_image_size.h);
 					this.minimap_canvas.ctx.lineTo(0, 0);
-				// "undraw" cutout (rectangle counterclockwise)
+				/* "undraw" cutout (rectangle counterclockwise) */
 					this.minimap_canvas.ctx.moveTo(cutout_x+0, cutout_y+0);
 					this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+cutout_h);
 					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+cutout_h);

@@ -234,7 +234,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			/* TODO: rework!! */
 			this.player.load_all_images(this.player.small, this.player.DOM_obj.image_cache_small);
 			this.player.DOM_obj.load_btn.hide();
-			// this.player.interaction_block = false;
+			/* this.player.interaction_block = false; */
 		};
 		/**
 		 *  @description This function handles the click event on the "previous"-button.

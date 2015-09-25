@@ -34,7 +34,7 @@
 	}
 	.thrixty-player .showroom{
 		width: 100%;
-		/*height: calc(100% - 50px);*//* set, when entering fullscreen */
+		/*height: calc(100% - 50px);*/ /* set, when entering fullscreen */
 		padding: 0;
 		margin: 0;
 		overflow: hidden;

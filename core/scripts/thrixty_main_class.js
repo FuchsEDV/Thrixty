@@ -154,7 +154,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-		// setup ausführen?
+		/** setup ausführen? */
 
 
 		ThrixtyPlayer.log("Player (id "+this.player_id+") initialized.", this.player_id);
@@ -165,7 +165,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.setup = function(){
 
-		//// 1.) vom player selbst bereitzustellende daten und strukturen
+		/* / / 1.) vom player selbst bereitzustellende daten und strukturen */
 
 		/* considering the settings */
 		this.parse_settings();
@@ -176,7 +176,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-		//// 2.) Informationen von externen quellen beschaffen und bereitstellen
+		/* / / 2.) Informationen von externen quellen beschaffen und bereitstellen */
 
 		/* read small filelist */
 		this.read_filelist(this.small);
@@ -201,7 +201,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-		//// 3.) informationsquellen miteinander verquicken
+		/* / / 3.) informationsquellen miteinander verquicken */
 
 		/* Set the values for the possibly different image count. */
 		this.set_image_offsets();
@@ -349,22 +349,22 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			/* these will store the image preloads */
 			/* this.DOM_obj.main_box.append(this.DOM_obj.controls_cache); */
 				/* cache control icons */
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/expand.svg\">")      );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/pause.svg\">")       );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/plus.svg\">")        );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/vorwaertz.svg\">")   );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/expand_w.svg\">")    );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/pause_w.svg\">")     );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/plus_w.svg\">")      );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/vorwaertz_w.svg\">") );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/minus.svg\">")       );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/play.svg\">")        );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/shrink.svg\">")      );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/zurueck.svg\">")     );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/minus_w.svg\">")     );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/play_w.svg\">")      );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/shrink_w.svg\">")    );
-				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"style/images/zurueck_w.svg\">")   );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/expand.svg\">")      );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/pause.svg\">")       );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/plus.svg\">")        );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/vorwaertz.svg\">")   );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/expand_w.svg\">")    );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/pause_w.svg\">")     );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/plus_w.svg\">")      );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/vorwaertz_w.svg\">") );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/minus.svg\">")       );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/play.svg\">")        );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/shrink.svg\">")      );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/zurueck.svg\">")     );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/minus_w.svg\">")     );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/play_w.svg\">")      );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/shrink_w.svg\">")    );
+				this.DOM_obj.controls_cache.append( jQuery("<img src=\""+ThrixtyPlayer.mainpath+"core/style/images/zurueck_w.svg\">")   );
 			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_small);
 			this.DOM_obj.main_box.append(this.DOM_obj.image_cache_large);
 
@@ -661,7 +661,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		var s_load  = this.small.images_loaded + this.small.images_errored;
 		var l_count = this.large.images_count;
 		var l_load  = this.large.images_loaded + this.large.images_errored;
-		 // console.log("s_count: "+s_count+" | s_load: "+s_load+" | l_count: "+l_count+" | l_load: "+l_load+"");
+		/** console.log("s_count: "+s_count+" | s_load: "+s_load+" | l_count: "+l_count+" | l_load: "+l_load+""); */
 
 		switch( true ){
 			case s_load == 0:                                           /* 1 - initialized */
@@ -688,7 +688,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					/* load small pictures */
 					if( ThrixtyPlayer.is_mobile ){
 						this.load_one_image(this.small.images[0], this.DOM_obj.image_cache_small);
-						// display continue loading button
+						/* display continue loading button */
 						this.DOM_obj.load_btn.show();
 					} else {
 						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
@@ -792,7 +792,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				}
 			break;
 			default:
-				// error
+				/* error */
 			break;
 		}
 	};

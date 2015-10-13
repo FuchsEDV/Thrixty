@@ -68,12 +68,12 @@ Instead, only copy the object folders and filelists, as they are the only files 
 
 ###6.) Change Log
 * V1.4:
-    * Changed the folder structure as a preparation for layouting.
+    * Changed folder structure.
     * Saving bandwidth on mobile devices (detected by user-agent) by showing a load button instead of auto loading.
     * Changes in state management.
     * Zoom Mode can now be "none" for disabling zoom. (Will automatically trigger, when large filelist was not found.)
     * Rebuilt Autostart.
-    * Let the Player talk into a log object. (Spam Console Log is annoying...)
+    * Let the Player log into an object. (Spamming Console Log is annoying...)
     * Introduced a log-object in Namespace. ('console.log(ThrixtyPlayer.logs);')
     * Rebuilt the initialize functionality.
     * Path- and file-name conventions.
@@ -113,7 +113,7 @@ Instead, only copy the object folders and filelists, as they are the only files 
 * Responsiveness improvements.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Layouts for easy customization
+* Readme section on customization
 
 ###8.) License
 ```txt

@@ -103,7 +103,7 @@ var ThrixtyPlayer = {
 
 
 	function get_mainpath(){
-		/* TODO: instead of treating this file to be last loaded, actually search for it. */
+		/* TODO: instead of treating this file to be the last one loaded at runtime, actually search for it. */
 		var scripts = document.getElementsByTagName('script');
 		var filepath = scripts[scripts.length - 1].src;
 		var parts = filepath.split("/");
@@ -149,6 +149,8 @@ var ThrixtyPlayer = {
 			}
 		];
 
+
+
 		/* on load function for starting the init after file load */
 		var onload = function(){
 			loaded_count += 1;
@@ -168,10 +170,13 @@ var ThrixtyPlayer = {
 		/* loop through the include array to load the files */
 		for( var i=0; i<includes_count; i++ ){
 			current_include = includes[i];
-			if( current_include.typ == "js" ){
-				load_script_file(current_include.path, onload);
-			} else if( current_include.typ == "css" ){
-				load_stylesheet(current_include.path, onload);
+			switch( current_include.typ ){
+				case "js":
+					load_script_file(current_include.path, onload);
+				break;
+				case "css":
+					load_stylesheet(current_include.path, onload);
+				break;
 			}
 		}
 	};

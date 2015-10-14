@@ -45,16 +45,16 @@ Unzip them in the same folder as the corefiles.
 (We suggest the folder "[website-root]/thrixty".)
 * When using the 360Shots Software to generate these files, you SHOULD NOT just copy and paste the whole folder for every object.
 Instead, only copy the object folders and filelists, as they are the only files being needed.
-* The two files "thrixty_initialize.js" and "thrixty_styles.css" are to be included in your head section like this:
+* The two files "thrixty_init.js" and "thrixty_styles.css" are to be included in your head section like this:
 
 ```txt
 <head>
-    <script id="test" type="text/javascript" src="[path]thrixty_initialize.js"></script>
+    <script id="test" type="text/javascript" src="[path]thrixty_init.js"></script>
 </head>
 [path] is the path through the internet to the thrixty main folder.
 ```
 
-* The file "thrixty_initialize.js" will get its own path and start loading the class files.
+* The file "thrixty_init.js" will get its own path and start loading the class files.
 * You need to make sure all files in "scripts" and "style" are accessible and none are missing.
 * If you use any CMS, those files need to be hooked to the script- and style-section.
 * ######Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress).
@@ -70,7 +70,7 @@ Customization of the player is quite easy, as Thrixty is optimised for doing as 
 Create a CSS file and include it after the initialization file.
 ```txt
 <head>
-    <script id="test" type="text/javascript" src="(...)thrixty_initialize.js"></script>
+    <script id="test" type="text/javascript" src="(...)thrixty_init.js"></script>
     <link type="text/css" rel="stylesheet" href="(...)custom.css">
 </head>
 ```

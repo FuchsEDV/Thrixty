@@ -8,9 +8,6 @@
 ;"use strict";
 var thrixty_version = "dev1.4";
 
-
-/** TODO: make sure, that only one instance of this script is being executed - for example an iframe could include another copy. (The class files are supposed to be overwriteable.) */
-
 /* 1.: define ThrixtyPlayer Namespace */
 /**
  *  @description ThrixtyPlayer Application
@@ -61,6 +58,10 @@ var ThrixtyPlayer = {
 	export_logs: function(){
 		return JSON.stringify(ThrixtyPlayer.logs);
 	}
+
+
+
+
 };
 
 
@@ -76,30 +77,20 @@ var ThrixtyPlayer = {
 	console.log(c);
 */
 
-var testtest;
+
 
 
 
 (function(){
 
-
-
-	/* fill mainpath property */
-	ThrixtyPlayer.mainpath = (function(){
-		/* TODO: instead of treating this file to be the last one loaded at runtime, actually search for it. */
-		var scripts = document.getElementsByTagName('script');
-		var filepath = scripts[scripts.length - 1].src;
-		testtest = scripts[scripts.length - 1];
-		var parts = filepath.split("/");
-		parts.pop(); /* remove "[filename].[ext]" */
-		return parts.join("/")+"/";
-	})();
-
-
 	init();
 
 
+
+
 	function init(){
+		/* fill mainpath property */
+		ThrixtyPlayer.mainpath = get_mainpath();
 		ThrixtyPlayer.log("Script Mainpath |"+ThrixtyPlayer.mainpath+"|");
 		/* include jquery dependecy */
 		load_jquery();
@@ -108,7 +99,14 @@ var testtest;
 
 
 
-
+	function get_mainpath(){
+		/* TODO: instead of treating this file to be the last one loaded at runtime, actually search for it. */
+		var scripts = document.getElementsByTagName('script');
+		var filepath = scripts[scripts.length - 1].src;
+		var parts = filepath.split("/");
+		parts.pop(); /* remove "[filename].[ext]" */
+		return parts.join("/")+"/";
+	};
 
 
 
@@ -126,6 +124,98 @@ var testtest;
 	};
 
 
+
+	function include_files(){
+		/* storage array for file paths */
+		var includes = [
+			{
+				typ: "js",
+				path: ThrixtyPlayer.mainpath+"core/scripts/thrixty_main_class.js"
+			},
+			{
+				typ: "js",
+				path: ThrixtyPlayer.mainpath+"core/scripts/thrixty_eventhandler_class.js"
+			},
+			{
+				typ: "js",
+				path: ThrixtyPlayer.mainpath+"core/scripts/thrixty_drawinghandler_class.js"
+			},
+			{
+				typ: "css",
+				path: ThrixtyPlayer.mainpath+"core/style/thrixty_styles.css"
+			}
+		];
+
+
+
+		/* on load function for starting the init after file load */
+		var onload = function(){
+			loaded_count += 1;
+			if( loaded_count == includes_count ){
+				/* append player init to document ready after all includes were loaded */
+				jQuery_Thrixty(document).ready(
+					init_ThrixtyPlayer
+				);
+			}
+		};
+
+		/* vars for counting loaded files */
+		var includes_count = includes.length;
+		var loaded_count = 0;
+		var current_include = {};
+
+		/* loop through the include array to load the files */
+		for( var i=0; i<includes_count; i++ ){
+			current_include = includes[i];
+			switch( current_include.typ ){
+				case "js":
+					load_script_file(current_include.path, onload);
+				break;
+				case "css":
+					load_stylesheet(current_include.path, onload);
+				break;
+			}
+		}
+	};
+
+
+
+	function load_script_file(url, load_callback){
+		/* create and configure new element */
+		var script_file = document.createElement('script');
+		script_file.type = "text/javascript";
+		/* append new element to document */
+		document.getElementsByTagName('head')[0].appendChild(script_file);
+		/* assign load event */
+		script_file.onload = load_callback;
+		/* assign error event */
+		script_file.onerror = function(event){
+			ThrixtyPlayer.log("JS File not found! |"+event.target.src+"|");
+		};
+		/* assign path && load file */
+		script_file.src = url;
+		ThrixtyPlayer.log("Added JS File   |"+url+"|");
+	};
+
+
+
+	function load_stylesheet(url, load_callback){
+		/* create and configure new element */
+		var stylesheet = document.createElement("link");
+		stylesheet.type = "text/css";
+		stylesheet.rel = "stylesheet";
+		/* append new element to document */
+		document.getElementsByTagName('head')[0].appendChild(stylesheet);
+		/* assign load event */
+		stylesheet.onload = load_callback;
+		/* assign error event */
+		stylesheet.onerror = function(event){
+			ThrixtyPlayer.log("CSS File not found! |"+event.target.href+"|");
+		};;
+		/* assign path && load file */
+		stylesheet.href = url;
+		ThrixtyPlayer.log("Added CSS File  |"+url+"|");
+	};
 
 
 

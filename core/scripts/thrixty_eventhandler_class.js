@@ -294,7 +294,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		ThrixtyPlayer.EventHandler.prototype.event_capture_touchstart_event = function(touchstart_event){
 			if( this.player.are_events_enabled() ){
 				this.is_touch = true;
-				this.event_capture_mousedown_event(touchstart_event);
+				this.event_capture_mousedown_event(touchstart_event.originalEvent);
 				this.is_touch = false;
 			}
 		};
@@ -358,7 +358,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			};
 			ThrixtyPlayer.EventHandler.prototype.mousedown_event_minimap_canvas = function(mousedown_event){
 				/* left click? */
-				if( mousedown_event.which == 1 ){
+				if( mousedown_event.which == 1 || mousedown_event.type == "touchstart" ){
 					/* memorize state */
 					this.minimap.is_mousedown = true;
 					this.minimap.is_click = true;
@@ -369,7 +369,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			};
 			ThrixtyPlayer.EventHandler.prototype.mousedown_event_marker = function(mousedown_event){
 				/* left click? */
-				if( mousedown_event.which == 1 ){
+				if( mousedown_event.which == 1 || mousedown_event.type == "touchstart" ){
 					/* memorize state */
 					this.marker.is_mousedown = true;
 					this.marker.is_click = true;
@@ -380,7 +380,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			}
 			ThrixtyPlayer.EventHandler.prototype.mousedown_event_main_canvas = function(mousedown_event){
 				/* left click? */
-				if( mousedown_event.which == 1 ){
+				if( mousedown_event.which == 1 || mousedown_event.type == "touchstart" ){
 					/* memorize state */
 					this.main.is_mousedown = true;
 					this.main.is_click = true;
@@ -394,7 +394,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		ThrixtyPlayer.EventHandler.prototype.touchmove_event_document = function(touchmove_event){
 			if( this.player.are_events_enabled() ){
 				this.is_touch = true;
-				this.mousemove_event_document(touchmove_event);
+				this.mousemove_event_document(touchmove_event.originalEvent);
 				this.is_touch = false;
 			}
 		};
@@ -471,7 +471,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		ThrixtyPlayer.EventHandler.prototype.touchend_event_document = function(touchend_event){
 			if( this.player.are_events_enabled() ){
 				this.is_touch = true;
-				this.mouseup_event_document(touchend_event);
+				this.mouseup_event_document(touchend_event.originalEvent);
 				this.is_touch = false;
 			}
 		};

@@ -74,10 +74,13 @@ Create a CSS file and include it after the initialization file.
     <link type="text/css" rel="stylesheet" href="(...)custom.css">
 </head>
 ```
-Here is an example that will make the object have a green border and the button line to have a red background.
+Here is an example that will make the object have a orange border and the button container to have a blue background.
 ```css
-.thrixty{
-    background: red;
+.thrixty-player .canvas_container{
+    border: 2px solid orange;
+}
+.thrixty-player .control_container{
+    background: blue;
 }
 ```
 

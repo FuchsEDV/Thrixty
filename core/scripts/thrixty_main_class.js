@@ -49,7 +49,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						progress_bar_large: jQuery("<div class=\"progress_bar_large\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
 					load_btn: jQuery("<button id=\"load_btn\" style=\"display: none;\"></button>"),
 				controls: jQuery("<div class=\"controls\" style=\"display: none;\"></div>"),
-					control_container_one: jQuery("<div class=\"control_container_center\" ></div>"),
+					control_container_one: jQuery("<div class=\"control_container\" ></div>"),
 						prev_btn: jQuery("<button id=\"prev_btn\" class=\"ctrl_buttons\" state=\"step\" disabled ></button>"),
 						play_btn: jQuery("<button id=\"play_btn\" class=\"ctrl_buttons\" state=\"play\" disabled ></button>"),
 						next_btn: jQuery("<button id=\"next_btn\" class=\"ctrl_buttons\" disabled ></button>"),

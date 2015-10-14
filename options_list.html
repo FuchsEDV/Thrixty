@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			.new{
+				background: rgba(0,255,0,0.75);
+			}
+			.edited{
+				background: rgba(255,255,0,0.75);
+			}
+			.deprecated{
+				background: rgba(255,0,0,0.75);
+			}
+		</style>
+	</head>
+	<body>
+		<table border="1" style="margin: 0 auto;">
+			<tr>
+				<th>option</th>
+				<th>Description</th>
+				<th>possible values</th>
+			</tr>
+			<tr>
+				<td class="">thrixty-basepath</td>
+				<td class="" rowspan="3">These are telling the game where to find the Filelists.<br>"[http://basepath][filelist-path-small.txt]"<br>"[http://basepath][filelist-path-large.txt]"<br></td>
+				<td class="">[mainpath]</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-filelist-path-small</td>
+				<td class="">[subpath]</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-filelist-path-large</td>
+				<td class="">[subpath]</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-seconds-per-turn</td>
+				<td class="">How long every 360° turn will take.</td>
+				<td class=""><b>5</b>, [integer]</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-direction</td>
+				<td class="">"forward" is interpreted as clockwise, when watched from above.</td>
+				<td class=""><b>forward / 1</b>, backward / -1</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-sensitivity-x</td>
+				<td class="">How sensitive the Player will react horizontally to touch gestures.<br>The finger needs to be move at least X pixel.</td>
+				<td class=""><b>20</b>, [integer]</td>
+			</tr>
+			<!--<tr>
+				<td class="">
+					thrixty-sensitivity-y<br>
+					(<b>This option is not yet used!</b>)
+				</td>
+				<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be move at least Y pixel.</td>
+				<td class=""><b>50</b>, [integer]</td>
+			</tr>-->
+			<tr>
+				<td class="">thrixty-zoom-mode</td>
+				<td class="">Zoomed in images showing in the <b>same</b> or an extra window. Or no zoom at all.</td>
+				<td class="">
+					<b>inbox</b>, outbox, none
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-zoom-control</td>
+				<td class="">
+					How to move the zoomed image.<br>
+					Automatically use the <b>mouseposition</b> or drag the cutout.
+				</td>
+				<td class="">
+					<b>progressive</b>, classic
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-position-indicator</td>
+				<td class="">How to indicate the zoomed in position. Or dont.</td>
+				<td class="">
+					<b>minimap</b>, marker, none
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-outbox-position</td>
+				<td class="">Where the zoom box should spawn.</td>
+				<td class="">
+					<b>right</b>, bottom, left, top
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

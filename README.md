@@ -6,10 +6,11 @@ ToC:
 * 2.: Example
 * 3.: Usage
 * 4.: Installation Tutorial
-* 5.: Documentation
-* 6.: Change Log
-* 7.: Planned Features and Changes
-* 8.: License
+* 5.: Customization
+* 6.: Documentation
+* 7.: Change Log
+* 8.: Planned Features and Changes
+* 9.: License
 
 ### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.
@@ -46,12 +47,11 @@ Unzip them in the same folder as the corefiles.
 Instead, only copy the object folders and filelists, as they are the only files being needed.
 * The two files "thrixty_initialize.js" and "thrixty_styles.css" are to be included in your head section like this:
 
-    ```html
+```txt
 <head>
-    <script id="test" type="text/javascript" src="[path]scripts/thrixty_initialize.js"></script>
-    <link type="text/css" rel="stylesheet" href="[path]style/thrixty_styles.css">
+    <script id="test" type="text/javascript" src="[path]thrixty_initialize.js"></script>
 </head>
-[path] is the path customers browsers will use to access these ressources.
+[path] is the path through the internet to the thrixty main folder.
 ```
 
 * The file "thrixty_initialize.js" will get its own path and start loading the class files.
@@ -63,10 +63,29 @@ Instead, only copy the object folders and filelists, as they are the only files 
 * You can customize the player by adding attributes to these intial div-tags.
 * (A list of possible options and their standard values will be added.)
 
-###5.) Documentation
+###5.) Customization
+
+[WIP]
+Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over CSS.
+Create a CSS file and include it after the initialization file.
+```txt
+<head>
+    <script id="test" type="text/javascript" src="(...)thrixty_initialize.js"></script>
+    <link type="text/css" rel="stylesheet" href="(...)custom.css">
+</head>
+```
+Here is an example that will make the object have a green border and the button line to have a red background.
+```css
+.thrixty{
+    background: red;
+}
+```
+
+
+###6.) Documentation
 [[Not yet done](http://www.fuchs-edv.de)]
 
-###6.) Change Log
+###7.) Change Log
 * V1.4:
     * Changed folder structure.
     * Saving bandwidth on mobile devices (detected by user-agent) by showing a load button instead of auto loading.
@@ -106,16 +125,16 @@ Instead, only copy the object folders and filelists, as they are the only files 
     * Keyboard Shortcuts
     * Drag Rotation
 
-###7.) Planned Features and Changes
+###8.) Planned Features and Changes
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
 * Log export for debugging purposes.
 * Preview picture (the first small image).
 * Responsiveness improvements.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Readme section on customization
+* Readme: section on customization
 
-###8.) License
+###9.) License
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 

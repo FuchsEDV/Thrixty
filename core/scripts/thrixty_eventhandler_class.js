@@ -527,4 +527,4 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			};
 	/** /Interaction */
 
-})(jQuery_2_1_3);
+})(jQuery_Thrixty);

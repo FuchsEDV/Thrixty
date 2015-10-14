@@ -473,4 +473,4 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			this.minimap_canvas.ctx.fill();
 		this.minimap_canvas.ctx.globalAlpha = 1;
 	};
-})(jQuery_2_1_3);
+})(jQuery_Thrixty);

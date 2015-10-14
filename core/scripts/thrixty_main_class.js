@@ -1383,4 +1383,4 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	/* /GETTER AND SETTER END */
 
 
-})(jQuery_2_1_3);
+})(jQuery_Thrixty);

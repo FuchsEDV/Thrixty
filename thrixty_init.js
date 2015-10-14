@@ -83,49 +83,26 @@ var ThrixtyPlayer = {
 
 (function(){
 
-	init();
+
+	/* fill mainpath property */
+	/* TODO: instead of treating this file to be the last one loaded at runtime, actually search for it. */
+	var scripts = document.getElementsByTagName('script');
+	var last_inserted_file = scripts[scripts.length - 1];
+	var parts = last_inserted_file.src.split("/");
+	parts.pop(); /* remove "[filename].[ext]" */
+	ThrixtyPlayer.mainpath = parts.join("/")+"/";
+	ThrixtyPlayer.log("Script Mainpath |"+ThrixtyPlayer.mainpath+"|");
 
 
 
-
-	function init(){
-		/* fill mainpath property */
-		ThrixtyPlayer.mainpath = get_mainpath();
-		ThrixtyPlayer.log("Script Mainpath |"+ThrixtyPlayer.mainpath+"|");
-		/* include jquery dependecy */
-		load_jquery();
-
-	};
+	/* include jquery dependecy */
+	var jquery_path = ThrixtyPlayer.mainpath+"core/scripts/jquery-2.1.3.js";
+	load_script_file( jquery_path, include_files );
 
 
-
-	function get_mainpath(){
-		/* TODO: instead of treating this file to be the last one loaded at runtime, actually search for it. */
-		var scripts = document.getElementsByTagName('script');
-		var filepath = scripts[scripts.length - 1].src;
-		var parts = filepath.split("/");
-		parts.pop(); /* remove "[filename].[ext]" */
-		return parts.join("/")+"/";
-	};
-
-
-
-	function load_jquery(){
-		var jquery_path = ThrixtyPlayer.mainpath+"core/scripts/jquery-2.1.3.js";
-		load_script_file(
-			jquery_path,
-			/* on load function: */
-			function(){
-				jQuery_Thrixty = jQuery.noConflict(true);
-				/* the rest of the scripts will be included, when jquery was loaded */
-				include_files();
-			}
-		);
-	};
-
-
-
+	/* include the rest of the files */
 	function include_files(){
+		jQuery_Thrixty = jQuery.noConflict(true);
 		/* storage array for file paths */
 		var includes = [
 			{
@@ -179,24 +156,24 @@ var ThrixtyPlayer = {
 	};
 
 
-
+	function insertAfter(newNode, referenceNode) {
+		referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+	};
 	function load_script_file(url, load_callback){
 		/* create and configure new element */
 		var script_file = document.createElement('script');
 		script_file.type = "text/javascript";
-		/* append new element to document */
-		document.getElementsByTagName('head')[0].appendChild(script_file);
-		/* assign load event */
+		script_file.src = url;
 		script_file.onload = load_callback;
-		/* assign error event */
 		script_file.onerror = function(event){
 			ThrixtyPlayer.log("JS File not found! |"+event.target.src+"|");
 		};
-		/* assign path && load file */
-		script_file.src = url;
+
+		/* append new element to document */
+		insertAfter(script_file, last_inserted_file);
+		last_inserted_file = script_file;
 		ThrixtyPlayer.log("Added JS File   |"+url+"|");
 	};
-
 
 
 	function load_stylesheet(url, load_callback){
@@ -204,16 +181,15 @@ var ThrixtyPlayer = {
 		var stylesheet = document.createElement("link");
 		stylesheet.type = "text/css";
 		stylesheet.rel = "stylesheet";
-		/* append new element to document */
-		document.getElementsByTagName('head')[0].appendChild(stylesheet);
-		/* assign load event */
+		stylesheet.href = url;
 		stylesheet.onload = load_callback;
-		/* assign error event */
 		stylesheet.onerror = function(event){
 			ThrixtyPlayer.log("CSS File not found! |"+event.target.href+"|");
-		};;
-		/* assign path && load file */
-		stylesheet.href = url;
+		};
+
+		/* append new element to document */
+		insertAfter(stylesheet, last_inserted_file);
+		last_inserted_file = stylesheet;
 		ThrixtyPlayer.log("Added CSS File  |"+url+"|");
 	};
 
@@ -288,5 +264,4 @@ abc.load_all_images(abc.large, abc.DOM_obj.image_cache_large);
 
 
 */
-
 

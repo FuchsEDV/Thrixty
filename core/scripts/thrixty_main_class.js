@@ -68,14 +68,14 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			basepath: "", /* Standardpfad, von wo aus die Player-Dateien liegen. */
 			filelist_path_small: "filelist_small.txt",
 			filelist_path_large: "filelist_large.txt",
-			seconds_per_turn: 5,
-			direction: 1, /* 1|-1 <=> forward|backward */
-			sensitivity_x: 20,
-			sensitivity_y: 50,
-			zoom_mode: "inbox",
 			zoom_control: "progressive",
+			zoom_mode: "inbox",
 			position_indicator: "minimap",
 			outbox_position: "right",
+			direction: 1, /* 1|-1 <=> forward|backward */
+			seconds_per_turn: 5,
+			sensitivity_x: 20,
+			sensitivity_y: 50,
 		};
 		/* The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"! */
 
@@ -239,30 +239,11 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						this.settings.filelist_path_large = String(attr.value);
 					}
 					break;
-				case "thrixty-seconds-per-turn":
-					if( attr.value != "" ){
-						this.settings.seconds_per_turn = parseInt(attr.value);
-					}
-					break;
-				case "thrixty-direction":
-					if( attr.value == "1" || attr.value == "forward" ){
-						this.settings.direction = 1;
-					} else if( attr.value == "-1" || attr.value == "backward" ){
-						this.settings.direction = -1;
-					}
-					break;
-				case "thrixty-sensitivity-x":
-					if( attr.value != "" ){
-						if( parseInt(attr.value) >= 0 ){
-							this.settings.sensitivity_x = parseInt(attr.value);
-						}
-					}
-					break;
-				case "thrixty-sensitivity-y":
-					if( attr.value != "" ){
-						if( parseInt(attr.value) >= 0 ){
-							this.settings.sensitivity_y = parseInt(attr.value);
-						}
+				case "thrixty-zoom-control":
+					if( attr.value == "classic" ){
+						this.settings.zoom_control = "classic";
+					} else {
+						this.settings.zoom_control = "progressive";
 					}
 					break;
 				case "thrixty-zoom-mode":
@@ -274,13 +255,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						this.settings.zoom_mode = "outbox";
 					} else if( attr.value == "none" ){
 						this.settings.zoom_mode = "none";
-					}
-					break;
-				case "thrixty-zoom-control":
-					if( attr.value == "classic" ){
-						this.settings.zoom_control = "classic";
-					} else {
-						this.settings.zoom_control = "progressive";
 					}
 					break;
 				case "thrixty-position-indicator":
@@ -303,6 +277,32 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						this.settings.outbox_position = "top";
 					} else if( attr.value == "bottom" ){
 						this.settings.outbox_position = "bottom";
+					}
+					break;
+				case "thrixty-direction":
+					if( attr.value == "1" || attr.value == "forward" ){
+						this.settings.direction = 1;
+					} else if( attr.value == "-1" || attr.value == "backward" ){
+						this.settings.direction = -1;
+					}
+					break;
+				case "thrixty-seconds-per-turn":
+					if( attr.value != "" ){
+						this.settings.seconds_per_turn = parseInt(attr.value);
+					}
+					break;
+				case "thrixty-sensitivity-x":
+					if( attr.value != "" ){
+						if( parseInt(attr.value) >= 0 ){
+							this.settings.sensitivity_x = parseInt(attr.value);
+						}
+					}
+					break;
+				case "thrixty-sensitivity-y":
+					if( attr.value != "" ){
+						if( parseInt(attr.value) >= 0 ){
+							this.settings.sensitivity_y = parseInt(attr.value);
+						}
 					}
 					break;
 				default:

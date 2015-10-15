@@ -43,7 +43,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						main_canvas: jQuery("<canvas id=\"main_canvas\" class=\"canvas\" width=\"0\" height=\"0\"></canvas>"),
 						minimap_canvas: jQuery("<canvas id=\"minimap_canvas\" class=\"canvas\" width=\"0\" height=\"0\" style=\"display:none;\"></canvas>"),
 						marker: jQuery("<div id=\"marker\" style=\"display:none;\"></div>"),
-						event_capture: jQuery("<div id=\"event_capture\"></div>"),
 					progress_container: jQuery("<div class=\"progress_container\" ></div>"),
 						progress_bar_small: jQuery("<div class=\"progress_bar_small\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
 						progress_bar_large: jQuery("<div class=\"progress_bar_large\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
@@ -327,7 +326,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.canvas_container.append(this.DOM_obj.main_canvas);
 					this.DOM_obj.canvas_container.append(this.DOM_obj.minimap_canvas);
 					this.DOM_obj.canvas_container.append(this.DOM_obj.marker);
-					this.DOM_obj.canvas_container.append(this.DOM_obj.event_capture);
 				this.DOM_obj.showroom.append(this.DOM_obj.progress_container);
 					this.DOM_obj.progress_container.append(this.DOM_obj.progress_bar_small);
 					this.DOM_obj.progress_container.append(this.DOM_obj.progress_bar_large);
@@ -810,7 +808,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* start rotation for startup. */
 		/* autostart / autoplay */
 		ThrixtyPlayer.log("Autostart animation", this.player_id);
-		this.start_rotation();
+		// this.start_rotation();
 	};
 
 

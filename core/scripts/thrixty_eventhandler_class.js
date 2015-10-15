@@ -65,53 +65,85 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.player.DOM_obj.main_box.on("mousedown touchstart", function(){
 			this.focus();
 		});
+		/* Keypresses: */
+		this.player.DOM_obj.main_box.on("keydown", this.keypresses.bind(this));
+
+		/* Buttons */
+			this.player.DOM_obj.load_btn.on("click", this.load_button_event_click.bind(this));
+			this.player.DOM_obj.prev_btn.on("click", this.prev_button_event_click.bind(this));
+			this.player.DOM_obj.play_btn.on("click", this.play_button_event_click.bind(this));
+			this.player.DOM_obj.next_btn.on("click", this.next_button_event_click.bind(this));
+			this.player.DOM_obj.zoom_btn.on("click", this.zoom_button_event_click.bind(this));
+			this.player.DOM_obj.size_btn.on("click", this.size_button_event_click.bind(this));
+		/* /Buttons */
+
+
+
+
+		/* Mouse Interaction */
+			/* mousedown */
+			jQuery(document).on("mousedown", this.document_mousedown.bind(this));
+			this.player.DOM_obj.main_canvas.on("mousedown", this.main_canvas_mousedown.bind(this));
+			this.player.DOM_obj.minimap_canvas.on("mousedown", this.minimap_canvas_mousedown.bind(this));
+			this.player.DOM_obj.marker.on("mousedown", this.marker_mousedown.bind(this));
+			/* mousemove */
+			jQuery(document).on("mousemove", this.document_mousemove.bind(this));
+			this.player.DOM_obj.main_canvas.on("mousemove", this.main_canvas_mousemove.bind(this));
+			this.player.DOM_obj.minimap_canvas.on("mousemove", this.minimap_canvas_mousemove.bind(this));
+			this.player.DOM_obj.marker.on("mousemove", this.marker_mousemove.bind(this));
+			/* mouseup */
+			jQuery(document).on("mouseup", this.document_mouseup.bind(this));
+			this.player.DOM_obj.main_canvas.on("mouseup", this.main_canvas_mouseup.bind(this));
+			this.player.DOM_obj.minimap_canvas.on("mouseup", this.minimap_canvas_mouseup.bind(this));
+			this.player.DOM_obj.marker.on("mouseup", this.marker_mouseup.bind(this));
+		/* /Mouse Interaction */
+		/* Touch Interaction */
+			/* touchstart */
+			jQuery(document).on("touchstart", this.document_touchstart.bind(this));
+			this.player.DOM_obj.main_canvas.on("touchstart", this.main_canvas_touchstart.bind(this));
+			this.player.DOM_obj.minimap_canvas.on("touchstart", this.minimap_canvas_touchstart.bind(this));
+			this.player.DOM_obj.marker.on("touchstart", this.marker_touchstart.bind(this));
+			/* touchmove */
+			jQuery(document).on("touchmove", this.document_touchmove.bind(this));
+			this.player.DOM_obj.main_canvas.on("touchmove", this.main_canvas_touchmove.bind(this));
+			this.player.DOM_obj.minimap_canvas.on("touchmove", this.minimap_canvas_touchmove.bind(this));
+			this.player.DOM_obj.marker.on("touchmove", this.marker_touchmove.bind(this));
+			/* touchend */
+			jQuery(document).on("touchend", this.document_touchend.bind(this));
+			this.player.DOM_obj.main_canvas.on("touchend", this.main_canvas_touchend.bind(this));
+			this.player.DOM_obj.minimap_canvas.on("touchend", this.minimap_canvas_touchend.bind(this));
+			this.player.DOM_obj.marker.on("touchend", this.marker_touchend.bind(this));
+		/* /Touch Interaction */
+
+
+
+
+
 
 		/* Window Resize: */
 		jQuery(window).on("resize", this.resize_window_event.bind(this));
 
-		/* Keypresses: */
-		this.player.DOM_obj.main_box.on("keydown", this.keypresses.bind(this));
 
 		/* Scrolling: */
 		this.player.DOM_obj.main_box.on("wheel", this.scroll_event.bind(this));
 
-		/* Buttons: */
-		this.player.DOM_obj.load_btn.on("click", this.load_button_event_click.bind(this));
-		this.player.DOM_obj.prev_btn.on("click", this.prev_button_event_click.bind(this));
-		this.player.DOM_obj.play_btn.on("click", this.play_button_event_click.bind(this));
-		this.player.DOM_obj.next_btn.on("click", this.next_button_event_click.bind(this));
-		this.player.DOM_obj.zoom_btn.on("click", this.zoom_button_event_click.bind(this));
-		this.player.DOM_obj.size_btn.on("click", this.size_button_event_click.bind(this));
-		this.player.DOM_obj.event_capture.on("dblclick", this.event_capture_dblclick.bind(this));
+
+		// this.player.DOM_obj.event_capture.on("dblclick", this.event_capture_dblclick.bind(this));
+
+
 
 		/* Mouse/Touch Interaction: */
-		this.player.DOM_obj.event_capture.on("touchstart", this.event_capture_touchstart_event.bind(this));
-		this.player.DOM_obj.event_capture.on("mousedown", this.event_capture_mousedown_event.bind(this));
-		jQuery(document).on("touchmove", this.touchmove_event_document.bind(this));
-		jQuery(document).on("mousemove", this.mousemove_event_document.bind(this));
-		jQuery(document).on("touchend", this.touchend_event_document.bind(this));
-		jQuery(document).on("mouseup", this.mouseup_event_document.bind(this));
+		// this.player.DOM_obj.event_capture.on("touchstart", this.event_capture_touchstart_event.bind(this));
+		// this.player.DOM_obj.event_capture.on("mousedown", this.event_capture_mousedown_event.bind(this));
+		// jQuery(document).on("touchmove", this.touchmove_event_document.bind(this));
+		// jQuery(document).on("mousemove", this.mousemove_event_document.bind(this));
+		// jQuery(document).on("touchend", this.touchend_event_document.bind(this));
+		// jQuery(document).on("mouseup", this.mouseup_event_document.bind(this));
+
+
 	};
 
 
-
-
-
-
-
-
-
-
-	/** Window Resize: */
-		/**
-		 * @description  This method handles the resizing events.
-		 */
-		ThrixtyPlayer.EventHandler.prototype.resize_window_event = function(resize_event){
-			if( this.player.is_fullpage ){
-				this.player.set_fullpage_canvas_dimensions();
-			}
-		};
-	/** /Window Resize */
 
 	/** Keypresses: */
 		/**
@@ -214,18 +246,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		};
 	/** /Keypresses */
 
-	/** Scrolling: */
-		/**
-		 *  @description This function manages the scroll events.
-		 */
-		ThrixtyPlayer.EventHandler.prototype.scroll_event = function(wheel_event){
-			/* prevent the User from scrolling the content while in fullpage */
-			if( this.player.is_fullpage ){
-				wheel_event.preventDefault();
-			}
-		};
-	/** /Scrolling */
-
 	/** Buttons: */
 		/**
 		 *  @description This function handles the click event on the "load"-button.
@@ -288,6 +308,296 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			}
 		};
 	/** /Buttons */
+
+
+
+
+
+
+
+
+
+	/** Interaction */
+		/* mousedown */
+			ThrixtyPlayer.EventHandler.prototype.document_mousedown = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.main_canvas_mousedown = function(e){
+				/* A1 | user wants to turn the object */
+				if( this.player.settings.zoom_control == "progressive" ){
+					this.prepare_object_turn(e.pageX, e.pageY);
+					e.preventDefault();
+				}
+				/* B1 | user wants to turn the object */
+				if( this.player.settings.zoom_control == "classic" ){
+					this.prepare_object_turn();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_mousedown = function(e){
+				/* A1 | user wants to turn the object */
+				if( this.player.settings.zoom_control == "progressive" ){
+					this.prepare_object_turn();
+					e.preventDefault();
+				}
+				/* B2 | user wants to move the section */
+				if( this.player.settings.zoom_control == "classic" ){
+					this.prepare_section_move();
+					this.execute_section_move(); // instantly snap to target position
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.marker_mousedown = function(e){
+				/* A1 | user wants to turn the object */
+				if( this.player.settings.zoom_control == "progressive" ){
+					this.prepare_object_turn();
+					e.preventDefault();
+				}
+				/* B2 | user wants to move the section */
+				if( this.player.settings.zoom_control == "classic" ){
+					this.prepare_section_move();
+					this.execute_section_move(); // instantly snap to target position
+					e.preventDefault();
+				}
+			};
+		/* /mousedown */
+		/* mousemove */
+			ThrixtyPlayer.EventHandler.prototype.document_mousemove = function(e){
+				/* A1 | user turns the object */
+				/* B1 | user turns the object */
+				if( this.object_turn.prepared ){
+					this.execute_object_turn(e.pageX, e.pageY);
+					e.preventDefault();
+				}
+				/* A2 | user moves section */
+				if( this.player.is_zoomed && this.player.settings.zoom_control == "progressive" ){
+					this.execute_section_move();
+					e.preventDefault();
+				}
+				/* B2 | user moves section */
+				if( this.section_move.prepared ){
+					this.execute_section_move();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.main_canvas_mousemove = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_mousemove = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.marker_mousemove = function(e){/**/};
+		/* /mousemove */
+		/* mouseup */
+			ThrixtyPlayer.EventHandler.prototype.document_mouseup = function(e){
+				/* A1 | user stops turning the object */
+				/* B1 | user stops turning the object */
+				if( this.object_turn.prepared ){
+					this.stop_object_turn(e.pageX, e.pageY);
+					e.preventDefault();
+				}
+				/* B2 | user stops moving section */
+				if( this.section_move.prepared ){
+					this.stop_section_move();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.main_canvas_mouseup = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_mouseup = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.marker_mouseup = function(e){/**/};
+		/* /mouseup */
+		/* touchstart */
+			ThrixtyPlayer.EventHandler.prototype.document_touchstart = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchstart = function(e){
+				/* C1 | user wants to turn the object */
+				if( !this.player.is_zoomed ){
+					this.prepare_object_turn();
+					e.preventDefault();
+				}
+				/* C2 | user wants to move the section inverted */
+				if( this.player.is_zoomed ){
+					this.prepare_section_move_inverted();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_touchstart = function(e){
+				// objektausschnitt verschieben
+				/* C3 | user wants to move the section */
+				if( this.player.is_zoomed ){
+					this.prepare_section_move();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.marker_touchstart = function(e){
+				// objektausschnitt verschieben
+				/* C3 | user wants to move the section */
+				if( this.player.is_zoomed ){
+					this.prepare_section_move();
+					e.preventDefault();
+				}
+			};
+		/* /touchstart */
+		/* touchmove */
+			ThrixtyPlayer.EventHandler.prototype.document_touchmove = function(e){
+				/* C1 | user turns the object */
+				if( this.object_turn.prepared ){
+					this.execute_object_turn();
+					e.preventDefault();
+				}
+				/* C2 | user moves the section (inverted) */
+				if( this.section_move_inverted.prepared ){
+					this.execute_inverted_section_move();
+					e.preventDefault();
+				}
+				/* C3 | user moves the section */
+				if( this.section_move.prepared ){
+					this.execute_section_move();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchmove = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_touchmove = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.marker_touchmove = function(e){/**/};
+		/* /touchmove */
+		/* touchend */
+			ThrixtyPlayer.EventHandler.prototype.document_touchend = function(e){
+				/* C1 | user stop turning the object */
+				if( this.object_turn.prepared ){
+					this.stop_object_turn();
+					e.preventDefault();
+				}
+				/* C2 | user stops moving section (inverted) */
+				if( this.section_move_inverted.prepared ){
+					this.stop_inverted_section_move();
+					e.preventDefault();
+				}
+				/* C3 | user stops moving section */
+				if( this.section_move.prepared ){
+					this.stop_section_move();
+					e.preventDefault();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchend = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_touchend = function(e){/**/};
+			ThrixtyPlayer.EventHandler.prototype.marker_touchend = function(e){/**/};
+		/* /touchend */
+	/** /Interaction */
+
+
+
+ThrixtyPlayer.EventHandler.prototype.object_turn = {
+	prepared: false,
+	start_x: null,
+	start_y: null,
+};
+ThrixtyPlayer.EventHandler.prototype.section_move = {
+	prepared: false,
+	start_x: null,
+	start_y: null,
+};
+ThrixtyPlayer.EventHandler.prototype.section_move_inverted = {
+	prepared: false,
+	start_x: null,
+	start_y: null,
+};
+
+
+	/** Interaction Functions */
+		ThrixtyPlayer.EventHandler.prototype.prepare_object_turn = function(x, y){
+			/* stuff */
+			this.object_turn.prepared = true;
+			this.object_turn.start_x = x;
+			this.object_turn.start_y = y;
+		};
+		ThrixtyPlayer.EventHandler.prototype.execute_object_turn = function(x, y){
+			/* stuff */
+			console.log("object turn to: "+x+"|"+y);
+
+
+			var distance_x = x - object_turn.start_x;
+			/* distance_x set, so use that to do the turns */
+			var rest = this.player.distance_rotation(distance_x);
+			/* aktualisiere start_x zu momentaner position minus rest */
+			this.main.start_x = x - rest;
+		};
+		ThrixtyPlayer.EventHandler.prototype.stop_object_turn = function(x, y){
+			/* stuff */
+			console.log("object turn end: "+x+"|"+y);
+			this.object_turn.prepared = false;
+			this.object_turn.start_x = null;
+			this.object_turn.start_y = null;
+		};
+		ThrixtyPlayer.EventHandler.prototype.prepare_section_move = function(){
+			/* stuff */
+		};
+		ThrixtyPlayer.EventHandler.prototype.execute_section_move = function(){
+			/* stuff */
+		};
+		ThrixtyPlayer.EventHandler.prototype.stop_section_move = function(){
+			/* stuff */
+		};
+		ThrixtyPlayer.EventHandler.prototype.prepare_section_move_inverted = function(){
+			/* stuff */
+		};
+		ThrixtyPlayer.EventHandler.prototype.execute_inverted_section_move = function(){
+			/* stuff */
+		};
+		ThrixtyPlayer.EventHandler.prototype.stop_inverted_section_move = function(){
+			/* stuff */
+		};
+		/** /Interaction Functions */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/** Window Resize: */
+		/**
+		 * @description  This method handles the resizing events.
+		 */
+		ThrixtyPlayer.EventHandler.prototype.resize_window_event = function(resize_event){
+			if( this.player.is_fullpage ){
+				this.player.set_fullpage_canvas_dimensions();
+			}
+		};
+	/** /Window Resize */
+
+
+
+
+
+
+
+	/** Scrolling: */
+		/**
+		 *  @description This function manages the scroll events.
+		 */
+		ThrixtyPlayer.EventHandler.prototype.scroll_event = function(wheel_event){
+			/* prevent the User from scrolling the content while in fullpage */
+			if( this.player.is_fullpage ){
+				wheel_event.preventDefault();
+			}
+		};
+	/** /Scrolling */
+
+
+
+
+
+
+
+
 
 	/** Mouse/Touch Interaction: */
 		/* START MOVE EVENT */

@@ -42,30 +42,6 @@
 		background: transparent;
 		position: relative; /* create a new coordinate system for positioning the progress bar */
 	}
-		.thrixty-player #load_btn{
-			width: 90px;
-			height: 90px;
-			max-width: 160px;
-			max-height: 160px;
-			background-color: #ffffff;
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-size: 80% 80%;
-			border: 5px solid #000000;
-			border-radius: 50%;
-			margin: 0px 5px;
-			padding: 0;
-
-			background-position: 80% center;
-			background-image: url(images/play.svg);
-
-
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			z-index: 7;
-		}
 		.thrixty-player .canvas_container{
 			width: 100%;
 			height: 100%;
@@ -311,3 +287,38 @@
 			cursor: crosshair;
 				background: white;
 		}
+	.thrixty-player #load_overlay{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		z-index: 7;
+		background: transparent;
+	}
+			.thrixty-player #load_btn{
+				width: 90px;
+				height: 90px;
+				max-width: 160px;
+				max-height: 160px;
+				background-color: #ffffff;
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 80% 80%;
+				border: 5px solid #000000;
+				border-radius: 50%;
+				margin: 0px 5px;
+				padding: 0;
+
+				background-position: 80% center;
+				background-image: url(images/play.svg);
+
+
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-ms-transform: translate(-50%, -50%);
+				-webkit-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				z-index: 8;
+			}

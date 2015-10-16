@@ -29,31 +29,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.EventHandler = function(parent){
 		this.player = parent;
-		this.start_x = 0;
-		/* assign events to the parents elements */
+
 		this.assign_events();
 
-
-		/* declaration of properties used by methods */
-		this.minimap = {
-			is_mousedown: false,
-			is_click: false,
-			start_x: 0,
-				start_y: 0, /* unused */
-		};
-		this.marker = {
-			is_mousedown: false,
-			is_click: false,
-			start_x: 0,
-				start_y: 0, /* unused */
-		};
-		this.main = {
-			is_mousedown: false,
-			is_click: false,
-			start_x: 0,
-				start_y: 0, /* unused */
-		};
-		this.is_touch = false; /* to be implemented */
+		this.is_click = false; /* for click events */
 	};
 	/**
 	 *  @description This function initializes the GUI events.
@@ -69,15 +48,17 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.player.DOM_obj.main_box.on("keydown", this.keypresses.bind(this));
 
 		/* Buttons */
-			this.player.DOM_obj.load_btn.on("click", this.load_button_event_click.bind(this));
 			this.player.DOM_obj.prev_btn.on("click", this.prev_button_event_click.bind(this));
 			this.player.DOM_obj.play_btn.on("click", this.play_button_event_click.bind(this));
 			this.player.DOM_obj.next_btn.on("click", this.next_button_event_click.bind(this));
 			this.player.DOM_obj.zoom_btn.on("click", this.zoom_button_event_click.bind(this));
 			this.player.DOM_obj.size_btn.on("click", this.size_button_event_click.bind(this));
 		/* /Buttons */
-
-
+		this.player.DOM_obj.main_canvas.on("dblclick", this.main_canvas_dblclick.bind(this));
+		/* Loading Manager */
+			this.player.DOM_obj.load_overlay.on("click", this.load_button_event_click.bind(this));
+			this.player.DOM_obj.load_btn.on("click", this.load_button_event_click.bind(this));
+		/* /Loading Manager */
 
 
 		/* Mouse Interaction */
@@ -116,10 +97,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* /Touch Interaction */
 
 
-
-
-
-
 		/* Window Resize: */
 		jQuery(window).on("resize", this.resize_window_event.bind(this));
 
@@ -127,21 +104,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* Scrolling: */
 		this.player.DOM_obj.main_box.on("wheel", this.scroll_event.bind(this));
 
-
-		// this.player.DOM_obj.event_capture.on("dblclick", this.event_capture_dblclick.bind(this));
-
-
-
-		/* Mouse/Touch Interaction: */
-		// this.player.DOM_obj.event_capture.on("touchstart", this.event_capture_touchstart_event.bind(this));
-		// this.player.DOM_obj.event_capture.on("mousedown", this.event_capture_mousedown_event.bind(this));
-		// jQuery(document).on("touchmove", this.touchmove_event_document.bind(this));
-		// jQuery(document).on("mousemove", this.mousemove_event_document.bind(this));
-		// jQuery(document).on("touchend", this.touchend_event_document.bind(this));
-		// jQuery(document).on("mouseup", this.mouseup_event_document.bind(this));
-
-
 	};
+
+
+
 
 
 
@@ -246,15 +212,19 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		};
 	/** /Keypresses */
 
+
+
+
+
 	/** Buttons: */
 		/**
 		 *  @description This function handles the click event on the "load"-button.
 		 */
-		ThrixtyPlayer.EventHandler.prototype.load_button_event_click = function(click_event){
-			/* TODO: rework!! */
-			this.player.load_all_images(this.player.small, this.player.DOM_obj.image_cache_small);
+		ThrixtyPlayer.EventHandler.prototype.load_button_event_click = function(e){
+			this.player.DOM_obj.load_overlay.hide();
 			this.player.DOM_obj.load_btn.hide();
-			/* this.player.interaction_block = false; */
+
+			this.player.load_all_images(this.player.small, this.player.DOM_obj.image_cache_small);
 		};
 		/**
 		 *  @description This function handles the click event on the "previous"-button.
@@ -301,7 +271,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/**
 		 *  @description This function handles the double click event on the event-capture area.
 		 */
-		ThrixtyPlayer.EventHandler.prototype.event_capture_dblclick = function(dblclick_event){
+		ThrixtyPlayer.EventHandler.prototype.main_canvas_dblclick = function(dblclick_event){
 			if( this.player.are_events_enabled() ){
 				dblclick_event.preventDefault();
 				this.player.toggle_zoom();
@@ -313,49 +283,64 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-
-
-
-
 	/** Interaction */
 		/* mousedown */
 			ThrixtyPlayer.EventHandler.prototype.document_mousedown = function(e){/**/};
 			ThrixtyPlayer.EventHandler.prototype.main_canvas_mousedown = function(e){
 				/* A1 | user wants to turn the object */
 				if( this.player.settings.zoom_control == "progressive" ){
-					this.prepare_object_turn(e.pageX, e.pageY);
-					e.preventDefault();
+					/* left click only */
+					if( e.which == 1 ){
+						this.prepare_object_turn(e.pageX, e.pageY);
+						e.preventDefault();
+					}
 				}
 				/* B1 | user wants to turn the object */
 				if( this.player.settings.zoom_control == "classic" ){
-					this.prepare_object_turn();
-					e.preventDefault();
+					/* left click only */
+					if( e.which == 1 ){
+						this.prepare_object_turn(e.pageX, e.pageY);
+						e.preventDefault();
+					}
 				}
+				this.is_click = true;
 			};
 			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_mousedown = function(e){
 				/* A1 | user wants to turn the object */
 				if( this.player.settings.zoom_control == "progressive" ){
-					this.prepare_object_turn();
-					e.preventDefault();
+					/* left click only */
+					if( e.which == 1 ){
+						this.prepare_object_turn(e.pageX, e.pageY);
+						e.preventDefault();
+					}
 				}
-				/* B2 | user wants to move the section */
+				/* B2 | user wants to move the section | minimap variation */
 				if( this.player.settings.zoom_control == "classic" ){
-					this.prepare_section_move();
-					this.execute_section_move(); // instantly snap to target position
-					e.preventDefault();
+					/* left click only */
+					if( e.which == 1 ){
+						this.prepare_section_move("minimap");
+						this.execute_section_move(e.pageX, e.pageY); /* instantly snap to target position */
+						e.preventDefault();
+					}
 				}
 			};
 			ThrixtyPlayer.EventHandler.prototype.marker_mousedown = function(e){
 				/* A1 | user wants to turn the object */
 				if( this.player.settings.zoom_control == "progressive" ){
-					this.prepare_object_turn();
-					e.preventDefault();
+					/* left click only */
+					if( e.which == 1 ){
+						this.prepare_object_turn(e.pageX, e.pageY);
+						e.preventDefault();
+					}
 				}
 				/* B2 | user wants to move the section */
 				if( this.player.settings.zoom_control == "classic" ){
-					this.prepare_section_move();
-					this.execute_section_move(); // instantly snap to target position
-					e.preventDefault();
+					/* left click only */
+					if( e.which == 1 ){
+						this.prepare_section_move("marker");
+						this.execute_section_move(e.pageX, e.pageY); /* instantly snap to target position */
+						e.preventDefault();
+					}
 				}
 			};
 		/* /mousedown */
@@ -369,12 +354,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				}
 				/* A2 | user moves section */
 				if( this.player.is_zoomed && this.player.settings.zoom_control == "progressive" ){
-					this.execute_section_move();
+					this.execute_section_move(e.pageX, e.pageY);
 					e.preventDefault();
 				}
 				/* B2 | user moves section */
 				if( this.section_move.prepared ){
-					this.execute_section_move();
+					this.execute_section_move(e.pageX, e.pageY);
 					e.preventDefault();
 				}
 			};
@@ -387,11 +372,18 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				/* A1 | user stops turning the object */
 				/* B1 | user stops turning the object */
 				if( this.object_turn.prepared ){
-					this.stop_object_turn(e.pageX, e.pageY);
+					this.execute_object_turn(e.pageX, e.pageY); /* do a final object turn */
+					this.stop_object_turn();
 					e.preventDefault();
+				}
+				/* if this is still a click, toggle object rotation */
+				if( this.is_click ){
+					this.player.toggle_rotation();
+					this.is_click = false;
 				}
 				/* B2 | user stops moving section */
 				if( this.section_move.prepared ){
+					this.execute_section_move(e.pageX, e.pageY); /* do a final section move */
 					this.stop_section_move();
 					e.preventDefault();
 				}
@@ -404,48 +396,44 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			ThrixtyPlayer.EventHandler.prototype.document_touchstart = function(e){/**/};
 			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchstart = function(e){
 				/* C1 | user wants to turn the object */
-				if( !this.player.is_zoomed ){
-					this.prepare_object_turn();
-					e.preventDefault();
-				}
-				/* C2 | user wants to move the section inverted */
-				if( this.player.is_zoomed ){
-					this.prepare_section_move_inverted();
-					e.preventDefault();
-				}
+				this.prepare_object_turn(e.originalEvent.pageX, e.originalEvent.pageY);
+				e.preventDefault();
+				/* register this as starting a click */
+				this.is_click = true;
 			};
 			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_touchstart = function(e){
 				// objektausschnitt verschieben
-				/* C3 | user wants to move the section */
+				/* C2 | user wants to move the section */
 				if( this.player.is_zoomed ){
-					this.prepare_section_move();
+					this.prepare_section_move("minimap");
+					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY); /* instantly snap to target position */
 					e.preventDefault();
 				}
 			};
 			ThrixtyPlayer.EventHandler.prototype.marker_touchstart = function(e){
 				// objektausschnitt verschieben
-				/* C3 | user wants to move the section */
+				/* C2 | user wants to move the section */
 				if( this.player.is_zoomed ){
-					this.prepare_section_move();
+					this.prepare_section_move("marker");
+					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY); /* instantly snap to target position */
 					e.preventDefault();
 				}
 			};
 		/* /touchstart */
 		/* touchmove */
 			ThrixtyPlayer.EventHandler.prototype.document_touchmove = function(e){
+				/* stop scrolling in fullpage mode */
+				if( this.player.is_fullpage ){
+					e.preventDefault();
+				}
 				/* C1 | user turns the object */
 				if( this.object_turn.prepared ){
-					this.execute_object_turn();
+					this.execute_object_turn(e.originalEvent.pageX, e.originalEvent.pageY);
 					e.preventDefault();
 				}
-				/* C2 | user moves the section (inverted) */
-				if( this.section_move_inverted.prepared ){
-					this.execute_inverted_section_move();
-					e.preventDefault();
-				}
-				/* C3 | user moves the section */
+				/* C2 | user moves the section */
 				if( this.section_move.prepared ){
-					this.execute_section_move();
+					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY);
 					e.preventDefault();
 				}
 			};
@@ -457,18 +445,20 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			ThrixtyPlayer.EventHandler.prototype.document_touchend = function(e){
 				/* C1 | user stop turning the object */
 				if( this.object_turn.prepared ){
+					this.execute_object_turn(e.originalEvent.pageX, e.originalEvent.pageY); /* do a final object turn */
 					this.stop_object_turn();
 					e.preventDefault();
 				}
-				/* C2 | user stops moving section (inverted) */
-				if( this.section_move_inverted.prepared ){
-					this.stop_inverted_section_move();
-					e.preventDefault();
-				}
-				/* C3 | user stops moving section */
+				/* C2 | user stops moving section */
 				if( this.section_move.prepared ){
+					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY); /* do a final section move */
 					this.stop_section_move();
 					e.preventDefault();
+				}
+				/* if this is still a click, toggle object rotation */
+				if( this.is_click ){
+					this.player.toggle_rotation();
+					this.is_click = false;
 				}
 			};
 			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchend = function(e){/**/};
@@ -479,84 +469,87 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-ThrixtyPlayer.EventHandler.prototype.object_turn = {
-	prepared: false,
-	start_x: null,
-	start_y: null,
-};
-ThrixtyPlayer.EventHandler.prototype.section_move = {
-	prepared: false,
-	start_x: null,
-	start_y: null,
-};
-ThrixtyPlayer.EventHandler.prototype.section_move_inverted = {
-	prepared: false,
-	start_x: null,
-	start_y: null,
-};
 
 
 	/** Interaction Functions */
-		ThrixtyPlayer.EventHandler.prototype.prepare_object_turn = function(x, y){
-			/* stuff */
-			this.object_turn.prepared = true;
-			this.object_turn.start_x = x;
-			this.object_turn.start_y = y;
-		};
-		ThrixtyPlayer.EventHandler.prototype.execute_object_turn = function(x, y){
-			/* stuff */
-			console.log("object turn to: "+x+"|"+y);
+		/* Object Turn */
+			ThrixtyPlayer.EventHandler.prototype.object_turn = {
+				prepared: false,
+				start_x: null,
+				start_y: null,
+				last_x: null,
+				last_y: null,
+			};
+			ThrixtyPlayer.EventHandler.prototype.prepare_object_turn = function(x, y){
+				if( typeof(x) != "undefined" && typeof(y) != "undefined" ){
+					/* prepare turn by memorizing important information */
+					this.object_turn.prepared = true;
+					this.object_turn.start_x = x;
+					/* this.object_turn.start_y = y; *//* unused */
+					this.object_turn.last_x = x;
+					/* this.object_turn.last_y = y; */ /* unused */
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.execute_object_turn = function(x, y){
+				if( typeof(x) != "undefined" && typeof(y) != "undefined" ){
+					/* distance travelled since last object turn call */
+					var distance_x = x - this.object_turn.last_x;
 
+					/* following 2 lines unused */
+					/* phytagoras: d = sqrt( x^2 + y^2 ) */
+					/* var distance = Math.pow( Math.pow( x - this.object_turn.start_x, 2) + Math.pow( y - this.object_turn.start_y, 2), 1/2 ); */
 
-			var distance_x = x - object_turn.start_x;
-			/* distance_x set, so use that to do the turns */
-			var rest = this.player.distance_rotation(distance_x);
-			/* aktualisiere start_x zu momentaner position minus rest */
-			this.main.start_x = x - rest;
-		};
-		ThrixtyPlayer.EventHandler.prototype.stop_object_turn = function(x, y){
-			/* stuff */
-			console.log("object turn end: "+x+"|"+y);
-			this.object_turn.prepared = false;
-			this.object_turn.start_x = null;
-			this.object_turn.start_y = null;
-		};
-		ThrixtyPlayer.EventHandler.prototype.prepare_section_move = function(){
-			/* stuff */
-		};
-		ThrixtyPlayer.EventHandler.prototype.execute_section_move = function(){
-			/* stuff */
-		};
-		ThrixtyPlayer.EventHandler.prototype.stop_section_move = function(){
-			/* stuff */
-		};
-		ThrixtyPlayer.EventHandler.prototype.prepare_section_move_inverted = function(){
-			/* stuff */
-		};
-		ThrixtyPlayer.EventHandler.prototype.execute_inverted_section_move = function(){
-			/* stuff */
-		};
-		ThrixtyPlayer.EventHandler.prototype.stop_inverted_section_move = function(){
-			/* stuff */
-		};
-		/** /Interaction Functions */
+					if( Math.abs( x - this.object_turn.start_x) >= this.player.settings.sensitivity_x ){
+						this.is_click = false;
+						this.player.stop_rotation();
+					}
+					/* memorize x and subtract the left-over pixels */
+					this.object_turn.last_x = x - this.player.distance_rotation(distance_x);
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.stop_object_turn = function(){
+				/* forget the event data */
+				this.object_turn.prepared = false;
+				this.object_turn.last_x = null;
+				/* this.object_turn.last_y = null; *//* unused */
+			};
+		/* /Object Turn */
+		/* Section Move */
+			ThrixtyPlayer.EventHandler.prototype.section_move = {
+				prepared: false, /* prepared flag */
+				minimap: false,  /* triggered-by-click-on-minimap flag */
+			};
+			ThrixtyPlayer.EventHandler.prototype.prepare_section_move = function(mode){
+				if( typeof(mode) != "undefined" ){
+					/* flag prepared */
+					this.section_move.prepared = true;
+					if( mode === "minimap" ){
+						/* flag as minimap */
+						this.section_move.minimap = true;
+					}
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.execute_section_move = function(x, y){
+				if( typeof(x) != "undefined" && typeof(y) != "undefined" ){
+					var coords = {x: x, y: y};
 
+					/* if mode is minimap, convert minimap to main coordinates */
+					if( this.section_move.minimap ){
+						coords = this.player.minimap_to_main_coords(coords);
+					}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+					/* update mouseposition and redraw image */
+					this.player.drawing_handler.set_absolute_mouseposition( coords.x, coords.y );
+					this.player.drawing_handler.draw_current_image();
+				}
+			};
+			ThrixtyPlayer.EventHandler.prototype.stop_section_move = function(){
+				/* unflag prepared and unset mode*/
+				this.section_move.prepared = false;
+				this.section_move.minimap = false;
+			};
+		/* Section Move */
+	/** /Interaction Functions */
 
 
 
@@ -577,8 +570,6 @@ ThrixtyPlayer.EventHandler.prototype.section_move_inverted = {
 
 
 
-
-
 	/** Scrolling: */
 		/**
 		 *  @description This function manages the scroll events.
@@ -590,251 +581,5 @@ ThrixtyPlayer.EventHandler.prototype.section_move_inverted = {
 			}
 		};
 	/** /Scrolling */
-
-
-
-
-
-
-
-
-
-	/** Mouse/Touch Interaction: */
-		/* START MOVE EVENT */
-		ThrixtyPlayer.EventHandler.prototype.event_capture_touchstart_event = function(touchstart_event){
-			if( this.player.are_events_enabled() ){
-				this.is_touch = true;
-				this.event_capture_mousedown_event(touchstart_event.originalEvent);
-				this.is_touch = false;
-			}
-		};
-		ThrixtyPlayer.EventHandler.prototype.event_capture_mousedown_event = function(mousedown_event){
-			if( this.player.are_events_enabled() ){
-				var main_canvas = this.player.DOM_obj.main_canvas;
-
-				if( this.player.settings.zoom_control == "progressive" ){
-					/**
-					 * completely ignore minimap events in progressive control mode
-					 * completely ignore marker events in progressive control mode
-					 * trigger main_canvas's mousedown event
-					 */
-					mousedown_event.preventDefault();
-					this.mousedown_event_main_canvas(mousedown_event);
-				} else if( this.player.settings.zoom_control == "classic" ){
-					var click_in_main_canvas = this.check_boundaries(main_canvas, mousedown_event.pageX, mousedown_event.pageY);
-
-					/* click in minimap? */
-					var minimap_canvas = this.player.DOM_obj.minimap_canvas;
-					var click_in_minimap_canvas = this.check_boundaries(minimap_canvas, mousedown_event.pageX, mousedown_event.pageY);
-
-					/* click in marker? */
-					var marker = this.player.DOM_obj.marker;
-					var click_in_marker = this.check_boundaries(marker, mousedown_event.pageX, mousedown_event.pageY);
-
-					if( !click_in_main_canvas ){
-						/* IGNORE, as this click event has nothing to do with the player */
-					} else { /* click in main_canvas area */
-						mousedown_event.preventDefault();
-						/* is this click targeted on minimap? */
-						if( click_in_marker ){
-							/* do marker stuff */
-							this.mousedown_event_marker(mousedown_event);
-						} else if( click_in_minimap_canvas ){
-							/* do minimap stuff */
-							this.mousedown_event_minimap_canvas(mousedown_event);
-						} else {
-							/* do main_canvas stuff */
-							this.mousedown_event_main_canvas(mousedown_event);
-						}
-					}
-				}
-
-			}
-		};
-			ThrixtyPlayer.EventHandler.prototype.check_boundaries = function(jQ_element, X, Y){
-				var offset = jQ_element.offset();
-				offset.right = offset.left + jQ_element.width();
-				offset.bottom = offset.top + jQ_element.height();
-				if( ( jQ_element.css("display") != "none" )
-				&&  ( offset.left <= X )
-				&&  ( X <= offset.right )
-				&&  ( offset.top <= Y )
-				&&  ( Y <= offset.bottom )
-				){
-					return true;
-				} else {
-					return false;
-				}
-			};
-			ThrixtyPlayer.EventHandler.prototype.mousedown_event_minimap_canvas = function(mousedown_event){
-				/* left click? */
-				if( mousedown_event.which == 1 || mousedown_event.type == "touchstart" ){
-					/* memorize state */
-					this.minimap.is_mousedown = true;
-					this.minimap.is_click = true;
-					/* memorize coordinates */
-					this.minimap.start_x = mousedown_event.pageX;
-					this.minimap.start_y = mousedown_event.pageY;
-				}
-			};
-			ThrixtyPlayer.EventHandler.prototype.mousedown_event_marker = function(mousedown_event){
-				/* left click? */
-				if( mousedown_event.which == 1 || mousedown_event.type == "touchstart" ){
-					/* memorize state */
-					this.marker.is_mousedown = true;
-					this.marker.is_click = true;
-					/* memorize coordinates */
-					this.marker.start_x = mousedown_event.pageX;
-					this.marker.start_y = mousedown_event.pageY;
-				}
-			}
-			ThrixtyPlayer.EventHandler.prototype.mousedown_event_main_canvas = function(mousedown_event){
-				/* left click? */
-				if( mousedown_event.which == 1 || mousedown_event.type == "touchstart" ){
-					/* memorize state */
-					this.main.is_mousedown = true;
-					this.main.is_click = true;
-					/* memorize coordinates */
-					this.main.start_x = mousedown_event.pageX;
-					this.main.start_y = mousedown_event.pageY;
-				}
-			};
-
-		/* MOVE EVENT ITSELF */
-		ThrixtyPlayer.EventHandler.prototype.touchmove_event_document = function(touchmove_event){
-			if( this.player.are_events_enabled() ){
-				this.is_touch = true;
-				this.mousemove_event_document(touchmove_event.originalEvent);
-				this.is_touch = false;
-			}
-		};
-		ThrixtyPlayer.EventHandler.prototype.mousemove_event_document = function(mousemove_event){
-			if( this.player.are_events_enabled() ){
-				if( this.player.settings.zoom_control == "progressive" ){
-					if( this.main.is_mousedown ){
-						this.do_main_move(mousemove_event);
-					} else {
-						this.do_progressive_zoom_move(mousemove_event);
-					}
-				} else {
-					if( this.marker.is_mousedown ){
-						this.do_classic_marker_move(mousemove_event);
-					}
-					if( this.minimap.is_mousedown ){
-						this.do_classic_minimap_move(mousemove_event);
-					}
-					if( this.main.is_mousedown ){
-						this.do_main_move(mousemove_event);
-					}
-				}
-			}
-		};
-			ThrixtyPlayer.EventHandler.prototype.do_main_move = function(move_event){
-				var distance_x = move_event.pageX - this.main.start_x;
-
-				/* when the mouse is at any point father away from the starting click position, then the sensitivity settings allows, ... */
-				if( this.main.is_click && (Math.abs(distance_x) > this.player.settings.sensitivity_x) ){
-					/* ... stop this click sequence to execute a click event. */
-					this.main.is_click = false;
-				}
-
-				if( !this.main.is_click ){
-					/* stop animation */
-					this.player.stop_rotation();
-					/* distance_x set, so use that to do the turns */
-					var rest = this.player.distance_rotation(distance_x);
-					/* aktualisiere start_x zu momentaner position minus rest */
-					this.main.start_x = move_event.pageX - rest;
-				}
-			};
-			ThrixtyPlayer.EventHandler.prototype.do_progressive_zoom_move = function(move_event){
-				/* EXECUTED ON MAIN */
-				/* if zoomed */
-				if( this.player.is_zoomed ){
-					/* inform drawing handler of this mouse position */
-					this.player.drawing_handler.set_absolute_mouseposition( move_event.pageX, move_event.pageY );
-					/* draw curent image */
-					this.player.drawing_handler.draw_current_image();
-				} else {
-					/* do nothing */
-				}
-			};
-			ThrixtyPlayer.EventHandler.prototype.do_classic_marker_move = function(move_event){
-				/* do marker move */
-				this.marker.is_click = false;
-				/*  */
-				this.player.drawing_handler.set_absolute_mouseposition( move_event.pageX, move_event.pageY );
-				this.player.drawing_handler.draw_current_image();
-			};
-			ThrixtyPlayer.EventHandler.prototype.do_classic_minimap_move = function(move_event){
-				/* do minimap move */
-				this.minimap.is_click = false;
-				/* update the minimap position in the same way, as the marker does, but smaller */
-				/* this.player.drawing_handler.update_mouseposition_upon */
-				var X = ( ( move_event.pageX - this.player.DOM_obj.minimap_canvas.offset().left ) * ( this.player.DOM_obj.main_canvas.width()  / this.player.DOM_obj.minimap_canvas.width()  ) ) + this.player.DOM_obj.minimap_canvas.offset().left;
-				var Y = ( ( move_event.pageY - this.player.DOM_obj.minimap_canvas.offset().top  ) * ( this.player.DOM_obj.main_canvas.height() / this.player.DOM_obj.minimap_canvas.height() ) ) + this.player.DOM_obj.minimap_canvas.offset().top;
-				this.player.drawing_handler.set_absolute_mouseposition( X, Y );
-				this.player.drawing_handler.draw_current_image();
-			};
-
-		/* END MOVE EVENT */
-		ThrixtyPlayer.EventHandler.prototype.touchend_event_document = function(touchend_event){
-			if( this.player.are_events_enabled() ){
-				this.is_touch = true;
-				this.mouseup_event_document(touchend_event.originalEvent);
-				this.is_touch = false;
-			}
-		};
-		ThrixtyPlayer.EventHandler.prototype.mouseup_event_document = function(mouseup_event){
-			if( this.player.are_events_enabled() ){
-				this.mouseup_event_marker(mouseup_event);
-				this.mouseup_event_minimap_canvas(mouseup_event);
-				this.mouseup_event_main_canvas(mouseup_event);
-			}
-		};
-			ThrixtyPlayer.EventHandler.prototype.mouseup_event_marker = function(up_event){
-				if( this.marker.is_mousedown ){
-					/* if this is still a click, move zoom to clicked position */
-					if( this.marker.is_click ){
-						/* this.do_classic_marker_move(up_event); */
-						this.player.toggle_rotation();
-					}
-				}
-
-				/* mousedown reset */
-				this.marker.is_mousedown = false;
-				this.marker.is_click = false;
-				this.marker.start_x = 0;
-				this.marker.start_y = 0;
-			};
-			ThrixtyPlayer.EventHandler.prototype.mouseup_event_minimap_canvas = function(up_event){
-				if( this.minimap.is_mousedown ){
-					/* if this is still a click, move zoom to clicked position */
-					if( this.minimap.is_click ){
-						this.do_classic_minimap_move(up_event);
-					}
-				}
-
-				/* mousedown reset */
-				this.minimap.is_mousedown = false;
-				this.minimap.is_click = false;
-				this.minimap.start_x = 0;
-				this.minimap.start_y = 0;
-			};
-			ThrixtyPlayer.EventHandler.prototype.mouseup_event_main_canvas = function(up_event){
-				if( this.main.is_mousedown ){
-					/* toggle rotation if this is still a click */
-					if( this.main.is_click ){
-						this.player.toggle_rotation();
-					}
-				}
-
-				/* mousedown reset */
-				this.main.is_mousedown = false;
-				this.main.is_click = false;
-				this.main.start_x = 0;
-				this.main.start_y = 0;
-			};
-	/** /Interaction */
 
 })(jQuery_Thrixty);

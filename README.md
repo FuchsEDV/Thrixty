@@ -90,6 +90,7 @@ Here is an example that will make the object have a orange border and the button
 
 ###7.) Change Log
 * V1.4:
+    * Fixed iPad Support on Events. (maybe other mobile browsers are still broken...)
     * Changed folder structure.
     * Saving bandwidth on mobile devices (detected by user-agent) by showing a load button instead of auto loading.
     * Changes in state management.

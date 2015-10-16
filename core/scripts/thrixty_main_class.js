@@ -46,7 +46,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					progress_container: jQuery("<div class=\"progress_container\" ></div>"),
 						progress_bar_small: jQuery("<div class=\"progress_bar_small\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
 						progress_bar_large: jQuery("<div class=\"progress_bar_large\" state=\"unloaded\" style=\"width: 0%;\"></div>"),
-					load_btn: jQuery("<button id=\"load_btn\" style=\"display: none;\"></button>"),
 				controls: jQuery("<div class=\"controls\" style=\"display: none;\"></div>"),
 					control_container_one: jQuery("<div class=\"control_container\" ></div>"),
 						prev_btn: jQuery("<button id=\"prev_btn\" class=\"ctrl_buttons\" state=\"step\" disabled ></button>"),
@@ -54,6 +53,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						next_btn: jQuery("<button id=\"next_btn\" class=\"ctrl_buttons\" disabled ></button>"),
 						zoom_btn: jQuery("<button id=\"zoom_btn\" class=\"ctrl_buttons\" state=\"zoomin\" disabled ></button>"),
 						size_btn: jQuery("<button id=\"size_btn\" class=\"ctrl_buttons\" state=\"fullpage\" disabled ></button>"),
+				load_overlay: jQuery("<div id=\"load_overlay\" style=\"display: none;\"></div>"),
+					load_btn: jQuery("<button id=\"load_btn\" style=\"display: none;\"></button>"),
 				zoom_canvas: jQuery("<canvas id=\"zoom_canvas\" width=\"0\" height=\"0\" style=\"display: none;\"></canvas>"),
 				controls_cache: jQuery("<div class=\"controls_cache\" style=\"display: none;\"></div>"),
 				image_cache_small: jQuery("<div class=\"image_cache_small\" style=\"display: none;\"></div>"),
@@ -329,7 +330,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				this.DOM_obj.showroom.append(this.DOM_obj.progress_container);
 					this.DOM_obj.progress_container.append(this.DOM_obj.progress_bar_small);
 					this.DOM_obj.progress_container.append(this.DOM_obj.progress_bar_large);
-				this.DOM_obj.showroom.append(this.DOM_obj.load_btn);
 
 			/* these are the control buttons for the app */
 			this.DOM_obj.main_box.append(this.DOM_obj.controls);
@@ -340,6 +340,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.control_container_one.append(this.DOM_obj.zoom_btn);
 					this.DOM_obj.control_container_one.append(this.DOM_obj.size_btn);
 				this.DOM_obj.controls.append( jQuery("<div style=\"clear: both;\"></div>") );
+
+			/* thi is the overlay for the load confirmation */
+			this.DOM_obj.main_box.append(this.DOM_obj.load_overlay);
+				this.DOM_obj.load_overlay.append(this.DOM_obj.load_btn);
 
 			/* Zoom Box for Outbox Zoom (invisible on stadard) */
 			this.DOM_obj.main_box.append(this.DOM_obj.zoom_canvas);
@@ -686,7 +690,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					/* load small pictures */
 					if( ThrixtyPlayer.is_mobile ){
 						this.load_one_image(this.small.images[0], this.DOM_obj.image_cache_small);
-						/* display continue loading button */
+						this.DOM_obj.load_overlay.show();
 						this.DOM_obj.load_btn.show();
 					} else {
 						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
@@ -808,7 +812,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* start rotation for startup. */
 		/* autostart / autoplay */
 		ThrixtyPlayer.log("Autostart animation", this.player_id);
-		// this.start_rotation();
+		this.start_rotation();
 	};
 
 
@@ -1108,6 +1112,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.enter_fullpage = function(){
 		this.stop_zoom();
+		// this.stop_rotation();
 
 		/* set fullpage state */
 		this.is_fullpage = true;
@@ -1241,6 +1246,23 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			}
 		}
 	};
+
+
+
+
+
+	/* translates minimap coordinates */
+	ThrixtyPlayer.MainClass.prototype.minimap_to_main_coords = function(coords){
+		return {
+			x: ( ( coords.x - this.DOM_obj.minimap_canvas.offset().left ) / this.drawing_handler.image_size_ratio.w ) + this.DOM_obj.minimap_canvas.offset().left,
+			y: ( ( coords.y - this.DOM_obj.minimap_canvas.offset().top  ) / this.drawing_handler.image_size_ratio.h ) + this.DOM_obj.minimap_canvas.offset().top,
+		};
+	};
+
+
+
+
+
 	/**
 	 *  @description This function sets the base frequencies of the image objects.<br>
 	 *    The frequencies are different, when there are different amounts of images.

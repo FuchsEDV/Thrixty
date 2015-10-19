@@ -89,6 +89,7 @@ Here is an example that will make the object have a orange border and the button
 [[Not yet done](http://www.fuchs-edv.de)]
 
 ###7.) Change Log
+* V1.5 (planned):
 * V1.4:
     * Rewrote Event Handler.
     * Fixed iPad Support. (maybe other mobile browsers are still broken...)

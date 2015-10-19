@@ -40,12 +40,12 @@ Unzip them in the same folder as the corefiles.
 ```
 
 ### 4.) Installation Tutorial
-* Thrixty consists of two parts, that are to be integrated into your Website: "scripts" and "style".
+* Thrixty consists of two parts: the "core" folder and "thrixty_init.js".
 * Create a folder "thrixty" somewhere central in your website folder and copy those two folders in.
 (We suggest the folder "[website-root]/thrixty".)
 * When using the 360Shots Software to generate these files, you SHOULD NOT just copy and paste the whole folder for every object.
 Instead, only copy the object folders and filelists, as they are the only files being needed.
-* The two files "thrixty_init.js" and "thrixty_styles.css" are to be included in your head section like this:
+* The file "thrixty_init.js" is to be included in your head section like this:
 
 ```txt
 <head>
@@ -55,18 +55,17 @@ Instead, only copy the object folders and filelists, as they are the only files 
 ```
 
 * The file "thrixty_init.js" will get its own path and start loading the class files.
-* You need to make sure all files in "scripts" and "style" are accessible and none are missing.
-* If you use any CMS, those files need to be hooked to the script- and style-section.
+* You need to make sure the "core" folder and all its files are accessible and none are missing.
+* If you use any CMS, the init file needs to be hooked to the script-section.
 * ######Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress).
 
-* After every PageLoad the Player Script will now look for any div-tags with the class "thrixty-player" and will initialize itself on each found instance.
+* After completing PageLoad the Player Script will now look for any div-tags with the class "thrixty-player" and will initialize itself on each found instance.
 * You can customize the player by adding attributes to these intial div-tags.
 * (A list of possible options and their standard values will be added.)
 
 ###5.) Customization
 
-[WIP]
-Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over CSS.
+Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.
 Create a CSS file and include it after the initialization file.
 ```txt
 <head>
@@ -155,4 +154,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```
+rogram.  If not, see <http://www.gnu.org/licenses/>.
 ```

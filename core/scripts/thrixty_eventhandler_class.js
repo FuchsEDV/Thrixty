@@ -148,39 +148,14 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					if( this.player.are_events_enabled() ){
 						keydown_event.preventDefault();
 						/* doesnt have a correlating button */
-
-								/* TODO: das folgende in die player klasse umlagern */
-								var small_frequency = this.player.small.frequency;
-								if( small_frequency <= 100 ){
-									small_frequency += 5;
-									if( small_frequency > 100 ){
-										small_frequency = 100;
-									}
-									this.player.small.frequency = small_frequency;
-									this.player.large.frequency = Math.ceil(small_frequency*(this.player.large.images_count/this.player.small.images_count));
-									this.player.start_rotation();
-								}
-								ThrixtyPlayer.log("frequency change to "+this.player.small.frequency+"(for small) and "+this.player.large.frequency+"(for large).");
-
+						this.player.increase_rotation_frequency();
 					}
 					break;
 				case 40:  /* DOWN ARROW */
 					if( this.player.are_events_enabled() ){
 						keydown_event.preventDefault();
 						/* doesnt have a correlating button */
-
-								/* TODO: das folgende in die player klasse umlagern */
-								var small_frequency = this.player.small.frequency;
-								if( small_frequency > 1 ){
-									small_frequency -= 5;
-									if( small_frequency < 1 ){
-										small_frequency = 1;
-									}
-									this.player.small.frequency = small_frequency;
-									this.player.large.frequency = Math.ceil(small_frequency*(this.player.large.images_count/this.player.small.images_count));
-									this.player.start_rotation();
-								}
-								ThrixtyPlayer.log("frequency change to "+this.player.small.frequency+"(for small) and "+this.player.large.frequency+"(for large).");
+						this.player.decrease_rotation_frequency();
 					}
 					break;
 				case 27:  /* ESCAPE */

@@ -212,33 +212,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- *  TODO:
- *    current large image not found -> draw small version
- *    current small image not found -> draw blank
- */
-
-
-
 	/**
 	 *  @description This function decides where to draw the current picture.
 	 */
@@ -281,12 +254,15 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			this.main_canvas.draw_w,
 			this.main_canvas.draw_h
 		);
+
 		/* draw current small image */
-		this.main_canvas.ctx.drawImage(
-			small_image,
-			0,
-			0
-		);
+		if( !!small_image ){
+			this.main_canvas.ctx.drawImage(
+				small_image,
+				0,
+				0
+			);
+		}
 	};
 	/**
 	 *  @description This function draws a zoomed picture inside the main canvas.
@@ -315,17 +291,19 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		);
 
 		/* draw current image */
-		this.main_canvas.ctx.drawImage(
-			large_image,
-			0,
-			0,
-			large_image.naturalWidth, /* this needs to be calculated by the picture, as this varies from small to large */
-			large_image.naturalHeight, /* this needs to be calculated by the picture, as this varies from small to large */
-			-offsets.x,
-			-offsets.y,
-			this.large_image_size.w,
-			this.large_image_size.h
-		);
+		if( !!large_image ){
+			this.main_canvas.ctx.drawImage(
+				large_image,
+				0,
+				0,
+				large_image.naturalWidth, /* this needs to be calculated by the picture, as this varies from small to large */
+				large_image.naturalHeight, /* this needs to be calculated by the picture, as this varies from small to large */
+				-offsets.x,
+				-offsets.y,
+				this.large_image_size.w,
+				this.large_image_size.h
+			);
+		}
 	};
 	/**
 	 *  @description This function draws a zoomed picture inside the zoom canvas.
@@ -365,38 +343,28 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		);
 
 		/* draw small_image on main_canvas */
-		this.main_canvas.ctx.drawImage(
-			small_image,
-			0,
-			0
-		);
-		/* main_canvas.ctx.drawImage(small_image, 0, 0, small_image.naturalWidth, small_image.naturalHeight, 0, 0, small_image_size.w, small_image_size.h); */
+		if( !!small_image ){
+			this.main_canvas.ctx.drawImage(
+				small_image,
+				0,
+				0
+			);
+		}
 
 		/* draw large_image on zoom_canvas */
-		this.zoom_canvas.ctx.drawImage(
-			large_image,
-			0,
-			0,
-			large_image.naturalWidth,
-			large_image.naturalHeight,
-			-offsets.x,
-			-offsets.y,
-			this.large_image_size.w,
-			this.large_image_size.h
-		);
-		/**
-		 * zoom_canvas.ctx.drawImage(
-		 * 	large_image,
-		 * 	0,
-		 * 	0,
-		 * 	large_image.naturalWidth,
-		 * 	large_image.naturalHeight,
-		 * 	-zoom_img_offset.x,
-		 * 	-zoom_img_offset.y,
-		 * 	large_image_size.w,
-		 * 	large_image_size.h
-		 * );
-		 */
+		if( !!large_image ){
+			this.zoom_canvas.ctx.drawImage(
+				large_image,
+				0,
+				0,
+				large_image.naturalWidth,
+				large_image.naturalHeight,
+				-offsets.x,
+				-offsets.y,
+				this.large_image_size.w,
+				this.large_image_size.h
+			);
+		}
 	};
 	/**
 	 *  @description This function draws a rectangle as a position marker on the main_canvas.
@@ -448,11 +416,13 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		);
 
 		/* secondly draw image */
-		this.minimap_canvas.ctx.drawImage(
-			small_image,
-			0,
-			0
-		);
+		if( !!small_image ){
+			this.minimap_canvas.ctx.drawImage(
+				small_image,
+				0,
+				0
+			);
+		}
 
 		/* thirdly draw cutout */
 		this.minimap_canvas.ctx.globalAlpha = 0.5;

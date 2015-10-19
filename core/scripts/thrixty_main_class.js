@@ -184,7 +184,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			/* FATAL ERROR */
 			/*throw new Error("The Base Filelist (small) wasn't Loaded.\n"+small_fl_read, 0, 0);*/
 			return false;
-			/* TODO: once the preview picture is implemented, show an error message of some sort. */
 		}
 
 		/* read large filelist */
@@ -448,13 +447,13 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	/* ThrixtyPlayer.MainClass.prototype.set_ = function(){} */
 	/**
 	 *  @description This function is being called on load of the small images.
-	 *  @param  {object} load_event The Event, which triggered this function.
+	 *  @param  {object} load_event Triggering Event.
 	 */
 	ThrixtyPlayer.MainClass.prototype.small_onload_event = function(load_event){
 		/** This timeout will delay every load event execution by a quarter
 		 *   of a second.
-		 * This is done because of some browser executing the events before the
-		 *   images are properly loaded.
+		 * This is neccessary, as some browsers are executing load-events before the
+		 *   images are actually accessible.
 		 */
 		setTimeout(function(){
 			/* get param values */
@@ -472,39 +471,13 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				if( load_obj.first_loaded_image_id == null ){
 					/* register it, */
 					load_obj.first_loaded_image_id = current_elem.id;
-
-							var vogl = function(){
-								/** TODO: Dies in eine Methode verpacken. Diese Programmlogik gehört hier eigentlich nicht hin. Zu welcher Klasse soll dies gehören?
-								 * set main_canvas dimensions to those of the first element
-								 * show and hide is being used because of reasons (the reasons are - what else could it be - Internet Explorer)
-								 */
-								current_elem.jq_elem.show();
-
-								/* background */
-								this.DOM_obj.bg_canvas[0].width = current_elem.jq_elem[0].naturalWidth;
-								this.DOM_obj.bg_canvas[0].height = current_elem.jq_elem[0].naturalHeight;
-
-								/* main */
-								this.DOM_obj.main_canvas[0].width = current_elem.jq_elem[0].naturalWidth;
-								this.DOM_obj.main_canvas[0].height = current_elem.jq_elem[0].naturalHeight;
-									/* set drawing handlers canvas to main canvas */
-									this.drawing_handler.canvas = this.DOM_obj.main_canvas;
-
-								/* minimap */
-								this.DOM_obj.minimap_canvas[0].width = current_elem.jq_elem[0].naturalWidth;
-								this.DOM_obj.minimap_canvas[0].height = current_elem.jq_elem[0].naturalHeight;
-
-								/* zoom box */
-								this.DOM_obj.zoom_canvas[0].width = current_elem.jq_elem[0].naturalWidth;
-								this.DOM_obj.zoom_canvas[0].height = current_elem.jq_elem[0].naturalHeight;
-
-								current_elem.jq_elem.hide();
-							}.bind(this);
-
 					/* and give the dimensions to the drawing handler. */
 					this.drawing_handler.set_small_image_size(current_elem.jq_elem);
 					/* calc dimension ratio */
 					this.drawing_handler.calculate_image_ratio();
+
+
+
 
 					/** The whole purpose of the following block is to make sure,
 					 *   that the starting image WILL be loaded.
@@ -517,7 +490,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						if( current_count < 5 && !this.isLoaded){
 							current_count += 1;
 
-							vogl();
+							this.resize_canvasses_to_dimensions_of(current_elem.jq_elem[0]);
+							/* set drawing handlers canvas to main canvas */
+							this.drawing_handler.canvas = this.DOM_obj.main_canvas;
 
 							/* draw image to canvas */
 							this.drawing_handler.draw_current_image();
@@ -812,7 +787,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* start rotation for startup. */
 		/* autostart / autoplay */
 		ThrixtyPlayer.log("Autostart animation", this.player_id);
-		this.start_rotation();
+		// this.start_rotation();
 	};
 
 
@@ -1208,7 +1183,32 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		}
 	};
+	/**
+	 *  @description Sets the width and height attributes of the canvasses to the width of th specified element.
+	 */
+	ThrixtyPlayer.MainClass.prototype.resize_canvasses_to_dimensions_of = function(element){
+		/* show and hide are being used because of REASONS! */
+		/* (the reasons are - what else could it be - Internet Explorer...) */
+		jQuery(element).show();
 
+		/* background */
+		this.DOM_obj.bg_canvas[0].width = element.naturalWidth;
+		this.DOM_obj.bg_canvas[0].height = element.naturalHeight;
+
+		/* main */
+		this.DOM_obj.main_canvas[0].width = element.naturalWidth;
+		this.DOM_obj.main_canvas[0].height = element.naturalHeight;
+
+		/* minimap */
+		this.DOM_obj.minimap_canvas[0].width = element.naturalWidth;
+		this.DOM_obj.minimap_canvas[0].height = element.naturalHeight;
+
+		/* zoom box */
+		this.DOM_obj.zoom_canvas[0].width = element.naturalWidth;
+		this.DOM_obj.zoom_canvas[0].height = element.naturalHeight;
+
+		jQuery(element).hide();
+	};
 
 
 
@@ -1272,6 +1272,38 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.large.frequency = Math.ceil(this.large.images_count / this.settings.seconds_per_turn);
 	};
 	/**
+	 *  @description This function increases the rotation speed by 5 images per second. (max 100)
+	 */
+	ThrixtyPlayer.MainClass.prototype.increase_rotation_frequency = function(){
+		var small_frequency = this.small.frequency;
+		if( small_frequency <= 100 ){
+			small_frequency += 5;
+			if( small_frequency > 100 ){
+				small_frequency = 100;
+			}
+			this.small.frequency = small_frequency;
+			this.large.frequency = Math.ceil(small_frequency*(this.large.images_count/this.small.images_count));
+			this.start_rotation();
+		}
+	}
+	/**
+	 *  @description This function decreases the rotation speed by 5 images per second. (min 1)
+	 */
+	ThrixtyPlayer.MainClass.prototype.decrease_rotation_frequency = function(){
+		var small_frequency = this.small.frequency;
+		if( small_frequency > 1 ){
+			small_frequency -= 5;
+			if( small_frequency < 1 ){
+				small_frequency = 1;
+			}
+			this.small.frequency = small_frequency;
+			this.large.frequency = Math.ceil(small_frequency*(this.large.images_count/this.small.images_count));
+			this.start_rotation();
+		}
+	}
+
+
+	/**
 	 *  @description This function sets the rotation direction for the player.
 	 *  @param {String} direction "default", "fw" or "bw"
 	 */
@@ -1290,7 +1322,14 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.get_current_small_image = function(){
 		/* get and return the current small image */
-		return this.small.images[this.small.active_image_id].jq_elem[0];
+
+		var cur_image = this.small.images[this.small.active_image_id];
+		if( cur_image.elem_loaded ){
+			return cur_image.jq_elem[0];
+		} else {
+			/* There is nothing to show */
+			return null;
+		}
 	};
 	/**
 	 *  @description This function returns HTML-Object of the current large image.<br>In case, that big one wasnt loaded yet, the small one is returned.
@@ -1312,7 +1351,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		}
 
 		/* the large one isnt yet loaded, so fall back to the small one */
-		return base_small.jq_elem[0];
+		return this.get_current_small_image();
 	};
 	/**
 	 *  @description This function returns the dimensions of the background canvas

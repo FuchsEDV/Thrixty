@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.5
+ *  @version 1.4.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -785,9 +785,15 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.all_images_loaded = function(){
 		/* start rotation for startup. */
-		/* autostart / autoplay */
-		ThrixtyPlayer.log("Autostart animation", this.player_id);
-		// this.start_rotation();
+		/* autostart depends on initialized player count. */
+		/* 3 or less players are allowed for autoplay */
+		if( ThrixtyPlayer.initialized_players.length <= 3 ){
+			/* autostart / autoplay */
+			ThrixtyPlayer.log("autostart animation", this.player_id);
+			this.start_rotation();
+		} else {
+			ThrixtyPlayer.log("dont autostart animation", this.player_id);
+		}
 	};
 
 

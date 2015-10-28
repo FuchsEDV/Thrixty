@@ -6,7 +6,6 @@
  *  @module ThrixtyPlayer.MainClass
  */
 ;"use strict";
-var thrixty_version = "dev1.4";
 
 /* 1.: define ThrixtyPlayer Namespace */
 /**
@@ -17,6 +16,7 @@ var thrixty_version = "dev1.4";
  *  @property {array} initialized_players Container for all Players initialized.
  */
 var ThrixtyPlayer = {
+	version: "dev1.5",
 	mainpath: "",
 	initialized_players: [],
 	logs: {
@@ -225,8 +225,7 @@ var ThrixtyPlayer = {
 			});
 			return all_players;
 		})();
-		console.log(ThrixtyPlayer.initialized_players);
-		console.log(ThrixtyPlayer.logs);
+		console.log(ThrixtyPlayer);
 	};
 
 

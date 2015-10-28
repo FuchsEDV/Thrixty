@@ -96,7 +96,7 @@ At initialization the namespace object is dumped into the console.<br>
 Inspecting that object will tell you i.a.:<br>
 
 | Property | Value |
-| :- | :- |
+| :--- | :--- |
 | Version | ThrixtyPlayer.version |
 | List of Player Instances | ThrixtyPlayer.initialized_players |
 | Application Log | ThrixtyPlayer.logs.main_log |

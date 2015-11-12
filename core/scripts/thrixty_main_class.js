@@ -84,6 +84,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			context: "small",
 			filepath: "",
 			filelist_loaded: null,
+								image_width: 0,
+								image_height: 0,
+								image_ratio: 0,
 			images_count: 0,
 			images_loaded: 0,
 			images_errored: 0,
@@ -107,6 +110,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			context: "large",
 			filepath: "",
 			filelist_loaded: null,
+								image_width: 0,
+								image_height: 0,
+								image_ratio: 0,
 			images_count: 0,
 			images_loaded: 0,
 			images_errored: 0,
@@ -471,14 +477,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				if( load_obj.first_loaded_image_id == null ){
 					/* register it, */
 					load_obj.first_loaded_image_id = current_elem.id;
-					/* and give the dimensions to the drawing handler. */
-					this.drawing_handler.set_small_image_size(current_elem.jq_elem);
-					/* calc dimension ratio */
-					this.drawing_handler.calculate_image_ratio();
 
 
 
-
+					// TODO: das gehört hier nciht hin... das gehört in den ladezustandswechsel
 					/** The whole purpose of the following block is to make sure,
 					 *   that the starting image WILL be loaded.
 					 * Some current browser on fast computer are executing
@@ -487,22 +489,51 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					 */
 					var current_count = 0;
 					var start_img_draw = function(){
-						if( current_count < 5 && !this.isLoaded){
+						if( current_count < 20 && this.loading_state < 3){
 							current_count += 1;
 
-							this.resize_canvasses_to_dimensions_of(current_elem.jq_elem[0]);
-							/* set drawing handlers canvas to main canvas */
-							this.drawing_handler.canvas = this.DOM_obj.main_canvas;
+
+
+							/* show and hide are being used because of REASONS! */
+							/* (the reasons are - what else could it be - Internet Explorers...) */
+							current_elem.jq_elem.show();
+								/* save small image dimensions and ratio centrally */
+								var w = current_elem.jq_elem[0].naturalWidth;
+								this.small.image_width = w;
+								var h = current_elem.jq_elem[0].naturalHeight;
+								this.small.image_height = h;
+								this.small.image_ratio = w/h;
+
+								/* apply image dimensions to the canvasses base attributes */
+								/* background */
+									this.DOM_obj.bg_canvas[0].width = w;
+									this.DOM_obj.bg_canvas[0].height = h;
+								/* main */
+									this.DOM_obj.main_canvas[0].width = w;
+									this.DOM_obj.main_canvas[0].height = h;
+								/* minimap */
+									this.DOM_obj.minimap_canvas[0].width = w;
+									this.DOM_obj.minimap_canvas[0].height = h;
+								/* zoom box */
+									this.DOM_obj.zoom_canvas[0].width = w;
+									this.DOM_obj.zoom_canvas[0].height = h;
+							current_elem.jq_elem.hide();
+
+							/* start with setting the normal sized dimensions */
+							this.set_normal_dimensions();
 
 							/* draw image to canvas */
 							this.drawing_handler.draw_current_image();
 
-							/* function calls itself after 0.5 seconds */
-							setTimeout(start_img_draw, 500);
+							/* function calls itself after 0.1 seconds  =>  break after 2 seconds max */
+							setTimeout(start_img_draw, 100);
 						}
 					}.bind(this);
 					start_img_draw();
 					/* /end */
+
+
+
 				}
 
 			/* if this load errored */
@@ -541,10 +572,20 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				if( load_obj.first_loaded_image_id == null ){
 					/* register it, */
 					load_obj.first_loaded_image_id = current_elem.id;
-					/* and give the dimensions to the drawing handler. */
-					this.drawing_handler.set_large_image_size(current_elem.jq_elem);
-					/* calc imension ratio */
-					this.drawing_handler.calculate_image_ratio();
+
+
+					// TODO: dies gehört eher in den ladezustandswechsel
+					/* and memorize the image dimensions */
+					/* show and hide are being used because of REASONS! */
+					/* (the reasons are - what else could it be - Internet Explorer...) */
+					current_elem.jq_elem.show();
+						var w = current_elem.jq_elem[0].naturalWidth;
+						this.large.image_width = w;
+						var h = current_elem.jq_elem[0].naturalHeight;
+						this.large.image_height = h;
+						this.large.image_ratio = w/h;
+					current_elem.jq_elem.hide();
+
 				}
 
 				/* When this image is current, redraw the current image. */
@@ -582,8 +623,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description This function starts the loading of this image into this container.<br>(used on the large images when being loaded one after the other)
 	 */
 	ThrixtyPlayer.MainClass.prototype.load_one_image = function(img_obj, target_container){
-		/* set this element to not loaded, assign the src and append it to the image container. */
-		img_obj.elem_loaded = false;
+		/* assign src to this element and append it to the image container. */
 		img_obj.jq_elem.attr("src", img_obj.source);
 		target_container.append(img_obj.jq_elem);
 	};
@@ -984,9 +1024,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 			/* check for position indicator wanted (for example a minimap) */
 			if( this.settings.position_indicator == "minimap" ){
+				this.DOM_obj.minimap_canvas.css("width", (this.small.image_width*100 / this.large.image_width)+"%");
+				this.DOM_obj.minimap_canvas.css("height", (this.small.image_height*100 / this.large.image_height)+"%");
 				this.DOM_obj.minimap_canvas.show();
 			} else if( this.settings.position_indicator == "marker" ){
-				this.DOM_obj.minimap_canvas.show();
 				this.DOM_obj.marker.show();
 			}
 
@@ -1015,6 +1056,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.DOM_obj.minimap_canvas.hide();
 		/* hide marker */
 		this.DOM_obj.marker.hide();
+		/* TODO: clear the variables set by drawing handler by [this.set_marker_position();] over [draw_current_image()] */
+		/*       maybe implement resets for all canvasses? */
 		/* draw unzoomed picture */
 		this.drawing_handler.draw_current_image();
 	};
@@ -1037,6 +1080,24 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			 *  }
 			 */
 		}
+	};
+	/**
+	 *  @description This function draws a rectangle as a position marker on the main_canvas.
+	 */
+	ThrixtyPlayer.MainClass.prototype.set_marker_position = function(){
+		/* Dimensionate and position the marker correctly over the canvas */
+
+		var W = this.DOM_obj.canvas_container.width() * this.small.image_width/this.large.image_width;
+		var H = this.DOM_obj.canvas_container.height() * this.small.image_width/this.large.image_width;
+		// this.drawing_handler.relative_mouse.x/y  will likely change
+		var X = ( this.drawing_handler.relative_mouse.x / this.DOM_obj.canvas_container.width() ) * ( this.DOM_obj.canvas_container.width() - W );
+		var Y = ( this.drawing_handler.relative_mouse.y / this.DOM_obj.canvas_container.height() ) * ( this.DOM_obj.canvas_container.height() - H );
+
+
+		this.DOM_obj.marker.css("width",  W+"px");
+		this.DOM_obj.marker.css("height", H+"px");
+		this.DOM_obj.marker.css("left",   X+"px");
+		this.DOM_obj.marker.css("top",    Y+"px");
 	};
 	/**
 	 * @description Setups the HTML objects for displaying the zoom picture in a outer box.
@@ -1102,20 +1163,17 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		/* set main_box fullscreeen-styles */
 		this.DOM_obj.main_box.css('position', 'fixed');
-		this.DOM_obj.main_box.css('top', '5px');
-		this.DOM_obj.main_box.css('right', '5px');
-		this.DOM_obj.main_box.css('bottom', '5px');
-		this.DOM_obj.main_box.css('left', '5px');
+		this.DOM_obj.main_box.css('left', '0');
+		this.DOM_obj.main_box.css('top', '0');
+		this.DOM_obj.main_box.css('width', '100%');
+		this.DOM_obj.main_box.css('height', '100%');
+		this.DOM_obj.main_box.css('border', '5px solid gray');
 		this.DOM_obj.main_box.css('background', 'white');
 		this.DOM_obj.main_box.css('z-index', '9999');
-		this.DOM_obj.main_box.css('max-width', 'calc(100% - 10px)');
-		this.DOM_obj.main_box.css('max-height', 'calc(100% - 10px)');
 
-		/* set showrooms height and consider the button height */
-		this.DOM_obj.showroom.css('height', 'calc(100% - '+this.DOM_obj.controls.outerHeight()+'px)');
 
 		/* set refreshing styles at start */
-		this.set_fullpage_canvas_dimensions();
+		this.set_fullpage_dimensions();
 	};
 	/**
 	 *  @description This function reverts the fullpage sized canvas to a normal size.
@@ -1130,49 +1188,84 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* unset main_box fullscreeen-styles */
 		this.DOM_obj.main_box.css('position', '');
 		this.DOM_obj.main_box.css('top', '');
-		this.DOM_obj.main_box.css('right', '');
-		this.DOM_obj.main_box.css('bottom', '');
 		this.DOM_obj.main_box.css('left', '');
+		this.DOM_obj.main_box.css('width', '');
+		this.DOM_obj.main_box.css('height', '');
+		this.DOM_obj.main_box.css('border', '');
 		this.DOM_obj.main_box.css('background', '');
 		this.DOM_obj.main_box.css('z-index', '');
-		this.DOM_obj.main_box.css('max-width', '');
-		this.DOM_obj.main_box.css('max-height', '');
 
-		/* unset showrooms height */
-		this.DOM_obj.showroom.css('height', '');
+
 
 		/* unset canvas_container size modification */
-		this.DOM_obj.canvas_container.css('width', '');
-		this.DOM_obj.canvas_container.css('height', '');
-		this.DOM_obj.canvas_container.css('margin-left', '');
-		this.DOM_obj.canvas_container.css('margin-right', '');
+		this.set_normal_dimensions();
+
+	};
+
+
+
+	/**
+	 *  @description Unsets the dimensions of the canvas_container.
+	 */
+	ThrixtyPlayer.MainClass.prototype.set_normal_dimensions = function(){
+		/* set showrooms dimensions */
+
+		var showroom_width = this.DOM_obj.main_box.width();
+		var showroom_height = showroom_width / this.small.image_ratio;
+
+		this.DOM_obj.showroom.css('width', showroom_width+'px');
+		this.DOM_obj.showroom.css('height', showroom_height+'px');
+
+
+		/* set canvas_container dimensions */
+
+		var canvas_container_width = showroom_width;
+		var canvas_container_height = showroom_height;
+		var canvas_container_x = 0;
+		var canvas_container_y = 0;
+
+
+		this.DOM_obj.canvas_container.css('width', canvas_container_width+'px');
+		this.DOM_obj.canvas_container.css('height', canvas_container_height+'px');
+		this.DOM_obj.canvas_container.css('margin-left', canvas_container_x+'px');
+		this.DOM_obj.canvas_container.css('margin-top', canvas_container_y+'px');
 	};
 	/**
 	 *  @description Sets the dimensions of the canvas_container.
 	 */
-	ThrixtyPlayer.MainClass.prototype.set_fullpage_canvas_dimensions = function(){
+	ThrixtyPlayer.MainClass.prototype.set_fullpage_dimensions = function(){
 		/* dont do anything, when not even in fullpage */
 		if( this.is_fullpage ){
 
+			/* set showrooms dimensions and consider the button height */
+			var showroom_width = this.DOM_obj.main_box.width();
+			var showroom_height = this.DOM_obj.main_box.height()-50;
+
+			this.DOM_obj.showroom.css('width', showroom_width+'px');
+			this.DOM_obj.showroom.css('height', showroom_height+'px');
+
+
+
 			/* gather basic information */
-			var showroom_width = this.DOM_obj.showroom.width();
-			var showroom_height = this.DOM_obj.showroom.height();
 			if( !this.is_zoomed ){
-				var image_aspect_ratio = this.drawing_handler.image_aspect_ratio.small;
+				var image_aspect_ratio = this.small.image_ratio;
 			} else {
-				var image_aspect_ratio = this.drawing_handler.image_aspect_ratio.large;
+				var image_aspect_ratio = this.large.image_ratio;
 			}
 
-			/* calculate dimensions */
-			var current_showroom_aspect_ratio = showroom_width / showroom_height;
-			if( current_showroom_aspect_ratio <= image_aspect_ratio ){ /* portrait orientation */
+			/* showroom aspect ratio for orientation */
+			var showroom_aspect_ratio = showroom_width / showroom_height;
+
+			/* portrait orientation [] */
+			if( showroom_aspect_ratio <= image_aspect_ratio ){
 				var canvas_container_width  = showroom_width;
 				var canvas_container_height = showroom_width/image_aspect_ratio;
 
 				var canvas_container_x      = 0;
 				var canvas_container_y      = (showroom_height-canvas_container_height)/2;
 
-			} else { /* landscape orientation */
+			/* landscape orientation [___] */
+			} else {
 				var canvas_container_width  = showroom_height*image_aspect_ratio;
 				var canvas_container_height = showroom_height;
 
@@ -1180,41 +1273,16 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				var canvas_container_y      = 0
 			}
 
+
+
 			/* assign canvas dimensions */
 			this.DOM_obj.canvas_container.css('width', canvas_container_width+'px');
 			this.DOM_obj.canvas_container.css('height', canvas_container_height+'px');
-
 			this.DOM_obj.canvas_container.css('margin-left', canvas_container_x+'px');
 			this.DOM_obj.canvas_container.css('margin-top', canvas_container_y+'px');
-
 		}
 	};
-	/**
-	 *  @description Sets the width and height attributes of the canvasses to the width of th specified element.
-	 */
-	ThrixtyPlayer.MainClass.prototype.resize_canvasses_to_dimensions_of = function(element){
-		/* show and hide are being used because of REASONS! */
-		/* (the reasons are - what else could it be - Internet Explorer...) */
-		jQuery(element).show();
 
-		/* background */
-		this.DOM_obj.bg_canvas[0].width = element.naturalWidth;
-		this.DOM_obj.bg_canvas[0].height = element.naturalHeight;
-
-		/* main */
-		this.DOM_obj.main_canvas[0].width = element.naturalWidth;
-		this.DOM_obj.main_canvas[0].height = element.naturalHeight;
-
-		/* minimap */
-		this.DOM_obj.minimap_canvas[0].width = element.naturalWidth;
-		this.DOM_obj.minimap_canvas[0].height = element.naturalHeight;
-
-		/* zoom box */
-		this.DOM_obj.zoom_canvas[0].width = element.naturalWidth;
-		this.DOM_obj.zoom_canvas[0].height = element.naturalHeight;
-
-		jQuery(element).hide();
-	};
 
 
 
@@ -1252,23 +1320,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			}
 		}
 	};
-
-
-
-
-
-	/* translates minimap coordinates */
-	ThrixtyPlayer.MainClass.prototype.minimap_to_main_coords = function(coords){
-		return {
-			x: ( ( coords.x - this.DOM_obj.minimap_canvas.offset().left ) / this.drawing_handler.image_size_ratio.w ) + this.DOM_obj.minimap_canvas.offset().left,
-			y: ( ( coords.y - this.DOM_obj.minimap_canvas.offset().top  ) / this.drawing_handler.image_size_ratio.h ) + this.DOM_obj.minimap_canvas.offset().top,
-		};
-	};
-
-
-
-
-
 	/**
 	 *  @description This function sets the base frequencies of the image objects.<br>
 	 *    The frequencies are different, when there are different amounts of images.
@@ -1277,6 +1328,27 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.small.frequency = Math.ceil(this.small.images_count / this.settings.seconds_per_turn);
 		this.large.frequency = Math.ceil(this.large.images_count / this.settings.seconds_per_turn);
 	};
+
+
+
+
+
+	/* translates minimap coordinates */
+	ThrixtyPlayer.MainClass.prototype.minimap_to_main_coords = function(coords){
+		// TODO: size ratio verallgemeinern
+		var size_ratio_w = this.small.image_width / this.large.image_width;
+		var size_ratio_h = this.small.image_height / this.large.image_height;
+		return {
+			x: ( ( coords.x - this.DOM_obj.minimap_canvas.offset().left ) / size_ratio_w ) + this.DOM_obj.minimap_canvas.offset().left,
+			y: ( ( coords.y - this.DOM_obj.minimap_canvas.offset().top  ) / size_ratio_h ) + this.DOM_obj.minimap_canvas.offset().top,
+		};
+	};
+
+
+
+
+
+
 	/**
 	 *  @description This function increases the rotation speed by 5 images per second. (max 100)
 	 */

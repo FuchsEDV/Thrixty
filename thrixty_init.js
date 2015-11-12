@@ -65,6 +65,18 @@ var ThrixtyPlayer = {
 };
 
 
+
+
+
+
+/* TODO: überlegen, ob man nur bei finden von player instanzen auch die dateien einbinden muss */
+
+
+
+
+
+
+
 /* example code for debug information export */
 /**
 	var a = {

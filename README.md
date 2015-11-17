@@ -17,8 +17,8 @@ ToC:
 * 11.: <a href="#user-content-11-license">License</a>
 
 
-<a name="punkt-1" aria-hidden="true"></a>
-### 1.) Thrixty Player
+
+### <a name="punkt-1" aria-hidden="true">1.) Thrixty Player</a>
 The Thrixty Player is a tool to show off your 360° Photography.<br>
 It is using HTML5 CANVAS elements to display sequences.
 

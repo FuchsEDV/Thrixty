@@ -4,21 +4,21 @@
 Version: 1.5 | 17.11.2015
 
 ToC:
-* 1.: Thrixty Player
-* 2.: Example
-* 3.: Usage
-* 4.: Installation Tutorial
-* 5.: Parameters
-* 6.: Customization
-* 7.: General Description
-* 8.: Documentation
-* 9.: Change Log
-* 10.: Planned Features and Changes
-* 11.: License
+* 1.: <a href="#punkt-1">Thrixty Player</a>
+* 2.: <a href="#user-content-2-example">Example</a>
+* 3.: <a href="#user-content-3-usage">Usage</a>
+* 4.: <a href="#user-content-4-installation-tutorial">Installation Tutorial</a>
+* 5.: <a href="#user-content-5-parameters">Parameters</a>
+* 6.: <a href="#user-content-6-customization">Customization</a>
+* 7.: <a href="#user-content-7-general-description">General Description</a>
+* 8.: <a href="#user-content-8-documentation">Documentation</a>
+* 9.: <a href="#user-content-9-change-log">Change Log</a>
+* 10.: <a href="#user-content-10-planned-features-and-changes-unordered">Planned Features and Changes</a>
+* 11.: <a href="#user-content-11-license">License</a>
 
 
+<a name="punkt-1" aria-hidden="true"></a>
 ### 1.) Thrixty Player
-
 The Thrixty Player is a tool to show off your 360° Photography.<br>
 It is using HTML5 CANVAS elements to display sequences.
 
@@ -233,6 +233,7 @@ Here is an example that will make the object have a orange border and the button
 ### 7.) General Description
 
 This section explains shortly, what the javascript is doing:<br>
+<br>
 After including the initializing script "thrixty_init.js" in your documents head, it will wait for the whole site to finish loading.<br>
 It will then start by looking for all divs with class thrixty-player ("div.thrixty-player").<br>
 On each found div it will start a new player instance, allowing you to place multiple players on each site.<br>

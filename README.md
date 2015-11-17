@@ -113,9 +113,10 @@ For semantics you should put it into the head-section.
 
 
 ### 5.) Parameters
-	Here is a list of the usable params (in the form of HTML-attributes):
-	| <b>option</b> | <b>description</b> | <b>possible values</b> |
-	| :--- | :--- |
+Here is a list of the usable params (in the form of HTML-attributes):
+| <b>option</b> | <b>description</b> | <b>possible values</b> |
+| :--- | :--- |
+| a | b | c |
 
 
 ### 6.) Customization

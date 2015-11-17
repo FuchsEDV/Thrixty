@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.5 | 17.11.2015
+Version: dev1.6 | 17.11.2015
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -122,7 +122,7 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.5</td>
+		<td colspan="3" style="padding-left: 3em;">Version dev1.6</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -247,7 +247,7 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
-
+* Vdev1.6:
 * V1.5:
 	* Most browser-developers are not able to follow conventions.<br>
 	Thus positions and sizes are now calculated instead of declarated.

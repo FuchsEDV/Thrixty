@@ -4,21 +4,21 @@
 Version: 1.5 | 17.11.2015
 
 ToC:
-* 1.: <a href="#punkt-1">Thrixty Player</a>
-* 2.: <a href="#user-content-2-example">Example</a>
-* 3.: <a href="#user-content-3-usage">Usage</a>
-* 4.: <a href="#user-content-4-installation-tutorial">Installation Tutorial</a>
-* 5.: <a href="#user-content-5-parameters">Parameters</a>
-* 6.: <a href="#user-content-6-customization">Customization</a>
-* 7.: <a href="#user-content-7-general-description">General Description</a>
-* 8.: <a href="#user-content-8-documentation">Documentation</a>
-* 9.: <a href="#user-content-9-change-log">Change Log</a>
-* 10.: <a href="#user-content-10-planned-features-and-changes-unordered">Planned Features and Changes</a>
-* 11.: <a href="#user-content-11-license">License</a>
+* 1.: <a href="#1-thrixty-player">Thrixty Player</a>
+* 2.: <a href="#2-example">Example</a>
+* 3.: <a href="#3-usage">Usage</a>
+* 4.: <a href="#4-installation-tutorial">Installation Tutorial</a>
+* 5.: <a href="#5-parameters">Parameters</a>
+* 6.: <a href="#6-customization">Customization</a>
+* 7.: <a href="#7-general-description">General Description</a>
+* 8.: <a href="#8-documentation">Documentation</a>
+* 9.: <a href="#9-change-log">Change Log</a>
+* 10.: <a href="#10-planned-features-and-changes-unordered">Planned Features and Changes</a>
+* 11.: <a href="#11-license">License</a>
 
 
 
-### <a name="punkt-1" aria-hidden="true">1.) Thrixty Player</a>
+### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.<br>
 It is using HTML5 CANVAS elements to display sequences.
 

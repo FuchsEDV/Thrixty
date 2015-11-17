@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.4
+ *  @version 1.5
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */
@@ -355,6 +355,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				if( this.is_click ){
 					this.player.toggle_rotation();
 					this.is_click = false;
+					e.preventDefault();
 				}
 				/* B2 | user stops moving section */
 				if( this.section_move.prepared ){
@@ -370,46 +371,54 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* touchstart */
 			ThrixtyPlayer.EventHandler.prototype.document_touchstart = function(e){/**/};
 			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchstart = function(e){
-				/* C1 | user wants to turn the object */
-				this.prepare_object_turn(e.originalEvent.pageX, e.originalEvent.pageY);
-				e.preventDefault();
-				/* register this as starting a click */
-				this.is_click = true;
-			};
-			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_touchstart = function(e){
-				// objektausschnitt verschieben
-				/* C2 | user wants to move the section */
-				if( this.player.is_zoomed ){
-					this.prepare_section_move("minimap");
-					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY); /* instantly snap to target position */
+				if( e.originalEvent.touches.length == 1 ){
+					/* C1 | user wants to turn the object */
+					this.prepare_object_turn(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+					/* register this as starting a click */
+					this.is_click = true;
 					e.preventDefault();
 				}
 			};
+			ThrixtyPlayer.EventHandler.prototype.minimap_canvas_touchstart = function(e){
+				if( e.originalEvent.touches.length == 1 ){
+					// objektausschnitt verschieben
+					/* C2 | user wants to move the section */
+					if( this.player.is_zoomed ){
+						this.prepare_section_move("minimap");
+						this.execute_section_move(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY); /* instantly snap to target position */
+						e.preventDefault();
+					}
+				}
+			};
 			ThrixtyPlayer.EventHandler.prototype.marker_touchstart = function(e){
-				// objektausschnitt verschieben
-				/* C2 | user wants to move the section */
-				if( this.player.is_zoomed ){
-					this.prepare_section_move("marker");
-					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY); /* instantly snap to target position */
-					e.preventDefault();
+				if( e.originalEvent.touches.length == 1 ){
+					// objektausschnitt verschieben
+					/* C2 | user wants to move the section */
+					if( this.player.is_zoomed ){
+						this.prepare_section_move("marker");
+						this.execute_section_move(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY); /* instantly snap to target position */
+						e.preventDefault();
+					}
 				}
 			};
 		/* /touchstart */
 		/* touchmove */
 			ThrixtyPlayer.EventHandler.prototype.document_touchmove = function(e){
-				/* stop scrolling in fullpage mode */
-				if( this.player.is_fullpage ){
-					e.preventDefault();
-				}
-				/* C1 | user turns the object */
-				if( this.object_turn.prepared ){
-					this.execute_object_turn(e.originalEvent.pageX, e.originalEvent.pageY);
-					e.preventDefault();
-				}
-				/* C2 | user moves the section */
-				if( this.section_move.prepared ){
-					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY);
-					e.preventDefault();
+				if( e.originalEvent.touches.length == 1 ){
+					/* stop scrolling in fullpage mode */
+					if( this.player.is_fullpage ){
+						e.preventDefault();
+					}
+					/* C1 | user turns the object */
+					if( this.object_turn.prepared ){
+						this.execute_object_turn(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+						e.preventDefault();
+					}
+					/* C2 | user moves the section */
+					if( this.section_move.prepared ){
+						this.execute_section_move(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+						e.preventDefault();
+					}
 				}
 			};
 			ThrixtyPlayer.EventHandler.prototype.main_canvas_touchmove = function(e){/**/};
@@ -418,15 +427,15 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* /touchmove */
 		/* touchend */
 			ThrixtyPlayer.EventHandler.prototype.document_touchend = function(e){
-				/* C1 | user stop turning the object */
+				/* C1 | user stops turning the object */
 				if( this.object_turn.prepared ){
-					this.execute_object_turn(e.originalEvent.pageX, e.originalEvent.pageY); /* do a final object turn */
+					// this.execute_object_turn(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY); /* do a final object turn */
 					this.stop_object_turn();
 					e.preventDefault();
 				}
 				/* C2 | user stops moving section */
 				if( this.section_move.prepared ){
-					this.execute_section_move(e.originalEvent.pageX, e.originalEvent.pageY); /* do a final section move */
+					// this.execute_section_move(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY); /* do a final section move */
 					this.stop_section_move();
 					e.preventDefault();
 				}
@@ -536,7 +545,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		 */
 		ThrixtyPlayer.EventHandler.prototype.resize_window_event = function(resize_event){
 			if( this.player.is_fullpage ){
-				this.player.set_fullpage_canvas_dimensions();
+				this.player.set_fullpage_dimensions();
+			} else {
+				this.player.set_normal_dimensions();
 			}
 		};
 	/** /Window Resize */

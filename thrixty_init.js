@@ -1,12 +1,11 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.4
+ *  @version 1.5
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
 ;"use strict";
-var thrixty_version = "1.4";
 
 /* 1.: define ThrixtyPlayer Namespace */
 /**
@@ -17,6 +16,7 @@ var thrixty_version = "1.4";
  *  @property {array} initialized_players Container for all Players initialized.
  */
 var ThrixtyPlayer = {
+	version: "1.5",
 	mainpath: "",
 	initialized_players: [],
 	logs: {
@@ -63,6 +63,18 @@ var ThrixtyPlayer = {
 
 
 };
+
+
+
+
+
+
+/* TODO: überlegen, ob man nur bei finden von player instanzen auch die dateien einbinden muss */
+
+
+
+
+
 
 
 /* example code for debug information export */
@@ -225,8 +237,7 @@ var ThrixtyPlayer = {
 			});
 			return all_players;
 		})();
-		console.log(ThrixtyPlayer.initialized_players);
-		console.log(ThrixtyPlayer.logs);
+		console.log(ThrixtyPlayer);
 	};
 
 

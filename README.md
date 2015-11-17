@@ -10,19 +10,24 @@ ToC:
 * 4.: Installation Tutorial
 * 5.: Parameters
 * 6.: Customization
-* 7.: General Information
+* 7.: General Description
 * 8.: Documentation
 * 9.: Change Log
 * 10.: Planned Features and Changes
 * 11.: License
 
+
 ### 1.) Thrixty Player
+
 The Thrixty Player is a tool to show off your 360° Photography.<br>
 It is using HTML5 CANVAS elements to display sequences.
 
+
 ### 2.) Example
+
 To view an example, download [these](https://github.com/FuchsEDV/Thrixty_example) two files.<br>
 Unzip them in the same folder as the corefiles.
+
 
 ### 3.) Usage
 
@@ -43,6 +48,7 @@ __Keboard:__<br>
 	[F] => Fullscreen on/off
 	[ESC] => Stop Zoom, Rotation, Fullscreen all at once.
 	```
+
 
 ### 4.) Installation Tutorial
 
@@ -111,8 +117,8 @@ For semantics you should put it into the head-section.
 * ###### Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
-
 ### 5.) Parameters
+
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
@@ -223,31 +229,24 @@ Here is an example that will make the object have a orange border and the button
 	}
 	```
 
-### 7.) General Information
 
-					(What is the player doing?)
-					The Player is searching for thrixty divs with class stuff.
-					inits player instance on each.
-					asdasd
+### 7.) General Description
 
-					Every global property is stored in the namespace "ThrixtyPlayer" together with the classes.<br>
-					At initialization the namespace object is dumped into the console.<br>
-					(The easest way to access this is by using your browsers developer tools - for example "Firebug" for Firefox.)<br>
-					(If you cant find the object in the console, you can manually execute "console.log(ThrixtyPlayer);")<br>
-					<br>
-					Inspecting that object will tell you i.a.:<br>
+This section explains shortly, what the javascript is doing:<br>
+After including the initializing script "thrixty_init.js" in your documents head, it will wait for the whole site to finish loading.<br>
+It will then start by looking for all divs with class thrixty-player ("div.thrixty-player").<br>
+On each found div it will start a new player instance, allowing you to place multiple players on each site.<br>
+<br>
+The initializing script also creates the namespace "ThrixtyPlayer", which holds the classes, namespacewide variables and every instantiated player.<br>
 
-					| Property | Corresponding Property |
-					| :--- | :--- |
-					| Version | ThrixtyPlayer.version |
-					| List of Player Instances | ThrixtyPlayer.initialized_players |
-					| Application Log | ThrixtyPlayer.logs.main_log |
-					| Specific Player Instance Log | ThrixtyPlayer.logs.player_logs |
 
 ### 8.) Documentation
+
 [[Not yet done](http://www.fuchs-edv.de)]
 
+
 ### 9.) Change Log
+
 * V1.5:
 	* Most browser-developers are not able to follow conventions.<br>
 	Thus positions and sizes are now calculated instead of declarated.
@@ -257,11 +256,7 @@ Here is an example that will make the object have a orange border and the button
 	* Moved version number into the ThrixtyPlayer Object
 	* Implemented a parameter for Autoplay: "thrixty-autoplay".
 	* Load-Button now stays hidden, until the preview image becomes visible.
-
-
-* Readme: section on parameters
-
-
+	* Improved Readme with a section on parameters.
 * V1.4:
 	* Rewrote Event Handler.
 	* Fixed iPad Support. (maybe other mobile browsers are still broken...)
@@ -305,7 +300,9 @@ Here is an example that will make the object have a orange border and the button
 	* Keyboard Shortcuts
 	* Drag Rotation
 
+
 ### 10.) Planned Features and Changes (unordered)
+* Parameters for autoload and autoplay
 * Implement Event Debouncing
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
 * Log export for debugging purposes.
@@ -314,7 +311,9 @@ Here is an example that will make the object have a orange border and the button
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
 
+
 ### 11.) License
+
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 

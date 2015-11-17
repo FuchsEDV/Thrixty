@@ -1,19 +1,20 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.4.1 | 28.10.2015
+Version: 1.5 | 17.11.2015
 
 ToC:
 * 1.: Thrixty Player
 * 2.: Example
 * 3.: Usage
 * 4.: Installation Tutorial
-* 5.: Customization
-* 6.: General Information
-* 7.: Documentation
-* 8.: Change Log
-* 9.: Planned Features and Changes
-* 10.: License
+* 5.: Parameters
+* 6.: Customization
+* 7.: General Information
+* 8.: Documentation
+* 9.: Change Log
+* 10.: Planned Features and Changes
+* 11.: License
 
 ### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.<br>
@@ -111,7 +112,13 @@ For semantics you should put it into the head-section.
 
 
 
-### 5.) Customization
+### 5.) Parameters
+	Here is a list of the usable params (in the form of HTML-attributes):
+	| <b>option</b> | <b>description</b> | <b>possible values</b> |
+	| :--- | :--- |
+
+
+### 6.) Customization
 
 Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.<br>
 Create a CSS file and include it after the initialization file.<br>
@@ -127,7 +134,7 @@ Here is an example that will make the object have a orange border and the button
 	}
 	```
 
-### 6.) General Information
+### 7.) General Information
 
 					(What is the player doing?)
 					The Player is searching for thrixty divs with class stuff.
@@ -148,16 +155,24 @@ Here is an example that will make the object have a orange border and the button
 					| Application Log | ThrixtyPlayer.logs.main_log |
 					| Specific Player Instance Log | ThrixtyPlayer.logs.player_logs |
 
-### 7.) Documentation
+### 8.) Documentation
 [[Not yet done](http://www.fuchs-edv.de)]
 
-### 8.) Change Log
-* V1.5 (planned):
-	* Implement Event Debouncing
-* V1.4.1:
+### 9.) Change Log
+* V1.5:
+	* Most browser-developers are not able to follow conventions.<br>
+	Thus positions and sizes are now calculated instead of declarated.
+	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
+	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look above)
 	* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
-	* when the number of initialized players on one page exceeds 3, autoplay is stopped
-	* moved version number into the ThrixtyPlayer Object
+	* Moved version number into the ThrixtyPlayer Object
+	* Implemented a parameter for Autoplay: "thrixty-autoplay".
+	* Load-Button now stays hidden, until the preview image becomes visible.
+
+
+* Readme: section on parameters
+
+
 * V1.4:
 	* Rewrote Event Handler.
 	* Fixed iPad Support. (maybe other mobile browsers are still broken...)
@@ -201,16 +216,16 @@ Here is an example that will make the object have a orange border and the button
 	* Keyboard Shortcuts
 	* Drag Rotation
 
-### 9.) Planned Features and Changes
+### 10.) Planned Features and Changes (unordered)
+* Implement Event Debouncing
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
 * Log export for debugging purposes.
 * Preview picture (the first small image).
 * Responsiveness improvements.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Readme: section on customization
 
-### 10.) License
+### 11.) License
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
 

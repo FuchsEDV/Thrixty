@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.4.1
+ *  @version 1.5
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -76,6 +76,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			seconds_per_turn: 5,
 			sensitivity_x: 20,
 			sensitivity_y: 50,
+			autoplay: true,
 		};
 		/* The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"! */
 
@@ -310,6 +311,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						}
 					}
 					break;
+				case "thrixty-autoplay":
+					if( attr.value == "" || attr.value == "0" || attr.value == "off" ){
+						this.settings.autoplay = false;
+					} else if( attr.value == "1" || attr.value == "on" ){
+						this.settings.autoplay = true;
+					}
 				default:
 					break;
 			}
@@ -706,7 +713,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					if( ThrixtyPlayer.is_mobile ){
 						this.load_one_image(this.small.images[0], this.DOM_obj.image_cache_small);
 						this.DOM_obj.load_overlay.show();
-						this.DOM_obj.load_btn.show();
 					} else {
 						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
 					}
@@ -732,6 +738,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.play_btn.prop('disabled', true);
 					this.DOM_obj.next_btn.prop('disabled', true);
 					this.DOM_obj.zoom_btn.prop('disabled', true);
+
+					if( ThrixtyPlayer.is_mobile ){
+						this.DOM_obj.load_btn.show();
+					}
 				}
 			break;
 			case s_load == s_count && l_load == 0:                      /* 3 - playable */
@@ -824,15 +834,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description This function is called, when all base images are loaded.
 	 */
 	ThrixtyPlayer.MainClass.prototype.all_images_loaded = function(){
-		/* start rotation for startup. */
-		/* autostart depends on initialized player count. */
-		/* 3 or less players are allowed for autoplay */
-		if( ThrixtyPlayer.initialized_players.length <= 3 ){
-			/* autostart / autoplay */
-			ThrixtyPlayer.log("autostart animation", this.player_id);
+		/* autostart / autoplay */
+		if( this.settings.autoplay ){
+			ThrixtyPlayer.log("Autoplay started.", this.player_id);
 			this.start_rotation();
 		} else {
-			ThrixtyPlayer.log("dont autostart animation", this.player_id);
+			ThrixtyPlayer.log("No Autoplay.", this.player_id);
 		}
 	};
 
@@ -1161,7 +1168,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.DOM_obj.size_btn.attr('state', 'normalsize');
 
 
-		/* set main_box fullscreeen-styles */
+		/* set main_box fullpage-styles */
 		this.DOM_obj.main_box.css('position', 'fixed');
 		this.DOM_obj.main_box.css('left', '0');
 		this.DOM_obj.main_box.css('top', '0');

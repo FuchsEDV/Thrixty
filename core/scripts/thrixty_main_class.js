@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version dev1.6
+ *  @version dev1.5.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -57,6 +57,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					load_btn: jQuery("<button id=\"load_btn\" style=\"display: none;\"></button>"),
 				zoom_canvas: jQuery("<canvas id=\"zoom_canvas\" width=\"0\" height=\"0\" style=\"display: none;\"></canvas>"),
 				controls_cache: jQuery("<div class=\"controls_cache\" style=\"display: none;\"></div>"),
+				viewport_meta: jQuery("<meta name=\"viewport\" content=\"\">"),
 				image_cache_small: jQuery("<div class=\"image_cache_small\" style=\"display: none;\"></div>"),
 				image_cache_large: jQuery("<div class=\"image_cache_large\" style=\"display: none;\"></div>"),
 		}
@@ -350,7 +351,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.control_container_one.append(this.DOM_obj.play_btn);
 					this.DOM_obj.control_container_one.append(this.DOM_obj.next_btn);
 					this.DOM_obj.control_container_one.append(this.DOM_obj.zoom_btn);
-					this.DOM_obj.control_container_one.append(this.DOM_obj.size_btn);
+					if( !ThrixtyPlayer.is_mobile ){
+						this.DOM_obj.control_container_one.append(this.DOM_obj.size_btn);
+					}
 				this.DOM_obj.controls.append( jQuery("<div style=\"clear: both;\"></div>") );
 
 			/* thi is the overlay for the load confirmation */
@@ -359,6 +362,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 			/* Zoom Box for Outbox Zoom (invisible on stadard) */
 			this.DOM_obj.main_box.append(this.DOM_obj.zoom_canvas);
+
+			/* include viewport meta, for being able to reset zoom */
+			this.DOM_obj.main_box.append(this.DOM_obj.viewport_meta);
 
 			/* these will store the image preloads */
 			/* this.DOM_obj.main_box.append(this.DOM_obj.controls_cache); */
@@ -1161,12 +1167,15 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.enter_fullpage = function(){
 		this.stop_zoom();
-		// this.stop_rotation();
 
 		/* set fullpage state */
 		this.is_fullpage = true;
 		this.DOM_obj.size_btn.attr('state', 'normalsize');
 
+		/* disable scaling (only matters on mobiles) */
+		// this.DOM_obj.main_box.append(this.DOM_obj.viewport_meta);
+		this.DOM_obj.viewport_meta.attr('content', 'maximum-scale=1.0');
+		// window.dispatchEvent(new Event('resize'));
 
 		/* set main_box fullpage-styles */
 		this.DOM_obj.main_box.css('position', 'fixed');
@@ -1181,6 +1190,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		/* set refreshing styles at start */
 		this.set_fullpage_dimensions();
+
+
+
+
 	};
 	/**
 	 *  @description This function reverts the fullpage sized canvas to a normal size.
@@ -1188,9 +1201,17 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	ThrixtyPlayer.MainClass.prototype.quit_fullpage = function(){
 		this.stop_zoom();
 
+
 		/* reset fullpage state */
 		this.is_fullpage = false;
 		this.DOM_obj.size_btn.attr('state', 'fullpage');
+
+
+		/* remove scaling-disable (only matters on mobiles) */
+		this.DOM_obj.viewport_meta.attr('content', '');
+		// this.DOM_obj.viewport_meta.remove();
+		// window.dispatchEvent(new Event('resize'));
+
 
 		/* unset main_box fullscreeen-styles */
 		this.DOM_obj.main_box.css('position', '');
@@ -1203,9 +1224,11 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.DOM_obj.main_box.css('z-index', '');
 
 
-
 		/* unset canvas_container size modification */
 		this.set_normal_dimensions();
+
+
+
 
 	};
 

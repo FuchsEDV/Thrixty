@@ -102,6 +102,7 @@ For semantics you should put it into the head-section.
 	```
 
 * Typical problems at this stage:
+	* Not reading the [documentation](#4-installation-tutorial).
 	* thrixty_init.js not found | path incorrect; ressource not accessible
 	* thrixty_custom.css not found | path incorrect; ressource not accessible
 	* Filelists not found | paths incorrect; ressources not accessible

@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: dev1.5.1 | 17.11.2015
+Version: 1.5.1 | 17.11.2015
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -114,7 +114,7 @@ For semantics you should put it into the head-section.
 		* tabindex attribute - when using multiple players on one page - using the same value multiple times
 
 * When you are using any CMS or something similar, the same applies to the generated HTML!
-* ###### Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
+* <b>Are you using Wordpress?</b> Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 5.) Parameters
@@ -122,7 +122,7 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version dev1.5.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 1.5.1</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -243,14 +243,14 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 ### 8.) Documentation
 
-[[Not yet done](http://www.fuchs-edv.de)]
+[You are looking at it...](#5-parameters)
 
 
 ### 9.) Change Log
-* Vdev1.5.1:
-	* Fullpage disabled on mobile devices - unneccessary and not working properly.
+* V1.5.1:
+	* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
 * V1.5:
-	* Most browser-developers are not able to follow conventions.<br>
+	* Browser-developers are not able to follow conventions or standards.<br>
 	Thus positions and sizes are now calculated instead of declarated.
 	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
 	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look above)

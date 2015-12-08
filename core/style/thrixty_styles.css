@@ -150,10 +150,10 @@
 		width: 100%;
 		height: 50px;
 		padding: 5px 10% 5px 10%;
+		text-align: center;
 	}
 		.thrixty-player .control_container{
 			height: 40px;
-			width: 250px;
 			padding: 0;
 			margin: 0 auto;
 		}

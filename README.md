@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.5 | 17.11.2015
+Version: 1.5.1 | 17.11.2015
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -102,6 +102,7 @@ For semantics you should put it into the head-section.
 	```
 
 * Typical problems at this stage:
+	* Not reading the [documentation](#4-installation-tutorial).
 	* thrixty_init.js not found | path incorrect; ressource not accessible
 	* thrixty_custom.css not found | path incorrect; ressource not accessible
 	* Filelists not found | paths incorrect; ressources not accessible
@@ -114,7 +115,7 @@ For semantics you should put it into the head-section.
 		* tabindex attribute - when using multiple players on one page - using the same value multiple times
 
 * When you are using any CMS or something similar, the same applies to the generated HTML!
-* ###### Are you using Wordpress? Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
+* <b>Are you using Wordpress?</b> Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 5.) Parameters
@@ -122,7 +123,7 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.5</td>
+		<td colspan="3" style="padding-left: 3em;">Version 1.5.1</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -243,18 +244,19 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 ### 8.) Documentation
 
-[[Not yet done](http://www.fuchs-edv.de)]
+[You are looking at it...](#5-parameters)
 
 
 ### 9.) Change Log
-
+* V1.5.1:
+	* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
 * V1.5:
-	* Most browser-developers are not able to follow conventions.<br>
+	* Browser-developers are not able to follow conventions or standards.<br>
 	Thus positions and sizes are now calculated instead of declarated.
 	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
 	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look above)
 	* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
-	* Moved version number into the ThrixtyPlayer Object
+	* Moved version number into the ThrixtyPlayer Object.
 	* Implemented a parameter for Autoplay: "thrixty-autoplay".
 	* Load-Button now stays hidden, until the preview image becomes visible.
 	* Improved Readme with a section on parameters.
@@ -303,14 +305,14 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 10.) Planned Features and Changes (unordered)
+* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once.)
 * Parameters for autoload and autoplay
 * Implement Event Debouncing
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
-* Log export for debugging purposes.
-* Preview picture (the first small image).
-* Responsiveness improvements.
+* Log export for debugging purposes.(function itself is there, but there is no function to do it)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
-* Settings File or similiar instead of an overload of html attributes. => Required for the more non-standardy options.
+* Settings File or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
+* Proper classes structure. :)
 
 
 ### 11.) License

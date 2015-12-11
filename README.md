@@ -311,8 +311,9 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
 * Log export for debugging purposes.(function itself is there, but there is no function to do it)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
-* Settings File or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Proper classes structure. :)
+* Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
+* Making a nice icon for the load-button.
+* Better class structure. :)
 
 
 ### 11.) License

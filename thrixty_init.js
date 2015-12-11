@@ -108,7 +108,7 @@ var ThrixtyPlayer = {
 
 
 	/* include jquery dependecy */
-	var jquery_path = ThrixtyPlayer.mainpath+"core/scripts/jquery-2.1.3.js";
+	var jquery_path = ThrixtyPlayer.mainpath+"core/scripts/jquery-2.1.4.js";
 	load_script_file( jquery_path, include_files );
 
 

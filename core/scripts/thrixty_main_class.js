@@ -1365,12 +1365,13 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 	/* translates minimap coordinates */
 	ThrixtyPlayer.MainClass.prototype.minimap_to_main_coords = function(coords){
-		// TODO: size ratio verallgemeinern
+		// TODO: generalize size ratio
 		var size_ratio_w = this.small.image_width / this.large.image_width;
 		var size_ratio_h = this.small.image_height / this.large.image_height;
+		// TODO: this fails in chrome, because they screwed up a part of the jquery function
 		return {
-			x: ( ( coords.x - this.DOM_obj.minimap_canvas.offset().left ) / size_ratio_w ) + this.DOM_obj.minimap_canvas.offset().left,
-			y: ( ( coords.y - this.DOM_obj.minimap_canvas.offset().top  ) / size_ratio_h ) + this.DOM_obj.minimap_canvas.offset().top,
+			x: ( ( coords.x - this.DOM_obj.main_box.offset().left ) / size_ratio_w ) + this.DOM_obj.main_box.offset().left,
+			y: ( ( coords.y - this.DOM_obj.main_box.offset().top  ) / size_ratio_h ) + this.DOM_obj.main_box.offset().top,
 		};
 	};
 

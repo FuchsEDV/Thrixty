@@ -61,7 +61,7 @@ So extract those two into the newly created "thrixty" folder.
 * Create a folder "360_objects" in the root folder of your website.<br>
 This folder is where you are gonna put all your objects.
 * For exampling purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
-* __When using the 360Shots Software to generate the files, you should just copy and paste the object folder__; ignore the rest of the files.
+* __When using the 360Shots Software to generate the files, you should only copy and paste the object folder__; ignore the rest of the files.
 * Your final folder structure should look like this:
 
 	```html

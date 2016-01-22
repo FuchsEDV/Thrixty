@@ -77,7 +77,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			cycle_duration: 5,
 			sensitivity_x: 20,
 			sensitivity_y: 50,
-			autoplay: true,
+			autoplay: -1,
 		};
 
 
@@ -310,10 +310,11 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					}
 					break;
 				case "thrixty-autoplay":
-					if( attr.value == "" || attr.value == "0" || attr.value == "off" ){
-						this.settings.autoplay = false;
-					} else if( attr.value == "1" || attr.value == "on" ){
-						this.settings.autoplay = true;
+					if( attr.value != "" ){
+						var tmp_val = parseInt(attr.value);
+						if( tmp_val >= -1 ){
+							this.settings.autoplay = tmp_val;
+						}
 					}
 				default:
 					break;
@@ -846,7 +847,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* autostart / autoplay */
 		if( this.settings.autoplay ){
 			ThrixtyPlayer.log("Autoplay started.", this.player_id);
-			this.start_rotation();
+
+			console.log("autoplay setting: "+this.settings.autoplay);
+			this.start_rotation(this.settings.autoplay);
 		} else {
 			ThrixtyPlayer.log("No Autoplay.", this.player_id);
 		}
@@ -859,10 +862,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	/**
 	 *  @description This function starts the rotation.
 	 */
-	ThrixtyPlayer.MainClass.prototype.start_rotation = function(){
+	ThrixtyPlayer.MainClass.prototype.start_rotation = function(times = -1){
 		var root = this;
 
-		var delay = 10;
+		var delay = 100;
+
+console.log(times);
 
 		/* stop possible rotation */
 		this.stop_rotation();

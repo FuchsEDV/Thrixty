@@ -180,7 +180,7 @@ Here is a list of the usable params (in the form of HTML-attributes):
 			The default turning direction is clockwise, when watched from above.<br>
 			You should set this option to backwards, when you photographed in counterclockwise direction.
 		</td>
-		<td class=""><b>forward / 1</b>, backward / -1</td>
+		<td class=""><b>forward / 0</b>, backward / 1</td>
 	</tr>
 	<tr>
 		<td class="">thrixty-cycle-duration</td>
@@ -257,15 +257,16 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 ### 9.) Change Log
 * V1.6dev:
+	*
 	* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.
 	* Renamed "seconds-per-turn" to "cycle-duration".
 * V1.5.1:
 	* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
 * V1.5:
+	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
+	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look previous)
 	* Browser-developers are not able to follow conventions or standards.<br>
 	Thus positions and sizes are now calculated instead of declarated.
-	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
-	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look above)
 	* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
 	* Moved version number into the ThrixtyPlayer Object.
 	* Implemented a parameter for Autoplay: "thrixty-autoplay".
@@ -318,7 +319,7 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 ### 10.) Planned Features and Changes (unordered)
 * The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once.)
 * Parameters for autoload and autoplay
-* Implement Event Debouncing
+* Implement Event Throttling / Debouncing
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
 * Log export for debugging purposes.(function itself is there, but there is no function to do it)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)

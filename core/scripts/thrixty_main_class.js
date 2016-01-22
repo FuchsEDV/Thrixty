@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.5.1
+ *  @version 1.6dev
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -73,13 +73,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			zoom_mode: "inbox",
 			position_indicator: "minimap",
 			outbox_position: "right",
-			direction: 1, /* 1|-1 <=> forward|backward */
-			seconds_per_turn: 5,
+			direction: 0, /* 0|1 <=> forward|backward */
+			cycle_duration: 5,
 			sensitivity_x: 20,
 			sensitivity_y: 50,
 			autoplay: true,
 		};
-		/* The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"! */
 
 
 		this.small = {
@@ -147,8 +146,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 		/* Rotation */
-		this.rotation_direction = 1; /* 1|-1 <=> forward|backward */
-		/* this.rotation_direction is designed to treat this.settings.direction as always being "forward" - hence multiplicate itself with it. */
 		this.interval_id = 0;
 
 
@@ -287,15 +284,15 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					}
 					break;
 				case "thrixty-direction":
-					if( attr.value == "1" || attr.value == "forward" ){
+					if( attr.value == "0" || attr.value == "forward" ){
+						this.settings.direction = 0;
+					} else if( attr.value == "1" || attr.value == "backward" ){
 						this.settings.direction = 1;
-					} else if( attr.value == "-1" || attr.value == "backward" ){
-						this.settings.direction = -1;
 					}
 					break;
-				case "thrixty-seconds-per-turn":
+				case "thrixty-cycle-duration":
 					if( attr.value != "" ){
-						this.settings.seconds_per_turn = parseInt(attr.value);
+						this.settings.cycle_duration = parseInt(attr.value);
 					}
 					break;
 				case "thrixty-sensitivity-x":
@@ -429,6 +426,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	ThrixtyPlayer.MainClass.prototype.parse_filelist = function(load_obj, filelist){
 		/* parse die liste aus und speichere die sources im array */
 		var image_paths = filelist.replace(/[\s'"]/g,"").split(",");
+
+		/* option for reverse turned on, reverse array */
+		if( this.settings.direction != 0 ){
+			image_paths.reverse();
+		}
+
 		/* loop through all paths */
 		var pic_count = image_paths.length;
 		/*( if length <= 0 raise error )*/
@@ -870,15 +873,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.DOM_obj.play_btn.attr('state', 'pause')
 
 		/* define repeating function */
-		if( this.rotation_direction > 0 ){ /* forward */
-			var rotation_func = function(){
-				root.nextImage();
-			};
-		} else if( this.rotation_direction < 0 ){ /* backward */
-			var rotation_func = function(){
-				root.previousImage();
-			};
-		}
+		var rotation_func = function(){
+			root.nextImage();
+		};
 
 		/* calculate delay */
 		if( this.is_zoomed ){
@@ -946,6 +943,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* the basic movement is backwards, so invert the value */
 		anzahl_nextimages = anzahl_nextimages * -1;
 
+
 		if( this.is_zoomed ){
 			this.change_active_image_id(this.large, anzahl_nextimages);
 			/* assign large to small */
@@ -1000,9 +998,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description This function changes the load_object's active_image_id by the specified amount.<br>Only values from 0 to images_count-1 gets assigned.
 	 */
 	ThrixtyPlayer.MainClass.prototype.change_active_image_id = function(load_obj, amount){
-		/* The given amount is multiplicated with the BASE direction, so whichever base direction is used, it will still be treated as "forward". */
-		amount = amount * this.settings.direction;
-
 		var id = load_obj.active_image_id;
 		var count = load_obj.images_count;
 
@@ -1355,8 +1350,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *    The frequencies are different, when there are different amounts of images.
 	 */
 	ThrixtyPlayer.MainClass.prototype.set_image_frequencies = function(){
-		this.small.frequency = Math.ceil(this.small.images_count / this.settings.seconds_per_turn);
-		this.large.frequency = Math.ceil(this.large.images_count / this.settings.seconds_per_turn);
+		this.small.frequency = Math.ceil(this.small.images_count / this.settings.cycle_duration);
+		this.large.frequency = Math.ceil(this.large.images_count / this.settings.cycle_duration);
 	};
 
 
@@ -1412,19 +1407,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	}
 
 
-	/**
-	 *  @description This function sets the rotation direction for the player.
-	 *  @param {String} direction "default", "fw" or "bw"
-	 */
-	ThrixtyPlayer.MainClass.prototype.set_rotation_direction = function(direction){
-		if( direction == "default" ){
-			this.rotation_direction = this.settings.direction;
-		} else if( direction == "fw" || direction == 1 ){
-			this.rotation_direction = 1; /* current direction: forward */
-		} else if( direction == "bw" || direction == -1 ){
-			this.rotation_direction = -1; /* current direction: backward */
-		}
-	};
+
 	/**
 	 *  @description This function returns HTML-Object of the current small image.
 	 *  @return {DOM} image Returns the small image which the active_image_id is pointing to.

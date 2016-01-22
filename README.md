@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.5.1 | 17.11.2015
+Version: 1.6dev | 22.01.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -123,7 +123,7 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.5.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 1.6dev</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -176,11 +176,14 @@ Here is a list of the usable params (in the form of HTML-attributes):
 	</tr>
 	<tr>
 		<td class="">thrixty-direction</td>
-		<td class="">"forward" is interpreted as clockwise, when watched from above.</td>
+		<td class="">
+			The default turning direction is clockwise, when watched from above.<br>
+			You should set this option to backwards, when you photographed in counterclockwise direction.
+		</td>
 		<td class=""><b>forward / 1</b>, backward / -1</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-seconds-per-turn</td>
+		<td class="">thrixty-cycle-duration</td>
 		<td class="">How long every 360° turn will take.</td>
 		<td class=""><b>5</b>, [integer]</td>
 	</tr>
@@ -220,6 +223,7 @@ Customization of the player is quite easy, as Thrixty is optimised for doing as 
 Create a CSS file and include it after the initialization file.<br>
 Add this to the head:
 Here is an example that will make the object have a orange border and the button container to have a blue background.<br>
+It will also hide the Zoom Button, as long as it is disabled.<br>
 
 	```css
 	.thrixty-player .canvas_container{
@@ -228,7 +232,11 @@ Here is an example that will make the object have a orange border and the button
 	.thrixty-player .control_container{
 		background: blue;
 	}
+	#zoom_btn:disabled {
+		display: none;
+	}
 	```
+
 
 
 ### 7.) General Description
@@ -248,6 +256,9 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
+* V1.6dev:
+	* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.
+	* Renamed "seconds-per-turn" to "cycle-duration".
 * V1.5.1:
 	* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
 * V1.5:

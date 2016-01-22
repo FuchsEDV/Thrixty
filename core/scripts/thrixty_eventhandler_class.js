@@ -148,14 +148,14 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					if( this.player.are_events_enabled() ){
 						keydown_event.preventDefault();
 						/* doesnt have a correlating button */
-						this.player.increase_rotation_frequency();
+						this.player.decrease_rotation_delay();
 					}
 					break;
 				case 40:  /* DOWN ARROW */
 					if( this.player.are_events_enabled() ){
 						keydown_event.preventDefault();
 						/* doesnt have a correlating button */
-						this.player.decrease_rotation_frequency();
+						this.player.increase_rotation_delay();
 					}
 					break;
 				case 27:  /* ESCAPE */

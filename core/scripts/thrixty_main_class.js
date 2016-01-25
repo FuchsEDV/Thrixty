@@ -78,6 +78,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			sensitivity_x: 20,
 			sensitivity_y: 50,
 			autoplay: -1,
+			autoload: !ThrixtyPlayer.is_mobile, /* false when mobile */
 		};
 
 
@@ -143,7 +144,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.is_rotating = false;
 		this.rotation_id = 0;
 		this.rotation_count = -1;
-		this.rotation_delay = 200;
+		this.rotation_delay = 100;
+		this.rotation_speed_modifiers = [0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.4, 2, 2.5, 3.2, 4];
+		this.rotation_speed_selected = 5;
 
 
 
@@ -316,6 +319,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 						if( tmp_val > 1 ){
 							this.settings.autoplay = tmp_val;
 						}
+					}
+				case "thrixty-autoload":
+					if( ThrixtyPlayer.is_mobile || attr.value == "off" ){
+						this.settings.autoload = false;
+					} else if( attr.value == "on" ){
+						this.settings.autoload = true;
 					}
 				default:
 					break;
@@ -721,11 +730,11 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.zoom_btn.prop('disabled', true);
 
 					/* load small pictures */
-					if( ThrixtyPlayer.is_mobile ){
+					if( this.settings.autoload ){
+						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
+					} else {
 						this.load_one_image(this.small.images[0], this.DOM_obj.image_cache_small);
 						this.DOM_obj.load_overlay.show();
-					} else {
-						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
 					}
 				}
 			break;
@@ -750,7 +759,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.next_btn.prop('disabled', true);
 					this.DOM_obj.zoom_btn.prop('disabled', true);
 
-					if( ThrixtyPlayer.is_mobile ){
+					if( !this.settings.autoload ){
 						this.DOM_obj.load_btn.show();
 					}
 				}
@@ -1112,21 +1121,24 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description Toggles between zoomed and unzoomed state.
 	 */
 	ThrixtyPlayer.MainClass.prototype.toggle_zoom = function(){
-		if( this.is_zoomed ){
+		if( !this.is_zoomed ){
+			/* var was_rotating = this.is_rotating; */
+			this.stop_rotation();
+			this.start_zoom();
+			/* if already rotating, refresh rotation frequency */
+			/*if( was rotating ){
+				this.start_rotation();
+			}*/
+
+		} else {
 			this.stop_zoom();
 			/* if already rotating, refresh rotation frequency */
 			if( this.is_rotating ){
 				this.start_rotation();
 			}
-		} else {
-			this.stop_rotation();
-			this.start_zoom();
-			/** if already rotating, refresh rotation frequency
-			 *  if( this.is_rotating ){
-			 * 	 this.start_rotation();
-			 *  }
-			 */
 		}
+		/* refresh rotation delay */
+		this.set_rotation_delay();
 	};
 	/**
 	 *  @description This function draws a rectangle as a position marker on the main_canvas.
@@ -1381,30 +1393,44 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *    The frequencies are different, when there are different amounts of images.
 	 */
 	ThrixtyPlayer.MainClass.prototype.set_rotation_delay = function(){
-		// TODO: an dieser stelle vielleicht sowas wie einen temporären modifierer einbauen, damit man mit den pfeiltasten verschnellern und verlangsamern kann.
-		this.rotation_delay = Math.ceil( (1000 / this.small.images_count) * this.settings.cycle_duration );
+		var images_count = 0;
+		if( !this.is_zoomed ){
+			images_count = this.small.images_count;
+		} else {
+			images_count = this.large.images_count;
+		}
+		this.rotation_delay = Math.ceil( ( (1000 / images_count) * this.settings.cycle_duration ) / this.rotation_speed_modifiers[this.rotation_speed_selected] );
+		/* restart rotation? */
+		if( this.is_rotating ){
+			this.stop_rotation();
+			this.start_rotation();
+		}
 	};
 	/**
 	 *  @description This function increases the rotation speed by 5 images per second. (max 100)
 	 */
-	ThrixtyPlayer.MainClass.prototype.increase_rotation_delay = function(){
-		this.rotation_delay += 10;
-		if( this.rotation_delay > 400 ){
-			this.rotation_delay = 400;
+	ThrixtyPlayer.MainClass.prototype.increase_rotation_speed = function(){
+		var sp_sel = this.rotation_speed_selected;
+		sp_sel += 1;
+		/* upper limit */
+		if( sp_sel > this.rotation_speed_modifiers.length-1 ){
+			sp_sel = this.rotation_speed_modifiers.length-1;
 		}
-		this.stop_rotation();
-		this.start_rotation();
+		this.rotation_speed_selected = sp_sel;
+		this.set_rotation_delay();
 	}
 	/**
 	 *  @description This function decreases the rotation speed by 5 images per second. (min 1)
 	 */
-	ThrixtyPlayer.MainClass.prototype.decrease_rotation_delay = function(){
-		this.rotation_delay -= 10;
-		if( this.rotation_delay < 10 ){
-			this.rotation_delay = 10;
+	ThrixtyPlayer.MainClass.prototype.decrease_rotation_speed = function(){
+		var sp_sel = this.rotation_speed_selected;
+		sp_sel -= 1;
+		/* lower limit */
+		if( sp_sel < 0 ){
+			sp_sel = 0;
 		}
-		this.stop_rotation();
-		this.start_rotation();
+		this.rotation_speed_selected = sp_sel;
+		this.set_rotation_delay();
 	}
 
 

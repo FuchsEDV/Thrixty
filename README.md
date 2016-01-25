@@ -126,9 +126,9 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		<td colspan="3" style="padding-left: 3em;">Version 1.6dev</td>
 	</tr>
 	<tr>
-		<th>option</th>
+		<th>Option</th>
 		<th>Description</th>
-		<th>possible values</th>
+		<th>Possible Values</th>
 	</tr>
 	<tr>
 		<td class="">thrixty-basepath</td>
@@ -144,20 +144,17 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		<td class="">[subpath]</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-zoom-control</td>
-		<td class="">
-			How to move the zoomed image.<br>
-			Automatically use the <b>mouseposition</b> or drag the cutout.
-		</td>
-		<td class="">
-			<b>progressive</b>, classic
-		</td>
-	</tr>
-	<tr>
 		<td class="">thrixty-zoom-mode</td>
 		<td class="">Zoomed in images showing in the <b>same</b> or an extra window. Or no zoom at all.</td>
 		<td class="">
 			<b>inbox</b>, outbox, none
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-outbox-position</td>
+		<td class="">Where the zoom box should spawn.</td>
+		<td class="">
+			<b>right</b>, bottom, left, top
 		</td>
 	</tr>
 	<tr>
@@ -168,10 +165,13 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-outbox-position</td>
-		<td class="">Where the zoom box should spawn.</td>
+		<td class="">thrixty-zoom-control</td>
 		<td class="">
-			<b>right</b>, bottom, left, top
+			How to move the zoomed image.<br>
+			Automatically use the <b>mouseposition</b> or drag the cutout.
+		</td>
+		<td class="">
+			<b>progressive</b>, classic
 		</td>
 	</tr>
 	<tr>
@@ -195,6 +195,20 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 		<td class=""><b>20</b>, [integer]</td>
 	</tr>
+	<!--<tr>
+		<td class="">
+			thrixty-sensitivity-y<br>
+			(<b>This option is not yet used!</b>)
+		</td>
+		<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be move at least Y pixel.</td>
+		<td class=""><b>50</b>, [integer]</td>
+	</tr>-->
+	<tr>
+		<td class="">thrixty-autoload</td>
+		<td class="">
+			Lets the player load the images automatically
+		</td>
+	</tr>
 	<tr>
 		<td class="">thrixty-autoplay</td>
 		<td class="">
@@ -206,14 +220,6 @@ Here is a list of the usable params (in the form of HTML-attributes):
 			<b>1</b>, 0 (alternatively)
 		</td>
 	</tr>
-	<!--<tr>
-		<td class="">
-			thrixty-sensitivity-y<br>
-			(<b>This option is not yet used!</b>)
-		</td>
-		<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be move at least Y pixel.</td>
-		<td class=""><b>50</b>, [integer]</td>
-	</tr>-->
 </table>
 
 
@@ -257,7 +263,8 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 ### 9.) Change Log
 * V1.6dev:
-	*
+	* New option "Autoload " can be used to restrict the player from automatically loading. Autoload is always disabled on mobile devices!
+	* Animation Speed Modifier reworked. Now has a list of speeds you can switch through by pressing arrow up/down.
 	* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.
 	* Renamed "seconds-per-turn" to "cycle-duration".
 * V1.5.1:
@@ -317,15 +324,14 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 10.) Planned Features and Changes (unordered)
-* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once.)
-* Parameters for autoload and autoplay
+* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once...)
 * Implement Event Throttling / Debouncing
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
-* Log export for debugging purposes.(function itself is there, but there is no function to do it)
+* Log export for debugging purposes. (The log itself is there, but there is no function to actually export it.)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
 * Making a nice icon for the load-button.
-* Better class structure. :)
+* Better classes structure. :)
 
 
 ### 11.) License

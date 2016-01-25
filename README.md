@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.5.1 | 17.11.2015
+Version: 1.6 | 22.01.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -61,7 +61,7 @@ So extract those two into the newly created "thrixty" folder.
 * Create a folder "360_objects" in the root folder of your website.<br>
 This folder is where you are gonna put all your objects.
 * For exampling purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
-* __When using the 360Shots Software to generate the files, you should just copy and paste the object folder__; ignore the rest of the files.
+* __When using the 360Shots Software to generate the files, you should only copy and paste the object folder__; ignore the rest of the files.
 * Your final folder structure should look like this:
 
 	```html
@@ -123,12 +123,12 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.5.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 1.6</td>
 	</tr>
 	<tr>
-		<th>option</th>
+		<th>Option</th>
 		<th>Description</th>
-		<th>possible values</th>
+		<th>Possible Values</th>
 	</tr>
 	<tr>
 		<td class="">thrixty-basepath</td>
@@ -144,27 +144,10 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		<td class="">[subpath]</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-zoom-control</td>
-		<td class="">
-			How to move the zoomed image.<br>
-			Automatically use the <b>mouseposition</b> or drag the cutout.
-		</td>
-		<td class="">
-			<b>progressive</b>, classic
-		</td>
-	</tr>
-	<tr>
 		<td class="">thrixty-zoom-mode</td>
 		<td class="">Zoomed in images showing in the <b>same</b> or an extra window. Or no zoom at all.</td>
 		<td class="">
 			<b>inbox</b>, outbox, none
-		</td>
-	</tr>
-	<tr>
-		<td class="">thrixty-position-indicator</td>
-		<td class="">How to indicate the zoomed in position. Or dont.</td>
-		<td class="">
-			<b>minimap</b>, marker, none
 		</td>
 	</tr>
 	<tr>
@@ -175,12 +158,32 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-direction</td>
-		<td class="">"forward" is interpreted as clockwise, when watched from above.</td>
-		<td class=""><b>forward / 1</b>, backward / -1</td>
+		<td class="">thrixty-position-indicator</td>
+		<td class="">How to indicate the zoomed in position. Or dont.</td>
+		<td class="">
+			<b>minimap</b>, marker, none
+		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-seconds-per-turn</td>
+		<td class="">thrixty-zoom-control</td>
+		<td class="">
+			How to move the zoomed image.<br>
+			Automatically use the <b>mouseposition</b> or drag the cutout.
+		</td>
+		<td class="">
+			<b>progressive</b>, classic
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-direction</td>
+		<td class="">
+			The default turning direction is clockwise, when watched from above.<br>
+			You should set this option to backwards, when you photographed in counterclockwise direction.
+		</td>
+		<td class=""><b>forward / 0</b>, backward / 1</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-cycle-duration</td>
 		<td class="">How long every 360° turn will take.</td>
 		<td class=""><b>5</b>, [integer]</td>
 	</tr>
@@ -192,17 +195,6 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 		<td class=""><b>20</b>, [integer]</td>
 	</tr>
-	<tr>
-		<td class="">thrixty-autoplay</td>
-		<td class="">
-			Will this player automatically play its animation upon load.<br>
-			The finger needs to be move at least X pixel.
-		</td>
-		<td class="">
-			<b>on</b>, off<br>
-			<b>1</b>, 0 (alternatively)
-		</td>
-	</tr>
 	<!--<tr>
 		<td class="">
 			thrixty-sensitivity-y<br>
@@ -211,6 +203,25 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be move at least Y pixel.</td>
 		<td class=""><b>50</b>, [integer]</td>
 	</tr>-->
+	<tr>
+		<td class="">thrixty-autoload</td>
+		<td class="">
+			Lets the player load automatically. Always disabled on mobile devices.
+		</td>
+		<td class="">
+			<b>on</b>, off
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-autoplay</td>
+		<td class="">
+			Will this player automatically play its animation upon load.<br>
+			The finger needs to be move at least X pixel.
+		</td>
+		<td class="">
+			<b>-1 (infinite)</b>, 0 (off), [number &gt; 0]
+		</td>
+	</tr>
 </table>
 
 
@@ -220,6 +231,7 @@ Customization of the player is quite easy, as Thrixty is optimised for doing as 
 Create a CSS file and include it after the initialization file.<br>
 Add this to the head:
 Here is an example that will make the object have a orange border and the button container to have a blue background.<br>
+It will also hide the Zoom Button, as long as it is disabled.<br>
 
 	```css
 	.thrixty-player .canvas_container{
@@ -228,7 +240,11 @@ Here is an example that will make the object have a orange border and the button
 	.thrixty-player .control_container{
 		background: blue;
 	}
+	#zoom_btn:disabled {
+		display: none;
+	}
 	```
+
 
 
 ### 7.) General Description
@@ -248,13 +264,18 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
+* V1.6:
+	* New option "Autoload " can be used to restrict the player from automatically loading. Autoload is always disabled on mobile devices!
+	* Animation Speed Modifier reworked. Now has a list of speeds you can switch through by pressing arrow up/down.
+	* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.
+	* Renamed "seconds-per-turn" to "cycle-duration".
 * V1.5.1:
 	* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
 * V1.5:
+	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
+	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look previous)
 	* Browser-developers are not able to follow conventions or standards.<br>
 	Thus positions and sizes are now calculated instead of declarated.
-	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
-	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look above)
 	* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
 	* Moved version number into the ThrixtyPlayer Object.
 	* Implemented a parameter for Autoplay: "thrixty-autoplay".
@@ -305,14 +326,14 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 10.) Planned Features and Changes (unordered)
-* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once.)
-* Parameters for autoload and autoplay
-* Implement Event Debouncing
+* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once...)
+* Implement Event Throttling / Debouncing
 * Adjust behavior when images werent found. (small instead of large, blank instead of small)
-* Log export for debugging purposes.(function itself is there, but there is no function to do it)
+* Log export for debugging purposes. (The log itself is there, but there is no function to actually export it.)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
-* Settings File or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Proper classes structure. :)
+* Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
+* Making a nice icon for the load-button.
+* Better classes structure. :)
 
 
 ### 11.) License

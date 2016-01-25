@@ -22,6 +22,7 @@
 	background: white;
 	outline: medium none;
 	position: relative; /* create new coordinate system for positioning the zoom canvas */
+	display: block;
 }
 	.thrixty-player .error{
 		width: 100%;
@@ -203,27 +204,27 @@
 					background-image: url(images/zurueck_w.svg);
 					background-color: #dddddd;
 				}
-			.thrixty-player #play_btn[state=play]{
+			.thrixty-player #play_btn[state=pause]{
 				background-position: 80% center;
 				background-image: url(images/play.svg);
 			}
-				.thrixty-player #play_btn[state=play]:hover{
-					background-image: url(images/play_w.svg);
-					background-color: black;
-				}
-				.thrixty-player #play_btn[state=play]:disabled{
-					background-image: url(images/play_w.svg);
-					background-color: #dddddd;
-				}
-			.thrixty-player #play_btn[state=pause]{
-				background-position: 50% center;
-				background-image: url(images/pause.svg);
-			}
 				.thrixty-player #play_btn[state=pause]:hover{
-					background-image: url(images/pause_w.svg);
+					background-image: url(images/play_w.svg);
 					background-color: black;
 				}
 				.thrixty-player #play_btn[state=pause]:disabled{
+					background-image: url(images/play_w.svg);
+					background-color: #dddddd;
+				}
+			.thrixty-player #play_btn[state=play]{
+				background-position: 50% center;
+				background-image: url(images/pause.svg);
+			}
+				.thrixty-player #play_btn[state=play]:hover{
+					background-image: url(images/pause_w.svg);
+					background-color: black;
+				}
+				.thrixty-player #play_btn[state=play]:disabled{
 					background-image: url(images/pause_w.svg);
 					background-color: #dddddd;
 				}

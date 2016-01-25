@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.5.1
+ *  @version 1.6
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -73,13 +73,13 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			zoom_mode: "inbox",
 			position_indicator: "minimap",
 			outbox_position: "right",
-			direction: 1, /* 1|-1 <=> forward|backward */
-			seconds_per_turn: 5,
+			direction: 0, /* 0|1 <=> forward|backward */
+			cycle_duration: 5,
 			sensitivity_x: 20,
 			sensitivity_y: 50,
-			autoplay: true,
+			autoplay: -1,
+			autoload: !ThrixtyPlayer.is_mobile, /* false when mobile */
 		};
-		/* The settings.direction is used multiplicative! It corresponds to "Base direction", so the rest of the program can treat both base directions as "forward"! */
 
 
 		this.small = {
@@ -104,7 +104,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				} */
 			first_loaded_image_id: null,
 			active_image_id: 0,
-			frequency: 15,
 			load_event: this.small_onload_event,
 		};
 
@@ -130,26 +129,24 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				} */
 			first_loaded_image_id: null,
 			active_image_id: 0,
-			frequency: 15,
 			load_event: this.large_onload_event,
 		};
 
 
-		/* State Variables */
+		/*** State Variables ***/
+		/* loading state */
 		this.loading_state = 0; /* 0:init | 1:initialized | 2:displayable | 3:playable | 4:zoomable | 5:completed */
-
-		/**/
 		this.execute_autostart = true;
-		this.is_rotating = false;
+		/* zoom state */
 		this.is_zoomed = false;
 		this.is_fullpage = false;
-
-
-
-		/* Rotation */
-		this.rotation_direction = 1; /* 1|-1 <=> forward|backward */
-		/* this.rotation_direction is designed to treat this.settings.direction as always being "forward" - hence multiplicate itself with it. */
-		this.interval_id = 0;
+		/* rotation state */
+		this.is_rotating = false;
+		this.rotation_id = 0;
+		this.rotation_count = -1;
+		this.rotation_delay = 100;
+		this.rotation_speed_modifiers = [0.1, 0.2, 0.4, 0.6, 0.8, 1, 1.4, 2, 2.5, 3.2, 4];
+		this.rotation_speed_selected = 5;
 
 
 
@@ -212,7 +209,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		/* Set the values for the possibly different image count. */
 		this.set_image_offsets();
-		this.set_image_frequencies();
+		this.set_rotation_delay();
 
 		/* Now set loading state (nothing is loaded yet) */
 		this.update_loading_state();
@@ -287,15 +284,15 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					}
 					break;
 				case "thrixty-direction":
-					if( attr.value == "1" || attr.value == "forward" ){
+					if( attr.value == "0" || attr.value == "forward" ){
+						this.settings.direction = 0;
+					} else if( attr.value == "1" || attr.value == "backward" ){
 						this.settings.direction = 1;
-					} else if( attr.value == "-1" || attr.value == "backward" ){
-						this.settings.direction = -1;
 					}
 					break;
-				case "thrixty-seconds-per-turn":
+				case "thrixty-cycle-duration":
 					if( attr.value != "" ){
-						this.settings.seconds_per_turn = parseInt(attr.value);
+						this.settings.cycle_duration = parseInt(attr.value);
 					}
 					break;
 				case "thrixty-sensitivity-x":
@@ -313,10 +310,21 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					}
 					break;
 				case "thrixty-autoplay":
-					if( attr.value == "" || attr.value == "0" || attr.value == "off" ){
-						this.settings.autoplay = false;
-					} else if( attr.value == "1" || attr.value == "on" ){
-						this.settings.autoplay = true;
+					if( attr.value == "-1" || attr.value == "on" ){
+						this.settings.autoplay = -1;
+					} else if( attr.value == "0" || attr.value == "off" ){
+						this.settings.autoplay = 0;
+					} else {
+						var tmp_val = parseInt(attr.value);
+						if( tmp_val > 1 ){
+							this.settings.autoplay = tmp_val;
+						}
+					}
+				case "thrixty-autoload":
+					if( ThrixtyPlayer.is_mobile || attr.value == "off" ){
+						this.settings.autoload = false;
+					} else if( attr.value == "on" ){
+						this.settings.autoload = true;
 					}
 				default:
 					break;
@@ -332,7 +340,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.build_html_structure = function(){
 		/* this is the main part of the player - image show area */
-		this.DOM_obj.main_box.attr("tabindex", "0");
 		this.DOM_obj.main_box.css("outline", "none");
 			this.DOM_obj.main_box.append(this.DOM_obj.showroom);
 				this.DOM_obj.showroom.append(this.DOM_obj.canvas_container);
@@ -429,6 +436,12 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	ThrixtyPlayer.MainClass.prototype.parse_filelist = function(load_obj, filelist){
 		/* parse die liste aus und speichere die sources im array */
 		var image_paths = filelist.replace(/[\s'"]/g,"").split(",");
+
+		/* option for reverse turned on, reverse array */
+		if( this.settings.direction != 0 ){
+			image_paths.reverse();
+		}
+
 		/* loop through all paths */
 		var pic_count = image_paths.length;
 		/*( if length <= 0 raise error )*/
@@ -716,11 +729,11 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.zoom_btn.prop('disabled', true);
 
 					/* load small pictures */
-					if( ThrixtyPlayer.is_mobile ){
+					if( this.settings.autoload ){
+						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
+					} else {
 						this.load_one_image(this.small.images[0], this.DOM_obj.image_cache_small);
 						this.DOM_obj.load_overlay.show();
-					} else {
-						this.load_all_images(this.small, this.DOM_obj.image_cache_small);
 					}
 				}
 			break;
@@ -745,7 +758,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.DOM_obj.next_btn.prop('disabled', true);
 					this.DOM_obj.zoom_btn.prop('disabled', true);
 
-					if( ThrixtyPlayer.is_mobile ){
+					if( !this.settings.autoload ){
 						this.DOM_obj.load_btn.show();
 					}
 				}
@@ -841,13 +854,25 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.all_images_loaded = function(){
 		/* autostart / autoplay */
-		if( this.settings.autoplay ){
-			ThrixtyPlayer.log("Autoplay started.", this.player_id);
+		if( this.settings.autoplay < 0 ){
 			this.start_rotation();
-		} else {
+			ThrixtyPlayer.log("Autoplay infinite.", this.player_id);
+		} else if( this.settings.autoplay == 0 ){
 			ThrixtyPlayer.log("No Autoplay.", this.player_id);
+		} else {
+			this.start_rotation(this.settings.autoplay*this.small.images_count);
+			ThrixtyPlayer.log("Autoplay "+this.settings.autoplay+" turn(s).", this.player_id);
 		}
 	};
+
+
+
+
+
+
+
+
+
 
 
 
@@ -856,56 +881,64 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	/**
 	 *  @description This function starts the rotation.
 	 */
-	ThrixtyPlayer.MainClass.prototype.start_rotation = function(){
-		var root = this;
-
-		var delay = 10;
-
-		/* stop possible rotation */
-		this.stop_rotation();
-
-		/* set rotation params */
-		this.is_rotating = true;
-		/* set play/pause btn to play */
-		this.DOM_obj.play_btn.attr('state', 'pause')
-
-		/* define repeating function */
-		if( this.rotation_direction > 0 ){ /* forward */
-			var rotation_func = function(){
-				root.nextImage();
-			};
-		} else if( this.rotation_direction < 0 ){ /* backward */
-			var rotation_func = function(){
-				root.previousImage();
-			};
+	ThrixtyPlayer.MainClass.prototype.rotation = function(){
+		if( this.is_rotating ){
+			if( this.rotation_count < 0 ){
+				this.nextImage();
+			} else if( this.rotation_count > 0 ){
+				this.nextImage();
+				this.rotation_count -= 1;
+				if( this.rotation_count == 0 ){
+					this.stop_rotation();
+				}
+			} else { /* == 0 */
+				this.stop_rotation();
+			}
 		}
-
-		/* calculate delay */
-		if( this.is_zoomed ){
-			delay = 1000 / this.large.frequency;
-		} else {
-			delay = 1000 / this.small.frequency;
+	};
+	/**
+	 *  @description This function starts the rotation.
+	 */
+	ThrixtyPlayer.MainClass.prototype.start_rotation = function(times){
+		if( !this.is_rotating ){
+			if( typeof(times) === "undefined" ){
+				this.rotation_count = -1;
+			} else {
+				this.rotation_count = times;
+			}
+			if( this.rotation_count != 0 ){
+				/* animation is playing */
+				this.is_rotating = true;
+				this.DOM_obj.play_btn.attr('state', 'play')
+				/**/
+				this.rotation();
+				this.rotation_id = setInterval(this.rotation.bind(this), this.rotation_delay);
+			}
 		}
-
-		/* first call same function for no execution delay */
-		rotation_func();
-		/* start interval */
-		this.interval_id = setInterval(rotation_func, delay);
 	};
 	/**
 	 *  @description This function stops the rotation.
 	 */
 	ThrixtyPlayer.MainClass.prototype.stop_rotation = function(){
 		if( this.is_rotating ){
+			/**/
+			clearInterval(this.rotation_id);
+			this.rotation_id = 0;
+			/* animation is paused */
 			this.is_rotating = false;
-			this.DOM_obj.play_btn.attr('state', 'play');
-			/* end animation by stopping the interval */
-			clearInterval(this.interval_id);
-			this.interval_id = 0;
-		} else {
-			/* ignore */
+			this.DOM_obj.play_btn.attr('state', 'pause');
 		}
 	};
+
+
+
+
+
+
+
+
+
+
 	/**
 	 *  @description Toggle between start and stop rotation.
 	 */
@@ -946,6 +979,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* the basic movement is backwards, so invert the value */
 		anzahl_nextimages = anzahl_nextimages * -1;
 
+
 		if( this.is_zoomed ){
 			this.change_active_image_id(this.large, anzahl_nextimages);
 			/* assign large to small */
@@ -961,6 +995,17 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		return rest_distanz;
 	};
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1000,9 +1045,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description This function changes the load_object's active_image_id by the specified amount.<br>Only values from 0 to images_count-1 gets assigned.
 	 */
 	ThrixtyPlayer.MainClass.prototype.change_active_image_id = function(load_obj, amount){
-		/* The given amount is multiplicated with the BASE direction, so whichever base direction is used, it will still be treated as "forward". */
-		amount = amount * this.settings.direction;
-
 		var id = load_obj.active_image_id;
 		var count = load_obj.images_count;
 
@@ -1078,21 +1120,24 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description Toggles between zoomed and unzoomed state.
 	 */
 	ThrixtyPlayer.MainClass.prototype.toggle_zoom = function(){
-		if( this.is_zoomed ){
+		if( !this.is_zoomed ){
+			/* var was_rotating = this.is_rotating; */
+			this.stop_rotation();
+			this.start_zoom();
+			/* if already rotating, refresh rotation frequency */
+			/*if( was rotating ){
+				this.start_rotation();
+			}*/
+
+		} else {
 			this.stop_zoom();
 			/* if already rotating, refresh rotation frequency */
 			if( this.is_rotating ){
 				this.start_rotation();
 			}
-		} else {
-			this.stop_rotation();
-			this.start_zoom();
-			/** if already rotating, refresh rotation frequency
-			 *  if( this.is_rotating ){
-			 * 	 this.start_rotation();
-			 *  }
-			 */
 		}
+		/* refresh rotation delay */
+		this.set_rotation_delay();
 	};
 	/**
 	 *  @description This function draws a rectangle as a position marker on the main_canvas.
@@ -1190,10 +1235,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		/* set refreshing styles at start */
 		this.set_fullpage_dimensions();
-
-
-
-
 	};
 	/**
 	 *  @description This function reverts the fullpage sized canvas to a normal size.
@@ -1226,10 +1267,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		/* unset canvas_container size modification */
 		this.set_normal_dimensions();
-
-
-
-
 	};
 
 
@@ -1354,10 +1391,47 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 *  @description This function sets the base frequencies of the image objects.<br>
 	 *    The frequencies are different, when there are different amounts of images.
 	 */
-	ThrixtyPlayer.MainClass.prototype.set_image_frequencies = function(){
-		this.small.frequency = Math.ceil(this.small.images_count / this.settings.seconds_per_turn);
-		this.large.frequency = Math.ceil(this.large.images_count / this.settings.seconds_per_turn);
+	ThrixtyPlayer.MainClass.prototype.set_rotation_delay = function(){
+		var images_count = 0;
+		if( !this.is_zoomed ){
+			images_count = this.small.images_count;
+		} else {
+			images_count = this.large.images_count;
+		}
+		this.rotation_delay = Math.ceil( ( (1000 / images_count) * this.settings.cycle_duration ) / this.rotation_speed_modifiers[this.rotation_speed_selected] );
+		/* restart rotation? */
+		if( this.is_rotating ){
+			this.stop_rotation();
+			this.start_rotation();
+		}
 	};
+	/**
+	 *  @description This function increases the rotation speed by 5 images per second. (max 100)
+	 */
+	ThrixtyPlayer.MainClass.prototype.increase_rotation_speed = function(){
+		var sp_sel = this.rotation_speed_selected;
+		sp_sel += 1;
+		/* upper limit */
+		if( sp_sel > this.rotation_speed_modifiers.length-1 ){
+			sp_sel = this.rotation_speed_modifiers.length-1;
+		}
+		this.rotation_speed_selected = sp_sel;
+		this.set_rotation_delay();
+	}
+	/**
+	 *  @description This function decreases the rotation speed by 5 images per second. (min 1)
+	 */
+	ThrixtyPlayer.MainClass.prototype.decrease_rotation_speed = function(){
+		var sp_sel = this.rotation_speed_selected;
+		sp_sel -= 1;
+		/* lower limit */
+		if( sp_sel < 0 ){
+			sp_sel = 0;
+		}
+		this.rotation_speed_selected = sp_sel;
+		this.set_rotation_delay();
+	}
+
 
 
 
@@ -1365,12 +1439,13 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 	/* translates minimap coordinates */
 	ThrixtyPlayer.MainClass.prototype.minimap_to_main_coords = function(coords){
-		// TODO: size ratio verallgemeinern
+		// TODO: generalize size ratio
 		var size_ratio_w = this.small.image_width / this.large.image_width;
 		var size_ratio_h = this.small.image_height / this.large.image_height;
+		// TODO: this fails in chrome, because they screwed up a part of the jquery function
 		return {
-			x: ( ( coords.x - this.DOM_obj.minimap_canvas.offset().left ) / size_ratio_w ) + this.DOM_obj.minimap_canvas.offset().left,
-			y: ( ( coords.y - this.DOM_obj.minimap_canvas.offset().top  ) / size_ratio_h ) + this.DOM_obj.minimap_canvas.offset().top,
+			x: ( ( coords.x - this.DOM_obj.main_box.offset().left ) / size_ratio_w ) + this.DOM_obj.main_box.offset().left,
+			y: ( ( coords.y - this.DOM_obj.main_box.offset().top  ) / size_ratio_h ) + this.DOM_obj.main_box.offset().top,
 		};
 	};
 
@@ -1379,51 +1454,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 
 
-	/**
-	 *  @description This function increases the rotation speed by 5 images per second. (max 100)
-	 */
-	ThrixtyPlayer.MainClass.prototype.increase_rotation_frequency = function(){
-		var small_frequency = this.small.frequency;
-		if( small_frequency <= 100 ){
-			small_frequency += 5;
-			if( small_frequency > 100 ){
-				small_frequency = 100;
-			}
-			this.small.frequency = small_frequency;
-			this.large.frequency = Math.ceil(small_frequency*(this.large.images_count/this.small.images_count));
-			this.start_rotation();
-		}
-	}
-	/**
-	 *  @description This function decreases the rotation speed by 5 images per second. (min 1)
-	 */
-	ThrixtyPlayer.MainClass.prototype.decrease_rotation_frequency = function(){
-		var small_frequency = this.small.frequency;
-		if( small_frequency > 1 ){
-			small_frequency -= 5;
-			if( small_frequency < 1 ){
-				small_frequency = 1;
-			}
-			this.small.frequency = small_frequency;
-			this.large.frequency = Math.ceil(small_frequency*(this.large.images_count/this.small.images_count));
-			this.start_rotation();
-		}
-	}
 
-
-	/**
-	 *  @description This function sets the rotation direction for the player.
-	 *  @param {String} direction "default", "fw" or "bw"
-	 */
-	ThrixtyPlayer.MainClass.prototype.set_rotation_direction = function(direction){
-		if( direction == "default" ){
-			this.rotation_direction = this.settings.direction;
-		} else if( direction == "fw" || direction == 1 ){
-			this.rotation_direction = 1; /* current direction: forward */
-		} else if( direction == "bw" || direction == -1 ){
-			this.rotation_direction = -1; /* current direction: backward */
-		}
-	};
 	/**
 	 *  @description This function returns HTML-Object of the current small image.
 	 *  @return {DOM} image Returns the small image which the active_image_id is pointing to.

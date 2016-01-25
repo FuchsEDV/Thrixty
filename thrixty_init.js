@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.5.1
+ *  @version 1.6
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -16,7 +16,7 @@
  *  @property {array} initialized_players Container for all Players initialized.
  */
 var ThrixtyPlayer = {
-	version: "1.5.1",
+	version: "1.6",
 	mainpath: "",
 	initialized_players: [],
 	logs: {
@@ -108,7 +108,7 @@ var ThrixtyPlayer = {
 
 
 	/* include jquery dependecy */
-	var jquery_path = ThrixtyPlayer.mainpath+"core/scripts/jquery-2.1.3.js";
+	var jquery_path = ThrixtyPlayer.mainpath+"core/scripts/jquery-2.1.4.js";
 	load_script_file( jquery_path, include_files );
 
 

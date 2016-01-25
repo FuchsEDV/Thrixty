@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.5.1
+ *  @version 1.6
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */
@@ -30,9 +30,19 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	ThrixtyPlayer.EventHandler = function(parent){
 		this.player = parent;
 
-		this.assign_events();
+		/* for object turn */
+		this.object_turn = {
+			prepared: false,
+			start_x: null,
+			start_y: null,
+			last_x: null,
+			last_y: null,
+		};
+		/* for click events */
+		this.is_click = false;
 
-		this.is_click = false; /* for click events */
+
+		this.assign_events();
 	};
 	/**
 	 *  @description This function initializes the GUI events.
@@ -148,14 +158,14 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					if( this.player.are_events_enabled() ){
 						keydown_event.preventDefault();
 						/* doesnt have a correlating button */
-						this.player.increase_rotation_frequency();
+						this.player.increase_rotation_speed();
 					}
 					break;
 				case 40:  /* DOWN ARROW */
 					if( this.player.are_events_enabled() ){
 						keydown_event.preventDefault();
 						/* doesnt have a correlating button */
-						this.player.decrease_rotation_frequency();
+						this.player.decrease_rotation_speed();
 					}
 					break;
 				case 27:  /* ESCAPE */
@@ -457,13 +467,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 	/** Interaction Functions */
 		/* Object Turn */
-			ThrixtyPlayer.EventHandler.prototype.object_turn = {
-				prepared: false,
-				start_x: null,
-				start_y: null,
-				last_x: null,
-				last_y: null,
-			};
 			ThrixtyPlayer.EventHandler.prototype.prepare_object_turn = function(x, y){
 				if( typeof(x) != "undefined" && typeof(y) != "undefined" ){
 					/* prepare turn by memorizing important information */

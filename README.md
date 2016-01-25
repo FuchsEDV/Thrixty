@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.6dev | 22.01.2016
+Version: 1.6 | 22.01.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -123,7 +123,7 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.6dev</td>
+		<td colspan="3" style="padding-left: 3em;">Version 1.6</td>
 	</tr>
 	<tr>
 		<th>Option</th>
@@ -219,8 +219,7 @@ Here is a list of the usable params (in the form of HTML-attributes):
 			The finger needs to be move at least X pixel.
 		</td>
 		<td class="">
-			<b>on</b>, off<br>
-			<b>1</b>, 0 (alternatively)
+			<b>-1 (infinite)</b>, 0 (off), [number &gt; 0]
 		</td>
 	</tr>
 </table>
@@ -265,7 +264,7 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
-* V1.6dev:
+* V1.6:
 	* New option "Autoload " can be used to restrict the player from automatically loading. Autoload is always disabled on mobile devices!
 	* Animation Speed Modifier reworked. Now has a list of speeds you can switch through by pressing arrow up/down.
 	* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.

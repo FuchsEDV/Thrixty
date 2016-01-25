@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.6dev
+ *  @version 1.6
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -16,7 +16,7 @@
  *  @property {array} initialized_players Container for all Players initialized.
  */
 var ThrixtyPlayer = {
-	version: "1.6dev",
+	version: "1.6",
 	mainpath: "",
 	initialized_players: [],
 	logs: {

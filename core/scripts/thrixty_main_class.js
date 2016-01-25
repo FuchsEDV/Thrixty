@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.6dev
+ *  @version 1.6
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -340,7 +340,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.build_html_structure = function(){
 		/* this is the main part of the player - image show area */
-		this.DOM_obj.main_box.attr("tabindex", "0");
 		this.DOM_obj.main_box.css("outline", "none");
 			this.DOM_obj.main_box.append(this.DOM_obj.showroom);
 				this.DOM_obj.showroom.append(this.DOM_obj.canvas_container);

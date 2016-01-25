@@ -206,7 +206,10 @@ Here is a list of the usable params (in the form of HTML-attributes):
 	<tr>
 		<td class="">thrixty-autoload</td>
 		<td class="">
-			Lets the player load the images automatically
+			Lets the player load automatically. Always disabled on mobile devices.
+		</td>
+		<td class="">
+			<b>on</b>, off
 		</td>
 	</tr>
 	<tr>

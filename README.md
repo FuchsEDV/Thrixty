@@ -264,6 +264,8 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
+* V1.6.1 (planned):
+	* Base settings check | minimal settings set: thrixty-basepath, thrixty-filelist-path-small, thrixty-filelist-path-large
 * V1.6:
 	* New option "Autoload " can be used to restrict the player from automatically loading. Autoload is always disabled on mobile devices!
 	* Animation Speed Modifier reworked. Now has a list of speeds you can switch through by pressing arrow up/down.

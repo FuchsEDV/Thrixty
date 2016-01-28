@@ -57,7 +57,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					load_btn: jQuery("<button id=\"load_btn\" style=\"display: none;\"></button>"),
 				zoom_canvas: jQuery("<canvas id=\"zoom_canvas\" width=\"0\" height=\"0\" style=\"display: none;\"></canvas>"),
 				controls_cache: jQuery("<div class=\"controls_cache\" style=\"display: none;\"></div>"),
-				viewport_meta: jQuery("<meta name=\"viewport\" content=\"\">"),
 				image_cache_small: jQuery("<div class=\"image_cache_small\" style=\"display: none;\"></div>"),
 				image_cache_large: jQuery("<div class=\"image_cache_large\" style=\"display: none;\"></div>"),
 		}
@@ -67,8 +66,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* set base values */
 		this.settings = {
 			basepath: "", /* Standardpfad, von wo aus die Player-Dateien liegen. */
-			filelist_path_small: "filelist_small.txt",
-			filelist_path_large: "filelist_large.txt",
+			filelist_path_small: "",
+			filelist_path_large: "",
 			zoom_control: "progressive",
 			zoom_mode: "inbox",
 			position_indicator: "minimap",
@@ -176,6 +175,10 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.parse_settings();
 		ThrixtyPlayer.log(this.settings, this.player_id);
 
+
+		/* TODO: base settings check */
+
+
 		/* build the player */
 		this.build_html_structure();
 
@@ -228,9 +231,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 				case "thrixty-basepath":
 					if( attr.value != "" ){
 						this.settings.basepath = String(attr.value);
-						if( this.settings.basepath.substr(-1) != "/" ){
-							this.settings.basepath += "/";
-						}
+						this.settings.basepath += this.settings.basepath.charAt(this.settings.basepath.length-1) === "/" ? "" : "/";
 					}
 					break;
 				case "thrixty-filelist-path-small":
@@ -340,7 +341,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.build_html_structure = function(){
 		/* this is the main part of the player - image show area */
-		this.DOM_obj.main_box.css("outline", "none");
 			this.DOM_obj.main_box.append(this.DOM_obj.showroom);
 				this.DOM_obj.showroom.append(this.DOM_obj.canvas_container);
 					this.DOM_obj.canvas_container.append(this.DOM_obj.bg_canvas);
@@ -369,9 +369,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 			/* Zoom Box for Outbox Zoom (invisible on stadard) */
 			this.DOM_obj.main_box.append(this.DOM_obj.zoom_canvas);
-
-			/* include viewport meta, for being able to reset zoom */
-			this.DOM_obj.main_box.append(this.DOM_obj.viewport_meta);
 
 			/* these will store the image preloads */
 			/* this.DOM_obj.main_box.append(this.DOM_obj.controls_cache); */
@@ -929,16 +926,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			this.DOM_obj.play_btn.attr('state', 'pause');
 		}
 	};
-
-
-
-
-
-
-
-
-
-
 	/**
 	 *  @description Toggle between start and stop rotation.
 	 */
@@ -1217,11 +1204,6 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		this.is_fullpage = true;
 		this.DOM_obj.size_btn.attr('state', 'normalsize');
 
-		/* disable scaling (only matters on mobiles) */
-		// this.DOM_obj.main_box.append(this.DOM_obj.viewport_meta);
-		this.DOM_obj.viewport_meta.attr('content', 'maximum-scale=1.0');
-		// window.dispatchEvent(new Event('resize'));
-
 		/* set main_box fullpage-styles */
 		this.DOM_obj.main_box.css('position', 'fixed');
 		this.DOM_obj.main_box.css('left', '0');
@@ -1242,17 +1224,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	ThrixtyPlayer.MainClass.prototype.quit_fullpage = function(){
 		this.stop_zoom();
 
-
 		/* reset fullpage state */
 		this.is_fullpage = false;
 		this.DOM_obj.size_btn.attr('state', 'fullpage');
-
-
-		/* remove scaling-disable (only matters on mobiles) */
-		this.DOM_obj.viewport_meta.attr('content', '');
-		// this.DOM_obj.viewport_meta.remove();
-		// window.dispatchEvent(new Event('resize'));
-
 
 		/* unset main_box fullscreeen-styles */
 		this.DOM_obj.main_box.css('position', '');

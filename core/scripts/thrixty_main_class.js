@@ -66,8 +66,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* set base values */
 		this.settings = {
 			basepath: "", /* Standardpfad, von wo aus die Player-Dateien liegen. */
-			filelist_path_small: "",
-			filelist_path_large: "",
+			filelist_path_small: "small/Filelist.txt",
+			filelist_path_large: "large/Filelist.txt",
 			zoom_control: "progressive",
 			zoom_mode: "inbox",
 			position_indicator: "minimap",

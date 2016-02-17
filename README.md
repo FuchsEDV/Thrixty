@@ -191,7 +191,7 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		<td class="">thrixty-sensitivity-x</td>
 		<td class="">
 			How sensitive the Player will react horizontally to touch gestures.<br>
-			The finger needs to be move at least X pixel.
+			The finger needs to move at least X pixel.
 		</td>
 		<td class=""><b>20</b>, [integer]</td>
 	</tr>
@@ -215,8 +215,7 @@ Here is a list of the usable params (in the form of HTML-attributes):
 	<tr>
 		<td class="">thrixty-autoplay</td>
 		<td class="">
-			Will this player automatically play its animation upon load.<br>
-			The finger needs to be move at least X pixel.
+			Will this player automatically play its animation upon load.
 		</td>
 		<td class="">
 			<b>-1 (infinite)</b>, 0 (off), [number &gt; 0]
@@ -229,8 +228,7 @@ Here is a list of the usable params (in the form of HTML-attributes):
 
 Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.<br>
 Create a CSS file and include it after the initialization file.<br>
-Add this to the head:
-Here is an example that will make the object have a orange border and the button container to have a blue background.<br>
+The following is an example that will make the object have an orange border and the button container to have a blue background.<br>
 It will also hide the Zoom Button, as long as it is disabled.<br>
 
 	```css

@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.6
+ *  @version 1.6.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.EventHandler
  */

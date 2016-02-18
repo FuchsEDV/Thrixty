@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.6
+ *  @version 1.6.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.DrawingHandler
  */
@@ -184,6 +184,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		var small_image = this.player.get_current_small_image();
 
 		/* clear */
+		// this.player.main_canvas[0].width = this.player.main_canvas[0].width;
+		// this.player.main_canvas[0].height = this.player.main_canvas[0].height;
 		this.main_canvas.ctx.clearRect(
 			0,
 			0,
@@ -357,6 +359,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+cutout_h);
 					this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+0);
 					this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+0);
+			this.minimap_canvas.ctx.closePath();
 			this.minimap_canvas.ctx.fill();
 		this.minimap_canvas.ctx.globalAlpha = 1;
 	};

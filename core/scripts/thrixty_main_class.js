@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.6
+ *  @version 1.6.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -65,9 +65,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* Options */
 		/* set base values */
 		this.settings = {
-			basepath: "", /* Standardpfad, von wo aus die Player-Dateien liegen. */
-			filelist_path_small: "small/Filelist.txt",
-			filelist_path_large: "large/Filelist.txt",
+			basepath: "", /* => relative to current url */
+			filelist_path_small: "small/Filelist.txt", /* => subfolder 'small', then look for Filelist.txt */
+			filelist_path_large: "large/Filelist.txt", /* => subfolder 'large', then look for Filelist.txt */
 			zoom_control: "progressive",
 			zoom_mode: "inbox",
 			position_indicator: "minimap",
@@ -77,7 +77,7 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			sensitivity_x: 20,
 			sensitivity_y: 50,
 			autoplay: -1,
-			autoload: !ThrixtyPlayer.is_mobile, /* false when mobile */
+			autoload: !ThrixtyPlayer.is_mobile, /* false when mobile, true when not */
 		};
 
 
@@ -173,7 +173,18 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 
 		/* considering the settings */
 		this.parse_settings();
+		/* set the small and large filepaths to their settings-values */
+		var small_url = this.settings.basepath;
+		var large_url = this.settings.basepath;
+			small_url += small_url.charAt(small_url.length-1) === "/" ? "" : "/";
+			large_url += large_url.charAt(large_url.length-1) === "/" ? "" : "/";
+			small_url += this.settings.filelist_path_small;
+			large_url += this.settings.filelist_path_large;
+		this.small.filepath = small_url;
+		this.large.filepath = large_url;
+
 		ThrixtyPlayer.log(this.settings, this.player_id);
+
 
 
 		/* TODO: base settings check */
@@ -227,113 +238,146 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		var main_box_attr_count = main_box_attributes.length;
 		for( var i=0; i<main_box_attr_count; i++ ){
 			var attr = main_box_attributes[i];
-			switch( attr.name ){
+			attr_name = attr.name.trim();
+			attr_value = attr.value.trim();
+			switch( attr_name ){
 				case "thrixty-basepath":
-					if( attr.value != "" ){
-						this.settings.basepath = String(attr.value);
-						this.settings.basepath += this.settings.basepath.charAt(this.settings.basepath.length-1) === "/" ? "" : "/";
+					if( attr_value != "" ){
+						this.settings.basepath = attr_value;
 					}
 					break;
 				case "thrixty-filelist-path-small":
-					if( attr.value != "" ){
-						this.settings.filelist_path_small = String(attr.value);
+					if( attr_value != "" ){
+						this.settings.filelist_path_small = attr_value;
 					}
 					break;
 				case "thrixty-filelist-path-large":
-					if( attr.value != "" ){
-						this.settings.filelist_path_large = String(attr.value);
+					if( attr_value != "" ){
+						this.settings.filelist_path_large = attr_value;
 					}
 					break;
 				case "thrixty-zoom-control":
-					if( attr.value == "classic" ){
-						this.settings.zoom_control = "classic";
-					} else {
-						this.settings.zoom_control = "progressive";
+					/* proper values:  -progressive(default) -classic */
+					switch( attr_value ){
+						case "progressive":
+						case "classic":
+							this.settings.zoom_control = attr_value;
+							break;
 					}
 					break;
 				case "thrixty-zoom-mode":
 					/* proper values:  -inbox(default) -outbox -none */
-
-					if( attr.value == "inbox" ){
-						this.settings.zoom_mode = "inbox";
-					} else if( attr.value == "outbox" ){
-						this.settings.zoom_mode = "outbox";
-					} else if( attr.value == "none" ){
-						this.settings.zoom_mode = "none";
+					switch( attr_value ){
+						case "inbox":
+						case "outbox":
+						case "none":
+							this.settings.zoom_mode = attr_value;
+							break;
 					}
 					break;
 				case "thrixty-position-indicator":
-					/* proper values: -minimap -marker -none(|empty) */
-					if( attr.value == "minimap" ){
-						this.settings.position_indicator = "minimap";
-					} else if( attr.value == "marker" ){
-						this.settings.position_indicator = "marker";
-					} else if( attr.value == "none" || attr.value == "" ){
-						this.settings.position_indicator = "";
+					/* proper values: -minimap(default) -marker -none[|empty] */
+					switch( attr_value ){
+						case "minimap":
+						case "marker":
+							this.settings.position_indicator = attr_value;
+							break;
+						case "none":
+						case "":
+							this.settings.position_indicator = "";
+							break;
 					}
 					break;
 				case "thrixty-outbox-position":
-					/* proper value: -right -left -top -bottom */
-					if( attr.value == "right" ){
-						this.settings.outbox_position = "right";
-					} else if( attr.value == "left" ){
-						this.settings.outbox_position = "left";
-					} else if( attr.value == "top" ){
-						this.settings.outbox_position = "top";
-					} else if( attr.value == "bottom" ){
-						this.settings.outbox_position = "bottom";
+					/* proper values: -right(default) -left -top -bottom */
+					switch( attr_value ){
+						case "right":
+						case "left":
+						case "top":
+						case "bottom":
+							this.settings.outbox_position = attr_value;
+							break;
 					}
 					break;
 				case "thrixty-direction":
-					if( attr.value == "0" || attr.value == "forward" ){
-						this.settings.direction = 0;
-					} else if( attr.value == "1" || attr.value == "backward" ){
-						this.settings.direction = 1;
+					/* proper values: -forward[|0](default) -backward[|1] */
+					switch( attr_value ){
+						case "0":
+						case "forward":
+							this.settings.direction = 0;
+							break;
+						case "1":
+						case "backward":
+							this.settings.direction = 1;
+							break;
 					}
 					break;
 				case "thrixty-cycle-duration":
-					if( attr.value != "" ){
-						this.settings.cycle_duration = parseInt(attr.value);
+					/* proper values: -5(default) -[number > 0] */
+					if( attr_value != "" ){
+						attr_value = parseInt(attr_value);
+						if( attr_value > 0 ){
+							this.settings.cycle_duration = attr_value;
+						}
 					}
 					break;
 				case "thrixty-sensitivity-x":
-					if( attr.value != "" ){
-						if( parseInt(attr.value) >= 0 ){
-							this.settings.sensitivity_x = parseInt(attr.value);
+					/* proper values: -20(default) -[number >= 0] */
+					if( attr_value != "" ){
+						attr_value = parseInt(attr_value);
+						if( attr_value >= 0 ){
+							this.settings.sensitivity_x = attr_value;
 						}
 					}
 					break;
 				case "thrixty-sensitivity-y":
-					if( attr.value != "" ){
-						if( parseInt(attr.value) >= 0 ){
-							this.settings.sensitivity_y = parseInt(attr.value);
+					/* proper values: -50(default) -[number >= 0] */
+					if( attr_value != "" ){
+						attr_value = parseInt(attr_value);
+						if( attr_value >= 0 ){
+							this.settings.sensitivity_y = attr_value;
 						}
 					}
 					break;
 				case "thrixty-autoplay":
-					if( attr.value == "-1" || attr.value == "on" ){
-						this.settings.autoplay = -1;
-					} else if( attr.value == "0" || attr.value == "off" ){
-						this.settings.autoplay = 0;
+					/* proper values: -on[|-1](default) -off[|0] -[number > 0] */
+					switch( attr_value ){
+						case "on":
+						case "-1":
+							this.settings.autoplay = -1;
+							break;
+						case "off":
+						case "0":
+							this.settings.autoplay = 0;
+							break;
+						default:
+							attr_value = parseInt(attr_value);
+							if( attr_value > 0 ){
+								this.settings.autoplay = attr_value;
+							}
+							break;
+					}
+					break;
+				case "thrixty-autoload":
+					/* proper values: -on(default) -off(enforced on mobile) */
+					if( ThrixtyPlayer.is_mobile ){
+						this.settings.autoload = false;
 					} else {
-						var tmp_val = parseInt(attr.value);
-						if( tmp_val > 1 ){
-							this.settings.autoplay = tmp_val;
+						switch( attr_value ){
+							case "on":
+								this.settings.autoload = true;
+								break;
+							case "off":
+								this.settings.autoload = false;
+								break;
 						}
 					}
-				case "thrixty-autoload":
-					if( ThrixtyPlayer.is_mobile || attr.value == "off" ){
-						this.settings.autoload = false;
-					} else if( attr.value == "on" ){
-						this.settings.autoload = true;
-					}
+					break;
 				default:
+					/* ignore all other attributes */
 					break;
 			}
 		}
-		/* set the small and large filepaths to their settings-values */
-		this.small.filepath = this.settings.filelist_path_small;
-		this.large.filepath = this.settings.filelist_path_large;
 	};
 	/**
 	 *  @description This function generates HTML-Code and keeps track of generated elements.
@@ -405,7 +449,8 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		var return_value = false;
 
 		/* get url */
-		var url = this.settings.basepath + load_obj.filepath;
+		var url = load_obj.filepath;
+
 		ThrixtyPlayer.log("filelist path: "+url, this.player_id);
 		/* execute AJAX request */
 		jQuery.ajax({

@@ -1,7 +1,7 @@
 /**
  *  @fileOverview
  *  @author F.Heitmann @ Fuchs EDV Germany
- *  @version 1.6
+ *  @version 1.6.1
  *  @license GPLv3
  *  @module ThrixtyPlayer.MainClass
  */
@@ -16,7 +16,7 @@
  *  @property {array} initialized_players Container for all Players initialized.
  */
 var ThrixtyPlayer = {
-	version: "1.6",
+	version: "1.6.1",
 	mainpath: "",
 	initialized_players: [],
 	logs: {
@@ -228,7 +228,7 @@ var ThrixtyPlayer = {
 			selector.each(function(index, element){
 				/* new ThrixtyPlayer */
 				var new_player = new ThrixtyPlayer.MainClass(index, jQuery_Thrixty(element));
-				/* Trigger new processes for each initialize, so a single error will not stop the whole init */
+				/* Trigger new "processes" for each initialize, so a single error will not stop the whole initialization */
 				setTimeout(function(){
 					new_player.setup();
 				}, 10);

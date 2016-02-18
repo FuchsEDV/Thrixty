@@ -176,8 +176,14 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 		/* set the small and large filepaths to their settings-values */
 		var small_url = this.settings.basepath;
 		var large_url = this.settings.basepath;
+		/* TODO: quick HOTFIX! redo! */
+		if( small_url != "" ){
 			small_url += small_url.charAt(small_url.length-1) === "/" ? "" : "/";
+		}
+		/* TODO: quick HOTFIX! redo! */
+		if( large_url != "" ){
 			large_url += large_url.charAt(large_url.length-1) === "/" ? "" : "/";
+		}
 			small_url += this.settings.filelist_path_small;
 			large_url += this.settings.filelist_path_large;
 		this.small.filepath = small_url;

@@ -259,6 +259,18 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
+* V2.0.0 (planned - far ahead):
+	* Class restructuring and module pattern.
+	* Control of player-instances with (console-)commands
+		* proper constructor
+		* implement destructor
+* V1.6.2 (planned):
+	* Bugfix: Autoplay Off is also triggering Autoload Off
+	* General performance improvements by adding throttle and debounce.
+	* Responsiveness improvements in very small views.
+	(The resizing calculations are a bit off.)
+	* When the sizing image (first in small filelist) couldnt be loaded, dont display anything!
+	At the moment the player is showing the controls, even though there is nothing to see...
 * V1.6.1:
 	* Path-handling improved.
 	* The basepath is now initially empty.<br>
@@ -327,6 +339,7 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 10.) Planned Features and Changes (unordered)
+* context menu & picture export
 * (maybe) the player should not react to the mouseposition, when it is not focused.<br>
 Then it would also be neccessary to ignore mouseclicks, when not focused.
 * Expand automatic div-search with a manual variant, so it is possible to restart/start specific players.

@@ -85,9 +85,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			context: "small",
 			filepath: "",
 			filelist_loaded: null,
-								image_width: 0,
-								image_height: 0,
-								image_ratio: 0,
+			image_width: 0,
+			image_height: 0,
+			image_ratio: 0,
 			images_count: 0,
 			images_loaded: 0,
 			images_errored: 0,
@@ -110,9 +110,9 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 			context: "large",
 			filepath: "",
 			filelist_loaded: null,
-								image_width: 0,
-								image_height: 0,
-								image_ratio: 0,
+			image_width: 0,
+			image_height: 0,
+			image_ratio: 0,
 			images_count: 0,
 			images_loaded: 0,
 			images_errored: 0,
@@ -993,6 +993,11 @@ var ThrixtyPlayer = ThrixtyPlayer || {};
 	 */
 	ThrixtyPlayer.MainClass.prototype.distance_rotation = function(distance_x){
 		/* mache umdrehungen anhand des distance_x mit einer bestimmten übersetzung */
+		/* TODO: diese berechnung kann performanter gestaltet werden, indem die
+		 *   zwischenergebnisse ausgelagert werden, anstatt sie immer wieder neu zu berechnen.
+		 **/
+
+
 
 		/* Pixel per Degree (Application Parameter): The cursor needs to travel 2 pixel, to turn the object by 1 degree.  =>  2px/1° => 720px/360° */
 		var pixel_per_degree = 2;

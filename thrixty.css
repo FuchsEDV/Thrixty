@@ -102,7 +102,7 @@
 				top: 0;
 				z-index: 4;
 			}
-		.thrixty .progress_container{
+		.thrixty #progress_container{
 			width: 80%;
 			/*height: 20px;*/
 			background: #aaaaaa;
@@ -112,38 +112,20 @@
 			left: 10%;
 			z-index: 5;
 		}
-			.thrixty .progress_bar_small{
+			.thrixty .progress_bar{
 				/*width: X%;     X calculated by the ThrixtyPlayer.*/
 				height: 10px;
 				background: #00d000;
 				border-radius: 5px;
 			}
-				.thrixty .progress_bar_small[state=unloaded]{
+				.thrixty .progress_bar[state=unloaded]{
 					display: none;
 					/*display: block;*/
 				}
-				.thrixty .progress_bar_small[state=loading]{
+				.thrixty .progress_bar[state=loading]{
 					display: block;
 				}
-				.thrixty .progress_bar_small[state=loaded]{
-					display: none;
-					/*display: block;*/
-				}
-			.thrixty .progress_bar_large{
-				/*width: X%;     X calculated by the ThrixtyPlayer.*/
-				height: 10px;
-				background: #0000d0;
-				border-radius: 5px;
-			}
-				.thrixty .progress_bar_large[state=unloaded]{
-					display: none;
-					/*display: block;*/
-				}
-				.thrixty .progress_bar_large[state=loading]{
-					display: none;
-					/*display: block;*/
-				}
-				.thrixty .progress_bar_large[state=loaded]{
+				.thrixty .progress_bar[state=loaded]{
 					display: none;
 					/*display: block;*/
 				}
@@ -263,25 +245,25 @@
 					background-image: url(core/style/images/minus_w.svg);
 					background-color: #dddddd;
 				}
-			.thrixty #size_btn[state=normalsize]{
+			.thrixty #size_btn[state=normalsized]{
 				background-image: url(core/style/images/expand.svg);
 			}
-				.thrixty #size_btn[state=normalsize]:hover{
+				.thrixty #size_btn[state=normalsized]:hover{
 					background-image: url(core/style/images/expand_w.svg);
 					background-color: black;
 				}
-				.thrixty #size_btn[state=normalsize]:disabled{
+				.thrixty #size_btn[state=normalsized]:disabled{
 					background-image: url(core/style/images/expand_w.svg);
 					background-color: #dddddd;
 				}
-			.thrixty #size_btn[state=fullpage]{
+			.thrixty #size_btn[state=fullpaged]{
 				background-image: url(core/style/images/shrink.svg);
 			}
-				.thrixty #size_btn[state=fullpage]:hover{
+				.thrixty #size_btn[state=fullpaged]:hover{
 					background-image: url(core/style/images/shrink_w.svg);
 					background-color: black;
 				}
-				.thrixty #size_btn[state=fullpage]:disabled{
+				.thrixty #size_btn[state=fullpaged]:disabled{
 					background-image: url(core/style/images/shrink_w.svg);
 					background-color: #dddddd;
 				}

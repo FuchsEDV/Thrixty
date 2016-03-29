@@ -34,7 +34,7 @@
 		padding: 15px;
 		margin: 0;
 	}
-	.thrixty .showroom{
+	.thrixty #showroom{
 		width: 100%;
 		/*height: calc(100% - 50px);*/ /* set, when entering fullscreen */
 		padding: 0;
@@ -43,7 +43,7 @@
 		background: transparent;
 		position: relative; /* create a new coordinate system for positioning the progress bar */
 	}
-		.thrixty .canvas_container{
+		.thrixty #canvas_container{
 			width: 100%;
 			/*height: 100%;*/
 			/*max-width: 100%;*/
@@ -118,14 +118,14 @@
 				background: #00d000;
 				border-radius: 5px;
 			}
-				.thrixty .progress_bar[state=unloaded]{
+				.thrixty #small_progress_bar[state=unloaded]{
 					display: none;
 					/*display: block;*/
 				}
-				.thrixty .progress_bar[state=loading]{
+				.thrixty #small_progress_bar[state=loading]{
 					display: block;
 				}
-				.thrixty .progress_bar[state=loaded]{
+				.thrixty #small_progress_bar[state=loaded]{
 					display: none;
 					/*display: block;*/
 				}

@@ -244,7 +244,7 @@ It will also hide the Zoom Button, as long as it is disabled.<br>
 
 ### 7.) General Description
 
-This section explains shortly, what the javascript is doing:<br>
+This section explains briefly, what the javascript is doing:<br>
 <br>
 After including the initializing script "thrixty_init.js" in your documents head, it will wait for the whole site to finish loading.<br>
 It will then start by looking for all divs with class thrixty-player ("div.thrixty-player").<br>
@@ -270,10 +270,12 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 		* implement destructor
 	* General performance improvements by adding throttle and debounce.
 	* Bugfix: Autoplay Off also triggers Autoload Off
+	* Use large images in Fullpage Mode.
 
 
 
 	(done)
+	* Renamed option: direction => reversion
 	* Class restructuring.
 		* Joined MainClass, EventHandler and DrawingHandler into a single Player class.
 	* Gotten rid of jQuery.

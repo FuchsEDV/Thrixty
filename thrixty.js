@@ -33,52 +33,33 @@
 
 	/***** namespace methods *****/
 	Thrixty.cache_control_icons = function(){
-		/** TODO: rework this part to one liners **/
-		Thrixty.icons_cache.expand = document.createElement("img");
-		Thrixty.icons_cache.expand.src = Thrixty.mainpath+"core/style/images/expand.svg";
-		Thrixty.icons_cache.expand_w = document.createElement("img");
-		Thrixty.icons_cache.expand_w.src = Thrixty.mainpath+"core/style/images/expand_w.svg";
-		Thrixty.icons_cache.load = document.createElement("img");
-		Thrixty.icons_cache.load.src = Thrixty.mainpath+"core/style/images/load.svg";
-		Thrixty.icons_cache.load_w = document.createElement("img");
-		Thrixty.icons_cache.load_w.src = Thrixty.mainpath+"core/style/images/load_w.svg";
-		Thrixty.icons_cache.minus = document.createElement("img");
-		Thrixty.icons_cache.minus.src = Thrixty.mainpath+"core/style/images/minus.svg";
-		Thrixty.icons_cache.minus_w = document.createElement("img");
-		Thrixty.icons_cache.minus_w.src = Thrixty.mainpath+"core/style/images/minus_w.svg";
-		Thrixty.icons_cache.pause = document.createElement("img");
-		Thrixty.icons_cache.pause.src = Thrixty.mainpath+"core/style/images/pause.svg";
-		Thrixty.icons_cache.pause_w = document.createElement("img");
-		Thrixty.icons_cache.pause_w.src = Thrixty.mainpath+"core/style/images/pause_w.svg";
-		Thrixty.icons_cache.play = document.createElement("img");
-		Thrixty.icons_cache.play.src = Thrixty.mainpath+"core/style/images/play.svg";
-		Thrixty.icons_cache.play_w = document.createElement("img");
-		Thrixty.icons_cache.play_w.src = Thrixty.mainpath+"core/style/images/play_w.svg";
-		Thrixty.icons_cache.plus = document.createElement("img");
-		Thrixty.icons_cache.plus.src = Thrixty.mainpath+"core/style/images/plus.svg";
-		Thrixty.icons_cache.plus_w = document.createElement("img");
-		Thrixty.icons_cache.plus_w.src = Thrixty.mainpath+"core/style/images/plus_w.svg";
-		Thrixty.icons_cache.shrink = document.createElement("img");
-		Thrixty.icons_cache.shrink.src = Thrixty.mainpath+"core/style/images/shrink.svg";
-		Thrixty.icons_cache.shrink_w = document.createElement("img");
-		Thrixty.icons_cache.shrink_w.src = Thrixty.mainpath+"core/style/images/shrink_w.svg";
-		Thrixty.icons_cache.vorwaerts = document.createElement("img");
-		Thrixty.icons_cache.vorwaerts.src = Thrixty.mainpath+"core/style/images/vorwaerts.svg";
-		Thrixty.icons_cache.vorwaerts_w = document.createElement("img");
-		Thrixty.icons_cache.vorwaerts_w.src = Thrixty.mainpath+"core/style/images/vorwaerts_w.svg";
-		Thrixty.icons_cache.zurueck = document.createElement("img");
-		Thrixty.icons_cache.zurueck.src = Thrixty.mainpath+"core/style/images/zurueck.svg";
-		Thrixty.icons_cache.zurueck_w = document.createElement("img");
-		Thrixty.icons_cache.zurueck_w.src = Thrixty.mainpath+"core/style/images/zurueck_w.svg";
+		Thrixty.icons_cache.expand      = Thrixty.create_element("<img src='core/style/images/expand.svg'/>");
+		Thrixty.icons_cache.expand_w    = Thrixty.create_element("<img src='core/style/images/expand_w.svg'/>");
+		Thrixty.icons_cache.load        = Thrixty.create_element("<img src='core/style/images/load.svg'/>");
+		Thrixty.icons_cache.load_w      = Thrixty.create_element("<img src='core/style/images/load_w.svg'/>");
+		Thrixty.icons_cache.minus       = Thrixty.create_element("<img src='core/style/images/minus.svg'/>");
+		Thrixty.icons_cache.minus_w     = Thrixty.create_element("<img src='core/style/images/minus_w.svg'/>");
+		Thrixty.icons_cache.pause       = Thrixty.create_element("<img src='core/style/images/pause.svg'/>");
+		Thrixty.icons_cache.pause_w     = Thrixty.create_element("<img src='core/style/images/pause_w.svg'/>");
+		Thrixty.icons_cache.play        = Thrixty.create_element("<img src='core/style/images/play.svg'/>");
+		Thrixty.icons_cache.play_w      = Thrixty.create_element("<img src='core/style/images/play_w.svg'/>");
+		Thrixty.icons_cache.plus        = Thrixty.create_element("<img src='core/style/images/plus.svg'/>");
+		Thrixty.icons_cache.plus_w      = Thrixty.create_element("<img src='core/style/images/plus_w.svg'/>");
+		Thrixty.icons_cache.shrink      = Thrixty.create_element("<img src='core/style/images/shrink.svg'/>");
+		Thrixty.icons_cache.shrink_w    = Thrixty.create_element("<img src='core/style/images/shrink_w.svg'/>");
+		Thrixty.icons_cache.vorwaerts   = Thrixty.create_element("<img src='core/style/images/vorwaerts.svg'/>");
+		Thrixty.icons_cache.vorwaerts_w = Thrixty.create_element("<img src='core/style/images/vorwaerts_w.svg'/>");
+		Thrixty.icons_cache.zurueck     = Thrixty.create_element("<img src='core/style/images/zurueck.svg'/>");
+		Thrixty.icons_cache.zurueck_w   = Thrixty.create_element("<img src='core/style/images/zurueck_w.svg'/>");
 	};
 	Thrixty.log = function(msg, id){
-		if( typeof(id) != "number" ){
+		if( typeof(id) !== "number" ){
 			/* main log */
 			this.logs.main_log.push(msg);
 
 		} else {
 			/* player log */
-			if( typeof(this.logs.player_logs[id]) == "undefined" ){
+			if( typeof(this.logs.player_logs[id]) === "undefined" ){
 				this.logs.player_logs[id] = [msg];
 			} else {
 				this.logs.player_logs[id].push(msg);
@@ -87,6 +68,11 @@
 	};
 	Thrixty.export_logs = function(){
 		return JSON.stringify(this.logs);
+	};
+	Thrixty.create_element = function(str){
+		var el = document.createElement("div");
+		el.innerHTML = str;
+		return el.children[0];
 	};
 	Thrixty.debounce = function(callback, wait, immediate){
 		immediate = immediate || false;
@@ -185,7 +171,7 @@
 				zoom_mode: "inbox",
 				position_indicator: "minimap",
 				outbox_position: "right",
-				direction: 0, /* 0|1 <=> forward|backward */
+				reversion: false, /* false|true <=> forward|backward */
 				cycle_duration: 5,
 				sensitivity_x: 20,
 				sensitivity_y: 50,
@@ -257,78 +243,26 @@
 
 		/** HTML objects **/
 		/* TODO: rework this part to one liners */
-		this.DOM_obj = {};
-		this.DOM_obj.showroom = document.createElement("div");
-		this.DOM_obj.showroom.setAttribute("class", "showroom");
-			this.DOM_obj.canvas_container = document.createElement("div");
-			this.DOM_obj.canvas_container.setAttribute("class", "canvas_container");
-				this.DOM_obj.bg_canvas = document.createElement("canvas");
-				this.DOM_obj.bg_canvas.setAttribute("id", "bg_canvas");
-				this.DOM_obj.bg_canvas.setAttribute("class", "canvas");
-				this.DOM_obj.bg_canvas.setAttribute("width", "0");
-				this.DOM_obj.bg_canvas.setAttribute("height", "0");
-				this.DOM_obj.main_canvas = document.createElement("canvas");
-				this.DOM_obj.main_canvas.setAttribute("id", "main_canvas");
-				this.DOM_obj.main_canvas.setAttribute("class", "canvas");
-				this.DOM_obj.main_canvas.setAttribute("width", "0");
-				this.DOM_obj.main_canvas.setAttribute("height", "0");
-				this.DOM_obj.minimap_canvas = document.createElement("canvas");
-				this.DOM_obj.minimap_canvas.setAttribute("id", "minimap_canvas");
-				this.DOM_obj.minimap_canvas.setAttribute("class", "canvas");
-				this.DOM_obj.minimap_canvas.setAttribute("width", "0");
-				this.DOM_obj.minimap_canvas.setAttribute("height", "0");
-				this.DOM_obj.minimap_canvas.setAttribute("style", "display: none;");
-				this.DOM_obj.marker = document.createElement("div");
-				this.DOM_obj.marker.setAttribute("id", "marker");
-				this.DOM_obj.marker.setAttribute("style", "display: none;");
-			this.DOM_obj.progress_container = document.createElement("div");
-			this.DOM_obj.progress_container.setAttribute("id", "progress_container");
-				this.DOM_obj.progress_bar = document.createElement("div");
-				this.DOM_obj.progress_bar.setAttribute("class", "progress_bar");
-				this.DOM_obj.progress_bar.setAttribute("state", "unloaded");
-				this.DOM_obj.progress_bar.setAttribute("style", "width: 0%;");
-		this.DOM_obj.controls = document.createElement("div");
-		this.DOM_obj.controls.setAttribute("class", "controls");
-		this.DOM_obj.controls.setAttribute("style", "display: none;");
-			this.DOM_obj.control_container_one = document.createElement("div");
-			this.DOM_obj.control_container_one.setAttribute("class", "control_container_one");
-			this.DOM_obj.prev_btn = document.createElement("button");
-			this.DOM_obj.prev_btn.setAttribute("id", "prev_btn");
-			this.DOM_obj.prev_btn.setAttribute("class", "ctrl_buttons");
-			this.DOM_obj.prev_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.play_btn = document.createElement("button");
-			this.DOM_obj.play_btn.setAttribute("id", "play_btn");
-			this.DOM_obj.play_btn.setAttribute("class", "ctrl_buttons");
-			this.DOM_obj.play_btn.setAttribute("state", "pause");
-			this.DOM_obj.play_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.next_btn = document.createElement("button");
-			this.DOM_obj.next_btn.setAttribute("id", "next_btn");
-			this.DOM_obj.next_btn.setAttribute("class", "ctrl_buttons");
-			this.DOM_obj.next_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.zoom_btn = document.createElement("button");
-			this.DOM_obj.zoom_btn.setAttribute("id", "zoom_btn");
-			this.DOM_obj.zoom_btn.setAttribute("class", "ctrl_buttons");
-			this.DOM_obj.zoom_btn.setAttribute("state", "zoomed_out");
-			this.DOM_obj.zoom_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.size_btn = document.createElement("button");
-			this.DOM_obj.size_btn.setAttribute("id", "size_btn");
-			this.DOM_obj.size_btn.setAttribute("class", "ctrl_buttons");
-			this.DOM_obj.size_btn.setAttribute("state", "normalsized");
-			this.DOM_obj.size_btn.setAttribute("disabled", "disabled");
-		this.DOM_obj.load_overlay = document.createElement("div");
-		this.DOM_obj.load_overlay.setAttribute("id", "load_overlay");
-		this.DOM_obj.load_overlay.setAttribute("style", "display: none;");
-			this.DOM_obj.load_btn = document.createElement("button");
-			this.DOM_obj.load_btn.setAttribute("id", "load_btn");
-			this.DOM_obj.load_btn.setAttribute("style", "display: none;");
-		this.DOM_obj.zoom_canvas = document.createElement("canvas");
-		this.DOM_obj.zoom_canvas.setAttribute("id", "zoom_canvas");
-		this.DOM_obj.zoom_canvas.setAttribute("width", "0");
-		this.DOM_obj.zoom_canvas.setAttribute("height", "0");
-		this.DOM_obj.zoom_canvas.setAttribute("style", "display: none;");
-
-
-
+		this.DOM_obj = {
+			showroom: Thrixty.create_element("<div id='showroom'></div>"),
+				canvas_container: Thrixty.create_element("<div id='canvas_container'></div>"),
+					bg_canvas: Thrixty.create_element("<canvas id='bg_canvas' class='canvas' width='0' height='0'></canvas>"),
+					main_canvas: Thrixty.create_element("<canvas id='main_canvas' class='canvas' width='0' height='0'></canvas>"),
+					minimap_canvas: Thrixty.create_element("<canvas id='minimap_canvas' class='canvas' width='0' height='0'></canvas>"),
+					marker: Thrixty.create_element("<div id='marker'></div>"),
+				progress_container: Thrixty.create_element("<div id='progress_container'></div>"),
+					small_progress_bar: Thrixty.create_element("<div id='small_progress_bar' class='progress_bar' state='unloaded'></div>"),
+			controls: Thrixty.create_element("<div class='controls'></div>"),
+				control_container_one: Thrixty.create_element("<div class='control_container_one'></div>"),
+				prev_btn: Thrixty.create_element("<button id='prev_btn' class='ctrl_buttons'></button>"),
+				play_btn: Thrixty.create_element("<button id='play_btn' class='ctrl_buttons' state='pause'></button>"),
+				next_btn: Thrixty.create_element("<button id='next_btn' class='ctrl_buttons'></button>"),
+				zoom_btn: Thrixty.create_element("<button id='zoom_btn' class='ctrl_buttons' state='zoomed_out'></button>"),
+				size_btn: Thrixty.create_element("<button id='size_btn' class='ctrl_buttons' state='normalsized'></button>"),
+			load_overlay: Thrixty.create_element("<div id='load_overlay'></div>"),
+				load_btn: Thrixty.create_element("<button id='load_btn'></button>"),
+			zoom_canvas: Thrixty.create_element("<canvas id='zoom_canvas' width='0' height='0'></canvas>"),
+		};
 
 
 
@@ -342,7 +276,7 @@
 		this.loading_state = 0; /* 0:init | 1:initialized | 2:displayable | 3:playable | 4:zoomable | 5:completed */
 		this.execute_autostart = true;
 		/* zoom state */
-		this.can_zoom = false;
+		this.can_zoom = null;
 		this.is_zoomed = false;
 		this.is_fullpage = false;
 		/* rotation state */
@@ -358,7 +292,7 @@
 
 
 
-		/*** drawing properties ***/
+		/** drawing properties **/
 			/* current mouseposition to calculate drawing positions from - fed from EventHandler */
 			this.absolute_mouse = {
 				x: 0,
@@ -422,473 +356,343 @@
 				vp_w: 0,
 				vp_h: 0,
 			};
-		/*** /drawing properties ***/
-
-
-
-
-
-
-
+		/** /drawing properties **/
 
 		/** log creation **/
 		Thrixty.log("Player (id "+this.player_id+") initialized.");
 
+		// first part of init prozedure
+		this.init_a();
+	};
 
 
-		/*** PARSE SETTINGS ***/
-			/* loop through all attributes to get option values */
-			var main_box_attributes = this.root_element.attributes;
-			var main_box_attr_count = main_box_attributes.length;
-			for( var i=0; i<main_box_attr_count; i++ ){
-				var attr = main_box_attributes[i];
-				attr_name = attr.name.trim();
-				attr_value = attr.value.trim();
-				switch( attr_name ){
-					case "thrixty-basepath":
-						if( attr_value != "" ){
-							this.settings.basepath = attr_value;
-						}
-						break;
-					case "thrixty-filelist-path-small":
-						if( attr_value != "" ){
-							this.settings.filelist_path_small = attr_value;
-						}
-						break;
-					case "thrixty-filelist-path-large":
-						if( attr_value != "" ){
-							this.settings.filelist_path_large = attr_value;
-						}
-						break;
-					case "thrixty-zoom-control":
-						/* proper values:  -progressive(default) -classic */
-						switch( attr_value ){
-							case "progressive":
-							case "classic":
-								this.settings.zoom_control = attr_value;
-								break;
-						}
-						break;
-					case "thrixty-zoom-mode":
-						/* proper values:  -inbox(default) -outbox -none */
-						switch( attr_value ){
-							case "inbox":
-							case "outbox":
-							case "none":
-								this.settings.zoom_mode = attr_value;
-								break;
-						}
-						break;
-					case "thrixty-position-indicator":
-						/* proper values: -minimap(default) -marker -none[|empty] */
-						switch( attr_value ){
-							case "minimap":
-							case "marker":
-								this.settings.position_indicator = attr_value;
-								break;
-							case "none":
-							case "":
-								this.settings.position_indicator = "";
-								break;
-						}
-						break;
-					case "thrixty-outbox-position":
-						/* proper values: -right(default) -left -top -bottom */
-						switch( attr_value ){
-							case "right":
-							case "left":
-							case "top":
-							case "bottom":
-								this.settings.outbox_position = attr_value;
-								break;
-						}
-						break;
-					case "thrixty-direction":
-						/* proper values: -forward[|0](default) -backward[|1] */
-						switch( attr_value ){
-							case "0":
-							case "forward":
-								this.settings.direction = 0;
-								break;
-							case "1":
-							case "backward":
-								this.settings.direction = 1;
-								break;
-						}
-						break;
-					case "thrixty-cycle-duration":
-						/* proper values: -5(default) -[number > 0] */
-						if( attr_value != "" ){
-							attr_value = parseInt(attr_value);
-							if( attr_value > 0 ){
-								this.settings.cycle_duration = attr_value;
+
+	/**** INITIALIZATION ****/
+		/*** INITIALIZATION PART A ***/
+			Thrixty.Player.prototype.init_a = function(){
+				this.parse_settings();
+
+				this.check_settings();
+
+				this.load_small_filelist();
+
+				if( this.can_zoom !== false ){
+					this.load_large_filelist();
+				}
+			};
+			Thrixty.Player.prototype.parse_settings = function(){
+				/* loop through all attributes to get option values */
+				var main_box_attributes = this.root_element.attributes;
+				var main_box_attr_count = main_box_attributes.length;
+				for( var i=0; i<main_box_attr_count; i++ ){
+					var attr = main_box_attributes[i];
+					attr_name = attr.name.trim();
+					attr_value = attr.value.trim();
+					switch( attr_name ){
+						case "thrixty-basepath":
+							if( attr_value != "" ){
+								this.settings.basepath = attr_value;
 							}
-						}
-						break;
-					case "thrixty-sensitivity-x":
-						/* proper values: -20(default) -[number >= 0] */
-						if( attr_value != "" ){
-							attr_value = parseInt(attr_value);
-							if( attr_value >= 0 ){
-								this.settings.sensitivity_x = attr_value;
+							break;
+						case "thrixty-filelist-path-small":
+							if( attr_value != "" ){
+								this.settings.filelist_path_small = attr_value;
 							}
-						}
-						break;
-					case "thrixty-sensitivity-y":
-						/* proper values: -50(default) -[number >= 0] */
-						if( attr_value != "" ){
-							attr_value = parseInt(attr_value);
-							if( attr_value >= 0 ){
-								this.settings.sensitivity_y = attr_value;
+							break;
+						case "thrixty-filelist-path-large":
+							if( attr_value != "" ){
+								this.settings.filelist_path_large = attr_value;
 							}
-						}
-						break;
-					case "thrixty-autoplay":
-						/* proper values: -on[|-1](default) -off[|0] -[number > 0] */
-						switch( attr_value ){
-							case "on":
-							case "-1":
-								this.settings.autoplay = -1;
-								break;
-							case "off":
-							case "0":
-								this.settings.autoplay = 0;
-								break;
-							default:
+							break;
+						case "thrixty-zoom-control":
+							/* proper values:  -progressive(default) -classic */
+							switch( attr_value ){
+								case "progressive":
+								case "classic":
+									this.settings.zoom_control = attr_value;
+									break;
+							}
+							break;
+						case "thrixty-zoom-mode":
+							/* proper values:  -inbox(default) -outbox -none */
+							switch( attr_value ){
+								case "inbox":
+								case "outbox":
+								case "none":
+									this.settings.zoom_mode = attr_value;
+									break;
+							}
+							break;
+						case "thrixty-position-indicator":
+							/* proper values: -minimap(default) -marker -none[|empty] */
+							switch( attr_value ){
+								case "minimap":
+								case "marker":
+									this.settings.position_indicator = attr_value;
+									break;
+								case "none":
+								case "":
+									this.settings.position_indicator = "";
+									break;
+							}
+							break;
+						case "thrixty-outbox-position":
+							/* proper values: -right(default) -left -top -bottom */
+							switch( attr_value ){
+								case "right":
+								case "left":
+								case "top":
+								case "bottom":
+									this.settings.outbox_position = attr_value;
+									break;
+							}
+							break;
+						case "thrixty-reversion":
+							/* proper values: -false[0|forward] -true[1|backward] */
+							switch( attr_value ){
+								case "":
+								case "0":
+								case "false":
+								case "forward":
+									this.settings.reversion = false;
+									break;
+								case "1":
+								case "true":
+								case "backward":
+									this.settings.reversion = true;
+									break;
+							}
+							break;
+						case "thrixty-cycle-duration":
+							/* proper values: -5(default) -[number > 0] */
+							if( attr_value != "" ){
 								attr_value = parseInt(attr_value);
 								if( attr_value > 0 ){
-									this.settings.autoplay = attr_value;
+									this.settings.cycle_duration = attr_value;
 								}
-								break;
-						}
-						break;
-					case "thrixty-autoload":
-						/* proper values: -on(default) -off(enforced on mobile) */
-						if( Thrixty.is_mobile ){
-							this.settings.autoload = false;
-						} else {
+							}
+							break;
+						case "thrixty-sensitivity-x":
+							/* proper values: -20(default) -[number >= 0] */
+							if( attr_value != "" ){
+								attr_value = parseInt(attr_value);
+								if( attr_value >= 0 ){
+									this.settings.sensitivity_x = attr_value;
+								}
+							}
+							break;
+						case "thrixty-sensitivity-y":
+							/* proper values: -50(default) -[number >= 0] */
+							if( attr_value != "" ){
+								attr_value = parseInt(attr_value);
+								if( attr_value >= 0 ){
+									this.settings.sensitivity_y = attr_value;
+								}
+							}
+							break;
+						case "thrixty-autoplay":
+							/* proper values: -on[|-1](default) -off[|0] -[number > 0] */
 							switch( attr_value ){
 								case "on":
-									this.settings.autoload = true;
+								case "-1":
+									this.settings.autoplay = -1;
 									break;
 								case "off":
-									this.settings.autoload = false;
+								case "0":
+									this.settings.autoplay = 0;
+									break;
+								default:
+									attr_value = parseInt(attr_value);
+									if( attr_value > 0 ){
+										this.settings.autoplay = attr_value;
+									}
 									break;
 							}
-						}
-						break;
-					default:
-						/* ignore all other attributes */
-						break;
-				}
-			}
-
-			/* set the small and large filepaths to their settings-values */
-			var small_url = this.settings.basepath;
-			var large_url = this.settings.basepath;
-
-			if( small_url != "" ){
-				small_url += small_url.charAt(small_url.length-1) === "/" ? "" : "/";
-			}
-			if( large_url != "" ){
-				large_url += large_url.charAt(large_url.length-1) === "/" ? "" : "/";
-			}
-				small_url += this.settings.filelist_path_small;
-				large_url += this.settings.filelist_path_large;
-
-			this.small.filepath = small_url;
-			this.large.filepath = large_url;
-		/*** /PARSE SETTINGS ***/
-		/*** CHECK SETTINGS ***/
-			/* check settings for mandatories etc. */
-			/** ( TODO ) **/
-		/*** /CHECK SETTINGS ***/
-
-		/*** LOAD FILELISTS ***/
-			this.load_small_filelist();
-			this.load_large_filelist();
-		/*** /LOAD FILELISTS ***/
-	};
-
-
-	Thrixty.Player.prototype.check_loading_state = function(){
-		if( this.loading_state == 0 ){
-			if( this.small.filelist_loaded !== null && this.large.filelist_loaded !== null ){
-				// continue, as both filelists were loaded
-
-				if( this.small.filelist_loaded === true ){
-					// only do stuff, when small filelist was loaded
-					this.loading_state = 1;
-					Thrixty.log("Wechsel zu Ladestatus 1 (initialized)", this.player_id);
-
-					// parse small and parse large, when available
-					this.parse_small_filelist();
-					if( this.large.filelist_loaded === true ){
-						this.parse_large_filelist();
-					}
-
-					// ???
-					this.set_image_offsets();
-					this.set_rotation_delay();
-
-					// now build html structure
-					this.build_html_structure();
-
-					// next preload images
-					if( this.settings.autoload ){
-						this.load_small_images();
-						this.load_large_image(0);
-					} else {
-						this.load_first_small_image();
-						this.load_large_image(0);
-					}
-				} else {
-					/* error when trying to change to 1 */
-					this.loading_state = -1;
-					Thrixty.log("ERROR: -1 (initialized error)", this.player_id);
-				}
-			}
-			return null;
-		}
-		if( this.loading_state == 1 ){
-			// update progress bar
-			this.refresh_progress_bar();
-			// is first iamge loaded?
-			if( this.small.images[0].elem_loaded ){
-				this.loading_state = 2;
-				Thrixty.log("Wechsel zu Ladestatus 2 (displayable)", this.player_id);
-				// draw first small image on canvas
-				this.draw_current_image();
-				// show_player
-				this.DOM_obj.showroom.style.display = "";
-				this.DOM_obj.controls.style.display = "";
-			}
-		}
-		if( this.loading_state == 2 ){
-			// update progress bar
-			this.refresh_progress_bar();
-
-			if( (this.small.images_loaded + this.small.images_errored) == this.small.images_count ){
-				this.loading_state = 3;
-				Thrixty.log("Wechsel zu Ladestatus 3 (playable)", this.player_id);
-				// enable_controls(); || => if large was parsed, also enable zoom button
-				this.DOM_obj.size_btn.removeAttribute("disabled");
-				this.DOM_obj.prev_btn.removeAttribute("disabled");
-				this.DOM_obj.play_btn.removeAttribute("disabled");
-				this.DOM_obj.next_btn.removeAttribute("disabled");
-				if( this.settings.zoom_mode != "none" && this.large.filelist_loaded === true ){
-					this.can_zoom = true;
-					this.DOM_obj.zoom_btn.removeAttribute("disabled");
-				}
-				/* finally, assign the events to the HTML objects */
-				this.assign_events();
-			}
-		}
-		if( this.loading_state == 3 ){
-			/* all images loaded */
-			/* autostart / autoplay */
-			if( this.settings.autoplay < 0 ){
-				this.start_rotation();
-				Thrixty.log("Autoplay infinite.", this.player_id);
-			} else if( this.settings.autoplay == 0 ){
-				Thrixty.log("No Autoplay.", this.player_id);
-			} else {
-				this.start_rotation(this.settings.autoplay*this.small.images_count);
-				Thrixty.log("Autoplay "+this.settings.autoplay+" turn(s).", this.player_id);
-			}
-		}
-	};
-
-
-
-
-	/**** LOADING METHODS ****/
-		Thrixty.Player.prototype.load_small_filelist = function(){
-			var xhr = new XMLHttpRequest();
-			xhr.open("get", this.small.filepath, true);
-			xhr.onreadystatechange = function(){
-				if( xhr.readyState == 4 ){
-					if( xhr.status == 200 ){
-						Thrixty.log("basic (small) filelist found", this.player_id);
-						this.small.filelist_loaded = true;
-						this.small.filelist_content = xhr.responseText;
-						this.check_loading_state();
-					} else {
-						Thrixty.log("basic (small) filelist not found", this.player_id);
-						this.small.filelist_loaded = false;
-						this.check_loading_state();
+							break;
+						case "thrixty-autoload":
+							/* proper values: -on(default) -off(enforced on mobile) */
+							if( Thrixty.is_mobile ){
+								this.settings.autoload = false;
+							} else {
+								switch( attr_value ){
+									case "on":
+										this.settings.autoload = true;
+										break;
+									case "off":
+										this.settings.autoload = false;
+										break;
+								}
+							}
+							break;
+						default:
+							/* ignore all other attributes */
+							break;
 					}
 				}
-			}.bind(this);
-			xhr.send(null);
-		};
-		Thrixty.Player.prototype.load_large_filelist = function(){
-			var xhr = new XMLHttpRequest();
-			xhr.open("get", this.large.filepath, true);
-			xhr.onreadystatechange = function(){
-				if( xhr.readyState == 4 ){
-					if( xhr.status == 200 ){
-						Thrixty.log("large filelist found", this.player_id);
-						this.large.filelist_loaded = true;
-						if( this.settings.zoom_mode !== "none" ){
-							this.can_zoom = true;
-							this.parse_large_filelist();
+
+				/* set the small and large filepaths to their settings-values */
+				var small_url = this.settings.basepath;
+				var large_url = this.settings.basepath;
+
+				if( small_url != "" ){
+					small_url += small_url.charAt(small_url.length-1) === "/" ? "" : "/";
+				}
+				if( large_url != "" ){
+					large_url += large_url.charAt(large_url.length-1) === "/" ? "" : "/";
+				}
+					small_url += this.settings.filelist_path_small;
+					large_url += this.settings.filelist_path_large;
+
+				this.small.filepath = small_url;
+				this.large.filepath = large_url;
+			};
+			Thrixty.Player.prototype.check_settings = function(){
+				// TODO: check stuff
+				/* check settings for mandatories etc. */
+
+				if( this.settings.zoom_mode == "none" ){
+					this.can_zoom = false;
+				}
+			};
+			Thrixty.Player.prototype.load_small_filelist = function(){
+				var xhr = new XMLHttpRequest();
+				xhr.open("get", this.small.filepath, true);
+				xhr.onreadystatechange = function(){
+					if( xhr.readyState == 4 ){
+						if( xhr.status == 200 ){
+							Thrixty.log("basic (small) filelist found", this.player_id);
+							this.small.filelist_loaded = true;
+							this.small.filelist_content = xhr.responseText;
 						} else {
-							this.can_zoom = false;
+							Thrixty.log("basic (small) filelist not found", this.player_id);
+							this.small.filelist_loaded = false;
 						}
-						this.large.filelist_content = xhr.responseText;
-						this.check_loading_state();
-					} else {
-						Thrixty.log("large filelist not found", this.player_id);
-						this.large.filelist_loaded = false;
-						this.can_zoom = false;
-						this.check_loading_state();
+						/* continue with init part b? */
+						this.check_init_b();
 					}
+				}.bind(this);
+				xhr.send(null);
+			};
+			Thrixty.Player.prototype.load_large_filelist = function(){
+				var xhr = new XMLHttpRequest();
+				xhr.open("get", this.large.filepath, true);
+				xhr.onreadystatechange = function(){
+					if( xhr.readyState == 4 ){
+						if( xhr.status == 200 ){
+							Thrixty.log("large filelist found", this.player_id);
+							this.large.filelist_loaded = true;
+							this.large.filelist_content = xhr.responseText;
+							this.can_zoom = true; /* large exclusive */
+						} else {
+							Thrixty.log("large filelist not found", this.player_id);
+							this.large.filelist_loaded = false;
+							this.can_zoom = false; /* large exclusive */
+						}
+						/* continue with init part b? */
+						this.check_init_b();
+					}
+				}.bind(this);
+				xhr.send(null);
+			};
+			Thrixty.Player.prototype.check_init_b = function(){
+				/* (gets called 2 times,; trying to load 2 filelists) */
+				/* trigger function on the last call (when all filelist loads got a result */
+				if( this.small.filelist_loaded !== null && this.large.filelist_loaded !== null ){
+					this.init_b();
 				}
-			}.bind(this);
-			xhr.send(null);
-		};
-		Thrixty.Player.prototype.parse_small_filelist = function(){
-			/* clear images array */
-			this.small.images = [];
-			/* kill whitespace, ['] and ["] and convert to array on each [,] */
-			var image_paths = this.small.filelist_content.replace(/[\s'"]/g,"").split(",");
-			/* option for reverse turned on, reverse array */
-			/* (results in playing the animation reversely) */
-			if( this.settings.direction != 0 ){
-				image_paths.reverse();
-			}
-			/* loop through all paths */
-			var pic_count = image_paths.length;
-			this.small.images_count = pic_count;
+			};
+		/*** /INITIALIZATION PART A ***/
+		/*** INITIALIZATION PART B ***/
+			Thrixty.Player.prototype.init_b = function(){
+				this.parse_small_filelist();
+				if( this.can_zoom === true ){
+					this.parse_large_filelist();
+				}
+				this.build_html_structure();
+				/* Set the values for the possibly different image count. */
+				this.set_image_offsets();
+				this.set_rotation_delay();
+				if( this.settings.autoload ){
+					this.load_all_small_images();
+				} else {
+					this.load_small_image(0);
+				}
+				if( this.can_zoom === true ){
+					this.load_large_image(0);
+				}
+			};
+			Thrixty.Player.prototype.parse_small_filelist = function(){
+				this.small.images = [];
 
-			for( var i=0; i<pic_count; i++ ){
-				var new_image_object = {};
-				new_image_object.id = i;
-				new_image_object.source = image_paths[i];
-				new_image_object.elem_loaded = null;  /* null = not yet loaded, false = failed to load, true = is loaded */
-				new_image_object.to_small = null;
-				new_image_object.to_large = null;
-				new_image_object.element = document.createElement("img");
-				new_image_object.element.addEventListener(
-					"load",
-					function(index){
-						if( index == 0 ){
-							var img = this.small.images[0].element;
-							var w = img.naturalWidth;
-							var h = img.naturalHeight;
-							var ar = w/h;
-							this.small.image_width = w;
-							this.small.image_height = h;
-							this.small.image_ratio = ar;
-							this.set_canvas_dimensions(img);
-						}
-						this.small.images_loaded += 1;
-						this.small.images[index].elem_loaded = true;
-						this.check_loading_state();
-					}.bind(this, i)
-				);
-				new_image_object.element.addEventListener(
-					"error",
-					function(index){
-						this.small.images_errored += 1;
-						this.small.images[index].elem_loaded = false;
-						this.check_loading_state();
-					}.bind(this, i)
-				);
+				var image_paths = this.parse_filelist_content(this.small.filelist_content);
 
-				// append
-				this.small.images.push( new_image_object );
-			}
-		};
-		Thrixty.Player.prototype.parse_large_filelist = function(){
-			/* clear images array */
-			this.large.images = [];
-			/* kill whitespace, ['] and ["] and convert to array on each [,] */
-			var image_paths = this.large.filelist_content.replace(/[\s'"]/g,"").split(",");
-			/* option for reverse turned on, reverse array */
-			/* (results in playing the animation reversely) */
-			if( this.settings.direction != 0 ){
-				image_paths.reverse();
-			}
-			/* loop through all paths */
-			var pic_count = image_paths.length;
-			this.large.images_count = pic_count;
+				/* loop through all paths */
+				var pic_count = image_paths.length;
+				this.small.images_count = pic_count;
 
-			for( var i=0; i<pic_count; i++ ){
-				var new_image_object = {};
-				new_image_object.id = i;
-				new_image_object.source = image_paths[i];
-				new_image_object.elem_loaded = null;  /* null = not yet loaded, false = failed to load, true = is loaded */
-				new_image_object.to_small = null;
-				new_image_object.to_large = null;
-				new_image_object.element = document.createElement("img");
-				new_image_object.element.addEventListener(
-					"load",
-					function(index){
-						if( index == 0 ){
-							var img = this.large.images[0].element;
-							var w = img.naturalWidth;
-							var h = img.naturalHeight;
-							var ar = w/h;
-							this.large.image_width = w;
-							this.large.image_height = h;
-							this.large.image_ratio = ar;
-						}
-						this.large.images_loaded += 1;
-						this.large.images[index].elem_loaded = true;
-					}.bind(this, i)
-				);
-				new_image_object.element.addEventListener(
-					"error",
-					function(index, e){
-						this.large.images_errored += 1;
-						this.large.images[index].elem_loaded = false;
-					}.bind(this, i)
-				);
+				for( var i=0; i<pic_count; i++ ){
+					var new_image_object = {
+						id: i,
+						source: image_paths[i],
+						elem_loaded: null,  /* null = not yet loaded, false = failed to load, true = is loaded */
+						to_small: null,
+						to_large: null,
+						element: document.createElement("img"),
+					};
+					new_image_object.element.addEventListener(
+						"load",
+						this.init_small_all.bind(this, i) /* , e (addEventListener automatically adds it) */
+					);
+					new_image_object.element.addEventListener(
+						"error",
+						this.init_small_all.bind(this, i) /* , e (addEventListener automatically adds it) */
+					);
+					// append
+					this.small.images.push( new_image_object );
+				}
+			};
+			Thrixty.Player.prototype.parse_large_filelist = function(){
+				this.large.images = [];
 
-				// append
-				this.large.images.push( new_image_object );
-			}
-		};
-		Thrixty.Player.prototype.load_first_small_image = function(){
-			this.small.images[0].element.src = this.small.images[0].source;
-		};
-		Thrixty.Player.prototype.load_small_images = function(){
-			var i = 0;
-			var count = this.small.images_count;
-			for( i; i<count; i++ ){
-				this.small.images[i].element.src = this.small.images[i].source;
-			}
-		};
-		Thrixty.Player.prototype.load_large_image = function(index){
-			this.large.images[index].element.src = this.large.images[index].source;
-		}
-		Thrixty.Player.prototype.load_first_large_image = function(){
-			this.large.images[0].element.src = this.large.images[0].source;
-		};
-		Thrixty.Player.prototype.load_large_images = function(){
-			var i = 0;
-			var count = this.large.images_count;
-			for( i; i<count; i++ ){
-				this.large.images[i].element.src = this.large.images[i].source;
-			}
-		};
-		Thrixty.Player.prototype.build_html_structure = function(){
-			/* hide player */
-			this.DOM_obj.showroom.style.display = "none";
-				this.DOM_obj.zoom_canvas.style.display = "none";
-				this.DOM_obj.minimap_canvas.style.display = "none";
+				var image_paths = this.parse_filelist_content(this.large.filelist_content);
+
+				/* loop through all paths */
+				var pic_count = image_paths.length;
+				this.large.images_count = pic_count;
+
+				for( var i=0; i<pic_count; i++ ){
+					var new_image_object = {
+						id: i,
+						source: image_paths[i],
+						elem_loaded: null,  /* null = not yet loaded, false = failed to load, true = is loaded */
+						to_small: null,
+						to_large: null,
+						element: document.createElement("img"),
+					};
+					new_image_object.element.addEventListener(
+						"load",
+						this.init_large_all.bind(this, i) /* , e (addEventListener automatically adds it) */
+					);
+					new_image_object.element.addEventListener(
+						"error",
+						this.init_large_all.bind(this, i) /* , e (addEventListener automatically adds it) */
+					);
+					// append
+					this.large.images.push( new_image_object );
+				}
+			};
+			Thrixty.Player.prototype.build_html_structure = function(){
+				/* pre-hide player */
+				this.root_element.style.display = "none";
 				this.DOM_obj.marker.style.display = "none";
-			this.DOM_obj.controls.style.display = "none";
-			/* disable buttons */
-			this.DOM_obj.size_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.prev_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.play_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.next_btn.setAttribute("disabled", "disabled");
-			this.DOM_obj.zoom_btn.setAttribute("disabled", "disabled");
 
-			/* this is the main part of the player - image show area */
+				/* pre-disable buttons */
+				this.DOM_obj.size_btn.setAttribute("disabled", "disabled");
+				this.DOM_obj.prev_btn.setAttribute("disabled", "disabled");
+				this.DOM_obj.play_btn.setAttribute("disabled", "disabled");
+				this.DOM_obj.next_btn.setAttribute("disabled", "disabled");
+				this.DOM_obj.zoom_btn.setAttribute("disabled", "disabled");
+				/* put HTML into the DOM */
 				this.root_element.appendChild(this.DOM_obj.showroom);
 					this.DOM_obj.showroom.appendChild(this.DOM_obj.canvas_container);
 						this.DOM_obj.canvas_container.appendChild(this.DOM_obj.bg_canvas);
@@ -896,54 +700,229 @@
 						this.DOM_obj.canvas_container.appendChild(this.DOM_obj.minimap_canvas);
 						this.DOM_obj.canvas_container.appendChild(this.DOM_obj.marker);
 					this.DOM_obj.showroom.appendChild(this.DOM_obj.progress_container);
-						this.DOM_obj.progress_container.appendChild(this.DOM_obj.progress_bar);
+						this.DOM_obj.progress_container.appendChild(this.DOM_obj.small_progress_bar);
+					this.root_element.appendChild(this.DOM_obj.controls);
+						this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
+							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
+							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
+							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
+							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
+							if( !Thrixty.is_mobile ){
+								this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
+							}
+					if( !this.settings.autoload ){
+						this.root_element.appendChild(this.DOM_obj.load_overlay);
+							this.DOM_obj.load_overlay.appendChild(this.DOM_obj.load_btn);
+					}
+					this.root_element.appendChild(this.DOM_obj.zoom_canvas);
+			};
+			/** Init B Helpers **/
+				/* returns ARRAY of parsed 'text' */
+				Thrixty.Player.prototype.parse_filelist_content = function(text){
+					var ret_arr = [];
+					/* kill whitespace, ['] and ["] and split to array on each [,] */
+					var ret_arr = text.replace(/[\s'"]/g,"").split(",");
+					/* reverse array, when option is turned on */
+					/* (results in playing the animation reversely) */
+					if( this.settings.reversion ){
+						ret_arr.reverse();
+					}
+					/* TOCOME: parse check here? */
+					/* // */
+					return ret_arr;
+				};
+				Thrixty.Player.prototype.load_small_image = function(index){
+					var src = this.small.images[index].source;
+					this.small.images[index].element.src = src;
+				};
+				Thrixty.Player.prototype.load_all_small_images = function(){
+					var i = 0;
+					var count = this.small.images_count;
+					for( i; i<count; i++ ){
+						this.load_small_image(i);
+					}
+				};
+				Thrixty.Player.prototype.load_large_image = function(index){
+					var src = this.large.images[index].source;
+					this.large.images[index].element.src = src;
+				};
+				Thrixty.Player.prototype.load_all_large_images = function(){
+					var i = 0;
+					var count = this.large.images_count;
+					for( i; i<count; i++ ){
+						this.load_large_image(i);
+					}
+				};
+			/** /Init B Helpers **/
+		/*** /INITIALIZATION PART B ***/
+		/*** INITIALIZATION PART SMALL ***/
+			Thrixty.Player.prototype.init_small_first = function(index, e){
+				if( e.type === "load" ){
+					this.set_small_dimensions(index);
+					this.set_canvas_dimensions(this.small);
+					/* show player */
+					this.root_element.style.display = "";
+					this.assign_events();
+					this.draw_current_image();
+				} else {
+					// TODO: CRITICAL ERROR HANDLING!!!!
+					Thrixty.log("SMALL IMAGE WAS NOT FOUND", this.player_id);
+				}
+			};
+			Thrixty.Player.prototype.init_small_each = function(index, e){
+				if( e.type === "load" ){
+					this.small.images_loaded += 1;
+					this.small.images[index].elem_loaded = true;
+					Thrixty.log("small image "+index+" loaded ('"+this.small.images[0].element.src+"')", this.player_id);
 
-				/* these are the control buttons for the app */
-				this.root_element.appendChild(this.DOM_obj.controls);
-					this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
-						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
-						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
-						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
-						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
-						if( !Thrixty.is_mobile ){
-							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
+				} else if( e.type === "error" ){
+					this.small.images_errored += 1;
+					this.small.images[index].elem_loaded = false;
+					Thrixty.log("small image "+index+" errored ('"+this.small.images[0].element.src+"')", this.player_id);
+
+				} else {
+					// ???
+				}
+				// update (small) progress bar
+				this.refresh_small_progress_bar();
+			};
+			Thrixty.Player.prototype.init_small_all = function(index, e){
+				if( this.small.images[index].elem_loaded === null ){
+					this.init_small_each(index, e);
+
+					if( index === 0 ){
+						this.init_small_first(index, e);
+					}
+
+					/* check for all small being loaded */
+					if( (this.small.images_loaded + this.small.images_errored) == this.small.images_count ){
+						// [playable]
+						/* enable controls */
+						this.DOM_obj.prev_btn.removeAttribute("disabled");
+						this.DOM_obj.play_btn.removeAttribute("disabled");
+						this.DOM_obj.next_btn.removeAttribute("disabled");
+						this.DOM_obj.zoom_btn.removeAttribute("disabled");
+						this.DOM_obj.size_btn.removeAttribute("disabled");
+
+						/* autostart / autoplay */
+						/* start rotation (if autoplay is on) */
+						if( this.settings.autoplay < 0 ){
+							this.start_rotation();
+							Thrixty.log("Autoplay infinite.", this.player_id);
+						} else if( this.settings.autoplay == 0 ){
+							Thrixty.log("No Autoplay.", this.player_id);
+						} else {
+							this.start_rotation(this.settings.autoplay*this.small.images_count);
+							Thrixty.log("Autoplay "+this.settings.autoplay+" turn(s).", this.player_id);
 						}
+					}
+				}
+			};
+			/** Init Small Helpers **/
+				Thrixty.Player.prototype.set_small_dimensions = function(index){
+					var img = this.small.images[index].element;
+					// append child
+					this.root_element.appendChild(img);
+						// show child
+						img.style.display = "block";
+							var w = img.naturalWidth;
+							var h = img.naturalHeight;
+							var ar = w/h;
+							this.small.image_width = w;
+							this.small.image_height = h;
+							this.small.image_ratio = ar;
+						// hide child
+						img.style.display = "";
+					// remove child
+					this.root_element.removeChild(img);
+					Thrixty.log("Small dimensions set to: ("+w+"|"+h+")", this.player_id);
+				};
+				Thrixty.Player.prototype.refresh_small_progress_bar = function(){
+					var progress_bar = this.DOM_obj.small_progress_bar;
+					var percentage = ( (this.small.images_loaded+this.small.images_errored) / this.small.images_count);
 
-				/* thi is the overlay for the load confirmation */
-				this.root_element.appendChild(this.DOM_obj.load_overlay);
-					this.DOM_obj.load_overlay.appendChild(this.DOM_obj.load_btn);
+					/* NaN or negative   (-n...0) */
+					if( isNaN(percentage) || percentage <= 0 ){
+						progress_bar.setAttribute("state", "unloaded");
+						progress_bar.style.width = "0%";
 
-				/* Zoom Box for Outbox Zoom (invisible on stadard) */
-				this.root_element.appendChild(this.DOM_obj.zoom_canvas);
+					/* under 100%        (0,01...0,99) */
+					} else if( percentage < 1 ){
+						progress_bar.setAttribute("state", "loading");
+						progress_bar.style.width = (percentage * 100)+"%";
 
-			/* no errors (?) */
-			return true;
-		};
-		Thrixty.Player.prototype.refresh_progress_bar = function(){
-			var progress_bar = this.DOM_obj.progress_bar;
-			var percentage = ( (this.small.images_loaded+this.small.images_errored) / this.small.images_count);
+					/* over 100%         (1...n) */
+					} else if( percentage >= 1 ){
+						progress_bar.setAttribute("state", "loaded");
+						progress_bar.style.width = "100%";
+					}
+				};
+			/** /Init Small Helpers **/
+		/*** /INITIALIZATION PART SMALL ***/
+		/*** INITIALIZATION PART LARGE ***/
+			Thrixty.Player.prototype.init_large_first = function(index, e){
+				if( e.type === "load" ){
+					this.set_large_dimensions(0);
+				} else {
+					// TODO: CRITICAL ERROR HANDLING!!!!
+					Thrixty.log("LARGE IMAGE WAS NOT FOUND", this.player_id);
+				}
+			};
+			Thrixty.Player.prototype.init_large_each = function(index, e){
+				if( e.type === "load" ){
+					this.large.images_loaded += 1;
+					this.large.images[index].elem_loaded = true;
+					Thrixty.log("large image "+index+" loaded ('"+this.large.images[0].element.src+"')", this.player_id);
 
-			/* NaN or negative   (-n...0) */
-			if( isNaN(percentage) || percentage <= 0 ){
-				progress_bar.setAttribute("state", "unloaded");
-				progress_bar.style.width = "0%";
+				} else if( e.type === "error" ){
+					this.large.images_errored += 1;
+					this.large.images[index].elem_loaded = false;
+					Thrixty.log("large image "+index+" errored ('"+this.large.images[0].element.src+"')", this.player_id);
 
-			/* under 100%        (0,01...0,99) */
-			} else if( percentage < 1 ){
-				progress_bar.setAttribute("state", "loading");
-				progress_bar.style.width = (percentage * 100)+"%";
+				} else {
+					// ???
+				}
+				// (update large progress bar)
+			};
+			Thrixty.Player.prototype.init_large_all = function(index, e){
+				if( this.large.images[index].elem_loaded === null ){
+					this.init_large_each(index, e);
 
-			/* over 100%         (1...n) */
-			} else if( percentage >= 1 ){
-				progress_bar.setAttribute("state", "loaded");
-				progress_bar.style.width = "100%";
-			}
-		};
-	/**** /LOADING METHODS ****/
+					if( index === 0 ){
+						this.init_large_first(index, e);
+					}
+
+					/* if all large were loaded */
+					if( (this.large.images_loaded + this.large.images_errored) == this.large.images_count ){
+						// [completed]
+						// nothing
+					}
+				}
+			};
+			Thrixty.Player.prototype.set_large_dimensions = function(index){
+				var img = this.large.images[index].element;
+				// append child
+				this.root_element.appendChild(img);
+					// show child
+					img.style.display = "block";
+						var w = img.naturalWidth;
+						var h = img.naturalHeight;
+						var ar = w/h;
+						this.large.image_width = w;
+						this.large.image_height = h;
+						this.large.image_ratio = ar;
+					// hide child
+					img.style.display = "";
+				// remove child
+				this.root_element.removeChild(img);
+				Thrixty.log("Large dimensions set to: ("+w+"|"+h+")", this.player_id);
+			};
+		/*** /INITIALIZATION PART LARGE ***/
+	/**** /INITIALIZATION ****/
 
 
 
-	/**** HTML + EVENTS METHODS ****/
+	/**** EVENTS ****/
 		Thrixty.Player.prototype.assign_events = function(){
 			// TODO: put this into the constructor (???)
 				/* for object turn */
@@ -1029,55 +1008,41 @@
 			var keycode = e.keyCode || e.which;
 			switch( keycode ){
 				case 32:  /* SPACEBAR */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* correlate to click on play/pause button */
-						this.play_button_event_click();
-					}
+					e.preventDefault();
+					/* correlate to click on play/pause button */
+					this.play_button_event_click();
 					break;
 				case 37:  /* LEFT ARROW */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* correlate to click on left button */
-						this.prev_button_event_click();
-					}
+					e.preventDefault();
+					/* correlate to click on left button */
+					this.prev_button_event_click();
 					break;
 				case 39:  /* RIGHT ARROW */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* correlate to click on right button */
-						this.next_button_event_click();
-					}
+					e.preventDefault();
+					/* correlate to click on right button */
+					this.next_button_event_click();
 					break;
 				case 38:  /* UP ARROW */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* doesnt have a correlating button */
-						this.increase_rotation_speed();
-					}
+					e.preventDefault();
+					/* doesnt have a correlating button */
+					this.increase_rotation_speed();
 					break;
 				case 40:  /* DOWN ARROW */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* doesnt have a correlating button */
-						this.decrease_rotation_speed();
-					}
+					e.preventDefault();
+					/* doesnt have a correlating button */
+					this.decrease_rotation_speed();
 					break;
 				case 27:  /* ESCAPE */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* doesnt have a correlating button */
-						this.stop_rotation();
-						this.stop_zoom();
-						this.quit_fullpage();
-					}
+					e.preventDefault();
+					/* doesnt have a correlating button */
+					this.stop_rotation();
+					this.stop_zoom();
+					this.quit_fullpage();
 					break;
 				case 70:  /* F */
-					if( this.loading_state >= 3 ){
-						e.preventDefault();
-						/* correlate to click on fullpage button */
-						this.size_button_event_click();
-					}
+					e.preventDefault();
+					/* correlate to click on fullpage button */
+					this.size_button_event_click();
 					break;
 				case 33:  /* PAGEUP */
 				case 34:  /* PAGEDOWN */
@@ -1092,42 +1057,31 @@
 		};
 		/*** Buttons ***/
 			Thrixty.Player.prototype.load_button_event_click = function(e){
-				this.DOM_obj.load_overlay.style.display = "none";
-				this.DOM_obj.load_btn.style.display = "none";
-				this.load_small_images();
+				e.stopPropagation();
+				this.root_element.removeChild(this.DOM_obj.load_overlay);
+				this.load_all_small_images();
+
 			};
 			Thrixty.Player.prototype.prev_button_event_click = function(e){
-				if( this.loading_state >= 3 ){
-					this.stop_rotation();
-					this.draw_previous_image();
-				}
+				this.stop_rotation();
+				this.draw_previous_image();
 			};
 			Thrixty.Player.prototype.play_button_event_click = function(e){
-				if( this.loading_state >= 3 ){
-					this.toggle_rotation();
-				}
+				this.toggle_rotation();
 			};
 			Thrixty.Player.prototype.next_button_event_click = function(e){
-				if( this.loading_state >= 3 ){
-					this.stop_rotation();
-					this.draw_next_image();
-				}
+				this.stop_rotation();
+				this.draw_next_image();
 			};
 			Thrixty.Player.prototype.zoom_button_event_click = function(e){
-				if( this.loading_state >= 3 ){
-					this.toggle_zoom();
-				}
+				this.toggle_zoom();
 			};
 			Thrixty.Player.prototype.size_button_event_click = function(e){
-				if( this.loading_state >= 3 ){
-					this.toggle_fullpage();
-				}
+				this.toggle_fullpage();
 			};
 			Thrixty.Player.prototype.main_canvas_dblclick = function(e){
-				if( this.loading_state >= 3 ){
-					e.preventDefault();
-					this.toggle_zoom();
-				}
+				e.preventDefault();
+				this.toggle_zoom();
 			};
 		/*** /Buttons ***/
 		/*** Interaction ***/
@@ -1409,7 +1363,8 @@
 				};
 			/** /scrolling **/
 		/*** /Interaction ***/
-	/**** /HTML + EVENTS METHODS ****/
+	/**** /EVENTS ****/
+
 
 
 	/**** ROTATION METHODS ****/
@@ -1501,6 +1456,14 @@
 		};
 	/**** /ROTATION METHODS ****/
 
+
+
+
+
+
+
+
+
 	/**** IMAGE STEERING METHODS ****/
 		Thrixty.Player.prototype.change_active_image_id = function(amount){
 			var id = 0;
@@ -1508,9 +1471,11 @@
 			if( this.is_zoomed ){
 				id = this.large.active_image_id;
 				count = this.large.images_count;
+				this.small.active_image_id = this.large.images[id].to_small;
 			} else {
 				id = this.small.active_image_id;
 				count = this.small.images_count;
+				this.large.active_image_id = this.small.images[id].to_large;
 			}
 			/* calc position */
 			id = (id + amount) % count;
@@ -1535,6 +1500,20 @@
 			this.draw_current_image();
 		};
 	/**** /IMAGE STEERING METHODS ****/
+
+
+
+
+
+
+
+
+
+// MARK: Das Konzept des Drawens ist veraltet und total konfus...
+// Das muss dringend überarbeitet werden...
+
+
+
 
 
 	/**** DRAWING METHODS ****/
@@ -1594,12 +1573,14 @@
 		};
 		Thrixty.Player.prototype.unzoomed = function(){
 			/* Task: Draw the unzoomed image on the canvas */
-
 			/* refresh main_canvas information (in case smt changed in viewport size) */
 			this.main_canvas = this.get_main_canvas_dimensions();
+			console.log(this.main_canvas);
+
 
 			/* get current small image */
 			var small_image = this.get_current_small_image();
+			console.log(small_image);
 
 			/* clear */
 			// this.main_canvas.width = this.main_canvas.width;
@@ -2019,34 +2000,22 @@
 
 
 	/**** GETTER & SETTER ****/
-		Thrixty.Player.prototype.set_canvas_dimensions = function(img){
-			// append child
-			this.root_element.appendChild(img);
-				// show child
-				img.style.display = "block";
-					// get width, height, aspect ratio
-					var w = img.naturalWidth;
-					var h = img.naturalHeight;
-					var ar = w/h;
-					// set width and height of canvas
-					/* background */
-						this.DOM_obj.bg_canvas.width = w;
-						this.DOM_obj.bg_canvas.height = h;
-					/* main */
-						this.DOM_obj.main_canvas.width = w;
-						this.DOM_obj.main_canvas.height = h;
-					/* minimap */
-						this.DOM_obj.minimap_canvas.width = w;
-						this.DOM_obj.minimap_canvas.height = h;
-					/* zoom box */
-						this.DOM_obj.zoom_canvas.width = w;
-						this.DOM_obj.zoom_canvas.height = h;
-					// set normal dimensions || TODO: RENAME
-					this.set_normal_dimensions();
-				// hide child
-				img.style.display = "";
-			// remove child
-			this.root_element.removeChild(img);
+		Thrixty.Player.prototype.set_canvas_dimensions = function(size_obj){
+			/* set width and height of canvas */
+			var w = size_obj.image_width;
+			var h = size_obj.image_height;
+			/* background */
+				this.DOM_obj.bg_canvas.width = w;
+				this.DOM_obj.bg_canvas.height = h;
+			/* main */
+				this.DOM_obj.main_canvas.width = w;
+				this.DOM_obj.main_canvas.height = h;
+			/* minimap */
+				this.DOM_obj.minimap_canvas.width = w;
+				this.DOM_obj.minimap_canvas.height = h;
+			/* zoom box */
+				this.DOM_obj.zoom_canvas.width = w;
+				this.DOM_obj.zoom_canvas.height = h;
 		};
 
 		Thrixty.Player.prototype.set_image_offsets = function(){
@@ -2139,9 +2108,7 @@
 
 			/* request the large picture, that should have been loaded now */
 			if( base_large.elem_loaded === null ){
-
-// MARK:
-this.load_large_image(this.large.active_image_id);
+				this.load_large_image(this.large.active_image_id);
 			}
 
 			/* the large one isnt yet loaded, so fall back to the small one */
@@ -2195,14 +2162,6 @@ this.load_large_image(this.large.active_image_id);
 				vp_h: this.DOM_obj.zoom_canvas.offsetHeight,
 			}
 		};
-		Thrixty.Player.prototype.are_events_enabled = function(){
-			if( this.loading_state >= 3 ){
-				return true;
-			} else {
-				return false;
-			}
-		};
-
 	/**** /GETTER & SETTER ****/
 
 

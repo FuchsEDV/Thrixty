@@ -262,19 +262,20 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 * V2.0.1 (planned):
 	* Responsiveness improvements in very small views.
 	(The resizing calculations are a bit off.)
-	* When the sizing image (first in small filelist) couldnt be loaded, dont display anything! At the moment the player is showing the controls, even when there is nothing to see...
 * V2.0.0:
 	(planned)
 	* Control of player-instances with (console-)commands
 		* proper constructor
 		* implement destructor
-	* General performance improvements by adding throttle and debounce.
-	* Bugfix: Autoplay Off also triggers Autoload Off
 	* Use large images in Fullpage Mode.
 
 
 
 	(done)
+	* Cleaned up the code.
+	* When the sizing image (first in small filelist) couldnt be loaded, nothing will be displayed. In earlier versions the player was still showing the controls.
+	* General performance improvements by adding throttle and debounce.
+	* Bugfix: Autoplay Off also triggered Autoload Off
 	* Renamed option: direction => reversion
 	* Class restructuring.
 		* Joined MainClass, EventHandler and DrawingHandler into a single Player class.

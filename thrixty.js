@@ -221,7 +221,6 @@
 			};
 		/** /HTML objects **/
 
-
 		/** Images **/
 			this.small = {
 				filepath: "",
@@ -273,9 +272,6 @@
 			};
 		/** /Images **/
 
-
-
-
 		/** HTML object event vars **/
 			this.object_turn = {
 				prepared: false,
@@ -287,16 +283,7 @@
 			this.is_click = false;
 		/** /HTML object event vars **/
 
-
-
-
 		/** drawing properties **/
-			/* current mouseposition to calculate drawing positions from - fed from EventHandler */
-			this.absolute_mouse = {
-				x: 0,
-				y: 0,
-			};
-
 			/* current mouseposition relative to the main_canvas's upper-left-hand-corner */
 			this.relative_mouse = {
 				x: 0,
@@ -307,74 +294,7 @@
 				prepared: false, /* prepared flag */
 				minimap: false,  /* triggered-by-click-on-minimap flag */
 			};
-
-
-
-
-
-			/**
-			 * unused so far
-			 * this.bg_canvas = {
-			 * 	self: null,
-			 * 	ctx: null,
-			 * 	x: 0,
-			 * 	y: 0,
-			 * 	draw_w: 0,
-			 * 	draw_h: 0,
-			 * 	vp_w: 0,
-			 * 	vp_h: 0,
-			 * };
-			 */
-
-			/*  */
-			this.main_canvas = {
-				self: null,
-				ctx: null,
-				x: 0,
-				y: 0,
-				draw_w: 0,
-				draw_h: 0,
-				vp_w: 0,
-				vp_h: 0,
-			};
-
-			/*  */
-			this.minimap_canvas = {
-				self: null,
-				ctx: null,
-				x: 0,
-				y: 0,
-				draw_w: 0,
-				draw_h: 0,
-				vp_w: 0,
-				vp_h: 0,
-			};
-
-			this.marker = null;
-
-			/*  */
-			this.zoom_canvas = {
-				self: null,
-				ctx: null,
-				x: 0,
-				y: 0,
-				draw_w: 0,
-				draw_h: 0,
-				vp_w: 0,
-				vp_h: 0,
-			};
 		/** /drawing properties **/
-
-
-
-
-
-
-
-
-
-
-
 
 		/** log creation **/
 		Thrixty.log("Player (id "+this.player_id+") initialising.");
@@ -1356,7 +1276,7 @@
 						}
 
 						/* update mouseposition and redraw image */
-						this.set_absolute_mouseposition( coords.x, coords.y );
+						this.update_section_position( coords.x, coords.y );
 						this.draw_current_image();
 					}
 				};
@@ -1369,9 +1289,9 @@
 			/** window resize **/
 				Thrixty.Player.prototype.resize_window_event = function(e){
 					if( this.is_fullpage ){
-						this.set_fullpage_dimensions();
+						this.set_fullpaged_dimensions();
 					} else {
-						this.set_normal_dimensions();
+						this.set_normalsized_dimensions();
 					}
 				};
 			/** /window resize **/
@@ -1440,31 +1360,33 @@
 		};
 		Thrixty.Player.prototype.distance_rotation = function(distance_x){
 			/* mache umdrehungen anhand des distance_x mit einer bestimmten übersetzung */
+
+
 			/* TODO: diese berechnung kann performanter gestaltet werden, indem die
 			 *   zwischenergebnisse ausgelagert werden, anstatt sie immer wieder neu zu berechnen.
 			 **/
-
-			/* Pixel per Degree (Application Parameter): The cursor needs to travel 2 pixel, to turn the object by 1 degree.  =>  2px/1° => 720px/360° */
-			var pixel_per_degree = 2;
-
-			if( this.is_zoomed ){
-				/* Degree per Image: How many degree the object needs to turn, to show the next image. Example:  360°/72img = 5°/img */
-				var degree_per_image = 360/this.large.images_count;  /* 360°/n*img */
-			} else {
-				/* Degree per Image: How many degree the object needs to turn, to show the next image. Example:  360°/12img = 30°/img */
-				var degree_per_image = 360/this.small.images_count;  /* 360°/n*img */
-			}
-
-			/* Pixel per Image: How many pixel the cursor needs to travel, to show the next image. Example:  5°/img * 2px/°  <=>  5*2px / img  <=> 10px/img */
-			var pixel_per_image = pixel_per_degree * degree_per_image;
+				/* Pixel per Degree (Application Parameter): The cursor needs to travel 2 pixel, to turn the object by 1 degree.  =>  2px/1° => 720px/360° */
+				var pixel_per_degree = 2;
 
 
+				if( this.is_zoomed ){
+					/* Degree per Image: How many degree the object needs to turn, to show the next image. Example:  360°/72img = 5°/img */
+					var degree_per_image = 360/this.large.images_count;  /* 360°/n*img */
+				} else {
+					/* Degree per Image: How many degree the object needs to turn, to show the next image. Example:  360°/12img = 30°/img */
+					var degree_per_image = 360/this.small.images_count;  /* 360°/n*img */
+				}
+				/* Pixel per Image: How many pixel the cursor needs to travel, to show the next image. Example:  5°/img * 2px/°  <=>  5*2px / img  <=> 10px/img */
+				var pixel_per_image = pixel_per_degree * degree_per_image;
+			/* /potentielles auslagern */
+
+
+			/* TODO: variablen umbennen */
 			var rest_distanz = ( distance_x % pixel_per_image );
-
 			var anzahl_nextimages = ( distance_x - rest_distanz ) / pixel_per_image;
 
 
-			/* the basic movement is backwards, so invert the value */
+			/* invert the count, to adapt to the behavior of the finger (TODO: ausdruck...) */
 			anzahl_nextimages = anzahl_nextimages * -1;
 
 
@@ -1475,13 +1397,21 @@
 
 			return rest_distanz;
 		};
+		Thrixty.Player.prototype.set_rotation_delay = function(){
+			var images_count = 0;
+			if( !this.is_zoomed ){
+				images_count = this.small.images_count;
+			} else {
+				images_count = this.large.images_count;
+			}
+			this.rotation_delay = Math.ceil( ( (1000 / images_count) * this.settings.cycle_duration ) / this.rotation_speed_modifiers[this.rotation_speed_selected] );
+			/* restart rotation? */
+			if( this.is_rotating ){
+				this.stop_rotation();
+				this.start_rotation();
+			}
+		};
 	/**** /ROTATION METHODS ****/
-
-
-
-
-
-
 
 
 
@@ -1524,282 +1454,12 @@
 
 
 
-
-
-
-
-
-
-// MARK: Das Konzept des Drawens ist veraltet und total konfus...
-// Das muss dringend überarbeitet werden...
-// TODO: Caching für minimap und canvas sizes etc etc ( suche nach "get_main_canvas_dimensions")
-
-
-
-
-	/**** DRAWING METHODS ****/
-
-
-		/*** bilder malerei ***/
-			Thrixty.Player.prototype.draw_current_image = function(){
-				/* decide upon a drawing strategy */
-				if( !this.is_zoomed ){
-					this.unzoomed();
-				} else {
-					if( this.settings.zoom_mode == "inbox" ){
-						this.inbox_zoom();
-					} else if( this.settings.zoom_mode == "outbox" ){
-						if( !this.is_fullpage ){
-							this.outbox_zoom();
-						} else {
-							this.inbox_zoom();
-						}
-					}
-					if( this.settings.position_indicator == "minimap" ){
-						this.draw_minimap();
-					} else if( this.settings.position_indicator == "marker" ){
-					}
-					this.set_marker_position();
-				}
-			};
-			Thrixty.Player.prototype.unzoomed = function(){
-				/* Task: Draw the unzoomed image on the canvas */
-				/* refresh main_canvas information (in case smt changed in viewport size) */
-				this.main_canvas = this.get_main_canvas_dimensions();
-
-				/* get current small image */
-				var small_image = this.get_current_small_image();
-
-				/* clear */
-				// this.main_canvas.width = this.main_canvas.width;
-				// this.main_canvas.height = this.main_canvas.height;
-				this.main_canvas.ctx.clearRect(
-					0,
-					0,
-					this.main_canvas.draw_w,
-					this.main_canvas.draw_h
-				);
-
-				/* draw current small image */
-				if( !!small_image ){
-					this.main_canvas.ctx.drawImage(
-						small_image,
-						0,
-						0
-					);
-				}
-			};
-			Thrixty.Player.prototype.inbox_zoom = function(){
-				/* Task: Draw the enlarged image on the canvas */
-
-				/* refresh main_canvas information (in case smt changed in viewport size) */
-				this.main_canvas = this.get_main_canvas_dimensions();
-
-				/* refresh class-variable relative_mouse */
-				this.calculate_relative_mouse_position();
-
-				/* get current offsets */
-				var offsets = this.get_zoom_offsets();
-
-				/* get current image */
-				var large_image = this.get_current_large_image();
-
-				/* clear canvas */
-				this.main_canvas.ctx.clearRect(
-					0,
-					0,
-					this.main_canvas.draw_w,
-					this.main_canvas.draw_h
-				);
-
-				/* draw current image */
-				if( !!large_image ){
-					this.main_canvas.ctx.drawImage(
-						large_image,
-						0,
-						0,
-						large_image.naturalWidth, /* this needs to be calculated by the picture, as this varies from small to large */
-						large_image.naturalHeight, /* this needs to be calculated by the picture, as this varies from small to large */
-						-offsets.x,
-						-offsets.y,
-						this.large.image_width,
-						this.large.image_height
-					);
-				}
-			};
-			Thrixty.Player.prototype.outbox_zoom = function(){
-				/* Task: draw the elarged image on the zoom_canvas and the small image on the main_canvas */
-
-				/* refresh main_canvas and zoom_canvas information (in case smt changed in viewport size) */
-				this.main_canvas = this.get_main_canvas_dimensions();
-				this.zoom_canvas = this.get_zoom_canvas_dimensions();
-
-				/* refresh class-variable relative_mouse */
-				this.calculate_relative_mouse_position();
-
-				/* get current offsets */
-				var offsets = this.get_zoom_offsets();
-
-				/* get current image */
-				var small_image = this.get_current_small_image();
-				var large_image = this.get_current_large_image();
-
-
-
-				/* clear main_canvas and zoom_canvas */
-				this.main_canvas.ctx.clearRect(
-					0,
-					0,
-					this.main_canvas.draw_w,
-					this.main_canvas.draw_h
-				);
-				this.zoom_canvas.ctx.clearRect(
-					0,
-					0,
-					this.zoom_canvas.draw_w,
-					this.zoom_canvas.draw_h
-				);
-
-				/* draw small_image on main_canvas */
-				if( !!small_image ){
-					this.main_canvas.ctx.drawImage(
-						small_image,
-						0,
-						0
-					);
-				}
-
-				/* draw large_image on zoom_canvas */
-				if( !!large_image ){
-					this.zoom_canvas.ctx.drawImage(
-						large_image,
-						0,
-						0,
-						large_image.naturalWidth,
-						large_image.naturalHeight,
-						-offsets.x,
-						-offsets.y,
-						this.large.image_width,
-						this.large.image_height
-					);
-				}
-			};
-			Thrixty.Player.prototype.draw_minimap = function(){
-				/* Task: Draw the minimap on the minimap_canvas */
-
-				/* width and height are already set globally in the HTML as inline-CSS. */
-
-				/* refresh minimap_canvas information (in case smt changed in viewport size) */
-				this.minimap_canvas = this.get_minimap_canvas_dimensions();
-
-				/* get image */
-				var small_image = this.get_current_small_image();
-
-				/* calculate cutout dimensions */
-				cutout_w = this.minimap_canvas.draw_w * (this.small.image_width / this.large.image_width);
-				cutout_h = this.minimap_canvas.draw_h * (this.small.image_height / this.large.image_height);
-				cutout_x = ( this.relative_mouse.x / this.main_canvas.vp_w ) * ( this.minimap_canvas.draw_w - cutout_w );
-				cutout_y = ( this.relative_mouse.y / this.main_canvas.vp_h ) * ( this.minimap_canvas.draw_h - cutout_h );
-
-
-
-				/* first clear canvas */
-				this.minimap_canvas.ctx.clearRect(
-					0,
-					0,
-					this.minimap_canvas.draw_w,
-					this.minimap_canvas.draw_h
-				);
-
-				/* secondly draw image */
-				if( !!small_image ){
-					this.minimap_canvas.ctx.drawImage(
-						small_image,
-						0,
-						0
-					);
-				}
-
-				/* thirdly draw cutout */
-				this.minimap_canvas.ctx.globalAlpha = 0.5;
-					this.minimap_canvas.ctx.fillStyle = "black";
-					this.minimap_canvas.ctx.beginPath();
-						/* draw mask (rectangle clockwise) */
-							this.minimap_canvas.ctx.moveTo(0, 0);
-							this.minimap_canvas.ctx.lineTo(this.small.image_width, 0);
-							this.minimap_canvas.ctx.lineTo(this.small.image_width, this.small.image_height);
-							this.minimap_canvas.ctx.lineTo(0, this.small.image_height);
-							this.minimap_canvas.ctx.lineTo(0, 0);
-						/* "undraw" cutout (rectangle counterclockwise) */
-							this.minimap_canvas.ctx.moveTo(cutout_x+0, cutout_y+0);
-							this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+cutout_h);
-							this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+cutout_h);
-							this.minimap_canvas.ctx.lineTo(cutout_x+cutout_w, cutout_y+0);
-							this.minimap_canvas.ctx.lineTo(cutout_x+0, cutout_y+0);
-					this.minimap_canvas.ctx.closePath();
-					this.minimap_canvas.ctx.fill();
-				this.minimap_canvas.ctx.globalAlpha = 1;
-			};
-			Thrixty.Player.prototype.set_marker_position = function(){
-				/* Dimensionate and position the marker correctly over the canvas */
-				var W = this.DOM_obj.canvas_container.offsetWidth * this.small.image_width/this.large.image_width;
-				var H = this.DOM_obj.canvas_container.offsetHeight * this.small.image_width/this.large.image_width;
-				// this.relative_mouse.x/y  will likely change
-				var X = ( this.relative_mouse.x / this.DOM_obj.canvas_container.offsetWidth ) * ( this.DOM_obj.canvas_container.offsetWidth - W );
-				var Y = ( this.relative_mouse.y / this.DOM_obj.canvas_container.offsetHeight ) * ( this.DOM_obj.canvas_container.offsetHeight - H );
-				/*  */
-				this.DOM_obj.marker.style.width = W+"px";
-				this.DOM_obj.marker.style.height = H+"px";
-				this.DOM_obj.marker.style.left = X+"px";
-				this.DOM_obj.marker.style.top = Y+"px";
-			};
-		/*** /bildermalerei ***/
-
-
-
-
-		Thrixty.Player.prototype.set_absolute_mouseposition = function(X, Y){
-			this.absolute_mouse.x = X;
-			this.absolute_mouse.y = Y;
-		};
-		Thrixty.Player.prototype.calculate_relative_mouse_position = function(){
-			/* calculate relative mouse position */
-			var cursor_x = (this.absolute_mouse.x - this.main_canvas.x);
-			var cursor_y = (this.absolute_mouse.y - this.main_canvas.y);
-
-			/* Borders - min and max values - reset, when overstepped */
-			if( cursor_x < 0 ){
-				cursor_x = 0;
-			}
-			if( cursor_x > this.main_canvas.vp_w ){
-				cursor_x = this.main_canvas.vp_w;
-			}
-			if( cursor_y < 0 ){
-				cursor_y = 0;
-			}
-			if( cursor_y > this.main_canvas.vp_h ){
-				cursor_y = this.main_canvas.vp_h;
-			}
-			/* assign calculated values */
-			this.relative_mouse.x = cursor_x;
-			this.relative_mouse.y = cursor_y;
-		};
-		Thrixty.Player.prototype.get_zoom_offsets = function(){
-			var position_percentage_x = ( this.relative_mouse.x / this.main_canvas.vp_w );
-			var position_percentage_y = ( this.relative_mouse.y / this.main_canvas.vp_h );
-			return {
-				x: position_percentage_x * ( this.large.image_width - this.small.image_width ),
-				y: position_percentage_y * ( this.large.image_height - this.small.image_height ),
-			}
-		};
-
-
-	/**** /DRAWING METHODS ****/
-
-
 	/**** ZOOM METHODS ****/
 		Thrixty.Player.prototype.start_zoom = function(){
 			if( this.settings.zoom_mode != "none" ){
+				var main_canvas = this.DOM_obj.main_canvas;
+				var minimap_canvas = this.DOM_obj.minimap_canvas;
+
 				/* set zoom flag */
 				this.is_zoomed = true;
 
@@ -1808,15 +1468,15 @@
 				this.DOM_obj.zoom_btn.setAttribute('state', 'zoomed_in');
 
 				/* simulate zoom start at the center of the canvas */
-				var click_x = this.DOM_obj.main_canvas.getBoundingClientRect().left + document.body.scrollLeft + ( this.DOM_obj.main_canvas.offsetWidth / 2 );
-				var click_y = this.DOM_obj.main_canvas.getBoundingClientRect().top + document.body.scrollTop + ( this.DOM_obj.main_canvas.offsetHeight / 2 );
-				this.set_absolute_mouseposition(click_x, click_y);
+				var click_x = main_canvas.getBoundingClientRect().left + ( main_canvas.offsetWidth / 2 );
+				var click_y = main_canvas.getBoundingClientRect().top + ( main_canvas.offsetHeight / 2 );
+				this.update_section_position(click_x, click_y);
 
 				/* check for position indicator wanted (for example a minimap) */
 				if( this.settings.position_indicator == "minimap" ){
-					this.DOM_obj.minimap_canvas.style.display = "";
-					this.DOM_obj.minimap_canvas.style.width = (this.small.image_width*100 / this.large.image_width)+"%";
-					this.DOM_obj.minimap_canvas.style.height = (this.small.image_height*100 / this.large.image_height)+"%";
+					minimap_canvas.style.display = "";
+					minimap_canvas.style.width = (this.small.image_width*100 / this.large.image_width)+"%";
+					minimap_canvas.style.height = (this.small.image_height*100 / this.large.image_height)+"%";
 				} else if( this.settings.position_indicator == "marker" ){
 					this.DOM_obj.marker.style.display = "";
 				}
@@ -1840,71 +1500,62 @@
 			this.DOM_obj.minimap_canvas.style.display = "none";
 			/* hide marker */
 			this.DOM_obj.marker.style.display = "none";
-			/* TODO: clear the variables set by drawing handler by [this.set_marker_position();] over [draw_current_image()] */
-			/*       maybe implement resets for all canvasses? */
 			/* draw unzoomed picture */
 			this.draw_current_image();
 		};
 		Thrixty.Player.prototype.toggle_zoom = function(){
 			if( !this.is_zoomed ){
-				/* var was_rotating = this.is_rotating; */
-				this.stop_rotation();
+				/* if already rotating, stop it */
+				if( this.is_rotating ){
+					this.stop_rotation();
+				}
 				this.start_zoom();
-				/* if already rotating, refresh rotation frequency */
-				/*if( was rotating ){
-					this.start_rotation();
-				}*/
 
 			} else {
 				this.stop_zoom();
-				/* if already rotating, refresh rotation frequency */
-				if( this.is_rotating ){
-					this.start_rotation();
-				}
 			}
 			/* refresh rotation delay */
 			this.set_rotation_delay();
 		};
-
 		Thrixty.Player.prototype.setup_outbox = function(){
 			/* show zoom box at the selected position */
 			this.DOM_obj.zoom_canvas.style.display = "";
 
 			/* get main_canvas info */
-			var main_canvas = this.get_main_canvas_dimensions();
+			var main_canvas = this.DOM_obj.main_canvas;
+			var zoom_canvas = this.DOM_obj.zoom_canvas;
 
 			/* set zoom_canvas width */
-			this.DOM_obj.zoom_canvas.width  = main_canvas.draw_w;
-			this.DOM_obj.zoom_canvas.height = main_canvas.draw_h;
-			this.DOM_obj.zoom_canvas.style.width = main_canvas.vp_w+"px";
-			this.DOM_obj.zoom_canvas.style.height = main_canvas.vp_h+"px";
+			zoom_canvas.width  = main_canvas.width;
+			zoom_canvas.height = main_canvas.height;
+			zoom_canvas.style.width = main_canvas.offsetWidth+"px";
+			zoom_canvas.style.height = main_canvas.offsetHeight+"px";
 
 			/* set zoom_canvas position */
 			if( this.settings.outbox_position == "right" ){
-				this.DOM_obj.zoom_canvas.style.top = "0px";
-				this.DOM_obj.zoom_canvas.style.left = main_canvas.vp_w+"px";
+				zoom_canvas.style.top = 0+"px";
+				zoom_canvas.style.left = main_canvas.offsetWidth+"px";
 
 			} else if( this.settings.outbox_position == "left" ){
-				this.DOM_obj.zoom_canvas.style.top = "0px";
-				this.DOM_obj.zoom_canvas.style.left = (main_canvas.vp_w * -1)+"px";
+				zoom_canvas.style.top = 0+"px";
+				zoom_canvas.style.left = (main_canvas.offsetWidth * -1)+"px";
 
 			} else if( this.settings.outbox_position == "top" ){
-				this.DOM_obj.zoom_canvas.style.top = (main_canvas.vp_h * -1)+"px";
-				this.DOM_obj.zoom_canvas.style.left = "0px";
+				zoom_canvas.style.top = (main_canvas.offsetHeight * -1)+"px";
+				zoom_canvas.style.left = 0+"px";
 
 			} else if( this.settings.outbox_position == "bottom" ){
 				/* respect the control bar... */
-				this.DOM_obj.zoom_canvas.style.top = this.root_element.offsetHeight+"px";
-				this.DOM_obj.zoom_canvas.style.left = "0px";
+				zoom_canvas.style.top = this.root_element.offsetHeight+"px";
+				zoom_canvas.style.left = 0+"px";
 			}
 		};
 	/**** /ZOOM METHODS ****/
 
 
+
 	/**** FULLPAGE METHODS ****/
 		Thrixty.Player.prototype.enter_fullpage = function(){
-			this.stop_zoom();
-
 			/* set fullpage state */
 			this.is_fullpage = true;
 			this.DOM_obj.size_btn.setAttribute('state', 'fullpaged');
@@ -1921,11 +1572,9 @@
 
 
 			/* set refreshing styles at start */
-			this.set_fullpage_dimensions();
+			this.set_fullpaged_dimensions();
 		};
 		Thrixty.Player.prototype.quit_fullpage = function(){
-			this.stop_zoom();
-
 			/* reset fullpage state */
 			this.is_fullpage = false;
 			this.DOM_obj.size_btn.setAttribute('state', 'normalsized');
@@ -1942,16 +1591,63 @@
 
 
 			/* unset canvas_container size modification */
-			this.set_normal_dimensions();
+			this.set_normalsized_dimensions();
 		};
 		Thrixty.Player.prototype.toggle_fullpage = function(){
 			if( this.is_fullpage ){
+				this.stop_zoom();
 				this.quit_fullpage();
 			} else {
+				this.stop_zoom();
 				this.enter_fullpage();
 			}
 		};
-		Thrixty.Player.prototype.set_normal_dimensions = function(){
+		Thrixty.Player.prototype.set_fullpaged_dimensions = function(){
+			/* set showrooms dimensions and consider the button container height */
+			var showroom_width = this.root_element.offsetWidth;
+			var showroom_height = this.root_element.offsetHeight - this.DOM_obj.controls.offsetHeight;
+
+			this.DOM_obj.showroom.style.width = showroom_width+"px";
+			this.DOM_obj.showroom.style.height = showroom_height+"px";
+
+
+
+			/* gather basic information */
+			if( !this.is_zoomed ){
+				var image_aspect_ratio = this.small.image_ratio;
+			} else {
+				var image_aspect_ratio = this.large.image_ratio;
+			}
+
+			/* showroom aspect ratio for orientation */
+			var showroom_aspect_ratio = showroom_width / showroom_height;
+
+			/* portrait orientation [] */
+			if( showroom_aspect_ratio <= image_aspect_ratio ){
+				var canvas_container_width  = showroom_width;
+				var canvas_container_height = showroom_width/image_aspect_ratio;
+
+				var canvas_container_x      = 0;
+				var canvas_container_y      = (showroom_height-canvas_container_height)/2;
+
+			/* landscape orientation [___] */
+			} else {
+				var canvas_container_width  = showroom_height*image_aspect_ratio;
+				var canvas_container_height = showroom_height;
+
+				var canvas_container_x      = (showroom_width-canvas_container_width)/2;
+				var canvas_container_y      = 0
+			}
+
+
+
+			/* assign canvas dimensions */
+			this.DOM_obj.canvas_container.style.width = canvas_container_width+"px";
+			this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
+			this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
+			this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
+		};
+		Thrixty.Player.prototype.set_normalsized_dimensions = function(){
 			/* set showrooms dimensions */
 
 			var showroom_width = this.root_element.offsetWidth;
@@ -1962,68 +1658,276 @@
 
 
 			/* set canvas_container dimensions */
-
-			var canvas_container_width = showroom_width;
-			var canvas_container_height = showroom_height;
-			var canvas_container_x = 0;
-			var canvas_container_y = 0;
-
-
-			this.DOM_obj.canvas_container.style.width = canvas_container_width+"px";
-			this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
-			this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
-			this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
-		};
-		Thrixty.Player.prototype.set_fullpage_dimensions = function(){
-			/* dont do anything, when not even in fullpage */
-			if( this.is_fullpage ){
-
-				/* set showrooms dimensions and consider the button height */
-				var showroom_width = this.root_element.offsetWidth;
-				var showroom_height = this.root_element.offsetHeight-50;
-
-				this.DOM_obj.showroom.style.width = showroom_width+"px";
-				this.DOM_obj.showroom.style.height = showroom_height+"px";
-
-
-
-				/* gather basic information */
-				if( !this.is_zoomed ){
-					var image_aspect_ratio = this.small.image_ratio;
-				} else {
-					var image_aspect_ratio = this.large.image_ratio;
-				}
-
-				/* showroom aspect ratio for orientation */
-				var showroom_aspect_ratio = showroom_width / showroom_height;
-
-				/* portrait orientation [] */
-				if( showroom_aspect_ratio <= image_aspect_ratio ){
-					var canvas_container_width  = showroom_width;
-					var canvas_container_height = showroom_width/image_aspect_ratio;
-
-					var canvas_container_x      = 0;
-					var canvas_container_y      = (showroom_height-canvas_container_height)/2;
-
-				/* landscape orientation [___] */
-				} else {
-					var canvas_container_width  = showroom_height*image_aspect_ratio;
-					var canvas_container_height = showroom_height;
-
-					var canvas_container_x      = (showroom_width-canvas_container_width)/2;
-					var canvas_container_y      = 0
-				}
-
-
-
-				/* assign canvas dimensions */
-				this.DOM_obj.canvas_container.style.width = canvas_container_width+"px";
-				this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
-				this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
-				this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
-			}
+			this.DOM_obj.canvas_container.style.width = showroom_width+"px";
+			this.DOM_obj.canvas_container.style.height = showroom_height+"px";
+			this.DOM_obj.canvas_container.style.marginLeft = 0+"px";
+			this.DOM_obj.canvas_container.style.marginTop = 0+"px";
 		};
 	/**** /FULLPAGE METHODS ****/
+
+
+
+	/**** DRAWING METHODS ****/
+		Thrixty.Player.prototype.draw_current_image = function(){
+			/* decide upon a drawing strategy */
+			if( !this.is_zoomed ){
+				this.unzoomed();
+			} else {
+				if( this.settings.zoom_mode == "inbox" ){
+					this.inbox_zoom();
+				} else if( this.settings.zoom_mode == "outbox" ){
+					if( !this.is_fullpage ){
+						this.outbox_zoom();
+					} else {
+						this.inbox_zoom();
+					}
+				}
+				if( this.settings.position_indicator == "minimap" ){
+					this.draw_minimap();
+				}
+				this.set_marker_position();
+			}
+		};
+		Thrixty.Player.prototype.unzoomed = function(){
+			/* Task: Draw the unzoomed image on the canvas */
+			var main_canvas = this.DOM_obj.main_canvas;
+			var main_ctx = main_canvas.getContext("2d");
+
+			/* get current small image */
+			var small_image = this.get_current_small_image();
+
+			/* clear */
+			main_ctx.clearRect(
+				0,
+				0,
+				main_canvas.width,
+				main_canvas.height
+			);
+
+			/* draw current small image */
+			if( !!small_image ){
+				main_ctx.drawImage(
+					small_image,
+					0,
+					0
+				);
+			}
+		};
+		Thrixty.Player.prototype.inbox_zoom = function(){
+			/* Task: Draw the enlarged image on the canvas */
+			var main_canvas = this.DOM_obj.main_canvas;
+			var main_ctx = main_canvas.getContext("2d");
+
+			/* get current image */
+			var large_image = this.get_current_large_image();
+
+			/* clear canvas */
+			main_ctx.clearRect(
+				0,
+				0,
+				main_canvas.width,
+				main_canvas.height
+			);
+
+			if( !!large_image ){
+				/* get current offsets */
+				var offsets = this.get_zoom_offsets();
+				/* draw current image */
+				main_ctx.drawImage(
+					large_image,
+					0,
+					0,
+					large_image.naturalWidth, /* this needs to be calculated by the picture, as this varies from small to large */
+					large_image.naturalHeight, /* this needs to be calculated by the picture, as this varies from small to large */
+					-offsets.x,
+					-offsets.y,
+					this.large.image_width,
+					this.large.image_height
+				);
+			}
+		};
+		Thrixty.Player.prototype.outbox_zoom = function(){
+			/* Task: draw the elarged image on the zoom_canvas and the small image on the main_canvas */
+			var main_canvas = this.DOM_obj.main_canvas;
+			var main_ctx = main_canvas.getContext("2d");
+			var zoom_canvas = this.DOM_obj.zoom_canvas;
+			var zoom_ctx = zoom_canvas.getContext("2d");
+
+			/* get current image */
+			var small_image = this.get_current_small_image();
+			var large_image = this.get_current_large_image();
+
+			/* clear main_canvas and zoom_canvas */
+			main_ctx.clearRect(
+				0,
+				0,
+				main_canvas.width,
+				main_canvas.height
+			);
+			zoom_ctx.clearRect(
+				0,
+				0,
+				zoom_canvas.width,
+				zoom_canvas.height
+			);
+
+			/* draw small_image on main_canvas */
+			if( !!small_image ){
+				main_ctx.drawImage(
+					small_image,
+					0,
+					0
+				);
+			}
+
+			if( !!large_image ){
+				/* get current offsets */
+				var offsets = this.get_zoom_offsets();
+				/* draw large_image on zoom_canvas */
+				zoom_ctx.drawImage(
+					large_image,
+					0,
+					0,
+					large_image.naturalWidth,
+					large_image.naturalHeight,
+					-offsets.x,
+					-offsets.y,
+					this.large.image_width,
+					this.large.image_height
+				);
+			}
+		};
+		Thrixty.Player.prototype.draw_minimap = function(){
+			/* Task: Draw the minimap on the minimap_canvas */
+
+			/* width and height are already set globally in the HTML as inline-CSS. */
+			var main_canvas = this.DOM_obj.main_canvas;
+			/* var main_ctx = main_canvas.getContext("2d"); // not needed */
+			var minimap_canvas = this.DOM_obj.minimap_canvas;
+			var minimap_ctx = minimap_canvas.getContext("2d");
+
+			/* get image */
+			var small_image = this.get_current_small_image();
+
+			/* calculate cutout dimensions */
+			cutout_w = minimap_canvas.width * (this.small.image_width / this.large.image_width);
+			cutout_h = minimap_canvas.height * (this.small.image_height / this.large.image_height);
+			cutout_x = ( this.relative_mouse.x / main_canvas.offsetWidth ) * ( minimap_canvas.width - cutout_w );
+			cutout_y = ( this.relative_mouse.y / main_canvas.offsetHeight ) * ( minimap_canvas.height - cutout_h );
+
+
+
+			/* first clear canvas */
+			minimap_ctx.clearRect(
+				0,
+				0,
+				minimap_canvas.width,
+				minimap_canvas.height
+			);
+
+			/* second draw image */
+			if( !!small_image ){
+				minimap_ctx.drawImage(
+					small_image,
+					0,
+					0
+				);
+			}
+
+			/* third draw cutout */
+			minimap_ctx.globalAlpha = 0.5;
+				minimap_ctx.fillStyle = "black";
+				minimap_ctx.beginPath();
+					/* draw mask (rectangle clockwise) */
+						minimap_ctx.moveTo(0, 0);
+						minimap_ctx.lineTo(this.small.image_width, 0);
+						minimap_ctx.lineTo(this.small.image_width, this.small.image_height);
+						minimap_ctx.lineTo(0, this.small.image_height);
+						minimap_ctx.lineTo(0, 0);
+					/* "undraw" cutout (rectangle counterclockwise) */
+						minimap_ctx.moveTo(cutout_x+0, cutout_y+0);
+						minimap_ctx.lineTo(cutout_x+0, cutout_y+cutout_h);
+						minimap_ctx.lineTo(cutout_x+cutout_w, cutout_y+cutout_h);
+						minimap_ctx.lineTo(cutout_x+cutout_w, cutout_y+0);
+						minimap_ctx.lineTo(cutout_x+0, cutout_y+0);
+				minimap_ctx.closePath();
+				minimap_ctx.fill();
+			minimap_ctx.globalAlpha = 1;
+		};
+		Thrixty.Player.prototype.set_marker_position = function(){
+			/* Dimensionate and position the marker correctly over the canvas */
+			var W = this.DOM_obj.canvas_container.offsetWidth * this.small.image_width/this.large.image_width;
+			var H = this.DOM_obj.canvas_container.offsetHeight * this.small.image_width/this.large.image_width;
+			var X = ( this.relative_mouse.x / this.DOM_obj.canvas_container.offsetWidth ) * ( this.DOM_obj.canvas_container.offsetWidth - W );
+			var Y = ( this.relative_mouse.y / this.DOM_obj.canvas_container.offsetHeight ) * ( this.DOM_obj.canvas_container.offsetHeight - H );
+			/*  */
+			this.DOM_obj.marker.style.width = W+"px";
+			this.DOM_obj.marker.style.height = H+"px";
+			this.DOM_obj.marker.style.left = X+"px";
+			this.DOM_obj.marker.style.top = Y+"px";
+		};
+		Thrixty.Player.prototype.update_section_position = function(X, Y){
+			var main_canvas = this.DOM_obj.main_canvas;
+			/* calculate relative mouse position */
+			var cursor_x = (X - main_canvas.getBoundingClientRect().left);
+			var cursor_y = (Y - main_canvas.getBoundingClientRect().top);
+
+			/* Borders - min and max values - reset, when overstepped */
+			if( cursor_x < 0 ){
+				cursor_x = 0;
+			}
+			if( cursor_x > main_canvas.offsetWidth ){
+				cursor_x = main_canvas.offsetWidth;
+			}
+			if( cursor_y < 0 ){
+				cursor_y = 0;
+			}
+			if( cursor_y > main_canvas.offsetHeight ){
+				cursor_y = main_canvas.offsetHeight;
+			}
+			/* assign calculated values */
+			this.relative_mouse.x = cursor_x;
+			this.relative_mouse.y = cursor_y;
+		};
+		Thrixty.Player.prototype.get_zoom_offsets = function(){
+			var main_canvas = this.DOM_obj.main_canvas;
+			var position_percentage_x = ( this.relative_mouse.x / main_canvas.offsetWidth );
+			var position_percentage_y = ( this.relative_mouse.y / main_canvas.offsetHeight );
+			return {
+				x: position_percentage_x * ( this.large.image_width - this.small.image_width ),
+				y: position_percentage_y * ( this.large.image_height - this.small.image_height ),
+			}
+		};
+		Thrixty.Player.prototype.get_current_small_image = function(){
+			/* get and return the current small image */
+
+			var cur_image = this.small.images[this.small.active_image_id];
+			if( cur_image.elem_loaded ){
+				return cur_image.element;
+			} else {
+				/* There is nothing to show */
+				return null;
+			}
+		};
+		Thrixty.Player.prototype.get_current_large_image = function(){
+			/* get images (small for fallback) */
+			var base_small = this.small.images[this.small.active_image_id];
+			var base_large = this.large.images[this.large.active_image_id];
+
+			/* if the large one is already loaded, return it */
+			if( base_large.elem_loaded === true ){
+				return base_large.element;
+			}
+
+			/* request the large picture, that should have been loaded now */
+			if( base_large.elem_loaded === null ){
+				this.load_large_image(this.large.active_image_id);
+			}
+
+			/* the large one isnt yet loaded, so fall back to the small one */
+			return this.get_current_small_image();
+		};
+	/**** /DRAWING METHODS ****/
 
 
 
@@ -2045,7 +1949,6 @@
 				this.DOM_obj.zoom_canvas.width = w;
 				this.DOM_obj.zoom_canvas.height = h;
 		};
-
 		Thrixty.Player.prototype.set_image_offsets = function(){
 			/* get values */
 			var small_images_count = this.small.images_count;
@@ -2066,20 +1969,6 @@
 				for( var i=0; i<large_images_count; i++ ){
 					this.large.images[i].to_small = Math.round(i/large_to_small);
 				}
-			}
-		};
-		Thrixty.Player.prototype.set_rotation_delay = function(){
-			var images_count = 0;
-			if( !this.is_zoomed ){
-				images_count = this.small.images_count;
-			} else {
-				images_count = this.large.images_count;
-			}
-			this.rotation_delay = Math.ceil( ( (1000 / images_count) * this.settings.cycle_duration ) / this.rotation_speed_modifiers[this.rotation_speed_selected] );
-			/* restart rotation? */
-			if( this.is_rotating ){
-				this.stop_rotation();
-				this.start_rotation();
 			}
 		};
 		Thrixty.Player.prototype.increase_rotation_speed = function(){
@@ -2113,89 +2002,7 @@
 				y: ( ( coords.y - this.root_element.getBoundingClientRect().top - document.body.scrollTop ) / size_ratio_h ) + this.root_element.getBoundingClientRect().top + document.body.scrollTop,
 			};
 		};
-		Thrixty.Player.prototype.get_current_small_image = function(){
-			/* get and return the current small image */
-
-			var cur_image = this.small.images[this.small.active_image_id];
-			if( cur_image.elem_loaded ){
-				return cur_image.element;
-			} else {
-				/* There is nothing to show */
-				return null;
-			}
-		};
-		Thrixty.Player.prototype.get_current_large_image = function(){
-			/* get images (small for fallback) */
-			var base_small = this.small.images[this.small.active_image_id];
-			var base_large = this.large.images[this.large.active_image_id];
-
-			/* if the large one is already loaded, return it */
-			if( base_large.elem_loaded === true ){
-				return base_large.element;
-			}
-
-			/* request the large picture, that should have been loaded now */
-			if( base_large.elem_loaded === null ){
-				this.load_large_image(this.large.active_image_id);
-			}
-
-			/* the large one isnt yet loaded, so fall back to the small one */
-			return this.get_current_small_image();
-		};
-		Thrixty.Player.prototype.get_bg_canvas_dimensions = function(){
-			return {
-				self: this.DOM_obj.bg_canvas,
-				ctx: this.DOM_obj.bg_canvas.getContext("2d"),
-				x: this.DOM_obj.bg_canvas.getBoundingClientRect().left + document.body.scrollLeft,
-				y: this.DOM_obj.bg_canvas.getBoundingClientRect().top + document.body.scrollTop,
-				draw_w: this.DOM_obj.bg_canvas.width,
-				draw_h: this.DOM_obj.bg_canvas.height,
-				vp_w: this.DOM_obj.bg_canvas.offsetWidth,
-				vp_h: this.DOM_obj.bg_canvas.offsetHeight,
-			}
-		};
-		Thrixty.Player.prototype.get_main_canvas_dimensions = function(){
-			return {
-				self: this.DOM_obj.main_canvas,
-				ctx: this.DOM_obj.main_canvas.getContext("2d"),
-				x: this.DOM_obj.main_canvas.getBoundingClientRect().left,
-				y: this.DOM_obj.main_canvas.getBoundingClientRect().top,
-				draw_w: this.DOM_obj.main_canvas.width,
-				draw_h: this.DOM_obj.main_canvas.height,
-				vp_w: this.DOM_obj.main_canvas.offsetWidth,
-				vp_h: this.DOM_obj.main_canvas.offsetHeight,
-			}
-		};
-		Thrixty.Player.prototype.get_minimap_canvas_dimensions = function(){
-			return {
-				self: this.DOM_obj.minimap_canvas,
-				ctx: this.DOM_obj.minimap_canvas.getContext("2d"),
-				x: this.DOM_obj.minimap_canvas.getBoundingClientRect().left,
-				y: this.DOM_obj.minimap_canvas.getBoundingClientRect().top,
-				draw_w: this.DOM_obj.minimap_canvas.width,
-				draw_h: this.DOM_obj.minimap_canvas.height,
-				vp_w: this.DOM_obj.minimap_canvas.offsetWidth,
-				vp_h: this.DOM_obj.minimap_canvas.offsetHeight,
-			}
-		};
-		Thrixty.Player.prototype.get_zoom_canvas_dimensions = function(){
-			return {
-				self: this.DOM_obj.zoom_canvas,
-				ctx: this.DOM_obj.zoom_canvas.getContext("2d"),
-				x: this.DOM_obj.zoom_canvas.getBoundingClientRect().left,
-				y: this.DOM_obj.zoom_canvas.getBoundingClientRect().top,
-				draw_w: this.DOM_obj.zoom_canvas.width,
-				draw_h: this.DOM_obj.zoom_canvas.height,
-				vp_w: this.DOM_obj.zoom_canvas.offsetWidth,
-				vp_h: this.DOM_obj.zoom_canvas.offsetHeight,
-			}
-		};
 	/**** /GETTER & SETTER ****/
-
-
-
-
-
 
 
 
@@ -2205,49 +2012,3 @@
 	};
 /***** /Class Player *****/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-Thrixty.Player.prototype.
-Thrixty.Player.prototype.
-Thrixty.Player.prototype.
-Thrixty.Player.prototype.
-Thrixty.Player.prototype.
-Thrixty.Player.prototype.
-Thrixty.Player.prototype.
-*/

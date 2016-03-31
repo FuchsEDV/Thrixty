@@ -1,6 +1,3 @@
-/* Firefox Height 100% Fix */
-/*html { height: 100%; }*/
-/*body { height: 100%; margin:0; padding:0; }*/
 .thrixty,
 .thrixty div,
 .thrixty img,
@@ -9,12 +6,7 @@
 	box-sizing: border-box;
 }
 .thrixty img{ width: 100% }
-
-
-
-
-
-
+/***  ***/
 .thrixty{
 	min-width: 320px;
 	width: 100%;
@@ -177,94 +169,94 @@
 			}
 			.thrixty #prev_btn{
 				background-position: 15% center;
-				background-image: url(core/style/images/zurueck.svg);
+				background-image: url(icons/zurueck.svg);
 			}
 				.thrixty #prev_btn:hover{
-					background-image: url(core/style/images/zurueck_w.svg);
+					background-image: url(icons/zurueck_w.svg);
 					background-color: black;
 				}
 				.thrixty #prev_btn:disabled{
-					background-image: url(core/style/images/zurueck_w.svg);
+					background-image: url(icons/zurueck_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #play_btn[state=pause]{
 				background-position: 80% center;
-				background-image: url(core/style/images/play.svg);
+				background-image: url(icons/play.svg);
 			}
 				.thrixty #play_btn[state=pause]:hover{
-					background-image: url(core/style/images/play_w.svg);
+					background-image: url(icons/play_w.svg);
 					background-color: black;
 				}
 				.thrixty #play_btn[state=pause]:disabled{
-					background-image: url(core/style/images/play_w.svg);
+					background-image: url(icons/play_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #play_btn[state=play]{
 				background-position: 50% center;
-				background-image: url(core/style/images/pause.svg);
+				background-image: url(icons/pause.svg);
 			}
 				.thrixty #play_btn[state=play]:hover{
-					background-image: url(core/style/images/pause_w.svg);
+					background-image: url(icons/pause_w.svg);
 					background-color: black;
 				}
 				.thrixty #play_btn[state=play]:disabled{
-					background-image: url(core/style/images/pause_w.svg);
+					background-image: url(icons/pause_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #next_btn{
 				background-position: 80% center;
-				background-image: url(core/style/images/vorwaerts.svg);
+				background-image: url(icons/vorwaerts.svg);
 			}
 				.thrixty #next_btn:hover{
-					background-image: url(core/style/images/vorwaerts_w.svg);
+					background-image: url(icons/vorwaerts_w.svg);
 					background-color: black;
 				}
 				.thrixty #next_btn:disabled{
-					background-image: url(core/style/images/vorwaerts_w.svg);
+					background-image: url(icons/vorwaerts_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #zoom_btn[state=zoomed_out]{
-				background-image: url(core/style/images/plus.svg);
+				background-image: url(icons/plus.svg);
 			}
 				.thrixty #zoom_btn[state=zoomed_out]:hover{
-					background-image: url(core/style/images/plus_w.svg);
+					background-image: url(icons/plus_w.svg);
 					background-color: black;
 				}
 				.thrixty #zoom_btn[state=zoomed_out]:disabled{
-					background-image: url(core/style/images/plus_w.svg);
+					background-image: url(icons/plus_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #zoom_btn[state=zoomed_in]{
-				background-image: url(core/style/images/minus.svg);
+				background-image: url(icons/minus.svg);
 			}
 				.thrixty #zoom_btn[state=zoomed_in]:hover{
-					background-image: url(core/style/images/minus_w.svg);
+					background-image: url(icons/minus_w.svg);
 					background-color: black;
 				}
 				.thrixty #zoom_btn[state=zoomed_in]:disabled{
-					background-image: url(core/style/images/minus_w.svg);
+					background-image: url(icons/minus_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #size_btn[state=normalsized]{
-				background-image: url(core/style/images/expand.svg);
+				background-image: url(icons/expand.svg);
 			}
 				.thrixty #size_btn[state=normalsized]:hover{
-					background-image: url(core/style/images/expand_w.svg);
+					background-image: url(icons/expand_w.svg);
 					background-color: black;
 				}
 				.thrixty #size_btn[state=normalsized]:disabled{
-					background-image: url(core/style/images/expand_w.svg);
+					background-image: url(icons/expand_w.svg);
 					background-color: #dddddd;
 				}
 			.thrixty #size_btn[state=fullpaged]{
-				background-image: url(core/style/images/shrink.svg);
+				background-image: url(icons/shrink.svg);
 			}
 				.thrixty #size_btn[state=fullpaged]:hover{
-					background-image: url(core/style/images/shrink_w.svg);
+					background-image: url(icons/shrink_w.svg);
 					background-color: black;
 				}
 				.thrixty #size_btn[state=fullpaged]:disabled{
-					background-image: url(core/style/images/shrink_w.svg);
+					background-image: url(icons/shrink_w.svg);
 					background-color: #dddddd;
 				}
 		.thrixty #zoom_canvas{
@@ -301,7 +293,7 @@
 				padding: 0;
 
 				background-position: 80% center;
-				background-image: url(core/style/images/load.svg);
+				background-image: url(icons/load.svg);
 
 
 				position: absolute;

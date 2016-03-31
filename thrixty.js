@@ -37,24 +37,24 @@
 		/**** namespace properties ****/
 		/**** namespace methods ****/
 			cache_control_icons: function(){
-				Thrixty.icons_cache.expand      = Thrixty.create_element("<img src='core/style/images/expand.svg'/>");
-				Thrixty.icons_cache.expand_w    = Thrixty.create_element("<img src='core/style/images/expand_w.svg'/>");
-				Thrixty.icons_cache.load        = Thrixty.create_element("<img src='core/style/images/load.svg'/>");
-				Thrixty.icons_cache.load_w      = Thrixty.create_element("<img src='core/style/images/load_w.svg'/>");
-				Thrixty.icons_cache.minus       = Thrixty.create_element("<img src='core/style/images/minus.svg'/>");
-				Thrixty.icons_cache.minus_w     = Thrixty.create_element("<img src='core/style/images/minus_w.svg'/>");
-				Thrixty.icons_cache.pause       = Thrixty.create_element("<img src='core/style/images/pause.svg'/>");
-				Thrixty.icons_cache.pause_w     = Thrixty.create_element("<img src='core/style/images/pause_w.svg'/>");
-				Thrixty.icons_cache.play        = Thrixty.create_element("<img src='core/style/images/play.svg'/>");
-				Thrixty.icons_cache.play_w      = Thrixty.create_element("<img src='core/style/images/play_w.svg'/>");
-				Thrixty.icons_cache.plus        = Thrixty.create_element("<img src='core/style/images/plus.svg'/>");
-				Thrixty.icons_cache.plus_w      = Thrixty.create_element("<img src='core/style/images/plus_w.svg'/>");
-				Thrixty.icons_cache.shrink      = Thrixty.create_element("<img src='core/style/images/shrink.svg'/>");
-				Thrixty.icons_cache.shrink_w    = Thrixty.create_element("<img src='core/style/images/shrink_w.svg'/>");
-				Thrixty.icons_cache.vorwaerts   = Thrixty.create_element("<img src='core/style/images/vorwaerts.svg'/>");
-				Thrixty.icons_cache.vorwaerts_w = Thrixty.create_element("<img src='core/style/images/vorwaerts_w.svg'/>");
-				Thrixty.icons_cache.zurueck     = Thrixty.create_element("<img src='core/style/images/zurueck.svg'/>");
-				Thrixty.icons_cache.zurueck_w   = Thrixty.create_element("<img src='core/style/images/zurueck_w.svg'/>");
+				Thrixty.icons_cache.expand      = Thrixty.create_element("<img src='icons/expand.svg'/>");
+				Thrixty.icons_cache.expand_w    = Thrixty.create_element("<img src='icons/expand_w.svg'/>");
+				Thrixty.icons_cache.load        = Thrixty.create_element("<img src='icons/load.svg'/>");
+				Thrixty.icons_cache.load_w      = Thrixty.create_element("<img src='icons/load_w.svg'/>");
+				Thrixty.icons_cache.minus       = Thrixty.create_element("<img src='icons/minus.svg'/>");
+				Thrixty.icons_cache.minus_w     = Thrixty.create_element("<img src='icons/minus_w.svg'/>");
+				Thrixty.icons_cache.pause       = Thrixty.create_element("<img src='icons/pause.svg'/>");
+				Thrixty.icons_cache.pause_w     = Thrixty.create_element("<img src='icons/pause_w.svg'/>");
+				Thrixty.icons_cache.play        = Thrixty.create_element("<img src='icons/play.svg'/>");
+				Thrixty.icons_cache.play_w      = Thrixty.create_element("<img src='icons/play_w.svg'/>");
+				Thrixty.icons_cache.plus        = Thrixty.create_element("<img src='icons/plus.svg'/>");
+				Thrixty.icons_cache.plus_w      = Thrixty.create_element("<img src='icons/plus_w.svg'/>");
+				Thrixty.icons_cache.shrink      = Thrixty.create_element("<img src='icons/shrink.svg'/>");
+				Thrixty.icons_cache.shrink_w    = Thrixty.create_element("<img src='icons/shrink_w.svg'/>");
+				Thrixty.icons_cache.vorwaerts   = Thrixty.create_element("<img src='icons/vorwaerts.svg'/>");
+				Thrixty.icons_cache.vorwaerts_w = Thrixty.create_element("<img src='icons/vorwaerts_w.svg'/>");
+				Thrixty.icons_cache.zurueck     = Thrixty.create_element("<img src='icons/zurueck.svg'/>");
+				Thrixty.icons_cache.zurueck_w   = Thrixty.create_element("<img src='icons/zurueck_w.svg'/>");
 			},
 			log: function(msg, id){
 				if( typeof(id) !== "number" ){

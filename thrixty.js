@@ -37,24 +37,24 @@
 		/**** namespace properties ****/
 		/**** namespace methods ****/
 			cache_control_icons: function(){
-				Thrixty.icons_cache.expand      = Thrixty.create_element("<img src='icons/expand.svg'/>");
-				Thrixty.icons_cache.expand_w    = Thrixty.create_element("<img src='icons/expand_w.svg'/>");
-				Thrixty.icons_cache.load        = Thrixty.create_element("<img src='icons/load.svg'/>");
-				Thrixty.icons_cache.load_w      = Thrixty.create_element("<img src='icons/load_w.svg'/>");
-				Thrixty.icons_cache.minus       = Thrixty.create_element("<img src='icons/minus.svg'/>");
-				Thrixty.icons_cache.minus_w     = Thrixty.create_element("<img src='icons/minus_w.svg'/>");
-				Thrixty.icons_cache.pause       = Thrixty.create_element("<img src='icons/pause.svg'/>");
-				Thrixty.icons_cache.pause_w     = Thrixty.create_element("<img src='icons/pause_w.svg'/>");
-				Thrixty.icons_cache.play        = Thrixty.create_element("<img src='icons/play.svg'/>");
-				Thrixty.icons_cache.play_w      = Thrixty.create_element("<img src='icons/play_w.svg'/>");
-				Thrixty.icons_cache.plus        = Thrixty.create_element("<img src='icons/plus.svg'/>");
-				Thrixty.icons_cache.plus_w      = Thrixty.create_element("<img src='icons/plus_w.svg'/>");
-				Thrixty.icons_cache.shrink      = Thrixty.create_element("<img src='icons/shrink.svg'/>");
-				Thrixty.icons_cache.shrink_w    = Thrixty.create_element("<img src='icons/shrink_w.svg'/>");
-				Thrixty.icons_cache.vorwaerts   = Thrixty.create_element("<img src='icons/vorwaerts.svg'/>");
-				Thrixty.icons_cache.vorwaerts_w = Thrixty.create_element("<img src='icons/vorwaerts_w.svg'/>");
-				Thrixty.icons_cache.zurueck     = Thrixty.create_element("<img src='icons/zurueck.svg'/>");
-				Thrixty.icons_cache.zurueck_w   = Thrixty.create_element("<img src='icons/zurueck_w.svg'/>");
+				this.icons_cache.expand      = this.create_element(this.mainpath+"<img src='icons/expand.svg'/>");
+				this.icons_cache.expand_w    = this.create_element(this.mainpath+"<img src='icons/expand_w.svg'/>");
+				this.icons_cache.load        = this.create_element(this.mainpath+"<img src='icons/load.svg'/>");
+				this.icons_cache.load_w      = this.create_element(this.mainpath+"<img src='icons/load_w.svg'/>");
+				this.icons_cache.minus       = this.create_element(this.mainpath+"<img src='icons/minus.svg'/>");
+				this.icons_cache.minus_w     = this.create_element(this.mainpath+"<img src='icons/minus_w.svg'/>");
+				this.icons_cache.pause       = this.create_element(this.mainpath+"<img src='icons/pause.svg'/>");
+				this.icons_cache.pause_w     = this.create_element(this.mainpath+"<img src='icons/pause_w.svg'/>");
+				this.icons_cache.play        = this.create_element(this.mainpath+"<img src='icons/play.svg'/>");
+				this.icons_cache.play_w      = this.create_element(this.mainpath+"<img src='icons/play_w.svg'/>");
+				this.icons_cache.plus        = this.create_element(this.mainpath+"<img src='icons/plus.svg'/>");
+				this.icons_cache.plus_w      = this.create_element(this.mainpath+"<img src='icons/plus_w.svg'/>");
+				this.icons_cache.shrink      = this.create_element(this.mainpath+"<img src='icons/shrink.svg'/>");
+				this.icons_cache.shrink_w    = this.create_element(this.mainpath+"<img src='icons/shrink_w.svg'/>");
+				this.icons_cache.vorwaerts   = this.create_element(this.mainpath+"<img src='icons/vorwaerts.svg'/>");
+				this.icons_cache.vorwaerts_w = this.create_element(this.mainpath+"<img src='icons/vorwaerts_w.svg'/>");
+				this.icons_cache.zurueck     = this.create_element(this.mainpath+"<img src='icons/zurueck.svg'/>");
+				this.icons_cache.zurueck_w   = this.create_element(this.mainpath+"<img src='icons/zurueck_w.svg'/>");
 			},
 			log: function(msg, id){
 				if( typeof(id) !== "number" ){
@@ -145,7 +145,10 @@
 					var cur_candidate = player_candidates[i];
 					setTimeout(function(){
 						/* create new instance */
-						var new_player = new Thrixty.Player(this.players.length, cur_candidate);
+						var new_player = new Thrixty.Player(i+1, cur_candidate);
+						/* TODO: memorize yourself in Namespace!!! */
+						/* TODO: autosearch for id instead of giving it from outside */
+						/*     TODO: automatically save id in tabindex attribute */
 						/* memorize instance */
 						this.players.push( new_player  );
 					}.bind(this), 10);
@@ -187,6 +190,7 @@
 			this.events_assigned = false;
 			/* zoom state */
 			this.can_zoom = null;
+			this.canvas_size = null; /* null:N/A | 0:small | 1:large */
 			this.is_zoomed = false;
 			this.is_fullpage = false;
 			/* rotation state */
@@ -699,7 +703,7 @@
 			Thrixty.Player.prototype.init_small_first = function(index, e){
 				if( e.type === "load" ){
 					this.set_small_dimensions(index);
-					this.set_canvas_dimensions(this.small);
+					this.set_canvas_dimensions_to_size(0);
 					/* show player */
 					this.root_element.style.display = "";
 					this.draw_current_image();
@@ -814,7 +818,7 @@
 					Thrixty.log("large image "+index+" loaded ('"+this.large.images[0].element.src+"')", this.player_id);
 
 					/* when this image is supposed to be displayed, redraw to actuaklly show it */
-					if( this.is_zoomed && this.large.active_image_id === index ){
+					if( (this.is_zoomed || this.is_fullpage) && this.large.active_image_id === index ){
 						this.draw_current_image();
 					}
 
@@ -982,7 +986,7 @@
 					e.preventDefault();
 					/* doesnt have a correlating button */
 					this.stop_rotation();
-					// this.stop_zoom();
+					this.stop_zoom();
 					this.quit_fullpage();
 					break;
 				case 70:  /* F */
@@ -1098,18 +1102,19 @@
 						this.execute_object_turn(e.clientX, e.clientY);
 						e.preventDefault();
 					}
-					/* A2 | user moves section */
-					if( this.is_zoomed && this.settings.zoom_control == "progressive" ){
-						this.execute_section_move(e.clientX, e.clientY);
-						e.preventDefault();
-					}
 					/* B2 | user moves section */
 					if( this.section_move.prepared ){
 						this.execute_section_move(e.clientX, e.clientY);
 						e.preventDefault();
 					}
 				};
-				Thrixty.Player.prototype.main_canvas_mousemove = function(e){/**/};
+				Thrixty.Player.prototype.main_canvas_mousemove = function(e){
+					/* A2 | user moves section */
+					if( this.is_zoomed && this.settings.zoom_control == "progressive" ){
+						this.execute_section_move(e.clientX, e.clientY);
+						e.preventDefault();
+					}
+				};
 				Thrixty.Player.prototype.minimap_canvas_mousemove = function(e){/**/};
 				Thrixty.Player.prototype.marker_mousemove = function(e){/**/};
 			/** /mousemove **/
@@ -1604,8 +1609,8 @@
 		};
 		Thrixty.Player.prototype.set_fullpaged_dimensions = function(){
 			/* set showrooms dimensions and consider the button container height */
-			var showroom_width = this.root_element.offsetWidth;
-			var showroom_height = this.root_element.offsetHeight - this.DOM_obj.controls.offsetHeight;
+			var showroom_width = this.root_element.clientWidth;
+			var showroom_height = this.root_element.clientHeight - this.DOM_obj.controls.offsetHeight;
 
 			this.DOM_obj.showroom.style.width = showroom_width+"px";
 			this.DOM_obj.showroom.style.height = showroom_height+"px";
@@ -1671,21 +1676,22 @@
 		Thrixty.Player.prototype.draw_current_image = function(){
 			/* decide upon a drawing strategy */
 			if( !this.is_zoomed ){
-				this.unzoomed();
-			} else {
-				if( this.settings.zoom_mode == "inbox" ){
-					this.inbox_zoom();
-				} else if( this.settings.zoom_mode == "outbox" ){
-					if( !this.is_fullpage ){
-						this.outbox_zoom();
-					} else {
-						this.inbox_zoom();
-					}
+				if( !this.is_fullpage ){
+					this.unzoomed();
+				} else {
+					this.fullpaged();
 				}
-				if( this.settings.position_indicator == "minimap" ){
+			} else {
+				if( !this.is_fullpage && this.settings.zoom_mode == "outbox" ){
+					this.outbox_zoomed();
+				} else {
+					this.inbox_zoomed();
+				}
+				if( this.settings.position_indicator == "marker" ){
+					this.set_marker_position();
+				} else {
 					this.draw_minimap();
 				}
-				this.set_marker_position();
 			}
 		};
 		Thrixty.Player.prototype.unzoomed = function(){
@@ -1693,8 +1699,13 @@
 			var main_canvas = this.DOM_obj.main_canvas;
 			var main_ctx = main_canvas.getContext("2d");
 
-			/* get current small image */
+			/* get image to draw */
 			var small_image = this.get_current_small_image();
+
+			/* reset canvas size attributes */
+			if( this.canvas_size != 0 ){
+				this.set_canvas_dimensions_to_size(0);
+			}
 
 			/* clear */
 			main_ctx.clearRect(
@@ -1713,13 +1724,50 @@
 				);
 			}
 		};
-		Thrixty.Player.prototype.inbox_zoom = function(){
+		Thrixty.Player.prototype.fullpaged = function(){
+			/* Task: Draw the unzoomed image on the canvas */
+			var main_canvas = this.DOM_obj.main_canvas;
+			var main_ctx = main_canvas.getContext("2d");
+
+			/* get image to draw */
+			var large_image = this.get_current_large_image();
+
+			/* reset canvas size attributes */
+			if( this.canvas_size != 1 ){
+				this.set_canvas_dimensions_to_size(1);
+			}
+
+			/* clear */
+			main_ctx.clearRect(
+				0,
+				0,
+				main_canvas.width,
+				main_canvas.height
+			);
+
+			/* draw current small image */
+			if( !!large_image ){
+				main_ctx.drawImage(
+					large_image,
+					0,
+					0,
+					main_canvas.width,
+					main_canvas.height
+				);
+			}
+		};
+		Thrixty.Player.prototype.inbox_zoomed = function(){
 			/* Task: Draw the enlarged image on the canvas */
 			var main_canvas = this.DOM_obj.main_canvas;
 			var main_ctx = main_canvas.getContext("2d");
 
 			/* get current image */
 			var large_image = this.get_current_large_image();
+
+			/* reset canvas size attributes */
+			if( this.canvas_size != 0 ){
+				this.set_canvas_dimensions_to_size(0);
+			}
 
 			/* clear canvas */
 			main_ctx.clearRect(
@@ -1746,7 +1794,7 @@
 				);
 			}
 		};
-		Thrixty.Player.prototype.outbox_zoom = function(){
+		Thrixty.Player.prototype.outbox_zoomed = function(){
 			/* Task: draw the elarged image on the zoom_canvas and the small image on the main_canvas */
 			var main_canvas = this.DOM_obj.main_canvas;
 			var main_ctx = main_canvas.getContext("2d");
@@ -1756,6 +1804,11 @@
 			/* get current image */
 			var small_image = this.get_current_small_image();
 			var large_image = this.get_current_large_image();
+
+			/* reset canvas size attributes */
+			if( this.canvas_size != 0 ){
+				this.set_canvas_dimensions_to_size(0);
+			}
 
 			/* clear main_canvas and zoom_canvas */
 			main_ctx.clearRect(
@@ -1932,7 +1985,21 @@
 
 
 	/**** GETTER & SETTER ****/
-		Thrixty.Player.prototype.set_canvas_dimensions = function(size_obj){
+		Thrixty.Player.prototype.set_canvas_dimensions_to_size = function(size){
+			var size_obj = null;
+
+			switch( size ){
+				default:
+				case 0:
+					// to small
+					size_obj = this.small;
+				break;
+				case 1:
+					// to large
+					size_obj = this.large;
+				break;
+			}
+
 			/* set width and height of canvas */
 			var w = size_obj.image_width;
 			var h = size_obj.image_height;
@@ -1948,6 +2015,9 @@
 			/* zoom box */
 				this.DOM_obj.zoom_canvas.width = w;
 				this.DOM_obj.zoom_canvas.height = h;
+
+			/* memorize set size */
+			this.canvas_size = size;
 		};
 		Thrixty.Player.prototype.set_image_offsets = function(){
 			/* get values */
@@ -1998,8 +2068,8 @@
 			// TODO: this fails in chrome, because they screwed up a part of the jquery function
 
 			return {
-				x: ( ( coords.x - this.root_element.getBoundingClientRect().left - document.body.scrollLeft ) / size_ratio_w ) + this.root_element.getBoundingClientRect().left + document.body.scrollLeft,
-				y: ( ( coords.y - this.root_element.getBoundingClientRect().top - document.body.scrollTop ) / size_ratio_h ) + this.root_element.getBoundingClientRect().top + document.body.scrollTop,
+				x: ( ( coords.x - this.root_element.getBoundingClientRect().left ) / size_ratio_w ) + this.root_element.getBoundingClientRect().left,
+				y: ( ( coords.y - this.root_element.getBoundingClientRect().top ) / size_ratio_h ) + this.root_element.getBoundingClientRect().top,
 			};
 		};
 	/**** /GETTER & SETTER ****/

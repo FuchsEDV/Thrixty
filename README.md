@@ -259,6 +259,9 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
+* V2.1.0 (planned):
+	* Create an ImageLayer Class to encapsulate specific code.
+		* The Images themselves are supposed to decide which image to draw and which size they need the canvasses to be.
 * V2.0.1 (planned):
 	* Responsiveness improvements in very small views.
 	(The resizing calculations are a bit off.)
@@ -267,12 +270,17 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 	* Control of player-instances with (console-)commands
 		* proper constructor
 		* implement destructor
-	* Use large images in Fullpage Mode.
+	* Change the css to select player instances instead of classes. (custom attribute or smt)
+	* Check the usability in case of CSS not being able to load.
+	* Integrate CSS into the app itself.
+	* Get rid of the SVG files and integrate them somewhere into the app. (CSS maybe?)
 
 
 
 	(done)
+	* Use large images in Fullpage Mode.
 	* Cleaned up the code.
+	* Adjusted behavior when images werent found. (small instead of large, blank instead of small)
 	* When the sizing image (first in small filelist) couldnt be loaded, nothing will be displayed. In earlier versions the player was still showing the controls.
 	* General performance improvements by adding throttle and debounce.
 	* Bugfix: Autoplay Off also triggered Autoload Off
@@ -330,7 +338,7 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 		* Split up the param "zoom-mode" into "zoom-mode", "zoom-control" and "position-indicator".
 		* Prepended semicolons.
 	* V1.2:
-		* Introduced the new position indicator "marker" and made the "minimap" look less grabable
+		* Introduced the new position indicator "marker" and made the "minimap" look less grabbable
 		* New options "zoom-control" and "outbox-position"
 		* Splitted up the zoom options like "inbox_minimap" into seperate options
 		* Changes in initialization
@@ -353,13 +361,12 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 * (maybe) the player should not react to the mouseposition, when it is not focused.<br>
 Then it would also be neccessary to ignore mouseclicks, when not focused.
 * Expand automatic div-search with a manual variant, so it is possible to restart/start specific players.
-* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once...)
-* Implement Event Throttling / Debouncing
-* Adjust behavior when images werent found. (small instead of large, blank instead of small)
+* The touch-zoom function needs to change; only single-fingered-touches should be used.
 * Log export for debugging purposes. (The log itself is there, but there is no function to actually export it.)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
 * Making a nice icon for the load-button.
+* Holding next and prvious button rotates the image.
 
 
 ### 11.) License

@@ -135,36 +135,35 @@
 			},
 			init: function(){
 				Thrixty.log("initializing Thrixty");
-				// init players
 				var player_candidates = document.querySelectorAll("div.thrixty");
 				if( player_candidates.length > 0){
-					this.cache_control_icons();
+					Thrixty.cache_control_icons();
 				}
 				var i = 0;
 				for( i; i<player_candidates.length; i++ ){
 					var cur_candidate = player_candidates[i];
-					setTimeout(function(){
-						/* create new instance */
-						var new_player = new Thrixty.Player(i+1, cur_candidate);
-						/* TODO: memorize yourself in Namespace!!! */
-						/* TODO: autosearch for id instead of giving it from outside */
-						/*     TODO: automatically save id in tabindex attribute */
-						/* memorize instance */
-						this.players.push( new_player  );
-					}.bind(this), 10);
+					var new_player_id = new Thrixty.Player(cur_candidate);
 				}
 			},
 		/**** /namespace methods ****/
 	};
-	window.addEventListener( "load", Thrixty.init.bind(Thrixty) );
+	window.addEventListener( "load", Thrixty.init );
 /***** /Thrixty Namespace *****/
 
 
 
 /***** Class Player *****/
-	Thrixty.Player = function(id, root_el){
-		this.player_id = id;
+	Thrixty.Player = function(root_el){
+		Thrixty.players.push(this);
+
 		this.root_element = root_el;
+		this.player_id = Thrixty.players.indexOf(this);
+
+		/* tabindex needed for being focusable (actual id is not important) */
+		if( this.root_element.getAttribute("tabindex") === null ){
+			this.root_element.setAttribute("tabindex", this.player_id);
+		}
+		this.root_element.setAttribute("thrixty", "found");
 
 		/** Options **/
 			/* base values */
@@ -305,6 +304,18 @@
 
 		// first part of init prozedure
 		this.init_a();
+
+		return this.player_id;
+	};
+	Thrixty.Player.prototype.destruct = function(){
+		/* 1.: release event handlers (seems not to be needed) */
+		/* 2.: remove HTML / DOM-objects */
+		this.root_element.removeChild(this.DOM_obj.showroom);
+		this.root_element.removeChild(this.DOM_obj.controls);
+		this.root_element.removeChild(this.DOM_obj.load_overlay);
+		this.root_element.removeChild(this.DOM_obj.zoom_canvas);
+		/* 3.: remove namespaces reference */
+		Thrixty.players[this.player_id] = null;
 	};
 
 
@@ -644,15 +655,15 @@
 						this.DOM_obj.canvas_container.appendChild(this.DOM_obj.marker);
 					this.DOM_obj.showroom.appendChild(this.DOM_obj.progress_container);
 						this.DOM_obj.progress_container.appendChild(this.DOM_obj.small_progress_bar);
-					this.root_element.appendChild(this.DOM_obj.controls);
-						this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
-							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
-							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
-							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
-							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
-							if( !Thrixty.is_mobile ){
-								this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
-							}
+				this.root_element.appendChild(this.DOM_obj.controls);
+					this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
+						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
+						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
+						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
+						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
+						if( !Thrixty.is_mobile ){
+							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
+						}
 					if( !this.settings.autoload ){
 						this.root_element.appendChild(this.DOM_obj.load_overlay);
 							this.DOM_obj.load_overlay.appendChild(this.DOM_obj.load_btn);
@@ -1575,9 +1586,10 @@
 			this.root_element.style.background = "white";
 			this.root_element.style.zIndex = "9999";
 
-
 			/* set refreshing styles at start */
 			this.set_fullpaged_dimensions();
+
+			this.draw_current_image();
 		};
 		Thrixty.Player.prototype.quit_fullpage = function(){
 			/* reset fullpage state */
@@ -1594,9 +1606,10 @@
 			this.root_element.style.background = "";
 			this.root_element.style.zIndex = "";
 
-
 			/* unset canvas_container size modification */
 			this.set_normalsized_dimensions();
+
+			this.draw_current_image();
 		};
 		Thrixty.Player.prototype.toggle_fullpage = function(){
 			if( this.is_fullpage ){
@@ -2073,12 +2086,5 @@
 			};
 		};
 	/**** /GETTER & SETTER ****/
-
-
-
-	Thrixty.Player.prototype.destruct = function(){
-		// TODO: destruct this instance
-		delete Thrixty.players[this.player_id];
-	};
 /***** /Class Player *****/
 

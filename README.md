@@ -259,25 +259,10 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 9.) Change Log
-* V2.1.0 (planned):
-	* Create an ImageLayer Class to encapsulate specific code.
-		* The Images themselves are supposed to decide which image to draw and which size they need the canvasses to be.
-* V2.0.1 (planned):
-	* Responsiveness improvements in very small views.
-	(The resizing calculations are a bit off.)
 * V2.0.0:
-	(planned)
-	* Control of player-instances with (console-)commands
-		* proper constructor
-		* implement destructor
-	* Change the css to select player instances instead of classes. (custom attribute or smt)
-	* Check the usability in case of CSS not being able to load.
-	* Integrate CSS into the app itself.
-	* Get rid of the SVG files and integrate them somewhere into the app. (CSS maybe?)
-
-
-
-	(done)
+	* Player only reacts to mouseposition, when pointing inside.
+	* Implemented a rudimentary destructor.
+	* Changed the css to select player instances by custom attribute instead of by class.
 	* Use large images in Fullpage Mode.
 	* Cleaned up the code.
 	* Adjusted behavior when images werent found. (small instead of large, blank instead of small)
@@ -357,16 +342,16 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 
 ### 10.) Planned Features and Changes (unordered)
-* context menu & picture export
-* (maybe) the player should not react to the mouseposition, when it is not focused.<br>
-Then it would also be neccessary to ignore mouseclicks, when not focused.
-* Expand automatic div-search with a manual variant, so it is possible to restart/start specific players.
 * The touch-zoom function needs to change; only single-fingered-touches should be used.
-* Log export for debugging purposes. (The log itself is there, but there is no function to actually export it.)
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
+* Context menu & picture and log export
 * Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
 * Making a nice icon for the load-button.
-* Holding next and prvious button rotates the image.
+* Holding next and previous button rotates the image.
+* HTML5 Contextmenus are awesome!
+* Get rid of any extra files.
+* ImageLayer Class (???)
+* Settings button or contextmenu for user to set preferences.
 
 
 ### 11.) License

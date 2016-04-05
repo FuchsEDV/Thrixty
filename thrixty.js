@@ -37,24 +37,24 @@
 		/**** namespace properties ****/
 		/**** namespace methods ****/
 			cache_control_icons: function(){
-				this.icons_cache.expand      = this.create_element(this.mainpath+"<img src='icons/expand.svg'/>");
-				this.icons_cache.expand_w    = this.create_element(this.mainpath+"<img src='icons/expand_w.svg'/>");
-				this.icons_cache.load        = this.create_element(this.mainpath+"<img src='icons/load.svg'/>");
-				this.icons_cache.load_w      = this.create_element(this.mainpath+"<img src='icons/load_w.svg'/>");
-				this.icons_cache.minus       = this.create_element(this.mainpath+"<img src='icons/minus.svg'/>");
-				this.icons_cache.minus_w     = this.create_element(this.mainpath+"<img src='icons/minus_w.svg'/>");
-				this.icons_cache.pause       = this.create_element(this.mainpath+"<img src='icons/pause.svg'/>");
-				this.icons_cache.pause_w     = this.create_element(this.mainpath+"<img src='icons/pause_w.svg'/>");
-				this.icons_cache.play        = this.create_element(this.mainpath+"<img src='icons/play.svg'/>");
-				this.icons_cache.play_w      = this.create_element(this.mainpath+"<img src='icons/play_w.svg'/>");
-				this.icons_cache.plus        = this.create_element(this.mainpath+"<img src='icons/plus.svg'/>");
-				this.icons_cache.plus_w      = this.create_element(this.mainpath+"<img src='icons/plus_w.svg'/>");
-				this.icons_cache.shrink      = this.create_element(this.mainpath+"<img src='icons/shrink.svg'/>");
-				this.icons_cache.shrink_w    = this.create_element(this.mainpath+"<img src='icons/shrink_w.svg'/>");
-				this.icons_cache.vorwaerts   = this.create_element(this.mainpath+"<img src='icons/vorwaerts.svg'/>");
-				this.icons_cache.vorwaerts_w = this.create_element(this.mainpath+"<img src='icons/vorwaerts_w.svg'/>");
-				this.icons_cache.zurueck     = this.create_element(this.mainpath+"<img src='icons/zurueck.svg'/>");
-				this.icons_cache.zurueck_w   = this.create_element(this.mainpath+"<img src='icons/zurueck_w.svg'/>");
+				this.icons_cache.expand      = this.create_element("<img src='"+this.mainpath+"icons/expand.svg'/>");
+				this.icons_cache.expand_w    = this.create_element("<img src='"+this.mainpath+"icons/expand_w.svg'/>");
+				this.icons_cache.load        = this.create_element("<img src='"+this.mainpath+"icons/load.svg'/>");
+				this.icons_cache.load_w      = this.create_element("<img src='"+this.mainpath+"icons/load_w.svg'/>");
+				this.icons_cache.minus       = this.create_element("<img src='"+this.mainpath+"icons/minus.svg'/>");
+				this.icons_cache.minus_w     = this.create_element("<img src='"+this.mainpath+"icons/minus_w.svg'/>");
+				this.icons_cache.pause       = this.create_element("<img src='"+this.mainpath+"icons/pause.svg'/>");
+				this.icons_cache.pause_w     = this.create_element("<img src='"+this.mainpath+"icons/pause_w.svg'/>");
+				this.icons_cache.play        = this.create_element("<img src='"+this.mainpath+"icons/play.svg'/>");
+				this.icons_cache.play_w      = this.create_element("<img src='"+this.mainpath+"icons/play_w.svg'/>");
+				this.icons_cache.plus        = this.create_element("<img src='"+this.mainpath+"icons/plus.svg'/>");
+				this.icons_cache.plus_w      = this.create_element("<img src='"+this.mainpath+"icons/plus_w.svg'/>");
+				this.icons_cache.shrink      = this.create_element("<img src='"+this.mainpath+"icons/shrink.svg'/>");
+				this.icons_cache.shrink_w    = this.create_element("<img src='"+this.mainpath+"icons/shrink_w.svg'/>");
+				this.icons_cache.vorwaerts   = this.create_element("<img src='"+this.mainpath+"icons/vorwaerts.svg'/>");
+				this.icons_cache.vorwaerts_w = this.create_element("<img src='"+this.mainpath+"icons/vorwaerts_w.svg'/>");
+				this.icons_cache.zurueck     = this.create_element("<img src='"+this.mainpath+"icons/zurueck.svg'/>");
+				this.icons_cache.zurueck_w   = this.create_element("<img src='"+this.mainpath+"icons/zurueck_w.svg'/>");
 			},
 			log: function(msg, id){
 				if( typeof(id) !== "number" ){

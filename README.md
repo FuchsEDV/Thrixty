@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.6.1 | 22.01.2016
+Version: 2.0.0 | 06.04.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -25,8 +25,8 @@ It is using HTML5 CANVAS elements to display sequences.
 
 ### 2.) Example
 
-To view an example, download [these](https://github.com/FuchsEDV/Thrixty_example) two files.<br>
-Unzip them in the same folder as the corefiles.
+To view an example, download both this and the [example repository](https://github.com/FuchsEDV/Thrixty_example).<br>
+Unzip them into the same folder, then start up the index.html.
 
 
 ### 3.) Usage
@@ -39,29 +39,30 @@ __Mouse/Touch:__<br>
 ```
 __Keboard:__<br>
 (To use these, the Player needs to be focused - click once inside the Player.)
-	```txt
-	[Spacebar] => Play/Pause
-	[Arrow Left] => Step Backward
-	[Arrow Right] => Step Forward
-	[Arrow Up] => Increase Speed
-	[Arrow Down] => Decrease Speed
-	[F] => Fullscreen on/off
-	[ESC] => Stop Zoom, Rotation, Fullscreen all at once.
-	```
+```txt
+[Spacebar] => Play/Pause
+[Arrow Left] => Step Backward
+[Arrow Right] => Step Forward
+[Arrow Up] => Increase Speed
+[Arrow Down] => Decrease Speed
+[G] => Zoom on/off
+[F] => Fullscreen on/off
+[ESC] => Stop Zoom, Rotation, Fullscreen all at once.
+```
 
 
 ### 4.) Installation Tutorial
 
-* In this example we are using the index.html as a substitute for whatever you are using to generate the HTML.
-* So go and create an "index.html" in your websites root folder.
+In this example we are using the index.html as a substitute for whatever you are using to generate the HTML.
+* Create an "index.html" in your websites root folder.
 * If you want to customize the players look, also create a "thrixty_custom.css" here.
-* Create a folder "thrixty" in the root folder.
-* Thrixty consists of two parts: the "core" folder and "thrixty_init.js".<br>
-So extract those two into the newly created "thrixty" folder.
-* Create a folder "360_objects" in the root folder of your website.<br>
-This folder is where you are gonna put all your objects.
-* For exampling purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
-* __When using the 360Shots Software to generate the files, you should only copy and paste the object folder__; ignore the rest of the files.
+* Create a directory named "thrixty".
+* Extract this repository into "thrixty".<br>
+	* The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
+* Create a directory "360_objects".<br>
+	* This folder is where you are gonna put all your objects.
+	* For example purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
+	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
 * Your final folder structure should look like this:
 
 	```html
@@ -69,8 +70,10 @@ This folder is where you are gonna put all your objects.
 	|- [index.html]
 	|- [thrixty_custom.css]
 	|- thrixty/
-	|  |- core/
-	|  |- thrixty_init.js
+	|  |- icons/
+	|  |  |- [look_at_all_the_icons.svg]
+	|  |- thrixty.js
+	|  |- thrixty.css
 	|- 360_objects/
 	|  |- example/
 	|  |  |- large/
@@ -81,41 +84,48 @@ This folder is where you are gonna put all your objects.
 	|  |  |  |- [lots_of_small_images.jpg]
 	```
 
-* For the Player to be able to do anything, you need to include the "thrixty_init.js" in the DOM.<br>
+* For the Player to be able to do anything, you need to include both "thrixty.js" and "thrixty.css" in the DOM.<br>
 For semantics you should put it into the head-section.
-* When you choose to include a "thrixty_custom.css", include that one RIGHT AFTER the "thrixty_init.js".
-* Now create a div somewhere in the body with 'class="thrixty_player"' and give it at least the 3 options seen in the following example:
+	* When you choose to include a "thrixty_custom.css", include it <b>after both "thrixty.js" and "thrixty.css"</b>!
+* Now create a div somewhere in the body with 'class="thrixty"' as seen in the following example.
+	* The HTML-attribute "thrixty-basepath" is one of the options, referencing the basepath for the Filelists.
+	* The Player will be generated into each of these divs, while using the corresponding attributes as parameters.
 
 	```html
 	<!DOCTYPE html>
-	<head>
-		<script type="text/javascript" src="http://your.domain.com/thrixty/thrixty_init.js"></script>
-		<link type="text/css" rel="stylesheet" href="http://your.domain.com/thrixty_custom.css">
-	</head>
-	<body>
-		<div class="thrixty-player" tabindex="0"
-			thrixty-basepath="[web_path_to_objects_folder]/[object]/"
-			thrixty-filelist-path-small="small/Filelist.txt"
-			thrixty-filelist-path-large="large/Filelist.txt"
-		></div>
-	</body>
+	<html>
+		<head>
+			<script type="text/javascript" src="/thrixty/thrixty.js"></script>
+			<link type="text/css" rel="stylesheet" href="/thrixty/thrixty.css">
+			<link type="text/css" rel="stylesheet" href="/thrixty_custom.css">
+		</head>
+		<body>
+			<div class="thrixty"
+				thrixty-basepath="/360_objects/example/"
+			></div>
+		</body>
+	</html>
 	```
 
-* Typical problems at this stage:
-	* Not reading the [documentation](#4-installation-tutorial).
-	* thrixty_init.js not found | path incorrect; ressource not accessible
-	* thrixty_custom.css not found | path incorrect; ressource not accessible
-	* Filelists not found | paths incorrect; ressources not accessible
-	* Images referenced in the filelists not found | path incorrect; ressource not accessible
-	* __To solve those, load your browsers developer tools and look into your console and files for any files not being loaded.__
-	* div:
-		* not properly labeled with class="thrixty-player"
-		* doesnt have all of the minimal attributes "thrixty-basepath", "thrixty-filelist-path-small" and "thrixty-filelist-path-large" correctly set
-		* tabindex attribute - when using multiple players on one page - not set
-		* tabindex attribute - when using multiple players on one page - using the same value multiple times
+##### Typical problems at this stage:
+* Not reading the [documentation](#4-installation-tutorial).
+* thrixty.js not found | path incorrect; resource not accessible.
+* thrixty.css not found | path incorrect; resource not accessible.
+* thrixty_custom.css not found | path incorrect; resource not accessible.
+* Filelists not found | paths incorrect; resources not accessible.
+* Images referenced in the filelists not found | paths incorrect; resources not accessible.
+* div:
+	* not properly labeled with class="thrixty".
+	* tabindex attribute manually set and using the same value multiple times.
+	* not setting the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly.
 
-* When you are using any CMS or something similar, the same applies to the generated HTML!
-* <b>Are you using Wordpress?</b> Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
+##### To solve those problems, start your browsers developer tools.
+* Look into your console and files sections for any files not being loaded.
+* Look into the global object "Thrixty" and search and read the log.
+
+
+### Are you using Wordpress?
+Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 5.) Parameters
@@ -123,7 +133,7 @@ For semantics you should put it into the head-section.
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.6.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.0.0</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -169,8 +179,8 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-position-indicator</td>
-		<td class="">How to indicate the zoomed in position. Or dont.</td>
+		<td class="">thrixty-zoom-pointer</td>
+		<td class="">How to point to the zoomed in position.</td>
 		<td class="">
 			<b>minimap</b>, marker, none
 		</td>
@@ -183,13 +193,15 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-direction</td>
-		<td class="">"forward" is interpreted as clockwise, when watched from above.</td>
-		<td class=""><b>forward&nbsp;/&nbsp;1</b>, backward&nbsp;/&nbsp;-1</td>
+		<td class="">thrixty-reversion</td>
+		<td class="">Activate this to reverse filelist order.</td>
+		<td class="">
+			<b>0 / false / forward</b>, 1 / true / backward
+		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-cycle_duration</td>
-		<td class="">How long every 360° turn will take.</td>
+		<td class="">thrixty-cycle-duration</td>
+		<td class="">Duration of each whole turn in seconds.</td>
 		<td class=""><b>5</b>, [integer]</td>
 	</tr>
 	<tr>
@@ -210,134 +222,153 @@ Here is a list of the usable params (in the form of HTML-attributes):
 			<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
 		</td>
 	</tr>
-	<!--<tr>
-		<td class="">
-			thrixty-sensitivity-y<br>
-			(<b>This option is not yet used!</b>)
-		</td>
-		<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be move at least Y pixel.</td>
-		<td class=""><b>50</b>, [integer]</td>
-	</tr>-->
 </table>
 
 
 ### 6.) Customization
 
 Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.<br>
-Create a CSS file and include it after the initialization file.<br>
-The following is an example that will make the object have an orange border and the button container to have a blue background.<br>
-It will also hide the Zoom Button, as long as it is disabled.<br>
+The following examples are showing you some possibilities:
+* Create the file "thrixty_custom.css" and include it after the initialization file, if not already done.<br>
+* To have an orange border around the object, include the following CSS code into the file:
 
 	```css
-	.thrixty-player .canvas_container{
+	div[thrixty=found] #canvas_container{
 		border: 2px solid orange;
 	}
-	.thrixty-player .control_container{
+	```
+
+* To have a blue background on the controls container, include the following CSS code into the file:
+
+	```css
+	div[thrixty=found] .control_container_one{
 		background: blue;
 	}
-	#zoom_btn:disabled {
+	```
+
+* To hide the Zoom Button as long as it is disabled, include the following CSS code into the file:
+
+	```css
+	div[thrixty=found] #zoom_btn:disabled{
 		display: none;
 	}
 	```
 
 
-
 ### 7.) General Description
 
-This section explains shortly, what the javascript is doing:<br>
-<br>
-After including the initializing script "thrixty_init.js" in your documents head, it will wait for the whole site to finish loading.<br>
-It will then start by looking for all divs with class thrixty-player ("div.thrixty-player").<br>
-On each found div it will start a new player instance, allowing you to place multiple players on each site.<br>
-<br>
-The initializing script also creates the namespace "ThrixtyPlayer", which holds the classes, namespacewide variables and every instantiated player.<br>
+A short explanation, what Thrixty is doing:
+* After including and interpreting the JS, create namespace "Thrixty" and wait for the site to finish loading.
+* Look for all divs with a class of "thrixty" ("div.thrixty").
+* Initialize a Player instance for each div found.
+	* Parse (and check) options, load the filelists
+	* Parse filelists, cache images, generate HTML and display the first image while loading.
+	* Set the attribute "thrixty" to "found".
+	* Wait for user input.
 
 
 ### 8.) Documentation
 
-[You are looking at it...](#5-parameters)
+[You are looking at it...](#thrixty)
 
 
 ### 9.) Change Log
-* V1.6.1:
-	* Path-handling improved.
-	* The basepath is now initially empty.<br>
-	Therefore the path to the small filelist would be "[current_page/]small/Filelist.txt", when no params were set.
-	* Standard values for filelist settings: "small/Filelist.txt" and "large/Filelist.txt".<br>
-	These paths are the ones generated by our 360 Shots Worktable Suite.
-* V1.6:
-	* New option "Autoload " can be used to restrict the player from automatically loading. Autoload is always disabled on mobile devices!
-	* Animation Speed Modifier reworked. Now has a list of speeds you can switch through by pressing arrow up/down.
-	* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.
-	* Renamed "seconds-per-turn" to "cycle-duration".
-* V1.5.1:
-	* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
-* V1.5:
-	* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
-	This cannot be made more intuitive, as there are issues with non-conventional event uses. (look previous)
-	* Browser-developers are not able to follow conventions or standards.<br>
-	Thus positions and sizes are now calculated instead of declarated.
-	* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
-	* Moved version number into the ThrixtyPlayer Object.
-	* Implemented a parameter for Autoplay: "thrixty-autoplay".
-	* Load-Button now stays hidden, until the preview image becomes visible.
-	* Improved Readme with a section on parameters.
-* V1.4:
-	* Rewrote Event Handler.
-	* Fixed iPad Support. (maybe other mobile browsers are still broken...)
-	* Changed folder structure.
-	* Saving bandwidth on mobile devices (detected by user-agent) by showing a load button instead of auto loading.
-	* Changes in state management.
-	* Zoom Mode can now be "none" for disabling zoom.<br>
-	(Will automatically trigger, when large filelist was not found.)
-	* Rebuilt Autostart.
-	* Let the Player log into an object. (Spamming Console Log is annoying...)
-	* Introduced a log-object in Namespace. ('console.log(ThrixtyPlayer.logs);')
-	* Rebuilt the initialize functionality.
-	* Path- and file-name conventions.
-	* Reinforced compatibility on windows systems.
-	* Enforced strict-mode.
-* V1.3.1:
-	* Fixed Fullpage Mode.
-* V1.3:
-	* Re-encoding of line-endings to windows format.
-	* Safari drawing error resolved.
-	* Rewritten DrawingHandler.
-	* Full-page mostly fixed.<br>
-	To fix this completely will be the first thing to do in Version 1.4.
-	* Split up the param "zoom-mode" into "zoom-mode", "zoom-control" and "position-indicator".
-	* Prepended semicolons.
-* V1.2:
-	* Introduced the new position indicator "marker" and made the "minimap" look less grabable
-	* New options "zoom-control" and "outbox-position"
-	* Splitted up the zoom options like "inbox_minimap" into seperate options
-	* Changes in initialization
-	* Removed Yoda-Conditions
-	* Changes in Readme.md
-* V1.1:
-	* Changes in Error Handling and Reporting
-* V1.0 (Release):
-	* Play&amp;Pause
-	* Step forward
-	* Step backward
-	* Zoom
-	* Fullscreen
-	* Keyboard Shortcuts
-	* Drag Rotation
+* V2:
+	* V2.0.0:
+		* Throttled redraw.
+		* Player only reacts to mouseposition, when pointing inside.
+		* Implemented a rudimentary destructor.
+		* Changed the css to select player instances by custom attribute instead of by class.
+		* Use large images in Fullpage Mode.
+		* Cleaned up the code.
+		* Adjusted behavior when images werent found. (small instead of large, blank instead of small)
+		* When the sizing image (first in small filelist) couldnt be loaded, nothing will be displayed. In earlier versions the player was still showing the controls.
+		* General performance improvements by adding throttle and debounce to bottleneck events.
+		* Bugfix: Autoplay Off also triggered Autoload Off
+		* Renamed option: position-indicator => zoom-pointer
+		* Renamed option: direction => reversion
+		* Class restructuring.
+			* Joined MainClass, EventHandler and DrawingHandler into a single Player class.
+		* Gotten rid of jQuery.
+* V1:
+	* V1.6.1:
+		* Path-handling improved.
+		* The basepath is now initially empty.<br>
+		Therefore the path to the small filelist would be "[current_page/]small/Filelist.txt", when no params were set.
+		* Standard values for filelist settings: "small/Filelist.txt" and "large/Filelist.txt".<br>
+		These paths are the ones generated by our 360 Shots Worktable Suite.
+	* V1.6:
+		* New option "Autoload " can be used to restrict the player from automatically loading. Autoload is always disabled on mobile devices!
+		* Animation Speed Modifier reworked. Now has a list of speeds you can switch through by pressing arrow up/down.
+		* Changed effects of "direction" option. Will now simply reverse the filelist before load, instead of fuzzy logic.
+		* Renamed "seconds-per-turn" to "cycle-duration".
+	* V1.5.1:
+		* Fullpage disabled on mobile devices - it is not working properly on those small screens (and actually unneccessary).
+	* V1.5:
+		* Allowed double-finger-zoom, when touching with <b>both fingers at the same time</b>.<br>
+		This cannot be made more intuitive, as there are issues with non-conventional event uses. (look previous)
+		* Browser-developers are not able to follow conventions or standards.<br>
+		Thus positions and sizes are now calculated instead of declarated.
+		* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
+		* Moved version number into the ThrixtyPlayer Object.
+		* Implemented a parameter for Autoplay: "thrixty-autoplay".
+		* Load-Button now stays hidden, until the preview image becomes visible.
+		* Improved Readme with a section on parameters.
+	* V1.4:
+		* Rewrote Event Handler.
+		* Fixed iPad Support. (maybe other mobile browsers are still broken...)
+		* Changed folder structure.
+		* Saving bandwidth on mobile devices (detected by user-agent) by showing a load button instead of auto loading.
+		* Changes in state management.
+		* Zoom Mode can now be "none" for disabling zoom.<br>
+		(Will automatically trigger, when large filelist was not found.)
+		* Rebuilt Autostart.
+		* Let the Player log into an object. (Spamming Console Log is annoying...)
+		* Introduced a log-object in Namespace. ('console.log(ThrixtyPlayer.logs);')
+		* Rebuilt the initialize functionality.
+		* Path- and file-name conventions.
+		* Reinforced compatibility on windows systems.
+		* Enforced strict-mode.
+	* V1.3.1:
+		* Fixed Fullpage Mode.
+	* V1.3:
+		* Re-encoding of line-endings to windows format.
+		* Safari drawing error resolved.
+		* Rewritten DrawingHandler.
+		* Full-page mostly fixed.<br>
+		To fix this completely will be the first thing to do in Version 1.4.
+		* Split up the param "zoom-mode" into "zoom-mode", "zoom-control" and "position-indicator".
+		* Prepended semicolons.
+	* V1.2:
+		* Introduced the new position indicator "marker" and made the "minimap" look less grabbable
+		* New options "zoom-control" and "outbox-position"
+		* Splitted up the zoom options like "inbox_minimap" into seperate options
+		* Changes in initialization
+		* Removed Yoda-Conditions
+		* Changes in Readme.md
+	* V1.1:
+		* Changes in Error Handling and Reporting
+	* V1.0 (Release):
+		* Play&amp;Pause
+		* Step forward
+		* Step backward
+		* Zoom
+		* Fullscreen
+		* Keyboard Shortcuts
+		* Drag Rotation
 
 
 ### 10.) Planned Features and Changes (unordered)
-* (maybe) the player should not react to the mouseposition, when it is not focused.<br>
-Then it would also be neccessary to ignore mouseclicks, when not focused.
-* Expand automatic div-search with a manual variant, so it is possible to restart/start specific players.
-* The touch-zoom function should behave properly. (For now, one needs to touch with both fingers at once...)
-* Implement Event Throttling / Debouncing
-* Adjust behavior when images werent found. (small instead of large, blank instead of small)
-* Log export for debugging purposes. (The log itself is there, but there is no function to actually export it.)
+* The touch-zoom function needs to change; only single-fingered-touches should be used.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
+* Context menu & picture and log export
 * Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
 * Making a nice icon for the load-button.
-* Better classes structure. :)
+* Holding next and previous button rotates the image.
+* HTML5 Contextmenus are awesome!
+* Get rid of any extra files.
+* ImageLayer Class (???)
+* Settings button or contextmenu for user to set preferences.
 
 
 ### 11.) License

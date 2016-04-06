@@ -25,7 +25,7 @@ It is using HTML5 CANVAS elements to display sequences.
 
 ### 2.) Example
 
-To view an example, download both this and the [exampe repository](https://github.com/FuchsEDV/Thrixty_example).<br>
+To view an example, download both this and the [example repository](https://github.com/FuchsEDV/Thrixty_example).<br>
 Unzip them into the same folder, then start up the index.html.
 
 
@@ -53,23 +53,23 @@ __Keboard:__<br>
 
 ### 4.) Installation Tutorial
 
-* In this example we are using the index.html as a substitute for whatever you are using to generate the HTML.
-* So go and create an "index.html" in your websites root folder.
+In this example we are using the index.html as a substitute for whatever you are using to generate the HTML.
+* Create an "index.html" in your websites root folder.
 * If you want to customize the players look, also create a "thrixty_custom.css" here.
 * Create a directory named "thrixty".
 * Extract this repository into "thrixty".<br>
-The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
+	* The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
 * Create a directory "360_objects".<br>
 	* This folder is where you are gonna put all your objects.
 	* For example purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
-	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder</i>; ignore the rest of the files.
+	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
 * Your final folder structure should look like this:
 
 	```html
 	[website-mainfolder of your.domain.com]/
 	|- [index.html]
 	|- [thrixty_custom.css]
-	|- thrixty
+	|- thrixty/
 	|  |- icons/
 	|  |  |- [look_at_all_the_icons.svg]
 	|  |- thrixty.js
@@ -86,9 +86,9 @@ The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" ar
 
 * For the Player to be able to do anything, you need to include both "thrixty.js" and "thrixty.css" in the DOM.<br>
 For semantics you should put it into the head-section.
-	* When you choose to include a "thrixty_custom.css", include that one RIGHT AFTER the "thrixty.css"!
+	* When you choose to include a "thrixty_custom.css", include it <b>after both "thrixty.js" and "thrixty.css"</b>!
 * Now create a div somewhere in the body with 'class="thrixty"' as seen in the following example.
-	* The HTML-attribute "thrixty-basepath" is one of the options, referencing the baepath for the Filelists.
+	* The HTML-attribute "thrixty-basepath" is one of the options, referencing the basepath for the Filelists.
 	* The Player will be generated into each of these divs, while using the corresponding attributes as parameters.
 
 	```html
@@ -107,22 +107,25 @@ For semantics you should put it into the head-section.
 	</html>
 	```
 
-* Typical problems at this stage:
-	* Not reading the [documentation](#4-installation-tutorial).
-	* thrixty.js not found | path incorrect; resource not accessible
-	* thrixty.css not found | path incorrect; resource not accessible
-	* thrixty_custom.css not found | path incorrect; resource not accessible
-	* Filelists not found | paths incorrect; resources not accessible
-	* Images referenced in the filelists not found | paths incorrect; resources not accessible
-To solve those problems, load your browsers developer tools and look into your console and files for any files not being loaded.
-	* div:
-		* not properly labeled with class="thrixty-player"
-		* doesnt have all of the minimal attributes "thrixty-basepath", "thrixty-filelist-path-small" and "thrixty-filelist-path-large" correctly set
-		* tabindex attribute - when using multiple players on one page - not set
-		* tabindex attribute - when using multiple players on one page - using the same value multiple times
+##### Typical problems at this stage:
+* Not reading the [documentation](#4-installation-tutorial).
+* thrixty.js not found | path incorrect; resource not accessible.
+* thrixty.css not found | path incorrect; resource not accessible.
+* thrixty_custom.css not found | path incorrect; resource not accessible.
+* Filelists not found | paths incorrect; resources not accessible.
+* Images referenced in the filelists not found | paths incorrect; resources not accessible.
+* div:
+	* not properly labeled with class="thrixty".
+	* tabindex attribute manually set and using the same value multiple times.
+	* not setting the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly.
 
-* When you are using any CMS or something similar, the same applies to the generated HTML!
-* <b>Are you using Wordpress?</b> Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
+##### To solve those problems, start your browsers developer tools.
+* Look into your console and files sections for any files not being loaded.
+* Look into the global object "Thrixty" and search and read the log.
+
+
+### Are you using Wordpress?
+Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 5.) Parameters
@@ -130,7 +133,7 @@ To solve those problems, load your browsers developer tools and look into your c
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 1.6.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.0.0</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -176,8 +179,8 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-position-indicator</td>
-		<td class="">How to indicate the zoomed in position. Or dont.</td>
+		<td class="">thrixty-zoom-pointer</td>
+		<td class="">How to point to the zoomed in position.</td>
 		<td class="">
 			<b>minimap</b>, marker, none
 		</td>
@@ -190,13 +193,15 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-direction</td>
-		<td class="">"forward" is interpreted as clockwise, when watched from above.</td>
-		<td class=""><b>forward&nbsp;/&nbsp;1</b>, backward&nbsp;/&nbsp;-1</td>
+		<td class="">thrixty-reversion</td>
+		<td class="">Activate this to reverse filelist order.</td>
+		<td class="">
+			<b>0 / false / forward</b>, 1 / true / backward
+		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-cycle_duration</td>
-		<td class="">How long every 360° turn will take.</td>
+		<td class="">thrixty-cycle-duration</td>
+		<td class="">Duration of each whole turn in seconds.</td>
 		<td class=""><b>5</b>, [integer]</td>
 	</tr>
 	<tr>
@@ -217,70 +222,74 @@ Here is a list of the usable params (in the form of HTML-attributes):
 			<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
 		</td>
 	</tr>
-	<!--<tr>
-		<td class="">
-			thrixty-sensitivity-y<br>
-			(<b>This option is not yet used!</b>)
-		</td>
-		<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be move at least Y pixel.</td>
-		<td class=""><b>50</b>, [integer]</td>
-	</tr>-->
 </table>
 
 
 ### 6.) Customization
 
 Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.<br>
-Create a CSS file and include it after the initialization file.<br>
-The following is an example that will make the object have an orange border and the button container to have a blue background.<br>
-It will also hide the Zoom Button, as long as it is disabled.<br>
-
+The following examples are showing you some possibilities:
+* Create the file "thrixty_custom.css" and include it after the initialization file, if not already done.<br>
+* To have an orange border around the object, include the following CSS code into the file:
 	```css
-	.thrixty-player .canvas_container{
+	div[thrixty=found] #canvas_container{
 		border: 2px solid orange;
 	}
-	.thrixty-player .control_container{
+	```
+* To have a blue background on the controls container, include the following CSS code into the file:
+	```css
+	div[thrixty=found] .control_container_one{
 		background: blue;
 	}
-	#zoom_btn:disabled {
+	```
+* To hide the Zoom Button as long as it is disabled, include the following CSS code into the file:
+	```css
+	div[thrixty=found] #zoom_btn:disabled{
 		display: none;
 	}
 	```
 
 
 
+
 ### 7.) General Description
 
-This section explains briefly, what the javascript is doing:<br>
-<br>
-After including the initializing script "thrixty_init.js" in your documents head, it will wait for the whole site to finish loading.<br>
-It will then start by looking for all divs with class thrixty-player ("div.thrixty-player").<br>
-On each found div it will start a new player instance, allowing you to place multiple players on each site.<br>
-<br>
-The initializing script also creates the namespace "ThrixtyPlayer", which holds the classes, namespacewide variables and every instantiated player.<br>
+A short explanation, what Thrixty is doing:
+* After including and interpreting the JS, wait for the site to finish loading.
+* Look for all divs with a class of "thrixty" ("div.thrixty").
+* Initialize a Player instance for each div found.
+	* Parse (and check) options, load the filelists
+	* Parse filelists, cache images, generate HTML and display the first image while loading.
+	* Set the attribute "thrixty" to "found".
+	* Wait for user input.
+
+The Script is creating the namespace "Thrixty", which holds the classes, namespace-wide variables and every instantiated player.<br>
+Developers should look into this with a tool like "Firebug": 'console.log(Thrixty);'.
+
 
 
 ### 8.) Documentation
 
-[You are looking at it...](#5-parameters)
+[You are looking at it...](#thrixty)
 
 
 ### 9.) Change Log
-* V2.0.0:
-	* Throttled redraw.
-	* Player only reacts to mouseposition, when pointing inside.
-	* Implemented a rudimentary destructor.
-	* Changed the css to select player instances by custom attribute instead of by class.
-	* Use large images in Fullpage Mode.
-	* Cleaned up the code.
-	* Adjusted behavior when images werent found. (small instead of large, blank instead of small)
-	* When the sizing image (first in small filelist) couldnt be loaded, nothing will be displayed. In earlier versions the player was still showing the controls.
-	* General performance improvements by adding throttle and debounce.
-	* Bugfix: Autoplay Off also triggered Autoload Off
-	* Renamed option: direction => reversion
-	* Class restructuring.
-		* Joined MainClass, EventHandler and DrawingHandler into a single Player class.
-	* Gotten rid of jQuery.
+* V2:
+	*V2.0.0:
+		* Throttled redraw.
+		* Player only reacts to mouseposition, when pointing inside.
+		* Implemented a rudimentary destructor.
+		* Changed the css to select player instances by custom attribute instead of by class.
+		* Use large images in Fullpage Mode.
+		* Cleaned up the code.
+		* Adjusted behavior when images werent found. (small instead of large, blank instead of small)
+		* When the sizing image (first in small filelist) couldnt be loaded, nothing will be displayed. In earlier versions the player was still showing the controls.
+		* General performance improvements by adding throttle and debounce.
+		* Bugfix: Autoplay Off also triggered Autoload Off
+		* Renamed option: direction => reversion
+		* Class restructuring.
+			* Joined MainClass, EventHandler and DrawingHandler into a single Player class.
+		* Gotten rid of jQuery.
 * V1:
 	* V1.6.1:
 		* Path-handling improved.

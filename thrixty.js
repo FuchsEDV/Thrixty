@@ -859,7 +859,7 @@
 						this.large.image_height = h;
 						this.large.image_ratio = ar;
 					img.style.display = "";
-
+				this.root_element.removeChild(img);
 				Thrixty.log("Large dimensions set to: ("+w+"|"+h+")", this.player_id);
 			};
 		/*** /INITIALIZATION PART LARGE ***/

@@ -231,18 +231,23 @@ Customization of the player is quite easy, as Thrixty is optimised for doing as 
 The following examples are showing you some possibilities:
 * Create the file "thrixty_custom.css" and include it after the initialization file, if not already done.<br>
 * To have an orange border around the object, include the following CSS code into the file:
+
 	```css
 	div[thrixty=found] #canvas_container{
 		border: 2px solid orange;
 	}
 	```
+
 * To have a blue background on the controls container, include the following CSS code into the file:
+
 	```css
 	div[thrixty=found] .control_container_one{
 		background: blue;
 	}
 	```
+
 * To hide the Zoom Button as long as it is disabled, include the following CSS code into the file:
+
 	```css
 	div[thrixty=found] #zoom_btn:disabled{
 		display: none;
@@ -250,22 +255,16 @@ The following examples are showing you some possibilities:
 	```
 
 
-
-
 ### 7.) General Description
 
 A short explanation, what Thrixty is doing:
-* After including and interpreting the JS, wait for the site to finish loading.
+* After including and interpreting the JS, create namespace "Thrixty" and wait for the site to finish loading.
 * Look for all divs with a class of "thrixty" ("div.thrixty").
 * Initialize a Player instance for each div found.
 	* Parse (and check) options, load the filelists
 	* Parse filelists, cache images, generate HTML and display the first image while loading.
 	* Set the attribute "thrixty" to "found".
 	* Wait for user input.
-
-The Script is creating the namespace "Thrixty", which holds the classes, namespace-wide variables and every instantiated player.<br>
-Developers should look into this with a tool like "Firebug": 'console.log(Thrixty);'.
-
 
 
 ### 8.) Documentation
@@ -275,7 +274,7 @@ Developers should look into this with a tool like "Firebug": 'console.log(Thrixt
 
 ### 9.) Change Log
 * V2:
-	*V2.0.0:
+	* V2.0.0:
 		* Throttled redraw.
 		* Player only reacts to mouseposition, when pointing inside.
 		* Implemented a rudimentary destructor.

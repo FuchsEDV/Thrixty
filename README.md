@@ -25,8 +25,8 @@ It is using HTML5 CANVAS elements to display sequences.
 
 ### 2.) Example
 
-To view an example, download [these](https://github.com/FuchsEDV/Thrixty_example) two files.<br>
-Unzip them in the same folder as the corefiles.
+To view an example, download both this and the [exampe repository](https://github.com/FuchsEDV/Thrixty_example).<br>
+Unzip them into the same folder, then start up the index.html.
 
 
 ### 3.) Usage
@@ -40,11 +40,13 @@ __Mouse/Touch:__<br>
 __Keboard:__<br>
 (To use these, the Player needs to be focused - click once inside the Player.)
 	```txt
-	[Spacebar] => Play/Pause
-	[Arrow Left] => Step Backward
+	[Spacebar] => Play/Pause<br>
+	[Arrow Left] => Step Backward<br>
 	[Arrow Right] => Step Forward
 	[Arrow Up] => Increase Speed
+
 	[Arrow Down] => Decrease Speed
+
 	[F] => Fullscreen on/off
 	[ESC] => Stop Zoom, Rotation, Fullscreen all at once.
 	```

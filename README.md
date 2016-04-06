@@ -283,8 +283,9 @@ A short explanation, what Thrixty is doing:
 		* Cleaned up the code.
 		* Adjusted behavior when images werent found. (small instead of large, blank instead of small)
 		* When the sizing image (first in small filelist) couldnt be loaded, nothing will be displayed. In earlier versions the player was still showing the controls.
-		* General performance improvements by adding throttle and debounce.
+		* General performance improvements by adding throttle and debounce to bottleneck events.
 		* Bugfix: Autoplay Off also triggered Autoload Off
+		* Renamed option: position-indicator => zoom-pointer
 		* Renamed option: direction => reversion
 		* Class restructuring.
 			* Joined MainClass, EventHandler and DrawingHandler into a single Player class.

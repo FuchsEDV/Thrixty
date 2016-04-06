@@ -173,7 +173,7 @@
 				filelist_path_large: "large/Filelist.txt", /* => subfolder 'large', then look for Filelist.txt */
 				zoom_control: "progressive",
 				zoom_mode: "inbox",
-				position_indicator: "minimap",
+				zoom_pointer: "minimap",
 				outbox_position: "right",
 				reversion: false, /* false|true <=> forward|backward */
 				cycle_duration: 5,
@@ -302,7 +302,7 @@
 		/** log creation **/
 		Thrixty.log("Player (id "+this.player_id+") initialising.");
 
-		// first part of init prozedure
+		/* first part of init prozedure */
 		this.init_a();
 
 		return this.player_id;
@@ -376,16 +376,16 @@
 									break;
 							}
 							break;
-						case "thrixty-position-indicator":
+						case "thrixty-zoom-pointer":
 							/* proper values: -minimap(default) -marker -none[|empty] */
 							switch( attr_value ){
 								case "minimap":
 								case "marker":
-									this.settings.position_indicator = attr_value;
+									this.settings.zoom_pointer = attr_value;
 									break;
 								case "none":
 								case "":
-									this.settings.position_indicator = "";
+									this.settings.zoom_pointer = "";
 									break;
 							}
 							break;
@@ -500,9 +500,7 @@
 				this.large.filepath = large_url;
 			};
 			Thrixty.Player.prototype.check_settings = function(){
-				// TODO: check stuff
-				/* check settings for mandatories etc. */
-
+				/* TODO: actually check settings for mandatories etc. */
 				if( this.settings.zoom_mode == "none" ){
 					this.can_zoom = false;
 				}
@@ -600,7 +598,6 @@
 						"error",
 						this.init_small_all.bind(this, i) /* , e (addEventListener automatically adds it) */
 					);
-					// append
 					this.small.images.push( new_image_object );
 				}
 			};
@@ -630,7 +627,6 @@
 						"error",
 						this.init_large_all.bind(this, i) /* , e (addEventListener automatically adds it) */
 					);
-					// append
 					this.large.images.push( new_image_object );
 				}
 			};
@@ -682,8 +678,7 @@
 					if( this.settings.reversion ){
 						ret_arr.reverse();
 					}
-					/* TOCOME: parse check here? */
-					/* // */
+					/*? TODO: parse check here ?*/
 					return ret_arr;
 				};
 				Thrixty.Player.prototype.load_small_image = function(index){
@@ -719,8 +714,8 @@
 					this.root_element.style.display = "";
 					this.draw_current_image();
 				} else {
-					// TODO: CRITICAL ERROR HANDLING!!!!
-					Thrixty.log("SMALL IMAGE WAS NOT FOUND", this.player_id);
+					/*? TODO: CRITICAL ERROR HANDLING!!!! ?*/
+					Thrixty.log("SMALL SIZING IMAGE WAS NOT FOUND", this.player_id);
 				}
 			};
 			Thrixty.Player.prototype.init_small_each = function(index, e){
@@ -735,9 +730,9 @@
 					Thrixty.log("small image "+index+" errored ('"+this.small.images[0].element.src+"')", this.player_id);
 
 				} else {
-					// ???
+					/* ignored */
 				}
-				// update (small) progress bar
+				/* update (small) progress bar */
 				this.refresh_small_progress_bar();
 			};
 			Thrixty.Player.prototype.init_small_all = function(index, e){
@@ -750,7 +745,6 @@
 
 					/* check for all small being loaded */
 					if( (this.small.images_loaded + this.small.images_errored) == this.small.images_count ){
-						// [playable]
 						/* enable controls */
 						this.DOM_obj.prev_btn.removeAttribute("disabled");
 						this.DOM_obj.play_btn.removeAttribute("disabled");
@@ -775,9 +769,7 @@
 			/** Init Small Helpers **/
 				Thrixty.Player.prototype.set_small_dimensions = function(index){
 					var img = this.small.images[index].element;
-					// append child
 					this.root_element.appendChild(img);
-						// show child
 						img.style.display = "block";
 							var w = img.naturalWidth;
 							var h = img.naturalHeight;
@@ -785,9 +777,7 @@
 							this.small.image_width = w;
 							this.small.image_height = h;
 							this.small.image_ratio = ar;
-						// hide child
 						img.style.display = "";
-					// remove child
 					this.root_element.removeChild(img);
 					Thrixty.log("Small dimensions set to: ("+w+"|"+h+")", this.player_id);
 				};
@@ -818,7 +808,7 @@
 				if( e.type === "load" ){
 					this.set_large_dimensions(0);
 				} else {
-					// TODO: CRITICAL ERROR HANDLING!!!!
+					/*? TODO: CRITICAL ERROR HANDLING!!!! ?*/
 					Thrixty.log("LARGE IMAGE WAS NOT FOUND", this.player_id);
 				}
 			};
@@ -839,9 +829,10 @@
 					Thrixty.log("large image "+index+" errored ('"+this.large.images[0].element.src+"')", this.player_id);
 
 				} else {
-					// ???
+					/* nothing */
 				}
-				// (update large progress bar)
+				/* (update large progress bar) */
+				/* (...) */
 			};
 			Thrixty.Player.prototype.init_large_all = function(index, e){
 				if( this.large.images[index].elem_loaded === null ){
@@ -853,16 +844,13 @@
 
 					/* if all large were loaded */
 					if( (this.large.images_loaded + this.large.images_errored) == this.large.images_count ){
-						// [completed]
-						// nothing
+						/* doing nothing yet */
 					}
 				}
 			};
 			Thrixty.Player.prototype.set_large_dimensions = function(index){
 				var img = this.large.images[index].element;
-				// append child
 				this.root_element.appendChild(img);
-					// show child
 					img.style.display = "block";
 						var w = img.naturalWidth;
 						var h = img.naturalHeight;
@@ -870,10 +858,8 @@
 						this.large.image_width = w;
 						this.large.image_height = h;
 						this.large.image_ratio = ar;
-					// hide child
 					img.style.display = "";
-				// remove child
-				this.root_element.removeChild(img);
+
 				Thrixty.log("Large dimensions set to: ("+w+"|"+h+")", this.player_id);
 			};
 		/*** /INITIALIZATION PART LARGE ***/
@@ -1005,6 +991,11 @@
 					/* correlate to click on fullpage button */
 					this.size_button_event_click();
 					break;
+				case 71:  /* G */
+					e.preventDefault();
+					/* correlate to click on zoom button */
+					this.zoom_button_event_click();
+					break;
 				case 33:  /* PAGEUP */
 				case 34:  /* PAGEDOWN */
 				case 35:  /* END */
@@ -1126,8 +1117,20 @@
 						e.preventDefault();
 					}
 				};
-				Thrixty.Player.prototype.minimap_canvas_mousemove = function(e){/**/};
-				Thrixty.Player.prototype.marker_mousemove = function(e){/**/};
+				Thrixty.Player.prototype.minimap_canvas_mousemove = function(e){
+					/* A2 | user moves section */
+					if( this.is_zoomed && this.settings.zoom_control == "progressive" ){
+						this.execute_section_move(e.clientX, e.clientY);
+						e.preventDefault();
+					}
+				};
+				Thrixty.Player.prototype.marker_mousemove = function(e){
+					/* A2 | user moves section */
+					if( this.is_zoomed && this.settings.zoom_control == "progressive" ){
+						this.execute_section_move(e.clientX, e.clientY);
+						e.preventDefault();
+					}
+				};
 			/** /mousemove **/
 			/** mouseup **/
 				Thrixty.Player.prototype.document_mouseup = function(e){
@@ -1168,7 +1171,6 @@
 				};
 				Thrixty.Player.prototype.minimap_canvas_touchstart = function(e){
 					if( e.touches.length == 1 ){
-						// objektausschnitt verschieben
 						/* C2 | user wants to move the section */
 						if( this.is_zoomed ){
 							this.prepare_section_move("minimap");
@@ -1179,7 +1181,6 @@
 				};
 				Thrixty.Player.prototype.marker_touchstart = function(e){
 					if( e.touches.length == 1 ){
-						// objektausschnitt verschieben
 						/* C2 | user wants to move the section */
 						if( this.is_zoomed ){
 							this.prepare_section_move("marker");
@@ -1216,13 +1217,13 @@
 				Thrixty.Player.prototype.document_touchend = function(e){
 					/* C1 | user stops turning the object */
 					if( this.object_turn.prepared ){
-						// this.execute_object_turn(e.touches[0].pageX, e.touches[0].pageY); /* do a final object turn */
+						/* this.execute_object_turn(e.touches[0].clientX, e.touches[0].clientY); */ /* do a final object turn */
 						this.stop_object_turn();
 						e.preventDefault();
 					}
 					/* C2 | user stops moving section */
 					if( this.section_move.prepared ){
-						// this.execute_section_move(e.touches[0].pageX, e.touches[0].pageY); /* do a final section move */
+						/* this.execute_section_move(e.touches[0].clientX, e.touches[0].clientY); */ /* do a final section move */
 						this.stop_section_move();
 						e.preventDefault();
 					}
@@ -1242,7 +1243,7 @@
 						/* prepare turn by memorizing important information */
 						this.object_turn.prepared = true;
 						this.object_turn.start_x = x;
-						/* this.object_turn.start_y = y; *//* unused */
+						/* this.object_turn.start_y = y; */ /* unused */
 						this.object_turn.last_x = x;
 						/* this.object_turn.last_y = y; */ /* unused */
 					}
@@ -1260,15 +1261,17 @@
 							this.is_click = false;
 							this.stop_rotation();
 						}
-						/* memorize x and subtract the left-over pixels */
-						this.object_turn.last_x = x - this.distance_rotation(distance_x);
+						if( !this.is_click ){
+							/* memorize x and subtract the left-over pixels */
+							this.object_turn.last_x = x - this.distance_rotation(distance_x);
+						}
 					}
 				};
 				Thrixty.Player.prototype.stop_object_turn = function(){
 					/* forget the event data */
 					this.object_turn.prepared = false;
 					this.object_turn.last_x = null;
-					/* this.object_turn.last_y = null; *//* unused */
+					/* this.object_turn.last_y = null; */ /* unused */
 				};
 			/** /object turn **/
 			/** section move **/
@@ -1489,11 +1492,11 @@
 				this.update_section_position(click_x, click_y);
 
 				/* check for position indicator wanted (for example a minimap) */
-				if( this.settings.position_indicator == "minimap" ){
+				if( this.settings.zoom_pointer == "minimap" ){
 					minimap_canvas.style.display = "";
 					minimap_canvas.style.width = (this.small.image_width*100 / this.large.image_width)+"%";
 					minimap_canvas.style.height = (this.small.image_height*100 / this.large.image_height)+"%";
-				} else if( this.settings.position_indicator == "marker" ){
+				} else if( this.settings.zoom_pointer == "marker" ){
 					this.DOM_obj.marker.style.display = "";
 				}
 
@@ -1686,27 +1689,31 @@
 
 
 	/**** DRAWING METHODS ****/
-		Thrixty.Player.prototype.draw_current_image = function(){
-			/* decide upon a drawing strategy */
-			if( !this.is_zoomed ){
-				if( !this.is_fullpage ){
-					this.unzoomed();
+		Thrixty.Player.prototype.draw_current_image = Thrixty.throttle( /* do not update the drawing too often! 25 redraws per second max.! (40ms per call) */
+			function(){
+				/* decide upon a drawing strategy */
+				if( !this.is_zoomed ){
+					if( !this.is_fullpage ){
+						this.unzoomed();
+					} else {
+						this.fullpaged();
+					}
 				} else {
-					this.fullpaged();
+					if( !this.is_fullpage && this.settings.zoom_mode == "outbox" ){
+						this.outbox_zoomed();
+					} else {
+						this.inbox_zoomed();
+					}
+					if( this.settings.zoom_pointer == "marker" ){
+						this.set_marker_position();
+					} else {
+						this.draw_minimap();
+					}
 				}
-			} else {
-				if( !this.is_fullpage && this.settings.zoom_mode == "outbox" ){
-					this.outbox_zoomed();
-				} else {
-					this.inbox_zoomed();
-				}
-				if( this.settings.position_indicator == "marker" ){
-					this.set_marker_position();
-				} else {
-					this.draw_minimap();
-				}
-			}
-		};
+			},
+			40,
+			true
+		);
 		Thrixty.Player.prototype.unzoomed = function(){
 			/* Task: Draw the unzoomed image on the canvas */
 			var main_canvas = this.DOM_obj.main_canvas;
@@ -1868,7 +1875,7 @@
 
 			/* width and height are already set globally in the HTML as inline-CSS. */
 			var main_canvas = this.DOM_obj.main_canvas;
-			/* var main_ctx = main_canvas.getContext("2d"); // not needed */
+			/* var main_ctx = main_canvas.getContext("2d"); */ /* not needed */
 			var minimap_canvas = this.DOM_obj.minimap_canvas;
 			var minimap_ctx = minimap_canvas.getContext("2d");
 
@@ -2003,12 +2010,10 @@
 
 			switch( size ){
 				default:
-				case 0:
-					// to small
+				case 0: /* small */
 					size_obj = this.small;
 				break;
-				case 1:
-					// to large
+				case 1: /* large */
 					size_obj = this.large;
 				break;
 			}
@@ -2075,10 +2080,11 @@
 			this.set_rotation_delay();
 		};
 		Thrixty.Player.prototype.minimap_to_main_coords = function(coords){
-			// TODO: generalize size ratio
+			/* TODO: generalize size ratio */
 			var size_ratio_w = this.small.image_width / this.large.image_width;
 			var size_ratio_h = this.small.image_height / this.large.image_height;
-			// TODO: this fails in chrome, because they screwed up a part of the jquery function
+			/* TODO: this fails in chrome, because they screwed up a part of the jquery function */
+			/* MARK: SHOULD BE FINE NOW! Now testing... */
 
 			return {
 				x: ( ( coords.x - this.root_element.getBoundingClientRect().left ) / size_ratio_w ) + this.root_element.getBoundingClientRect().left,

@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 1.6.1 | 22.01.2016
+Version: 2.0.0 | 06.04.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -260,6 +260,7 @@ The initializing script also creates the namespace "ThrixtyPlayer", which holds 
 
 ### 9.) Change Log
 * V2.0.0:
+	* Throttled redraw.
 	* Player only reacts to mouseposition, when pointing inside.
 	* Implemented a rudimentary destructor.
 	* Changed the css to select player instances by custom attribute instead of by class.

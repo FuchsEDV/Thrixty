@@ -45,6 +45,7 @@ __Keboard:__<br>
 [Arrow Right] => Step Forward
 [Arrow Up] => Increase Speed
 [Arrow Down] => Decrease Speed
+[G] => Zoom on/off
 [F] => Fullscreen on/off
 [ESC] => Stop Zoom, Rotation, Fullscreen all at once.
 ```
@@ -55,22 +56,24 @@ __Keboard:__<br>
 * In this example we are using the index.html as a substitute for whatever you are using to generate the HTML.
 * So go and create an "index.html" in your websites root folder.
 * If you want to customize the players look, also create a "thrixty_custom.css" here.
-* Create a folder "thrixty" in the root folder.
-* Thrixty consists of two parts: the "core" folder and "thrixty_init.js".<br>
-So extract those two into the newly created "thrixty" folder.
-* Create a folder "360_objects" in the root folder of your website.<br>
-This folder is where you are gonna put all your objects.
-* For exampling purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
-* __When using the 360Shots Software to generate the files, you should only copy and paste the object folder__; ignore the rest of the files.
+* Create a directory named "thrixty".
+* Extract this repository into "thrixty".<br>
+The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
+* Create a directory "360_objects".<br>
+	* This folder is where you are gonna put all your objects.
+	* For example purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
+	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder</i>; ignore the rest of the files.
 * Your final folder structure should look like this:
 
 	```html
 	[website-mainfolder of your.domain.com]/
 	|- [index.html]
 	|- [thrixty_custom.css]
-	|- thrixty/
-	|  |- core/
-	|  |- thrixty_init.js
+	|- thrixty
+	|  |- icons/
+	|  |  |- [look_at_all_the_icons.svg]
+	|  |- thrixty.js
+	|  |- thrixty.css
 	|- 360_objects/
 	|  |- example/
 	|  |  |- large/
@@ -81,33 +84,37 @@ This folder is where you are gonna put all your objects.
 	|  |  |  |- [lots_of_small_images.jpg]
 	```
 
-* For the Player to be able to do anything, you need to include the "thrixty_init.js" in the DOM.<br>
+* For the Player to be able to do anything, you need to include both "thrixty.js" and "thrixty.css" in the DOM.<br>
 For semantics you should put it into the head-section.
-* When you choose to include a "thrixty_custom.css", include that one RIGHT AFTER the "thrixty_init.js".
-* Now create a div somewhere in the body with 'class="thrixty_player"' and give it at least the 3 options seen in the following example:
+	* When you choose to include a "thrixty_custom.css", include that one RIGHT AFTER the "thrixty.css"!
+* Now create a div somewhere in the body with 'class="thrixty"' as seen in the following example.
+	* The HTML-attribute "thrixty-basepath" is one of the options, referencing the baepath for the Filelists.
+	* The Player will be generated into each of these divs, while using the corresponding attributes as parameters.
 
 	```html
 	<!DOCTYPE html>
-	<head>
-		<script type="text/javascript" src="http://your.domain.com/thrixty/thrixty_init.js"></script>
-		<link type="text/css" rel="stylesheet" href="http://your.domain.com/thrixty_custom.css">
-	</head>
-	<body>
-		<div class="thrixty-player" tabindex="0"
-			thrixty-basepath="[web_path_to_objects_folder]/[object]/"
-			thrixty-filelist-path-small="small/Filelist.txt"
-			thrixty-filelist-path-large="large/Filelist.txt"
-		></div>
-	</body>
+	<html>
+		<head>
+			<script type="text/javascript" src="/thrixty/thrixty.js"></script>
+			<link type="text/css" rel="stylesheet" href="/thrixty/thrixty.css">
+			<link type="text/css" rel="stylesheet" href="/thrixty_custom.css">
+		</head>
+		<body>
+			<div class="thrixty"
+				thrixty-basepath="/360_objects/example/"
+			></div>
+		</body>
+	</html>
 	```
 
 * Typical problems at this stage:
 	* Not reading the [documentation](#4-installation-tutorial).
-	* thrixty_init.js not found | path incorrect; ressource not accessible
-	* thrixty_custom.css not found | path incorrect; ressource not accessible
-	* Filelists not found | paths incorrect; ressources not accessible
-	* Images referenced in the filelists not found | path incorrect; ressource not accessible
-	* __To solve those, load your browsers developer tools and look into your console and files for any files not being loaded.__
+	* thrixty.js not found | path incorrect; resource not accessible
+	* thrixty.css not found | path incorrect; resource not accessible
+	* thrixty_custom.css not found | path incorrect; resource not accessible
+	* Filelists not found | paths incorrect; resources not accessible
+	* Images referenced in the filelists not found | paths incorrect; resources not accessible
+To solve those problems, load your browsers developer tools and look into your console and files for any files not being loaded.
 	* div:
 		* not properly labeled with class="thrixty-player"
 		* doesnt have all of the minimal attributes "thrixty-basepath", "thrixty-filelist-path-small" and "thrixty-filelist-path-large" correctly set

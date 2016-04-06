@@ -39,17 +39,15 @@ __Mouse/Touch:__<br>
 ```
 __Keboard:__<br>
 (To use these, the Player needs to be focused - click once inside the Player.)
-	```txt
-	[Spacebar] => Play/Pause<br>
-	[Arrow Left] => Step Backward<br>
-	[Arrow Right] => Step Forward
-	[Arrow Up] => Increase Speed
-
-	[Arrow Down] => Decrease Speed
-
-	[F] => Fullscreen on/off
-	[ESC] => Stop Zoom, Rotation, Fullscreen all at once.
-	```
+```txt
+[Spacebar] => Play/Pause
+[Arrow Left] => Step Backward
+[Arrow Right] => Step Forward
+[Arrow Up] => Increase Speed
+[Arrow Down] => Decrease Speed
+[F] => Fullscreen on/off
+[ESC] => Stop Zoom, Rotation, Fullscreen all at once.
+```
 
 
 ### 4.) Installation Tutorial

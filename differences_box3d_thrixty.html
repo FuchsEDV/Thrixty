@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			.new{
+				background: rgba(0,255,0,0.75);
+			}
+			.edited{
+				background: rgba(255,255,0,0.75);
+			}
+			.deprecated{
+				background: rgba(255,0,0,0.75);
+			}
+		</style>
+	</head>
+	<body>
+		<table border="1" style="margin: 0 auto;">
+			<tr>
+				<td colspan="3" style="padding-left: 3em;">Version 2.0.0</td>
+			</tr>
+			<tr>
+				<th>Option</th>
+				<th>Beschreibung</th>
+				<th>mögliche Werte</th>
+				<th>box3d</th>
+				<th>thrixty</th>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Hauptpfad</td>
+				<td rowspan="3">
+					Sucht automatisch nach den zugehörigen Files.<br>
+					"size" wird dabei mit in den Pfad eingebaut.<br>
+					"[http://base.URL][object]/[size]/Filelist.txt"
+				</td>
+				<td>[Pfad]</td>
+				<td class="deprecated">data-baseURL</td>
+				<td rowspan="3"></td>
+			</tr>
+			<tr>
+				<td>Objektname</td>
+				<td>[String]</td>
+				<td class="deprecated">data-object</td>
+			</tr>
+			<tr>
+				<td>Objektgröße</td>
+				<td><b>small</b>, large</td>
+				<td class="deprecated">data-size</td>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Basepath</td>
+				<td rowspan="3">
+					These are telling the game where to find the Filelists.<br>
+					"[http://basepath][filelist-path-small.txt]"<br>
+					"[http://basepath][filelist-path-large.txt]"<br>
+				</td>
+				<td>
+					<b>[empty]</b>, [mainpath]
+				</td>
+				<td rowspan="3"></td>
+				<td class="new">thrixty-basepath</td>
+			</tr>
+			<tr>
+				<td>Subpath small</td>
+				<td>
+					<b>small/Filelist.txt</b>, [subpath]
+				</td>
+				<td class="new">thrixty-filelist-path-small</td>
+			</tr>
+			<tr>
+				<td>Subpath large</td>
+				<td>
+					<b>large/Filelist.txt</b>, [subpath]
+				</td>
+				<td class="new">thrixty-filelist-path-large</td>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Zoom Control</td>
+				<td>
+					How to move the zoomed image.<br>
+					Automatically use the <b>mouseposition</b> or drag the cutout.
+				</td>
+				<td>
+					<b>progressive</b>, classic
+				</td>
+				<td></td>
+				<td class="new">thrixty-zoom-control</td>
+			</tr>
+			<tr>
+				<td>Zoom Mode</td>
+				<td>Zoomed in images showing in the <b>same</b> or an extra window.</td>
+				<td>
+					<b>inbox</b>, outbox, none
+				</td>
+				<td></td>
+				<td class="new">thrixty-zoom-mode</td>
+			</tr>
+			<tr>
+				<td>Zoom Pointer</td>
+				<td>How to point to the zoomed in position.</td>
+				<td>
+					<b>minimap</b>, marker, none
+				</td>
+				<td></td>
+				<td class="new">thrixty-position-indicator</td>
+			</tr>
+			<tr>
+				<td>Zoom Outbox Position</td>
+				<td>Where the zoom box should spawn.</td>
+				<td>
+					<b>right</b>, bottom, left, top
+				</td>
+				<td></td>
+				<td class="new">thrixty-outbox-position</td>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Direction</td>
+				<td>Tells Box3D to animate in specified direction.</td>
+				<td><b>forward</b>, backward</td>
+				<td class="deprecated">data-direction</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Reversion</td>
+				<td>Tells the player to reverse image-order.</td>
+				<td>
+					<b>0&nbsp;/&nbsp;false&nbsp;/&nbsp;forward</b>,<br>
+					1&nbsp;/&nbsp;true&nbsp;/&nbsp;backward
+				</td>
+				<td></td>
+				<td class="new">thrixty-direction</td>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Framerate</td>
+				<td>How many pictures should be shown per second.</td>
+				<td><b>20</b>, [Integer 1-22]</td>
+				<td class="deprecated">data-framerate</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Cycle Duration</td>
+				<td>Time in seconds each whole turn takes.</td>
+				<td><b>5</b>, [integer > 0]</td>
+				<td></td>
+				<td class="new">thrixty-cycle-duration</td>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Sensitivity X</td>
+				<td>
+					How sensitive the Player will react horizontally to touch gestures.<br>
+					The finger needs to move at least X pixel.
+				</td>
+				<td><b>20</b>, [Integer]</td>
+				<td></td>
+				<td class="new">thrixty-sensitivity-x</td>
+			</tr>
+			<!--unused-->
+			<!--<tr>
+				<td>Sensitivity Y</td>
+				<td>
+					How sensitive the Player will react vertically to touch gestures.<br>
+					The finger needs to move at least Y pixel.
+				</td>
+				<td><b>50</b>, [Integer]</td>
+				<td></td>
+				<td class="deprecated">
+					thrixty-sensitivity-y<br>
+				</td>
+			</tr>-->
+			<tr>
+				<td>Autoplay</td>
+				<td>
+					Automatically starts the animation N times after being loaded, then stops.
+				</td>
+				<td>
+					<b>-1&nbsp;/&nbsp;on&nbsp;(infinite)</b>,<br>
+					[integer] (finite),<br>
+					0&nbsp;/&nbsp;off
+				</td>
+				<td></td>
+				<td class="new">thrixty-autoplay</td>
+			</tr>
+			<tr>
+				<td>Autoload</td>
+				<td>
+					Let the player load automatically. Is always disabled on mobile devices.
+				</td>
+				<td>
+					<b>on</b>, off
+				</td>
+				<td></td>
+				<td class="new">thrixty-autoload</td>
+			</tr>
+
+<!-- ///////////////////////// -->
+
+			<tr>
+				<td>Keyboard</td>
+				<td>Turns keyboard controls on or off.</td>
+				<td><b>true</b>, false</td>
+				<td class="deprecated">data-keyboard</td>
+				<td>always on</td>
+			</tr>
+			<tr>
+				<td>Animation</td>
+				<td>Controls the animation to be played "<b>endless</b>", "once" or "repeat"ed.</td>
+				<td><b>endless</b>, once, repeat</td>
+				<td class="deprecated">data-animate</td>
+				<td>integrated into autoplay</td>
+			</tr>
+			<tr>
+				<td>Zoom Box Position</td>
+				<td>Where the zoom should be placed.</td>
+				<td><b>right</b>, left</td>
+				<td class="deprecated">data-zoom-position</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Zoom Box Height</td>
+				<td>Height of the zoom box in pixel.</td>
+				<td><b>450px</b>, [Zahl]px</td>
+				<td class="deprecated">data-zoom-height</td>
+				<td rowspan="10">
+					for those you now<br>
+					can use CSS
+				</td>
+			</tr>
+			<tr>
+				<td>Zoom Box Width</td>
+				<td>Width of the zoom box in pixel.</td>
+				<td><b>450px</b>, [Zahl]px</td>
+				<td class="deprecated">data-zoom-width</td>
+			</tr>
+			<tr>
+				<td>Zoom Box Background</td>
+				<td>Which color the zoom box has.</td>
+				<td><b>#000000</b>, [Hex]</td>
+				<td class="deprecated">data-zoom-background</td>
+			</tr>
+			<tr>
+				<td>Zoom Box Border</td>
+				<td>What kind of border the Zoom Box should have.</td>
+				<td><b>2px solid #cccccc</b>, [CSS]</td>
+				<td class="deprecated">data-zoom-border</td>
+			</tr>
+			<tr>
+				<td>Zoom Box Margin</td>
+				<td>Margin of the zoom box.</td>
+				<td><b>9</b>, [Integer]</td>
+				<td class="deprecated">data-zoom-margin</td>
+			</tr>
+			<tr>
+				<td>Zoom Text Background</td>
+				<td>Background color of the zoom box description.</td>
+				<td><b>#ffffff</b>, [Hex]</td>
+				<td class="deprecated">data-zoom-text_bgcolor</td>
+			</tr>
+			<tr>
+				<td>Zoom Text Color</td>
+				<td>Font color of the zoom box description.</td>
+				<td><b>#000000</b>, [Hex]</td>
+				<td class="deprecated">data-zoom-text_fontcolor</td>
+			</tr>
+			<tr>
+				<td>Zoom Text</td>
+				<td>The Text inside the zoom box description..</td>
+				<td>[Text]</td>
+				<td class="deprecated">data-zoom-text</td>
+			</tr>
+			<tr>
+				<td>Zoom Font</td>
+				<td>Font to use in the zoom font desripction.</td>
+				<td>[String]</td>
+				<td class="deprecated">data-zoom-font</td>
+			</tr>
+			<tr>
+				<td>Zoom Font Size</td>
+				<td>Font Size to use in the zoom box description.</td>
+				<td><b>12px</b>, [Integer]px</td>
+				<td class="deprecated">data-zoom-font_size</td>
+			</tr>
+			<tr>
+				<td>Imagepaths</td>
+				<td>Directly feeds "Filelist.txt"-content into the Player.</td>
+				<td>[Text]</td>
+				<td class="deprecated">data-images</td>
+				<td>wont be implemented</td>
+			</tr>
+			<tr>
+				<td>Zoom on/off</td>
+				<td>When "zoom": turn on zoom function and enables the button.</td>
+				<td>true, zoom, false <b>[?]</b></td>
+				<td class="deprecated">data-controls</td>
+				<td>wont be implemented</td>
+			</tr>
+			<tr>
+				<td>Repeat Time</td>
+				<td>Controls the time between repeats.</td>
+				<td><b>10</b>, [Integer]</td>
+				<td class="deprecated">data-animate_interval</td>
+				<td>wont be implemented</td>
+			</tr>
+		</table>
+	</body>
+</html>

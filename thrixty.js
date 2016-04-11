@@ -671,8 +671,8 @@
 				/* returns ARRAY of parsed 'text' */
 				Thrixty.Player.prototype.parse_filelist_content = function(text){
 					var ret_arr = [];
-					/* kill whitespace, ['] and ["] and split to array on each [,] */
-					var ret_arr = text.replace(/[\s'"]/g,"").split(",");
+					/* kill leading and trailing whitespace, ['] and ["] and split to array on each [,] */
+					var ret_arr = text.trim().replace(/['"]/g,"").split(",");
 					/* reverse array, when option is turned on */
 					/* (results in playing the animation reversely) */
 					if( this.settings.reversion ){

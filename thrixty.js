@@ -8,7 +8,7 @@
 	/* now set a new Thrixty Namespace */
 	var Thrixty = {
 		/**** namespace properties ****/
-			version: "2.0.0",
+			version: "2.0.1",
 			players: [],
 			mainpath: (function(){
 				/* IEFE for evading variable pollution */

@@ -274,6 +274,12 @@ A short explanation, what Thrixty is doing:
 
 ### 9.) Change Log
 * V2:
+	* Vdev2.1:
+		(planned)
+		* Compensate too fast file load events
+
+		(done)
+		* Improvement of filelist parse.
 	* V2.0.1:
 		* Hotfix: Error with Whitespaces
 	* V2.0.0:

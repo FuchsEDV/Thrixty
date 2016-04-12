@@ -8,7 +8,7 @@
 	/* now set a new Thrixty Namespace */
 	var Thrixty = {
 		/**** namespace properties ****/
-			version: "2.0.1",
+			version: "dev2.1",
 			players: [],
 			mainpath: (function(){
 				/* IEFE for evading variable pollution */
@@ -339,7 +339,7 @@
 				var main_box_attr_count = main_box_attributes.length;
 				for( var i=0; i<main_box_attr_count; i++ ){
 					var attr = main_box_attributes[i];
-					attr_name = attr.name.trim();
+					attr_name = attr.name;
 					attr_value = attr.value.trim();
 					switch( attr_name ){
 						case "thrixty-basepath":
@@ -671,8 +671,8 @@
 				/* returns ARRAY of parsed 'text' */
 				Thrixty.Player.prototype.parse_filelist_content = function(text){
 					var ret_arr = [];
-					/* kill leading and trailing whitespace, ['] and ["] and split to array on each [,] */
-					var ret_arr = text.trim().replace(/['"]/g,"").split(",");
+					/* kill ['] and ["] (they are interfering with path handling) and split to array on each [,] */
+					var ret_arr = text.replace(/['"]/g,"").split(",");
 					/* reverse array, when option is turned on */
 					/* (results in playing the animation reversely) */
 					if( this.settings.reversion ){

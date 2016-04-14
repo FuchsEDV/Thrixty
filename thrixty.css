@@ -252,7 +252,7 @@ div[thrixty=found]{
 			width: 0px;
 			z-index: 999999;
 			cursor: crosshair;
-				background: white;
+			background: white;
 		}
 	div[thrixty=found] #load_overlay{
 		position: absolute;

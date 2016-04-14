@@ -1608,7 +1608,8 @@
 
 
 	/**** DRAWING METHODS ****/
-		Thrixty.Player.prototype.draw_current_image = Thrixty.throttle( /* do not update the drawing too often! 25 redraws per second max.! (40ms per call) */
+		Thrixty.Player.prototype.draw_current_image = Thrixty.throttle(
+			/* do not update the drawing too often! 25 redraws per second max.! (40ms per call) */
 			function(){
 				/* decide upon a drawing strategy */
 				if( !this.is_zoomed ){
@@ -1924,16 +1925,17 @@
 
 
 	/**** GETTER & SETTER ****/
-		// MARK:
-		// TODO: Umbau und kommentare und englisch und refactor
 		Thrixty.Player.prototype.refresh_player_sizings = function(){
-			// Ausgangsbasis: das root element hat eine feste größe
-			// Hier soll nun berechnet werden, wie groß der Inhalt ist.
-			// Die Größen werden fest in style="width, height" hineingeschrieben.
-
+			/* root_element sizings are dependant on the fullpage state and the available space */
 			if( this.is_fullpage ){
-				// fullpaged
-
+				/* TOCOME:
+				 *   Right now there is no selector, that can put this code into the CSS file.
+				 *   CSS4 is supposed to change that with its "$" notation.
+				 *   That notation is able to select the element to receive the styles.
+				 *   $.a > .b{ background:red;} <-- ".a" gets the red background
+				 *
+				 *   Same for the non-fullpage part
+				 **/
 				/* set root_element fullpage-styles */
 				this.root_element.style.position = "fixed";
 				this.root_element.style.top = "0";
@@ -1948,19 +1950,13 @@
 				this.root_element.style.background = "white";
 				this.root_element.style.zIndex = "9999";
 
-
-
-
-				// measure the actual (inner) space
+				/* measure available space */
 				var root_width  = this.root_element.clientWidth;
 				var root_height = this.root_element.clientHeight;
 
-
-
-				this.sizes_test(root_width, root_height, this.large.image_ratio);
+				/* update the generated player parts */
+				this.resize_dom_objects(root_width, root_height, this.large.image_ratio);
 			} else {
-				// normalgroesse
-
 				/* unset root_element fullscreeen-styles */
 				this.root_element.style.position = "";
 				this.root_element.style.top = "";
@@ -1975,116 +1971,77 @@
 				this.root_element.style.background = "";
 				this.root_element.style.zIndex = "";
 
-
-
+				/* calculate players sizing upon avaible space */
 				var root_width = this.root_element.clientWidth;
-				var root_height = "?px"; // <== diesen Wert feststellen
+				/* var root_height = "?px"; <== this value is being searched for */
 
+				/* determine maximum width */
 				var max_width = root_width;
-				// limit max_width to maxmium of picture size
+				/* always limit to small image width */
 				if( max_width > this.small.image_width ){
 					max_width = this.small.image_width;
 				}
+				/* calculate height upon the width */
 				root_height = (max_width / this.small.image_ratio);
+				/* (do not forget the height of the control bar) */
 				root_height += this.DOM_obj.controls.clientHeight;
 
-
-
+				/* check for possible limitations by max-height or similar */
+				this.root_element.style.width = root_width+"px";
+				this.root_element.style.height = root_height+"px";
+				/* measure the actual dimensions (max-height will shorten this) */
+				root_width = this.root_element.clientWidth;
+				root_height = this.root_element.clientHeight;
+				/* reassign corrected values to the element */
 				this.root_element.style.width = root_width+"px";
 				this.root_element.style.height = root_height+"px";
 
-				root_height = this.root_element.clientHeight;
-				this.root_element.style.height = root_height+"px";
-
-
-
-				this.sizes_test(root_width, root_height, this.small.image_ratio);
+				/* update the generated player parts */
+				this.resize_dom_objects(root_width, root_height, this.small.image_ratio);
 			}
 		};
-
-
-
-
-
-		Thrixty.Player.prototype.sizes_test = function(w, h, r){
-							// get controls dimensions
+			/** only used in above function **/
+			Thrixty.Player.prototype.resize_dom_objects = function(w, h, aspect_ratio){
+				/* get controls dimensions */
 				var controls_width = this.DOM_obj.controls.offsetWidth;
 				var controls_height = this.DOM_obj.controls.offsetHeight;
 
 				var showroom_width  = w;
 				var showroom_height = h - controls_height;
 
-				// set showroom height
+
 				this.DOM_obj.showroom.style.width  = showroom_width  +"px";
 				this.DOM_obj.showroom.style.height = showroom_height +"px";
-
-
-
-
-				/* gather basic information */
-				/*if( !this.is_zoomed ){
-					var image_aspect_ratio = this.small.image_ratio;
-				} else {
-					var image_aspect_ratio = this.large.image_ratio;
-				}*/
-				var image_aspect_ratio = r;
-
 
 
 				/* showroom aspect ratio for orientation */
 				var showroom_aspect_ratio = showroom_width / showroom_height;
 
-				/* portrait orientation [] */
-				if( image_aspect_ratio < showroom_aspect_ratio ){
-					var canvas_container_width  = showroom_height*image_aspect_ratio;
+				/* portrait orientation []      => lower then 1 */
+				/* landscape orientation [___]  => bigger then 1 */
+				/* if image is "more portrait"  then the showroom, center it horizontally */
+				/* if image is "more landscape" then the showroom, center it vertically */
+				if( showroom_aspect_ratio > aspect_ratio ){
+					var canvas_container_width  = showroom_height * aspect_ratio;
 					var canvas_container_height = showroom_height;
 
-					var canvas_container_x      = (showroom_width-canvas_container_width)/2;
+					var canvas_container_x      = (showroom_width - canvas_container_width) / 2;
 					var canvas_container_y      = 0;
 
-				/* landscape orientation [___] */
 				} else {
 					var canvas_container_width  = showroom_width;
-					var canvas_container_height = showroom_width/image_aspect_ratio;
+					var canvas_container_height = showroom_width/aspect_ratio;
 
 					var canvas_container_x      = 0;
 					var canvas_container_y      = (showroom_height-canvas_container_height)/2;
+
 				}
-
-
-
 
 				this.DOM_obj.canvas_container.style.width  = canvas_container_width +"px";
 				this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
 				this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
 				this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
-
-		};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			};
 		Thrixty.Player.prototype.set_canvas_dimensions_to_size = function(size){
 			var size_obj = null;
 

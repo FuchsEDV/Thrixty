@@ -277,6 +277,8 @@ A short explanation, what Thrixty is doing:
 	* Vdev2.1:
 		(planned)
 		* Compensate too fast file load events
+		* Rename "state"-attribute on buttons to "thrixty-state" to stay consistant
+		* Readme custom CSS example for portrait-pictures.
 
 		(done)
 		* Improvement of filelist parse.

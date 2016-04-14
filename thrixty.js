@@ -710,6 +710,9 @@
 				if( e.type === "load" ){
 					this.set_small_dimensions(index);
 					this.set_canvas_dimensions_to_size(0);
+
+					this.refresh_display_sizing();
+
 					/* show player */
 					this.root_element.style.display = "";
 					this.draw_current_image();
@@ -1307,11 +1310,7 @@
 			/** /section move **/
 			/** window resize **/
 				Thrixty.Player.prototype.resize_window_event = function(e){
-					if( this.is_fullpage ){
-						this.set_fullpaged_dimensions();
-					} else {
-						this.set_normalsized_dimensions();
-					}
+					this.refresh_display_sizing();
 				};
 			/** /window resize **/
 			/** scrolling **/
@@ -1579,18 +1578,8 @@
 			this.is_fullpage = true;
 			this.DOM_obj.size_btn.setAttribute('state', 'fullpaged');
 
-			/* set root_element fullpage-styles */
-			this.root_element.style.position = "fixed";
-			this.root_element.style.left = "0";
-			this.root_element.style.top = "0";
-			this.root_element.style.width = "100%";
-			this.root_element.style.height = "100%";
-			this.root_element.style.border = "5px solid gray";
-			this.root_element.style.background = "white";
-			this.root_element.style.zIndex = "9999";
-
 			/* set refreshing styles at start */
-			this.set_fullpaged_dimensions();
+			this.refresh_display_sizing();
 
 			this.draw_current_image();
 		};
@@ -1599,18 +1588,8 @@
 			this.is_fullpage = false;
 			this.DOM_obj.size_btn.setAttribute('state', 'normalsized');
 
-			/* unset root_element fullscreeen-styles */
-			this.root_element.style.position = "";
-			this.root_element.style.top = "";
-			this.root_element.style.left = "";
-			this.root_element.style.width = "";
-			this.root_element.style.height = "";
-			this.root_element.style.border = "";
-			this.root_element.style.background = "";
-			this.root_element.style.zIndex = "";
-
 			/* unset canvas_container size modification */
-			this.set_normalsized_dimensions();
+			this.refresh_display_sizing();
 
 			this.draw_current_image();
 		};
@@ -1622,67 +1601,6 @@
 				this.stop_zoom();
 				this.enter_fullpage();
 			}
-		};
-		Thrixty.Player.prototype.set_fullpaged_dimensions = function(){
-			/* set showrooms dimensions and consider the button container height */
-			var showroom_width = this.root_element.clientWidth;
-			var showroom_height = this.root_element.clientHeight - this.DOM_obj.controls.offsetHeight;
-
-			this.DOM_obj.showroom.style.width = showroom_width+"px";
-			this.DOM_obj.showroom.style.height = showroom_height+"px";
-
-
-
-			/* gather basic information */
-			if( !this.is_zoomed ){
-				var image_aspect_ratio = this.small.image_ratio;
-			} else {
-				var image_aspect_ratio = this.large.image_ratio;
-			}
-
-			/* showroom aspect ratio for orientation */
-			var showroom_aspect_ratio = showroom_width / showroom_height;
-
-			/* portrait orientation [] */
-			if( showroom_aspect_ratio <= image_aspect_ratio ){
-				var canvas_container_width  = showroom_width;
-				var canvas_container_height = showroom_width/image_aspect_ratio;
-
-				var canvas_container_x      = 0;
-				var canvas_container_y      = (showroom_height-canvas_container_height)/2;
-
-			/* landscape orientation [___] */
-			} else {
-				var canvas_container_width  = showroom_height*image_aspect_ratio;
-				var canvas_container_height = showroom_height;
-
-				var canvas_container_x      = (showroom_width-canvas_container_width)/2;
-				var canvas_container_y      = 0
-			}
-
-
-
-			/* assign canvas dimensions */
-			this.DOM_obj.canvas_container.style.width = canvas_container_width+"px";
-			this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
-			this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
-			this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
-		};
-		Thrixty.Player.prototype.set_normalsized_dimensions = function(){
-			/* set showrooms dimensions */
-
-			var showroom_width = this.root_element.offsetWidth;
-			var showroom_height = showroom_width / this.small.image_ratio;
-
-			this.DOM_obj.showroom.style.width = showroom_width+'px';
-			this.DOM_obj.showroom.style.height = showroom_height+'px';
-
-
-			/* set canvas_container dimensions */
-			this.DOM_obj.canvas_container.style.width = showroom_width+"px";
-			this.DOM_obj.canvas_container.style.height = showroom_height+"px";
-			this.DOM_obj.canvas_container.style.marginLeft = 0+"px";
-			this.DOM_obj.canvas_container.style.marginTop = 0+"px";
 		};
 	/**** /FULLPAGE METHODS ****/
 
@@ -2005,6 +1923,187 @@
 
 
 	/**** GETTER & SETTER ****/
+		// TODO: Umbau und kommentare und englisch und refactor
+		Thrixty.Player.prototype.refresh_display_sizing = function(){
+			// Ausgangsbasis: das root element hat eine feste größe
+			// Hier soll nun berechnet werden, wie groß der Inhalt ist.
+			// Die Größen werden fest in style="width, height" hineingeschrieben.
+
+
+
+
+			if( this.is_fullpage ){
+				// fullpaged
+
+				/* set root_element fullpage-styles */
+				this.root_element.style.position = "fixed";
+				this.root_element.style.top = "0";
+				this.root_element.style.right = "0";
+				this.root_element.style.bottom = "0";
+				this.root_element.style.left = "0";
+				this.root_element.style.width = "100%";
+				this.root_element.style.height = "100%";
+				this.root_element.style.maxWidth = "100%";
+				this.root_element.style.maxHeight = "100%";
+				this.root_element.style.border = "5px solid gray";
+				this.root_element.style.background = "white";
+				this.root_element.style.zIndex = "9999";
+
+
+
+
+				// measure the actual (inner) space
+				var root_width  = this.root_element.clientWidth;
+				var root_height = this.root_element.clientHeight;
+
+				// get controls dimensions
+				var controls_width = this.DOM_obj.controls.offsetWidth;
+				var controls_height = this.DOM_obj.controls.offsetHeight;
+
+				var showroom_width  = root_width;
+				var showroom_height = root_height - controls_height;
+
+				// set showroom height
+				this.DOM_obj.showroom.style.width  = showroom_width  +"px";
+				this.DOM_obj.showroom.style.height = showroom_height +"px";
+
+
+
+
+				/* gather basic information */
+				/*if( !this.is_zoomed ){
+					var image_aspect_ratio = this.small.image_ratio;
+				} else {
+					var image_aspect_ratio = this.large.image_ratio;
+				}*/
+				var image_aspect_ratio = this.large.image_ratio;
+
+
+
+				/* showroom aspect ratio for orientation */
+				var showroom_aspect_ratio = showroom_width / showroom_height;
+
+				/* portrait orientation [] */
+				if( image_aspect_ratio < showroom_aspect_ratio ){
+					var canvas_container_width  = showroom_height*image_aspect_ratio;
+					var canvas_container_height = showroom_height;
+
+					var canvas_container_x      = (showroom_width-canvas_container_width)/2;
+					var canvas_container_y      = 0;
+
+				/* landscape orientation [___] */
+				} else {
+					var canvas_container_width  = showroom_width;
+					var canvas_container_height = showroom_width/image_aspect_ratio;
+
+					var canvas_container_x      = 0;
+					var canvas_container_y      = (showroom_height-canvas_container_height)/2;
+				}
+
+
+
+
+				this.DOM_obj.canvas_container.style.width  = canvas_container_width +"px";
+				this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
+				this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
+				this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
+
+
+
+
+
+			} else {
+				// normalgroesse
+
+				/* unset root_element fullscreeen-styles */
+				this.root_element.style.position = "";
+				this.root_element.style.top = "";
+				this.root_element.style.right = "";
+				this.root_element.style.bottom = "";
+				this.root_element.style.left = "";
+				this.root_element.style.width = "";
+				this.root_element.style.height = "";
+				this.root_element.style.maxWidth = "";
+				this.root_element.style.maxHeight = "";
+				this.root_element.style.border = "";
+				this.root_element.style.background = "";
+				this.root_element.style.zIndex = "";
+
+
+
+
+
+
+				// zur verfuegung stehende breite
+				var canvas_container_width = this.root_element.clientWidth;
+console.log(canvas_container_width);
+
+
+				// limit width to maxmium of picture size
+				if( canvas_container_width > this.small.image_width ){
+					canvas_container_width = this.small.image_width;
+				}
+console.log(canvas_container_width);
+
+				// calculate height
+				var image_aspect_ratio = this.small.image_ratio;
+				var canvas_container_height = canvas_container_width / image_aspect_ratio;
+console.log(canvas_container_height);
+
+
+
+
+
+
+				// now we have the needed size of the images
+				this.DOM_obj.canvas_container.style.width  = canvas_container_width  +"px";
+				this.DOM_obj.canvas_container.style.height = canvas_container_height +"px";
+				this.DOM_obj.canvas_container.style.marginLeft = ( (this.root_element.clientWidth - canvas_container_width) / 2)+"px";
+				this.DOM_obj.canvas_container.style.marginTop = "0";
+
+
+
+
+				this.DOM_obj.showroom.style.width  = "";
+				this.DOM_obj.showroom.style.height = "";
+
+
+
+
+
+
+			}
+
+
+
+		};
+		Thrixty.Player.prototype.set_innard_sizes = function(){
+		};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		Thrixty.Player.prototype.set_canvas_dimensions_to_size = function(size){
 			var size_obj = null;
 

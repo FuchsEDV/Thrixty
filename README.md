@@ -230,6 +230,14 @@ Here is a list of the usable params (in the form of HTML-attributes):
 Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.<br>
 The following examples are showing you some possibilities:
 * Create the file "thrixty_custom.css" and include it after the initialization file, if not already done.<br>
+* To give the Player a maximum height of 500 px, include the following CSS code into the file:
+
+	```css
+	div[thrixty=found]{
+		max-height: 500px;
+	}
+	```
+
 * To have an orange border around the object, include the following CSS code into the file:
 
 	```css
@@ -278,9 +286,11 @@ A short explanation, what Thrixty is doing:
 		(planned)
 		* Compensate too fast file load events
 		* Rename "state"-attribute on buttons to "thrixty-state" to stay consistant
-		* Readme custom CSS example for portrait-pictures.
 
 		(done)
+		* Now respects max-width and max-height on the main div.
+			* The main div still needs to set the style tag, so do this over CSS-Selectors!
+			* Included a custom CSS example into the Readme.
 		* Improvement of filelist parse.
 	* V2.0.1:
 		* Hotfix: Error with Whitespaces

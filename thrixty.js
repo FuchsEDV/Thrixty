@@ -8,7 +8,7 @@
 	/* now set a new Thrixty Namespace */
 	var Thrixty = {
 		/**** namespace properties ****/
-			version: "2.0.1",
+			version: "2.1",
 			players: [],
 			mainpath: (function(){
 				/* IEFE for evading variable pollution */
@@ -339,7 +339,7 @@
 				var main_box_attr_count = main_box_attributes.length;
 				for( var i=0; i<main_box_attr_count; i++ ){
 					var attr = main_box_attributes[i];
-					attr_name = attr.name.trim();
+					attr_name = attr.name;
 					attr_value = attr.value.trim();
 					switch( attr_name ){
 						case "thrixty-basepath":
@@ -671,8 +671,8 @@
 				/* returns ARRAY of parsed 'text' */
 				Thrixty.Player.prototype.parse_filelist_content = function(text){
 					var ret_arr = [];
-					/* kill leading and trailing whitespace, ['] and ["] and split to array on each [,] */
-					var ret_arr = text.trim().replace(/['"]/g,"").split(",");
+					/* kill ['] and ["] (they are interfering with path handling) and split to array on each [,] */
+					var ret_arr = text.replace(/['"]/g,"").split(",");
 					/* reverse array, when option is turned on */
 					/* (results in playing the animation reversely) */
 					if( this.settings.reversion ){
@@ -710,8 +710,12 @@
 				if( e.type === "load" ){
 					this.set_small_dimensions(index);
 					this.set_canvas_dimensions_to_size(0);
+
 					/* show player */
 					this.root_element.style.display = "";
+					/* refresh player sizings */
+					this.refresh_player_sizings();
+
 					this.draw_current_image();
 				} else {
 					/*? TODO: CRITICAL ERROR HANDLING!!!! ?*/
@@ -1307,11 +1311,7 @@
 			/** /section move **/
 			/** window resize **/
 				Thrixty.Player.prototype.resize_window_event = function(e){
-					if( this.is_fullpage ){
-						this.set_fullpaged_dimensions();
-					} else {
-						this.set_normalsized_dimensions();
-					}
+					this.refresh_player_sizings();
 				};
 			/** /window resize **/
 			/** scrolling **/
@@ -1579,18 +1579,8 @@
 			this.is_fullpage = true;
 			this.DOM_obj.size_btn.setAttribute('state', 'fullpaged');
 
-			/* set root_element fullpage-styles */
-			this.root_element.style.position = "fixed";
-			this.root_element.style.left = "0";
-			this.root_element.style.top = "0";
-			this.root_element.style.width = "100%";
-			this.root_element.style.height = "100%";
-			this.root_element.style.border = "5px solid gray";
-			this.root_element.style.background = "white";
-			this.root_element.style.zIndex = "9999";
-
 			/* set refreshing styles at start */
-			this.set_fullpaged_dimensions();
+			this.refresh_player_sizings();
 
 			this.draw_current_image();
 		};
@@ -1599,18 +1589,8 @@
 			this.is_fullpage = false;
 			this.DOM_obj.size_btn.setAttribute('state', 'normalsized');
 
-			/* unset root_element fullscreeen-styles */
-			this.root_element.style.position = "";
-			this.root_element.style.top = "";
-			this.root_element.style.left = "";
-			this.root_element.style.width = "";
-			this.root_element.style.height = "";
-			this.root_element.style.border = "";
-			this.root_element.style.background = "";
-			this.root_element.style.zIndex = "";
-
 			/* unset canvas_container size modification */
-			this.set_normalsized_dimensions();
+			this.refresh_player_sizings();
 
 			this.draw_current_image();
 		};
@@ -1623,73 +1603,13 @@
 				this.enter_fullpage();
 			}
 		};
-		Thrixty.Player.prototype.set_fullpaged_dimensions = function(){
-			/* set showrooms dimensions and consider the button container height */
-			var showroom_width = this.root_element.clientWidth;
-			var showroom_height = this.root_element.clientHeight - this.DOM_obj.controls.offsetHeight;
-
-			this.DOM_obj.showroom.style.width = showroom_width+"px";
-			this.DOM_obj.showroom.style.height = showroom_height+"px";
-
-
-
-			/* gather basic information */
-			if( !this.is_zoomed ){
-				var image_aspect_ratio = this.small.image_ratio;
-			} else {
-				var image_aspect_ratio = this.large.image_ratio;
-			}
-
-			/* showroom aspect ratio for orientation */
-			var showroom_aspect_ratio = showroom_width / showroom_height;
-
-			/* portrait orientation [] */
-			if( showroom_aspect_ratio <= image_aspect_ratio ){
-				var canvas_container_width  = showroom_width;
-				var canvas_container_height = showroom_width/image_aspect_ratio;
-
-				var canvas_container_x      = 0;
-				var canvas_container_y      = (showroom_height-canvas_container_height)/2;
-
-			/* landscape orientation [___] */
-			} else {
-				var canvas_container_width  = showroom_height*image_aspect_ratio;
-				var canvas_container_height = showroom_height;
-
-				var canvas_container_x      = (showroom_width-canvas_container_width)/2;
-				var canvas_container_y      = 0
-			}
-
-
-
-			/* assign canvas dimensions */
-			this.DOM_obj.canvas_container.style.width = canvas_container_width+"px";
-			this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
-			this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
-			this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
-		};
-		Thrixty.Player.prototype.set_normalsized_dimensions = function(){
-			/* set showrooms dimensions */
-
-			var showroom_width = this.root_element.offsetWidth;
-			var showroom_height = showroom_width / this.small.image_ratio;
-
-			this.DOM_obj.showroom.style.width = showroom_width+'px';
-			this.DOM_obj.showroom.style.height = showroom_height+'px';
-
-
-			/* set canvas_container dimensions */
-			this.DOM_obj.canvas_container.style.width = showroom_width+"px";
-			this.DOM_obj.canvas_container.style.height = showroom_height+"px";
-			this.DOM_obj.canvas_container.style.marginLeft = 0+"px";
-			this.DOM_obj.canvas_container.style.marginTop = 0+"px";
-		};
 	/**** /FULLPAGE METHODS ****/
 
 
 
 	/**** DRAWING METHODS ****/
-		Thrixty.Player.prototype.draw_current_image = Thrixty.throttle( /* do not update the drawing too often! 25 redraws per second max.! (40ms per call) */
+		Thrixty.Player.prototype.draw_current_image = Thrixty.throttle(
+			/* do not update the drawing too often! 25 redraws per second max.! (40ms per call) */
 			function(){
 				/* decide upon a drawing strategy */
 				if( !this.is_zoomed ){
@@ -2005,6 +1925,123 @@
 
 
 	/**** GETTER & SETTER ****/
+		Thrixty.Player.prototype.refresh_player_sizings = function(){
+			/* root_element sizings are dependant on the fullpage state and the available space */
+			if( this.is_fullpage ){
+				/* TOCOME:
+				 *   Right now there is no selector, that can put this code into the CSS file.
+				 *   CSS4 is supposed to change that with its "$" notation.
+				 *   That notation is able to select the element to receive the styles.
+				 *   $.a > .b{ background:red;} <-- ".a" gets the red background
+				 *
+				 *   Same for the non-fullpage part
+				 **/
+				/* set root_element fullpage-styles */
+				this.root_element.style.position = "fixed";
+				this.root_element.style.top = "0";
+				this.root_element.style.right = "0";
+				this.root_element.style.bottom = "0";
+				this.root_element.style.left = "0";
+				this.root_element.style.width = "100%";
+				this.root_element.style.height = "100%";
+				this.root_element.style.maxWidth = "100%";
+				this.root_element.style.maxHeight = "100%";
+				this.root_element.style.border = "5px solid gray";
+				this.root_element.style.background = "white";
+				this.root_element.style.zIndex = "9999";
+
+				/* measure available space */
+				var root_width  = this.root_element.clientWidth;
+				var root_height = this.root_element.clientHeight;
+
+				/* update the generated player parts */
+				this.resize_dom_objects(root_width, root_height, this.large.image_ratio);
+			} else {
+				/* unset root_element fullscreeen-styles */
+				this.root_element.style.position = "";
+				this.root_element.style.top = "";
+				this.root_element.style.right = "";
+				this.root_element.style.bottom = "";
+				this.root_element.style.left = "";
+				this.root_element.style.width = "";
+				this.root_element.style.height = "";
+				this.root_element.style.maxWidth = "";
+				this.root_element.style.maxHeight = "";
+				this.root_element.style.border = "";
+				this.root_element.style.background = "";
+				this.root_element.style.zIndex = "";
+
+				/* calculate players sizing upon avaible space */
+				var root_width = this.root_element.clientWidth;
+				/* var root_height = "?px"; <== this value is being searched for */
+
+				/* determine maximum width */
+				var max_width = root_width;
+				/* always limit to small image width */
+				if( max_width > this.small.image_width ){
+					max_width = this.small.image_width;
+				}
+				/* calculate height upon the width */
+				root_height = (max_width / this.small.image_ratio);
+				/* (do not forget the height of the control bar) */
+				root_height += this.DOM_obj.controls.clientHeight;
+
+				/* check for possible limitations by max-height or similar */
+				this.root_element.style.width = root_width+"px";
+				this.root_element.style.height = root_height+"px";
+				/* measure the actual dimensions (max-height will shorten this) */
+				root_width = this.root_element.clientWidth;
+				root_height = this.root_element.clientHeight;
+				/* reassign corrected values to the element */
+				this.root_element.style.width = root_width+"px";
+				this.root_element.style.height = root_height+"px";
+
+				/* update the generated player parts */
+				this.resize_dom_objects(root_width, root_height, this.small.image_ratio);
+			}
+		};
+			/** only used in above function **/
+			Thrixty.Player.prototype.resize_dom_objects = function(w, h, aspect_ratio){
+				/* get controls dimensions */
+				var controls_width = this.DOM_obj.controls.offsetWidth;
+				var controls_height = this.DOM_obj.controls.offsetHeight;
+
+				var showroom_width  = w;
+				var showroom_height = h - controls_height;
+
+
+				this.DOM_obj.showroom.style.width  = showroom_width  +"px";
+				this.DOM_obj.showroom.style.height = showroom_height +"px";
+
+
+				/* showroom aspect ratio for orientation */
+				var showroom_aspect_ratio = showroom_width / showroom_height;
+
+				/* portrait orientation []      => lower then 1 */
+				/* landscape orientation [___]  => bigger then 1 */
+				/* if image is "more portrait"  then the showroom, center it horizontally */
+				/* if image is "more landscape" then the showroom, center it vertically */
+				if( showroom_aspect_ratio > aspect_ratio ){
+					var canvas_container_width  = showroom_height * aspect_ratio;
+					var canvas_container_height = showroom_height;
+
+					var canvas_container_x      = (showroom_width - canvas_container_width) / 2;
+					var canvas_container_y      = 0;
+
+				} else {
+					var canvas_container_width  = showroom_width;
+					var canvas_container_height = showroom_width/aspect_ratio;
+
+					var canvas_container_x      = 0;
+					var canvas_container_y      = (showroom_height-canvas_container_height)/2;
+
+				}
+
+				this.DOM_obj.canvas_container.style.width  = canvas_container_width +"px";
+				this.DOM_obj.canvas_container.style.height = canvas_container_height+"px";
+				this.DOM_obj.canvas_container.style.marginLeft = canvas_container_x+"px";
+				this.DOM_obj.canvas_container.style.marginTop = canvas_container_y+"px";
+			};
 		Thrixty.Player.prototype.set_canvas_dimensions_to_size = function(size){
 			var size_obj = null;
 

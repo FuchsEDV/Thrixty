@@ -8,8 +8,8 @@ div[thrixty=found] canvas{
 div[thrixty=found] img{ width: 100% }
 /***  ***/
 div[thrixty=found]{
-	min-width: 320px;
-	width: 100%;
+				min-width: 320px;
+	/*width: 100%;*/
 	/*height: 100%;*/
 	background: white;
 	outline: medium none;
@@ -17,7 +17,7 @@ div[thrixty=found]{
 	display: block;
 }
 	div[thrixty=found] .error{
-		width: 100%;
+		/*width: 100%;*/
 		/*height: 100%;*/
 		color: red;
 		font-size: 20px;
@@ -27,7 +27,7 @@ div[thrixty=found]{
 		margin: 0;
 	}
 	div[thrixty=found] #showroom{
-		width: 100%;
+		/*width: 100%;*/ /* programmatically set */
 		/*height: calc(100% - 50px);*/ /* set, when entering fullscreen */
 		padding: 0;
 		margin: 0;
@@ -36,7 +36,7 @@ div[thrixty=found]{
 		position: relative; /* create a new coordinate system for positioning the progress bar */
 	}
 		div[thrixty=found] #canvas_container{
-			width: 100%;
+			/*width: 100%;*/
 			/*height: 100%;*/
 			/*max-width: 100%;*/
 			/*max-height: 100%;*/
@@ -252,7 +252,7 @@ div[thrixty=found]{
 			width: 0px;
 			z-index: 999999;
 			cursor: crosshair;
-				background: white;
+			background: white;
 		}
 	div[thrixty=found] #load_overlay{
 		position: absolute;

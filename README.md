@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.0.1 | 06.04.2016
+Version: 2.1 | 06.04.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -133,7 +133,7 @@ Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.0.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.1</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -282,12 +282,7 @@ A short explanation, what Thrixty is doing:
 
 ### 9.) Change Log
 * V2:
-	* Vdev2.1:
-		(planned)
-		* Compensate too fast file load events
-		* Rename "state"-attribute on buttons to "thrixty-state" to stay consistant
-
-		(done)
+	* V2.1:
 		* Now respects max-width and max-height on the main div.
 			* The main div still needs to set the style tag, so do this over CSS-Selectors!
 			* Included a custom CSS example into the Readme.
@@ -379,6 +374,7 @@ A short explanation, what Thrixty is doing:
 
 
 ### 10.) Planned Features and Changes (unordered)
+* Rename "state"-attribute on buttons to "thrixty-state" to stay consistant
 * The touch-zoom function needs to change; only single-fingered-touches should be used.
 * Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
 * Context menu & picture and log export

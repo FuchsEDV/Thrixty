@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.1 | 06.04.2016
+Version: 2.2dev | 06.04.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -133,7 +133,7 @@ Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.2dev</td>
 	</tr>
 	<tr>
 		<th>option</th>

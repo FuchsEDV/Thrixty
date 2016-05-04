@@ -190,13 +190,22 @@
 						small_progress_bar: Thrixty.create_element("<div id='small_progress_bar' class='progress_bar' state='unloaded'></div>"),
 				controls: Thrixty.create_element("<div class='controls'></div>"),
 					control_container_one: Thrixty.create_element("<div class='control_container_one'></div>"),
-					prev_btn: Thrixty.create_element("<button id='prev_btn' class='ctrl_buttons'><svg xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><polygon points='69.599,0 8.195,50.29 69.599,100 '/><polygon points='79.533,0 91.508,0 91.508,100 79.533,100'/></svg></button>"),
-					play_btn: Thrixty.create_element("<button id='play_btn' class='ctrl_buttons' state='pause'><svg xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><polygon points='19.309,0 19.309,100 80.691,50.29'/></svg></button>"),
+					prev_btn: Thrixty.create_element("<button id='prev_btn' class='ctrl_buttons'></button>"),
+						prev_icon: Thrixty.create_element("<ok></ok>"),
+					play_btn: Thrixty.create_element("<button id='play_btn' class='ctrl_buttons' state='pause'></button>"),
+						play_icon_play: Thrixty.create_element("<ok></ok>"),
+						play_icon_pause: Thrixty.create_element("<ok></ok>"),
 					next_btn: Thrixty.create_element("<button id='next_btn' class='ctrl_buttons'></button>"),
+						next_icon: Thrixty.create_element("<ok></ok>"),
 					zoom_btn: Thrixty.create_element("<button id='zoom_btn' class='ctrl_buttons' state='zoomed_out'></button>"),
+						zoom_icon_zoom_in: Thrixty.create_element("<ok></ok>"),
+						zoom_icon_zoom_out: Thrixty.create_element("<ok></ok>"),
 					size_btn: Thrixty.create_element("<button id='size_btn' class='ctrl_buttons' state='normalsized'></button>"),
+						size_icon_fullsize: Thrixty.create_element(""),
+						size_icon_normalsize: Thrixty.create_element(""),
 				load_overlay: Thrixty.create_element("<div id='load_overlay'></div>"),
 					load_btn: Thrixty.create_element("<button id='load_btn'></button>"),
+						load_icon: Thrixty.create_element("<ok></ok>"),
 				zoom_canvas: Thrixty.create_element("<canvas id='zoom_canvas' width='0' height='0'></canvas>"),
 			};
 		/** /HTML objects **/
@@ -631,15 +640,24 @@
 				this.root_element.appendChild(this.DOM_obj.controls);
 					this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
+							this.DOM_obj.prev_btn.appendChild(this.DOM_obj.prev_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
+							this.DOM_obj.play_btn.appendChild(this.DOM_obj.play_icon_play);
+							this.DOM_obj.play_btn.appendChild(this.DOM_obj.play_icon_pause);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
+							this.DOM_obj.next_btn.appendChild(this.DOM_obj.next_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
+							this.DOM_obj.zoom_btn.appendChild(this.DOM_obj.zoom_icon_zoom_in);
+							this.DOM_obj.zoom_btn.appendChild(this.DOM_obj.zoom_icon_zoom_out);
 						if( !Thrixty.is_mobile ){
 							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
+								this.DOM_obj.size_btn.appendChild(this.DOM_obj.size_icon_fullsize);
+								this.DOM_obj.size_btn.appendChild(this.DOM_obj.size_icon_normalsize);
 						}
 					if( !this.settings.autoload ){
 						this.root_element.appendChild(this.DOM_obj.load_overlay);
 							this.DOM_obj.load_overlay.appendChild(this.DOM_obj.load_btn);
+								this.DOM_obj.load_btn.appendChild(this.DOM_obj.load_icon);
 					}
 					this.root_element.appendChild(this.DOM_obj.zoom_canvas);
 					this.assign_events();

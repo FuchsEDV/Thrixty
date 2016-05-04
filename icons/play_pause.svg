@@ -1,0 +1,5 @@
+<svg id='play_icon_pause' xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 0 100 100">
+	<circle class='icon_backgrounds' fill='#ffffff' stroke='#000000' stroke-width='3' cx='50' cy='50' r='47'/>
+	<polygon class='icon_polygons' fill='#000000' points='36.5,12.5 45.5,12.5 45.5,87.5 36.5,87.5'/>
+	<polygon class='icon_polygons' fill='#000000' points='54.5,12.5 63.5,12.5 63.5,87.5 54.5,87.5'/>
+</svg>

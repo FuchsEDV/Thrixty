@@ -1,5 +1,5 @@
-<svg id='next_icon' xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 0 100 100">
-	<circle class='icon_backgrounds' fill='#ffffff' stroke='#000000' stroke-width='3' cx='50' cy='50' r='47'/>
+<svg id='next_icon' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'>
+	<circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/>
 	<polygon class='icon_polygons' fill='#000000' points='44.587,87.5 90.641,50.217 44.587,12.5'/>
 	<polygon class='icon_polygons' fill='#000000' points='37.139,87.5 28.156,87.5 28.156,12.5 37.139,12.5'/>
 </svg>

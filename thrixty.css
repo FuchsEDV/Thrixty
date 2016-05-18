@@ -174,13 +174,13 @@ div[thrixty=found]{
 					transform: translate(5%, 5%) scale(0.9);
 				}
 				div[thrixty=found] #prev_btn #prev_icon{ /**/ }
-				div[thrixty=found] #play_btn[thrixty-state=play] #play_icon_play{ display: none; }
-				div[thrixty=found] #play_btn[thrixty-state=pause] #play_icon_pause{ display: none; }
+				div[thrixty=found] #play_btn[thrixty-state=play] #play_icon{ display: none; }
+				div[thrixty=found] #play_btn[thrixty-state=pause] #pause_icon{ display: none; }
 				div[thrixty=found] #next_btn #next_icon{ /**/ }
-				div[thrixty=found] #zoom_btn[thrixty-state=zoomed_out] #zoom_icon_zoom_out{ display: none; }
-				div[thrixty=found] #zoom_btn[thrixty-state=zoomed_in] #zoom_icon_zoom_in{ display: none; }
-				div[thrixty=found] #size_btn[thrixty-state=normalsized] #size_icon_normalsize{ display: none; }
-				div[thrixty=found] #size_btn[thrixty-state=fullpaged] #size_icon_fullsize{ display: none; }
+				div[thrixty=found] #zoom_btn[thrixty-state=zoomed_out] #zoom_out_icon{ display: none; }
+				div[thrixty=found] #zoom_btn[thrixty-state=zoomed_in] #zoom_in_icon{ display: none; }
+				div[thrixty=found] #size_btn[thrixty-state=normalsized] #normalsize_icon{ display: none; }
+				div[thrixty=found] #size_btn[thrixty-state=fullpaged] #fullsize_icon{ display: none; }
 		div[thrixty=found] #zoom_canvas{
 			position: absolute;
 			top: 0;

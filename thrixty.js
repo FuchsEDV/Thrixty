@@ -124,16 +124,6 @@
 			},
 		/**** /namespace methods ****/
 	};
-	/** Add Icons to Namespace **/
-	Thrixty.icons.prev_icon            = Thrixty.create_element("<svg id='prev_icon_prev' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='55.413,12.5 9.359,50.217 55.413,87.5'/><polygon class='icon_polygons' fill='#000000' points='62.862,12.5 71.844,12.5 71.844,87.5 62.862,87.5'/></svg>");
-	Thrixty.icons.play_icon_play       = Thrixty.create_element("<svg id='play_icon_play' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='35.481,12.501 35.481,87.501 81.519,50.217'/></svg>");
-	Thrixty.icons.play_icon_pause      = Thrixty.create_element("<svg id='play_icon_pause' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='36.5,12.5 45.5,12.5 45.5,87.5 36.5,87.5'/><polygon class='icon_polygons' fill='#000000' points='54.5,12.5 63.5,12.5 63.5,87.5 54.5,87.5'/></svg>");
-	Thrixty.icons.next_icon            = Thrixty.create_element("<svg id='next_icon_next' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='44.587,87.5 90.641,50.217 44.587,12.5'/><polygon class='icon_polygons' fill='#000000' points='37.139,87.5 28.156,87.5 28.156,12.5 37.139,12.5'/></svg>");
-	Thrixty.icons.zoom_icon_zoom_in    = Thrixty.create_element("<svg id='zoom_icon_zoom_in' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='45.5,12.5 54.5,12.5 54.5,45.5 87.5,45.5 87.5,54.5 54.5,54.5 54.5,87.5 45.5,87.5 45.5,54.5 12.5,54.5 12.5,45.5 45.5,45.5'/></svg>");
-	Thrixty.icons.zoom_icon_zoom_out   = Thrixty.create_element("<svg id='zoom_icon_zoom_out' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='12.5,45.5 87.5,45.5 87.5,54.5 12.5,54.5'/></svg>");
-	Thrixty.icons.size_icon_fullsize   = Thrixty.create_element("<svg id='size_icon_fullsize' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='18.5,18.5 42.566,18.5 42.566,25.72 25.72,25.72 25.72,42.566 18.5,42.566'/><polygon class='icon_polygons' fill='#000000' points='81.5,18.5 81.5,42.566 74.283,42.566 74.283,25.72 57.435,25.72 57.435,18.5'/><polygon class='icon_polygons' fill='#000000' points='18.5,81.5 18.5,57.435 25.72,57.435 25.72,74.283 42.566,74.283 42.566,81.5'/><polygon class='icon_polygons' fill='#000000' points='81.5,81.5 57.435,81.5 57.435,74.283 74.283,74.283 74.283,57.435 81.5,57.435'/></svg>");
-	Thrixty.icons.size_icon_normalsize = Thrixty.create_element("<svg id='size_icon_normalsize' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='35.348,18.5 42.565,18.5 42.565,42.566 18.5,42.566 18.5,35.348 35.348,35.348'/><polygon class='icon_polygons' fill='#000000' points='18.5,64.652 18.5,57.435 42.565,57.435 42.565,81.5 35.348,81.5 35.348,64.652'/><polygon class='icon_polygons' fill='#000000' points='64.652,81.5 57.435,81.5 57.435,57.435 81.5,57.435 81.5,64.652 64.652,64.652'/><polygon class='icon_polygons' fill='#000000' points='81.5,35.348 81.5,42.566 57.435,42.566 57.435,18.5 64.652,18.5 64.652,35.348'/></svg>");
-	Thrixty.icons.load_icon            = Thrixty.create_element("<svg id='load_icon_load' class='icons' xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'><circle class='icon_backgrounds' fill='transparent' stroke='transparent' stroke-width='3' cx='50' cy='50' r='47'/><polygon class='icon_polygons' fill='#000000' points='35.481,12.501 35.481,87.501 81.519,50.217'/></svg>");
 	/** Init Thrixty on load **/
 	window.addEventListener( "DOMContentLoaded", Thrixty.init );
 /***** /Thrixty Namespace *****/
@@ -202,12 +192,21 @@
 				controls: Thrixty.create_element("<div class='controls'></div>"),
 					control_container_one: Thrixty.create_element("<div class='control_container_one'></div>"),
 					prev_btn: Thrixty.create_element("<button id='prev_btn' class='ctrl_buttons'></button>"),
+						prev_icon: Thrixty.create_element("<svg id='prev_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#prev'/></svg>"),
 					play_btn: Thrixty.create_element("<button id='play_btn' class='ctrl_buttons' thrixty-state='pause'></button>"),
+						play_icon: Thrixty.create_element("<svg id='play_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#play'/></svg>"),
+						pause_icon: Thrixty.create_element("<svg id='pause_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#pause'/></svg>"),
 					next_btn: Thrixty.create_element("<button id='next_btn' class='ctrl_buttons'></button>"),
+						next_icon: Thrixty.create_element("<svg id='next_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#next'/></svg>"),
 					zoom_btn: Thrixty.create_element("<button id='zoom_btn' class='ctrl_buttons' thrixty-state='zoomed_out'></button>"),
+						zoom_in_icon: Thrixty.create_element("<svg id='zoom_in_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#zoom_in'/></svg>"),
+						zoom_out_icon: Thrixty.create_element("<svg id='zoom_out_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#zoom_out'/></svg>"),
 					size_btn: Thrixty.create_element("<button id='size_btn' class='ctrl_buttons' thrixty-state='normalsized'></button>"),
+						fullsize_icon: Thrixty.create_element("<svg id='fullsize_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#fullsize'/></svg>"),
+						normalsize_icon: Thrixty.create_element("<svg id='normalsize_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#normalsize'/></svg>"),
 				load_overlay: Thrixty.create_element("<div id='load_overlay'></div>"),
 					load_btn: Thrixty.create_element("<button id='load_btn'></button>"),
+						load_icon: Thrixty.create_element("<svg id='load_icon' class='icons' viewBox='0 0 100 100'><use xlink:href='icons.svg#load'/></svg>"),
 				zoom_canvas: Thrixty.create_element("<canvas id='zoom_canvas' width='0' height='0'></canvas>"),
 			};
 		/** /HTML objects **/
@@ -642,24 +641,24 @@
 				this.root_element.appendChild(this.DOM_obj.controls);
 					this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
-							this.DOM_obj.prev_btn.appendChild(Thrixty.icons.prev_icon.cloneNode(true));
+							this.DOM_obj.prev_btn.appendChild(this.DOM_obj.prev_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
-							this.DOM_obj.play_btn.appendChild(Thrixty.icons.play_icon_play.cloneNode(true));
-							this.DOM_obj.play_btn.appendChild(Thrixty.icons.play_icon_pause.cloneNode(true));
+							this.DOM_obj.play_btn.appendChild(this.DOM_obj.play_icon);
+							this.DOM_obj.play_btn.appendChild(this.DOM_obj.pause_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
-							this.DOM_obj.next_btn.appendChild(Thrixty.icons.next_icon.cloneNode(true));
+							this.DOM_obj.next_btn.appendChild(this.DOM_obj.next_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
-							this.DOM_obj.zoom_btn.appendChild(Thrixty.icons.zoom_icon_zoom_in.cloneNode(true));
-							this.DOM_obj.zoom_btn.appendChild(Thrixty.icons.zoom_icon_zoom_out.cloneNode(true));
+							this.DOM_obj.zoom_btn.appendChild(this.DOM_obj.zoom_in_icon);
+							this.DOM_obj.zoom_btn.appendChild(this.DOM_obj.zoom_out_icon);
 						if( !Thrixty.is_mobile ){
 							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
-								this.DOM_obj.size_btn.appendChild(Thrixty.icons.size_icon_fullsize.cloneNode(true));
-								this.DOM_obj.size_btn.appendChild(Thrixty.icons.size_icon_normalsize.cloneNode(true));
+								this.DOM_obj.size_btn.appendChild(this.DOM_obj.fullsize_icon);
+								this.DOM_obj.size_btn.appendChild(this.DOM_obj.normalsize_icon);
 						}
 					if( !this.settings.autoload ){
 						this.root_element.appendChild(this.DOM_obj.load_overlay);
 							this.DOM_obj.load_overlay.appendChild(this.DOM_obj.load_btn);
-								this.DOM_obj.load_btn.appendChild(Thrixty.icons.load_icon.cloneNode(true));
+								this.DOM_obj.load_btn.appendChild(this.DOM_obj.load_icon);
 					}
 					this.root_element.appendChild(this.DOM_obj.zoom_canvas);
 					this.assign_events();

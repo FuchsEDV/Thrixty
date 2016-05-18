@@ -110,14 +110,14 @@ div[thrixty=found]{
 				background: #00d000;
 				border-radius: 5px;
 			}
-				div[thrixty=found] #small_progress_bar[state=unloaded]{
+				div[thrixty=found] #small_progress_bar[thrixty-state=unloaded]{
 					display: none;
 					/*display: block;*/
 				}
-				div[thrixty=found] #small_progress_bar[state=loading]{
+				div[thrixty=found] #small_progress_bar[thrixty-state=loading]{
 					display: block;
 				}
-				div[thrixty=found] #small_progress_bar[state=loaded]{
+				div[thrixty=found] #small_progress_bar[thrixty-state=loaded]{
 					display: none;
 					/*display: block;*/
 				}
@@ -174,13 +174,13 @@ div[thrixty=found]{
 					transform: translate(5%, 5%) scale(0.9);
 				}
 				div[thrixty=found] #prev_btn #prev_icon{ /**/ }
-				div[thrixty=found] #play_btn[state=play] #play_icon_play{ display: none; }
-				div[thrixty=found] #play_btn[state=pause] #play_icon_pause{ display: none; }
+				div[thrixty=found] #play_btn[thrixty-state=play] #play_icon_play{ display: none; }
+				div[thrixty=found] #play_btn[thrixty-state=pause] #play_icon_pause{ display: none; }
 				div[thrixty=found] #next_btn #next_icon{ /**/ }
-				div[thrixty=found] #zoom_btn[state=zoomed_out] #zoom_icon_zoom_out{ display: none; }
-				div[thrixty=found] #zoom_btn[state=zoomed_in] #zoom_icon_zoom_in{ display: none; }
-				div[thrixty=found] #size_btn[state=normalsized] #size_icon_normalsize{ display: none; }
-				div[thrixty=found] #size_btn[state=fullpaged] #size_icon_fullsize{ display: none; }
+				div[thrixty=found] #zoom_btn[thrixty-state=zoomed_out] #zoom_icon_zoom_out{ display: none; }
+				div[thrixty=found] #zoom_btn[thrixty-state=zoomed_in] #zoom_icon_zoom_in{ display: none; }
+				div[thrixty=found] #size_btn[thrixty-state=normalsized] #size_icon_normalsize{ display: none; }
+				div[thrixty=found] #size_btn[thrixty-state=fullpaged] #size_icon_fullsize{ display: none; }
 		div[thrixty=found] #zoom_canvas{
 			position: absolute;
 			top: 0;

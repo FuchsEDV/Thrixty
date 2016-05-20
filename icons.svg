@@ -1,50 +1,50 @@
-<svg x="0" y="0" width="100" height="100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<symbol id="background">
-		<circle class="icon_backgrounds" stroke-width="3" cx="50" cy="50" r="47" fill="transparent" stroke="black"/>
+<svg x='0' y='0' width='100' height='100' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+	<symbol id='background'>
+		<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 	</symbol>
-	<symbol id="fullsize">
-		<use x="0" y="0" xlink:href="#background" />
+	<symbol id='fullsize'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 		<polygon class='icon_polygons' fill='#000000' points='18.5,18.5 42.566,18.5 42.566,25.72 25.72,25.72 25.72,42.566 18.5,42.566'/>
 		<polygon class='icon_polygons' fill='#000000' points='81.5,18.5 81.5,42.566 74.283,42.566 74.283,25.72 57.435,25.72 57.435,18.5'/>
 		<polygon class='icon_polygons' fill='#000000' points='18.5,81.5 18.5,57.435 25.72,57.435 25.72,74.283 42.566,74.283 42.566,81.5'/>
 		<polygon class='icon_polygons' fill='#000000' points='81.5,81.5 57.435,81.5 57.435,74.283 74.283,74.283 74.283,57.435 81.5,57.435'/>
 	</symbol>
-	<symbol id="load">
-		<use x="0" y="0" xlink:href="#background" />
-		<polygon class="icon_polygons" points="35.481,12.501 35.481,87.501 81.519,50.217" fill="#000000"/>
+	<symbol id='load'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
+		<polygon class='icon_polygons' points='35.481,12.501 35.481,87.501 81.519,50.217' fill='#000000'/>
 	</symbol>
-	<symbol id="next">
-		<use x="0" y="0" xlink:href="#background" />
+	<symbol id='next'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 		<polygon class='icon_polygons' fill='#000000' points='44.587,87.5 90.641,50.217 44.587,12.5'/>
 		<polygon class='icon_polygons' fill='#000000' points='37.139,87.5 28.156,87.5 28.156,12.5 37.139,12.5'/>
 	</symbol>
-	<symbol id="normalsize">
-		<use x="0" y="0" xlink:href="#background" />
+	<symbol id='normalsize'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 		<polygon class='icon_polygons' fill='#000000' points='35.348,18.5 42.565,18.5 42.565,42.566 18.5,42.566 18.5,35.348 35.348,35.348'/>
 		<polygon class='icon_polygons' fill='#000000' points='18.5,64.652 18.5,57.435 42.565,57.435 42.565,81.5 35.348,81.5 35.348,64.652'/>
 		<polygon class='icon_polygons' fill='#000000' points='64.652,81.5 57.435,81.5 57.435,57.435 81.5,57.435 81.5,64.652 64.652,64.652'/>
 		<polygon class='icon_polygons' fill='#000000' points='81.5,35.348 81.5,42.566 57.435,42.566 57.435,18.5 64.652,18.5 64.652,35.348'/>
 	</symbol>
-	<symbol id="pause">
-		<use x="0" y="0" xlink:href="#background" />
-		<polygon class="icon_polygons" points="36.5,12.5 45.5,12.5 45.5,87.5 36.5,87.5" fill="#000000"/>
-		<polygon class="icon_polygons" points="54.5,12.5 63.5,12.5 63.5,87.5 54.5,87.5" fill="#000000"/>
+	<symbol id='pause'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
+		<polygon class='icon_polygons' points='36.5,12.5 45.5,12.5 45.5,87.5 36.5,87.5' fill='#000000'/>
+		<polygon class='icon_polygons' points='54.5,12.5 63.5,12.5 63.5,87.5 54.5,87.5' fill='#000000'/>
 	</symbol>
-	<symbol id="play">
-		<use x="0" y="0" xlink:href="#background" />
-		<polygon class="icon_polygons" points="35.481,12.501 35.481,87.501 81.519,50.217" fill="#000000"/>
+	<symbol id='play'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
+		<polygon class='icon_polygons' points='35.481,12.501 35.481,87.501 81.519,50.217' fill='#000000'/>
 	</symbol>
-	<symbol id="prev">
-		<use x="0" y="0" xlink:href="#background" />
+	<symbol id='prev'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 		<polygon class='icon_polygons' fill='#000000' points='55.413,12.5 9.359,50.217 55.413,87.5'/>
 		<polygon class='icon_polygons' fill='#000000' points='62.862,12.5 71.844,12.5 71.844,87.5 62.862,87.5'/>
 	</symbol>
-	<symbol id="zoom_in">
-		<use x="0" y="0" xlink:href="#background" />
+	<symbol id='zoom_in'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 		<polygon class='icon_polygons' fill='#000000' points='45.5,12.5 54.5,12.5 54.5,45.5 87.5,45.5 87.5,54.5 54.5,54.5 54.5,87.5 45.5,87.5 45.5,54.5 12.5,54.5 12.5,45.5 45.5,45.5'/>
 	</symbol>
-	<symbol id="zoom_out">
-		<use x="0" y="0" xlink:href="#background" />
+	<symbol id='zoom_out'>
+		<!--<use x='0' y='0' xlink:href='#background' />--><circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/>
 		<polygon class='icon_polygons' fill='#000000' points='12.5,45.5 87.5,45.5 87.5,54.5 12.5,54.5'/>
 	</symbol>
 </svg>

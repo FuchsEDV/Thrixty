@@ -285,13 +285,15 @@ A short explanation, what Thrixty is doing:
 	* V2.2dev:
 		* ( planned )
 			* Holding next and previous button rotates the image.
-			* Implement some code, that replaces the <use> tags with the actual svg code. (polyfill for android & co)
 			* Improve README.md by adding detailed information about filelists and their purpose.
 			* Improve README.md by including a describing picture.
 		* ( done )
-		* Bugfix logging and Safari's filelist parsing.
+		* Tried to implement an SVG Sprite.
+			* The "<use>"-Tag is not widely supported on mobile browsers (they are being stupid again...).
+			* Therefore the code for the SVG-Icons is now saved in the Thrixty namespace (Thrixty.icons) and is being used to write the SVGs right into the HTML.
+			* SVG Icons are styled by CSS.
+		* Fixed logging and Safari's filelist parsing.
 		* Renamed "state"-attributes on buttons to "thrixty-state".
-		* Implemented SVG Sprite.
 	* V2.1:
 		* Now respects max-width and max-height on the main div.
 			* The main div still needs to set the style tag, so do this over CSS-Selectors!

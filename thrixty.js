@@ -58,6 +58,9 @@
 				el.innerHTML = str;
 				return el.children[0];
 			},
+			insertAfter: function (newNode, referenceNode) {
+				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+			},
 			debounce: function(callback, wait, immediate){
 				immediate = immediate || false;
 				var context = null;
@@ -110,8 +113,16 @@
 				}
 				return exec_func;
 			},
-			insertAfter: function (newNode, referenceNode) {
-				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+			addMouseholdEvent: function(elem, callback, interval, delay){
+				var i_id = 0;
+				elem.addEventListener( "mouseup",   function(e){ clearInterval(i_id); } );
+				elem.addEventListener( "mouseout",  function(e){ clearInterval(i_id); } );
+				elem.addEventListener( "mousedown", function(e){
+					/* (maybe) create custom event object 'custom_e' here */
+					var custom_e = e;
+					callback(custom_e);
+					/* start interval which calls 'callback(custom_e)' */
+				} );
 			},
 			init: function(){
 				Thrixty.log("initializing Thrixty");
@@ -271,6 +282,10 @@
 				last_y: null,
 			};
 			this.is_click = false;
+			this.prev_btn_event_vars = {
+				iv_id: 0,
+				/**/
+			};
 		/** /HTML object event vars **/
 
 		/** drawing properties **/
@@ -668,7 +683,7 @@
 				Thrixty.Player.prototype.parse_filelist_content = function(text){
 					var ret_arr = [];
 					/* kill ['] and ["] (they are interfering with path handling) and split to array on each [,] */
-					var ret_arr = text.replace(/['"]/g,"").split(",");
+					var ret_arr = text.replace(/['"\s]/g,"").split(",");
 					/* reverse array, when option is turned on */
 					/* (results in playing the animation reversely) */
 					if( this.settings.reversion ){
@@ -722,12 +737,12 @@
 				if( e.type === "load" ){
 					this.small.images_loaded += 1;
 					this.small.images[index].elem_loaded = true;
-					Thrixty.log("small image "+index+" loaded ('"+this.small.images[0].element.src+"')", this.player_id);
+					Thrixty.log("small image "+index+" loaded ('"+this.small.images[index].element.src+"')", this.player_id);
 
 				} else if( e.type === "error" ){
 					this.small.images_errored += 1;
 					this.small.images[index].elem_loaded = false;
-					Thrixty.log("small image "+index+" errored ('"+this.small.images[0].element.src+"')", this.player_id);
+					Thrixty.log("small image "+index+" errored ('"+this.small.images[index].element.src+"')", this.player_id);
 
 				} else {
 					/* ignored */
@@ -882,9 +897,24 @@
 				this.root_element.addEventListener("keydown", this.keypresses.bind(this));
 
 				/* Buttons */
-					this.DOM_obj.prev_btn.addEventListener("click", this.prev_button_event_click.bind(this));
-					this.DOM_obj.play_btn.addEventListener("click", this.play_button_event_click.bind(this));
-					this.DOM_obj.next_btn.addEventListener("click", this.next_button_event_click.bind(this));
+					/* TODO: touch */
+					Thrixty.addMouseholdEvent(
+						this.DOM_obj.prev_btn,
+						this.prev_button_event_mousehold.bind(this),
+						100,
+						500
+					);
+
+					/* TODO: touch */
+					this.DOM_obj.play_btn.addEventListener("mousedown", this.play_button_event_mousedown.bind(this));
+
+					/* TODO: touch */
+					Thrixty.addMouseholdEvent(
+						this.DOM_obj.next_btn,
+						this.next_button_event_mousehold.bind(this),
+						100,
+						500
+					);
 					this.DOM_obj.zoom_btn.addEventListener("click", this.zoom_button_event_click.bind(this));
 					this.DOM_obj.size_btn.addEventListener("click", this.size_button_event_click.bind(this));
 				/* /Buttons */
@@ -956,17 +986,20 @@
 			switch( keycode ){
 				case 32:  /* SPACEBAR */
 					/* correlate to click on play/pause button */
-					this.play_button_event_click();
+					this.play_button_event_mousedown();
+					/* this.play_button_event_mouseup(); */
 					e.preventDefault();
 					break;
 				case 37:  /* LEFT ARROW */
 					/* correlate to click on left button */
-					this.prev_button_event_click();
+/* TODO */
+/* this.prev_button_event_click(); */
 					e.preventDefault();
 					break;
 				case 39:  /* RIGHT ARROW */
 					/* correlate to click on right button */
-					this.next_button_event_click();
+/* TODO */
+/* this.next_button_event_click(); */
 					e.preventDefault();
 					break;
 				case 38:  /* UP ARROW */
@@ -1013,17 +1046,27 @@
 				this.root_element.removeChild(this.DOM_obj.load_overlay);
 				this.load_all_small_images();
 			};
-			Thrixty.Player.prototype.prev_button_event_click = function(e){
+			Thrixty.Player.prototype.prev_button_event_mousehold = function(e){
 				this.stop_rotation();
 				this.draw_previous_image();
 			};
-			Thrixty.Player.prototype.play_button_event_click = function(e){
+
+
+
+
+
+			Thrixty.Player.prototype.play_button_event_mousedown = function(e){
 				this.toggle_rotation();
 			};
-			Thrixty.Player.prototype.next_button_event_click = function(e){
+
+
+
+			Thrixty.Player.prototype.next_button_event_mousehold = function(e){
 				this.stop_rotation();
 				this.draw_next_image();
 			};
+
+
 			Thrixty.Player.prototype.zoom_button_event_click = function(e){
 				this.toggle_zoom();
 			};

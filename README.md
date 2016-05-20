@@ -284,9 +284,12 @@ A short explanation, what Thrixty is doing:
 * V2:
 	* V2.2dev:
 		* ( planned )
+			* Holding next and previous button rotates the image.
+			* Implement some code, that replaces the <use> tags with the actual svg code. (polyfill for android & co)
 			* Improve README.md by adding detailed information about filelists and their purpose.
 			* Improve README.md by including a describing picture.
 		* ( done )
+		* Bugfix logging and Safari's filelist parsing.
 		* Renamed "state"-attributes on buttons to "thrixty-state".
 		* Implemented SVG Sprite.
 	* V2.1:
@@ -381,16 +384,20 @@ A short explanation, what Thrixty is doing:
 		* Drag Rotation
 
 
-### 10.) Planned Features and Changes (unordered)
+### 10.) Planned Features and Changes (unordered & some may be discarded)
 * New Filelist Format (JSON-Style)
-* The touch-zoom function needs to change; only single-fingered-touches should be used.
-* Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
-* Context menu & picture and log export
-* Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Holding next and previous button rotates the image.
-* HTML5 Contextmenus are awesome!
-* ImageLayer Class (???)
-* Settings button or contextmenu for user to set preferences.
+	* Settings area to avoid the overload of html attributes.
+	* Support for Background Image with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
+	* Image Layers (for inside or top-down views of the same object)
+* Improvements in Touch Zooming
+	* Continuous zoom. (Think about a concept, to make this easily usable with touch gestures. In the end, there already is a great zoom function on most phones.)
+		* Maybe a detection of resolution can be useful?
+	* Fix the way, multi-fingered touch events work currently. (Should they be used anyway? Maybe just ignore any events with multiple fingers?)
+* Context menu.
+	* HTML5 Contextmenus are awesome!
+	* User settings.
+* Image Export. (???)
+* Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
 
 
 ### 11.) License

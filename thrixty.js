@@ -2163,8 +2163,8 @@
 			/* MARK: SHOULD BE FINE NOW! Now testing... */
 
 			return {
-				x: ( ( coords.x - this.root_element.getBoundingClientRect().left ) / size_ratio_w ) + this.root_element.getBoundingClientRect().left,
-				y: ( ( coords.y - this.root_element.getBoundingClientRect().top ) / size_ratio_h ) + this.root_element.getBoundingClientRect().top,
+				x: ( ( coords.x - this.DOM_obj.minimap_canvas.getBoundingClientRect().left ) / size_ratio_w ) + this.DOM_obj.minimap_canvas.getBoundingClientRect().left,
+				y: ( ( coords.y - this.DOM_obj.minimap_canvas.getBoundingClientRect().top ) / size_ratio_h ) + this.DOM_obj.minimap_canvas.getBoundingClientRect().top,
 			};
 		};
 	/**** /GETTER & SETTER ****/

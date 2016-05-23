@@ -303,6 +303,10 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
+	* V2.3:
+		* (planned)
+		* Multiple Player instances are causing my firefox to draw only two instances.
+			* The cause of this is an incorrect use of throttling: All instances are using the same redraw-throttle, so the calls are blocking each other.
 	* V2.2:
 		* Holding next and previous button rotates the image.
 			* The speed is fixed for now.

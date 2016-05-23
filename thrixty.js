@@ -8,7 +8,7 @@
 	/* now set a new Thrixty Namespace */
 	var Thrixty = {
 		/**** namespace properties ****/
-			version: "2.2",
+			version: "2.2.1",
 			players: [],
 			mainpath: (function(){
 				/* IEFE for evading variable pollution */
@@ -353,6 +353,12 @@
 				minimap: false,  /* triggered-by-click-on-minimap flag */
 			};
 		/** /drawing properties **/
+
+
+		/** Method Throttling **/
+			this.draw_current_image = Thrixty.throttle( this.draw_current_image, 40, true );
+		/** /Method Throttling **/
+
 
 		/** log creation **/
 		Thrixty.log("Player (id "+this.player_id+") initialising.");
@@ -1695,32 +1701,27 @@
 
 
 	/**** DRAWING METHODS ****/
-		Thrixty.Player.prototype.draw_current_image = Thrixty.throttle(
-			/* do not update the drawing too often! 25 redraws per second max.! (40ms per call) */
-			function(){
-				/* decide upon a drawing strategy */
-				if( !this.is_zoomed ){
-					if( !this.is_fullpage ){
-						this.unzoomed();
-					} else {
-						this.fullpaged();
-					}
+		Thrixty.Player.prototype.draw_current_image = function(){
+			/* decide upon a drawing strategy */
+			if( !this.is_zoomed ){
+				if( !this.is_fullpage ){
+					this.unzoomed();
 				} else {
-					if( !this.is_fullpage && this.settings.zoom_mode == "outbox" ){
-						this.outbox_zoomed();
-					} else {
-						this.inbox_zoomed();
-					}
-					if( this.settings.zoom_pointer == "marker" ){
-						this.set_marker_position();
-					} else {
-						this.draw_minimap();
-					}
+					this.fullpaged();
 				}
-			},
-			40,
-			true
-		);
+			} else {
+				if( !this.is_fullpage && this.settings.zoom_mode == "outbox" ){
+					this.outbox_zoomed();
+				} else {
+					this.inbox_zoomed();
+				}
+				if( this.settings.zoom_pointer == "marker" ){
+					this.set_marker_position();
+				} else {
+					this.draw_minimap();
+				}
+			}
+		};
 		Thrixty.Player.prototype.unzoomed = function(){
 			/* Task: Draw the unzoomed image on the canvas */
 			var main_canvas = this.DOM_obj.main_canvas;

@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.2 | 23.05.2016
+Version: 2.2.1 | 23.05.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -154,7 +154,7 @@ large:  http://www.example.com/large/Filelist.txt
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.2</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.2.1</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -303,6 +303,8 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
+	* V2.2.1:
+		* Fix of incorrect use of redraw throttle.
 	* V2.2:
 		* Holding next and previous button rotates the image.
 			* The speed is fixed for now.
@@ -417,11 +419,11 @@ A short explanation, what Thrixty is doing:
 	* HTML5 Contextmenus are awesome!
 	* User settings.
 * README additions:
-		* Add detailed information about filelists and their purpose.
-		* Add a concept describing picture.
-			* Notation: `![alt_text](image/path.png)`
-		* Add a proper example for player customization (look changes & icon replacement).
-		* Proofread.
+	* Add detailed information about filelists and their purpose.
+	* Add a concept describing picture.
+		* Notation: `![alt_text](image/path.png)`
+	* Add a proper example for player customization (look changes & icon replacement).
+	* Proofread.
 * Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
 * Rotation speed selection should be more accessible.
 * Button holding rotation speed should be dependant on the current speed.

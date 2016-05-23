@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.2dev | 20.05.2016
+Version: 2.2 | 23.05.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -154,7 +154,7 @@ large:  http://www.example.com/large/Filelist.txt
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.2dev</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.2</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -303,19 +303,7 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
-	* V2.2dev:
-		* ( planned )
-			* Improve README.md by adding detailed information about filelists and their purpose.
-			* Improve README.md by including a describing picture.
-Test:<br>
-![360Shots Logo](http://www.360shots.de/wp-content/uploads/2012/07/logo7.png)
-Format: ![Alt Text](url)
-![](http://www.360shots.de/wp-content/uploads/2012/07/logo8.png)
-
-
-			* Improve README.md by adding a proper example for icon replacement.
-			* Proofread README.md.
-		* ( done )
+	* V2.2:
 		* Holding next and previous button rotates the image.
 			* The speed is fixed for now.
 		* Tried to implement an SVG Sprite.
@@ -428,6 +416,11 @@ Format: ![Alt Text](url)
 * Context menu.
 	* HTML5 Contextmenus are awesome!
 	* User settings.
+* README additions:
+		* Add detailed information about filelists and their purpose.
+		* Add a concept describing picture. <!-- ![](http://www.360shots.de/wp-content/uploads/2012/07/logo7.png) -->
+		* Add a proper example for player customization (look changes & icon replacement).
+		* Proofread.
 * Image Export. (???)
 * Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
 * Button Hold Rotation should be dependant on the current speed.

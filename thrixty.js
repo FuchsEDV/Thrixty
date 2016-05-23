@@ -8,7 +8,7 @@
 	/* now set a new Thrixty Namespace */
 	var Thrixty = {
 		/**** namespace properties ****/
-			version: "2.2dev",
+			version: "2.2",
 			players: [],
 			mainpath: (function(){
 				/* IEFE for evading variable pollution */
@@ -1089,9 +1089,10 @@
 		};
 		/*** Buttons ***/
 			Thrixty.Player.prototype.load_button_event_click = function(e){
-				e.stopPropagation();
-				this.root_element.removeChild(this.DOM_obj.load_overlay);
+				/* window.setTimeout( this.load_all_small_images.bind(this), 10 ); */
 				this.load_all_small_images();
+				this.root_element.removeChild(this.DOM_obj.load_overlay);
+				e.stopPropagation();
 			};
 			Thrixty.Player.prototype.prev_button_event_mousehold = function(e){
 				this.stop_rotation();

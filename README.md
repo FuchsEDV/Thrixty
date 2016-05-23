@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.2 | 23.05.2016
+Version: 2.2.1 | 23.05.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -154,7 +154,7 @@ large:  http://www.example.com/large/Filelist.txt
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.2</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.2.1</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -303,10 +303,8 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
-	* V2.3:
-		* (planned)
-		* Multiple Player instances are causing my firefox to draw only two instances.
-			* The cause of this is an incorrect use of throttling: All instances are using the same redraw-throttle, so the calls are blocking each other.
+	* V2.2.1:
+		* Fix of incorrect use of redraw throttle.
 	* V2.2:
 		* Holding next and previous button rotates the image.
 			* The speed is fixed for now.

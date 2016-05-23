@@ -1,26 +1,27 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.1 | 06.04.2016
+Version: 2.2 | 23.05.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
 * 2.: <a href="#2-example">Example</a>
 * 3.: <a href="#3-usage">Usage</a>
 * 4.: <a href="#4-installation-tutorial">Installation Tutorial</a>
-* 5.: <a href="#5-parameters">Parameters</a>
-* 6.: <a href="#6-customization">Customization</a>
-* 7.: <a href="#7-general-description">General Description</a>
-* 8.: <a href="#8-documentation">Documentation</a>
-* 9.: <a href="#9-change-log">Change Log</a>
-* 10.: <a href="#10-planned-features-and-changes-unordered">Planned Features and Changes</a>
-* 11.: <a href="#11-license">License</a>
+* 5.: <a href="#5-filelists">Filelists</a>
+* 6.: <a href="#6-parameters">Parameters</a>
+* 7.: <a href="#7-customization">Customization</a>
+* 8.: <a href="#8-general-description">General Description</a>
+* 9.: <a href="#9-documentation">Documentation</a>
+* 10.: <a href="#10-change-log">Change Log</a>
+* 11.: <a href="#11-planned-features-and-changes-unordered">Planned Features and Changes</a>
+* 12.: <a href="#12-license">License</a>
 
 
 
 ### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.<br>
-It is using HTML5 CANVAS elements to display sequences.
+It is using HTML5 CANVAS to display sequences.
 
 
 ### 2.) Example
@@ -65,7 +66,7 @@ In this example we are using the index.html as a substitute for whatever you are
 	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
 * Your final folder structure should look like this:
 
-	```html
+	```txt
 	[website-mainfolder of your.domain.com]/
 	|- [index.html]
 	|- [thrixty_custom.css]
@@ -121,19 +122,39 @@ For semantics you should put it into the head-section.
 
 ##### To solve those problems, start your browsers developer tools.
 * Look into your console and files sections for any files not being loaded.
-* Look into the global object "Thrixty" and search and read the log.
-
+* Look into the global object "Thrixty" and read the log. (Thrixty.logs)
 
 ### Are you using Wordpress?
 Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
-### 5.) Parameters
+### 5.) Filelists
+Filelists are text documents that are referencing to the images used for the animation.<br>
+They consist of a comma-seperated list of paths.
+
+Thrixty currently uses two Filelists - a small and a large one.<br>
+They are referenced in the "thrixty-filelist-path-small" and "thrixty-filelist-path-large" settings respectively.<br>
+The part of the path they both share is referenced in the basepath.
+
+Therefore these settings:
+```txt
+basepath = http://www.example.com/
+filelist-path-small = small/Filelist.txt
+filelist-path-large = large/Filelist.txt
+```
+would make Thrixty look for these paths:
+```txt
+small:  http://www.example.com/small/Filelist.txt
+large:  http://www.example.com/large/Filelist.txt
+```
+
+
+### 6.) Parameters
 
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.2</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -225,7 +246,7 @@ Here is a list of the usable params (in the form of HTML-attributes):
 </table>
 
 
-### 6.) Customization
+### 7.) Customization
 
 Customization of the player is quite easy, as Thrixty is optimised for doing as much as possible over HTML and CSS.<br>
 The following examples are showing you some possibilities:
@@ -263,7 +284,7 @@ The following examples are showing you some possibilities:
 	```
 
 
-### 7.) General Description
+### 8.) General Description
 
 A short explanation, what Thrixty is doing:
 * After including and interpreting the JS, create namespace "Thrixty" and wait for the site to finish loading.
@@ -275,13 +296,22 @@ A short explanation, what Thrixty is doing:
 	* Wait for user input.
 
 
-### 8.) Documentation
+### 9.) Documentation
 
 [You are looking at it...](#thrixty)
 
 
-### 9.) Change Log
+### 10.) Change Log
 * V2:
+	* V2.2:
+		* Holding next and previous button rotates the image.
+			* The speed is fixed for now.
+		* Tried to implement an SVG Sprite.
+			* The "<use>"-Tag is not widely supported on mobile browsers (they are being stupid again...).
+			* Therefore the code for the SVG-Icons is now saved in the Thrixty namespace (Thrixty.icons) and is being used to write the SVGs right into the HTML.
+			* SVG Icons are styled by CSS.
+		* Fixed logging and Safari's filelist parsing.
+		* Renamed "state"-attributes on buttons to "thrixty-state".
 	* V2.1:
 		* Now respects max-width and max-height on the main div.
 			* The main div still needs to set the style tag, so do this over CSS-Selectors!
@@ -304,6 +334,7 @@ A short explanation, what Thrixty is doing:
 		* Renamed option: direction => reversion
 		* Class restructuring.
 			* Joined MainClass, EventHandler and DrawingHandler into a single Player class.
+			* Renamed Namespace from "ThrixtyPlayer" to "Thrixty".
 		* Gotten rid of jQuery.
 * V1:
 	* V1.6.1:
@@ -324,7 +355,7 @@ A short explanation, what Thrixty is doing:
 		This cannot be made more intuitive, as there are issues with non-conventional event uses. (look previous)
 		* Browser-developers are not able to follow conventions or standards.<br>
 		Thus positions and sizes are now calculated instead of declarated.
-		* Included information for developers into the Readme. Expecially for the namespace object "ThrixtyPlayer".
+		* Included information for developers into the Readme. Especially for the namespace object "ThrixtyPlayer".
 		* Moved version number into the ThrixtyPlayer Object.
 		* Implemented a parameter for Autoplay: "thrixty-autoplay".
 		* Load-Button now stays hidden, until the preview image becomes visible.
@@ -373,21 +404,29 @@ A short explanation, what Thrixty is doing:
 		* Drag Rotation
 
 
-### 10.) Planned Features and Changes (unordered)
-* Rename "state"-attribute on buttons to "thrixty-state" to stay consistant
-* The touch-zoom function needs to change; only single-fingered-touches should be used.
-* Full Background Support with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
-* Context menu & picture and log export
-* Settings file or smt similar instead of an overload of html attributes. => Required for the more non-standardy options.
-* Making a nice icon for the load-button.
-* Holding next and previous button rotates the image.
-* HTML5 Contextmenus are awesome!
-* Get rid of any extra files.
-* ImageLayer Class (???)
-* Settings button or contextmenu for user to set preferences.
+### 11.) Planned Features and Changes (unordered & some may be discarded)
+* New Filelist Format (JSON-Style)
+	* Settings area to avoid the overload of html attributes.
+	* Support for Background Image with automatic scale detection. (Background Strategies like "always filled", "stretch", etc.)
+	* Image Layers (for inside or top-down views of the same object)
+* Improvements in Touch Zooming
+	* Continuous zoom. (Think about a concept, to make this easily usable with touch gestures. In the end, there already is a great zoom function on most phones.)
+		* Maybe a detection of resolution can be useful?
+	* Fix the way, multi-fingered touch events work currently. (Should they be used anyway? Maybe just ignore any events with multiple fingers?)
+* Context menu.
+	* HTML5 Contextmenus are awesome!
+	* User settings.
+* README additions:
+		* Add detailed information about filelists and their purpose.
+		* Add a concept describing picture. <!-- ![](http://www.360shots.de/wp-content/uploads/2012/07/logo7.png) -->
+		* Add a proper example for player customization (look changes & icon replacement).
+		* Proofread.
+* Image Export. (???)
+* Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
+* Button Hold Rotation should be dependant on the current speed.
 
 
-### 11.) License
+### 12.) License
 
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots

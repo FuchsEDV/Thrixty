@@ -8,7 +8,7 @@
 	/* now set a new Thrixty Namespace */
 	var Thrixty = {
 		/**** namespace properties ****/
-			version: "2.1",
+			version: "2.2",
 			players: [],
 			mainpath: (function(){
 				/* IEFE for evading variable pollution */
@@ -22,7 +22,17 @@
 				main_log: [],
 				player_logs: {},
 			},
-			icons_cache: [],
+			icons: {
+				fullsize_icon:   "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' fill='#000000' points='18.5,18.5 42.566,18.5 42.566,25.72 25.72,25.72 25.72,42.566 18.5,42.566'/><polygon class='icon_polygons' fill='#000000' points='81.5,18.5 81.5,42.566 74.283,42.566 74.283,25.72 57.435,25.72 57.435,18.5'/><polygon class='icon_polygons' fill='#000000' points='18.5,81.5 18.5,57.435 25.72,57.435 25.72,74.283 42.566,74.283 42.566,81.5'/><polygon class='icon_polygons' fill='#000000' points='81.5,81.5 57.435,81.5 57.435,74.283 74.283,74.283 74.283,57.435 81.5,57.435'/>",
+				load_icon:       "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' points='35.481,12.501 35.481,87.501 81.519,50.217' fill='#000000'/>",
+				next_icon:       "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' fill='#000000' points='44.587,87.5 90.641,50.217 44.587,12.5'/><polygon class='icon_polygons' fill='#000000' points='37.139,87.5 28.156,87.5 28.156,12.5 37.139,12.5'/>",
+				normalsize_icon: "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' fill='#000000' points='35.348,18.5 42.565,18.5 42.565,42.566 18.5,42.566 18.5,35.348 35.348,35.348'/><polygon class='icon_polygons' fill='#000000' points='18.5,64.652 18.5,57.435 42.565,57.435 42.565,81.5 35.348,81.5 35.348,64.652'/><polygon class='icon_polygons' fill='#000000' points='64.652,81.5 57.435,81.5 57.435,57.435 81.5,57.435 81.5,64.652 64.652,64.652'/><polygon class='icon_polygons' fill='#000000' points='81.5,35.348 81.5,42.566 57.435,42.566 57.435,18.5 64.652,18.5 64.652,35.348'/>",
+				pause_icon:      "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' points='36.5,12.5 45.5,12.5 45.5,87.5 36.5,87.5' fill='#000000'/><polygon class='icon_polygons' points='54.5,12.5 63.5,12.5 63.5,87.5 54.5,87.5' fill='#000000'/>",
+				play_icon:       "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' points='35.481,12.501 35.481,87.501 81.519,50.217' fill='#000000'/>",
+				prev_icon:       "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' fill='#000000' points='55.413,12.5 9.359,50.217 55.413,87.5'/><polygon class='icon_polygons' fill='#000000' points='62.862,12.5 71.844,12.5 71.844,87.5 62.862,87.5'/>",
+				zoom_in_icon:    "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' fill='#000000' points='45.5,12.5 54.5,12.5 54.5,45.5 87.5,45.5 87.5,54.5 54.5,54.5 54.5,87.5 45.5,87.5 45.5,54.5 12.5,54.5 12.5,45.5 45.5,45.5'/>",
+				zoom_out_icon:   "<circle class='icon_backgrounds' stroke-width='3' cx='50' cy='50' r='47' fill='transparent' stroke='black'/><polygon class='icon_polygons' fill='#000000' points='12.5,45.5 87.5,45.5 87.5,54.5 12.5,54.5'/>",
+			},
 			is_mobile: (function(){
 				var mobile_user_agents = {
 					Android: !!navigator.userAgent.match(/Android/i),
@@ -36,26 +46,6 @@
 			})(),
 		/**** namespace properties ****/
 		/**** namespace methods ****/
-			cache_control_icons: function(){
-				this.icons_cache.expand      = this.create_element("<img src='"+this.mainpath+"icons/expand.svg'/>");
-				this.icons_cache.expand_w    = this.create_element("<img src='"+this.mainpath+"icons/expand_w.svg'/>");
-				this.icons_cache.load        = this.create_element("<img src='"+this.mainpath+"icons/load.svg'/>");
-				this.icons_cache.load_w      = this.create_element("<img src='"+this.mainpath+"icons/load_w.svg'/>");
-				this.icons_cache.minus       = this.create_element("<img src='"+this.mainpath+"icons/minus.svg'/>");
-				this.icons_cache.minus_w     = this.create_element("<img src='"+this.mainpath+"icons/minus_w.svg'/>");
-				this.icons_cache.pause       = this.create_element("<img src='"+this.mainpath+"icons/pause.svg'/>");
-				this.icons_cache.pause_w     = this.create_element("<img src='"+this.mainpath+"icons/pause_w.svg'/>");
-				this.icons_cache.play        = this.create_element("<img src='"+this.mainpath+"icons/play.svg'/>");
-				this.icons_cache.play_w      = this.create_element("<img src='"+this.mainpath+"icons/play_w.svg'/>");
-				this.icons_cache.plus        = this.create_element("<img src='"+this.mainpath+"icons/plus.svg'/>");
-				this.icons_cache.plus_w      = this.create_element("<img src='"+this.mainpath+"icons/plus_w.svg'/>");
-				this.icons_cache.shrink      = this.create_element("<img src='"+this.mainpath+"icons/shrink.svg'/>");
-				this.icons_cache.shrink_w    = this.create_element("<img src='"+this.mainpath+"icons/shrink_w.svg'/>");
-				this.icons_cache.vorwaerts   = this.create_element("<img src='"+this.mainpath+"icons/vorwaerts.svg'/>");
-				this.icons_cache.vorwaerts_w = this.create_element("<img src='"+this.mainpath+"icons/vorwaerts_w.svg'/>");
-				this.icons_cache.zurueck     = this.create_element("<img src='"+this.mainpath+"icons/zurueck.svg'/>");
-				this.icons_cache.zurueck_w   = this.create_element("<img src='"+this.mainpath+"icons/zurueck_w.svg'/>");
-			},
 			log: function(msg, id){
 				if( typeof(id) !== "number" ){
 					/* main log */
@@ -77,6 +67,48 @@
 				var el = document.createElement("div");
 				el.innerHTML = str;
 				return el.children[0];
+			},
+			insertAfter: function (newNode, referenceNode) {
+				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+			},
+			addTouchClickEvent: function(elem, callback){
+				var is_clicked = false;
+				elem.addEventListener( "touchstart", function(e){
+					is_clicked = true;
+					e.preventDefault();
+				} );
+				elem.addEventListener( "touchend", function(e){
+					callback();
+					is_clicked = false;
+					e.preventDefault();
+				} );
+			},
+			addMouseHoldEvent: function(elem, callback, interval, delay){
+				var i_id = 0;
+				elem.addEventListener( "mouseup",   function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "mouseout",  function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "mousedown", function(e){
+					/* (maybe) create custom event object 'custom_e' here */
+					var custom_e = e;
+					callback(custom_e);
+					/* start interval which calls 'callback(custom_e)' */
+					i_id = setInterval(callback, interval);
+					/**/
+					e.preventDefault();
+				} );
+			},
+			addTouchHoldEvent: function(elem, callback, interval, delay){
+				var i_id = 0;
+				elem.addEventListener( "touchend",   function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "touchstart", function(e){
+					/* (maybe) create custom event object 'custom_e' here */
+					var custom_e = e;
+					callback(custom_e);
+					/* start interval which calls 'callback(custom_e)' */
+					i_id = setInterval(callback, interval);
+					/**/
+					e.preventDefault();
+				} );
 			},
 			debounce: function(callback, wait, immediate){
 				immediate = immediate || false;
@@ -130,24 +162,25 @@
 				}
 				return exec_func;
 			},
-			insertAfter: function (newNode, referenceNode) {
-				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-			},
 			init: function(){
 				Thrixty.log("initializing Thrixty");
 				var player_candidates = document.querySelectorAll("div.thrixty");
-				if( player_candidates.length > 0){
-					Thrixty.cache_control_icons();
-				}
-				var i = 0;
-				for( i; i<player_candidates.length; i++ ){
-					var cur_candidate = player_candidates[i];
-					var new_player_id = new Thrixty.Player(cur_candidate);
+				var candidates_count = player_candidates.length;
+				if( candidates_count > 0 ){
+					/* get icons (asynchronously) to override the standard icons */
+					setTimeout(Thrixty.get_icons, 10);
+					/* init player */
+					var i = 0;
+					for( i; i<candidates_count; i++ ){
+						var cur_candidate = player_candidates[i];
+						var new_player_id = new Thrixty.Player(cur_candidate);
+					}
 				}
 			},
 		/**** /namespace methods ****/
 	};
-	window.addEventListener( "load", Thrixty.init );
+	/** Init Thrixty on load **/
+	window.addEventListener( "DOMContentLoaded", Thrixty.init );
 /***** /Thrixty Namespace *****/
 
 
@@ -210,16 +243,34 @@
 						minimap_canvas: Thrixty.create_element("<canvas id='minimap_canvas' class='canvas' width='0' height='0'></canvas>"),
 						marker: Thrixty.create_element("<div id='marker'></div>"),
 					progress_container: Thrixty.create_element("<div id='progress_container'></div>"),
-						small_progress_bar: Thrixty.create_element("<div id='small_progress_bar' class='progress_bar' state='unloaded'></div>"),
+						small_progress_bar: Thrixty.create_element("<div id='small_progress_bar' class='progress_bar' thrixty-state='unloaded'></div>"),
 				controls: Thrixty.create_element("<div class='controls'></div>"),
 					control_container_one: Thrixty.create_element("<div class='control_container_one'></div>"),
 					prev_btn: Thrixty.create_element("<button id='prev_btn' class='ctrl_buttons'></button>"),
-					play_btn: Thrixty.create_element("<button id='play_btn' class='ctrl_buttons' state='pause'></button>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#prev'/> */
+						prev_icon: Thrixty.create_element("<svg id='prev_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["prev_icon"]+"</svg>"),
+					play_btn: Thrixty.create_element("<button id='play_btn' class='ctrl_buttons' thrixty-state='pause'></button>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#play'/> */
+						play_icon: Thrixty.create_element("<svg id='play_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["play_icon"]+"</svg>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#pause'/> */
+						pause_icon: Thrixty.create_element("<svg id='pause_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["pause_icon"]+"</svg>"),
 					next_btn: Thrixty.create_element("<button id='next_btn' class='ctrl_buttons'></button>"),
-					zoom_btn: Thrixty.create_element("<button id='zoom_btn' class='ctrl_buttons' state='zoomed_out'></button>"),
-					size_btn: Thrixty.create_element("<button id='size_btn' class='ctrl_buttons' state='normalsized'></button>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#next'/> */
+						next_icon: Thrixty.create_element("<svg id='next_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["next_icon"]+"</svg>"),
+					zoom_btn: Thrixty.create_element("<button id='zoom_btn' class='ctrl_buttons' thrixty-state='zoomed_out'></button>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#zoom_in'/> */
+						zoom_in_icon: Thrixty.create_element("<svg id='zoom_in_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["zoom_in_icon"]+"</svg>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#zoom_out'/> */
+						zoom_out_icon: Thrixty.create_element("<svg id='zoom_out_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["zoom_out_icon"]+"</svg>"),
+					size_btn: Thrixty.create_element("<button id='size_btn' class='ctrl_buttons' thrixty-state='normalsized'></button>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#fullsize'/> */
+						fullsize_icon: Thrixty.create_element("<svg id='fullsize_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["fullsize_icon"]+"</svg>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#normalsize'/> */
+						normalsize_icon: Thrixty.create_element("<svg id='normalsize_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["normalsize_icon"]+"</svg>"),
 				load_overlay: Thrixty.create_element("<div id='load_overlay'></div>"),
 					load_btn: Thrixty.create_element("<button id='load_btn'></button>"),
+						/* <use xlink:href='"+Thrixty.mainpath+"icons.svg#load'/> */
+						load_icon: Thrixty.create_element("<svg id='load_icon' class='icons' viewBox='0 0 100 100'>"+Thrixty.icons["load_icon"]+"</svg>"),
 				zoom_canvas: Thrixty.create_element("<canvas id='zoom_canvas' width='0' height='0'></canvas>"),
 			};
 		/** /HTML objects **/
@@ -284,6 +335,10 @@
 				last_y: null,
 			};
 			this.is_click = false;
+			this.prev_btn_event_vars = {
+				iv_id: 0,
+				/**/
+			};
 		/** /HTML object event vars **/
 
 		/** drawing properties **/
@@ -654,15 +709,24 @@
 				this.root_element.appendChild(this.DOM_obj.controls);
 					this.DOM_obj.controls.appendChild(this.DOM_obj.control_container_one);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.prev_btn);
+							this.DOM_obj.prev_btn.appendChild(this.DOM_obj.prev_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.play_btn);
+							this.DOM_obj.play_btn.appendChild(this.DOM_obj.play_icon);
+							this.DOM_obj.play_btn.appendChild(this.DOM_obj.pause_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.next_btn);
+							this.DOM_obj.next_btn.appendChild(this.DOM_obj.next_icon);
 						this.DOM_obj.control_container_one.appendChild(this.DOM_obj.zoom_btn);
+							this.DOM_obj.zoom_btn.appendChild(this.DOM_obj.zoom_in_icon);
+							this.DOM_obj.zoom_btn.appendChild(this.DOM_obj.zoom_out_icon);
 						if( !Thrixty.is_mobile ){
 							this.DOM_obj.control_container_one.appendChild(this.DOM_obj.size_btn);
+								this.DOM_obj.size_btn.appendChild(this.DOM_obj.fullsize_icon);
+								this.DOM_obj.size_btn.appendChild(this.DOM_obj.normalsize_icon);
 						}
 					if( !this.settings.autoload ){
 						this.root_element.appendChild(this.DOM_obj.load_overlay);
 							this.DOM_obj.load_overlay.appendChild(this.DOM_obj.load_btn);
+								this.DOM_obj.load_btn.appendChild(this.DOM_obj.load_icon);
 					}
 					this.root_element.appendChild(this.DOM_obj.zoom_canvas);
 					this.assign_events();
@@ -672,7 +736,7 @@
 				Thrixty.Player.prototype.parse_filelist_content = function(text){
 					var ret_arr = [];
 					/* kill ['] and ["] (they are interfering with path handling) and split to array on each [,] */
-					var ret_arr = text.replace(/['"]/g,"").split(",");
+					var ret_arr = text.replace(/['"\s]/g,"").split(",");
 					/* reverse array, when option is turned on */
 					/* (results in playing the animation reversely) */
 					if( this.settings.reversion ){
@@ -726,12 +790,12 @@
 				if( e.type === "load" ){
 					this.small.images_loaded += 1;
 					this.small.images[index].elem_loaded = true;
-					Thrixty.log("small image "+index+" loaded ('"+this.small.images[0].element.src+"')", this.player_id);
+					Thrixty.log("small image "+index+" loaded ('"+this.small.images[index].element.src+"')", this.player_id);
 
 				} else if( e.type === "error" ){
 					this.small.images_errored += 1;
 					this.small.images[index].elem_loaded = false;
-					Thrixty.log("small image "+index+" errored ('"+this.small.images[0].element.src+"')", this.player_id);
+					Thrixty.log("small image "+index+" errored ('"+this.small.images[index].element.src+"')", this.player_id);
 
 				} else {
 					/* ignored */
@@ -791,17 +855,17 @@
 
 					/* NaN or negative   (-n...0) */
 					if( isNaN(percentage) || percentage <= 0 ){
-						progress_bar.setAttribute("state", "unloaded");
+						progress_bar.setAttribute("thrixty-state", "unloaded");
 						progress_bar.style.width = "0%";
 
 					/* under 100%        (0,01...0,99) */
 					} else if( percentage < 1 ){
-						progress_bar.setAttribute("state", "loading");
+						progress_bar.setAttribute("thrixty-state", "loading");
 						progress_bar.style.width = (percentage * 100)+"%";
 
 					/* over 100%         (1...n) */
 					} else if( percentage >= 1 ){
-						progress_bar.setAttribute("state", "loaded");
+						progress_bar.setAttribute("thrixty-state", "loaded");
 						progress_bar.style.width = "100%";
 					}
 				};
@@ -886,9 +950,18 @@
 				this.root_element.addEventListener("keydown", this.keypresses.bind(this));
 
 				/* Buttons */
-					this.DOM_obj.prev_btn.addEventListener("click", this.prev_button_event_click.bind(this));
-					this.DOM_obj.play_btn.addEventListener("click", this.play_button_event_click.bind(this));
-					this.DOM_obj.next_btn.addEventListener("click", this.next_button_event_click.bind(this));
+					Thrixty.addMouseHoldEvent( this.DOM_obj.prev_btn, this.prev_button_event_mousehold.bind(this), 100, 500 );
+					Thrixty.addTouchHoldEvent( this.DOM_obj.prev_btn, this.prev_button_event_mousehold.bind(this), 100, 500 );
+
+					/* TODO: touch */
+					this.DOM_obj.play_btn.addEventListener("mousedown", this.play_button_event_mousedown.bind(this));
+					Thrixty.addTouchClickEvent( this.DOM_obj.play_btn, this.play_button_event_mousedown.bind(this) );
+
+					Thrixty.addMouseHoldEvent( this.DOM_obj.next_btn, this.next_button_event_mousehold.bind(this), 100, 500 );
+					Thrixty.addTouchHoldEvent( this.DOM_obj.next_btn, this.next_button_event_mousehold.bind(this), 100, 500 );
+
+
+
 					this.DOM_obj.zoom_btn.addEventListener("click", this.zoom_button_event_click.bind(this));
 					this.DOM_obj.size_btn.addEventListener("click", this.size_button_event_click.bind(this));
 				/* /Buttons */
@@ -959,46 +1032,49 @@
 			var keycode = e.keyCode || e.which;
 			switch( keycode ){
 				case 32:  /* SPACEBAR */
-					e.preventDefault();
 					/* correlate to click on play/pause button */
-					this.play_button_event_click();
+					this.play_button_event_mousedown();
+					/* this.play_button_event_mouseup(); */
+					e.preventDefault();
 					break;
 				case 37:  /* LEFT ARROW */
-					e.preventDefault();
 					/* correlate to click on left button */
-					this.prev_button_event_click();
+/* TODO */
+/* this.prev_button_event_click(); */
+					e.preventDefault();
 					break;
 				case 39:  /* RIGHT ARROW */
-					e.preventDefault();
 					/* correlate to click on right button */
-					this.next_button_event_click();
+/* TODO */
+/* this.next_button_event_click(); */
+					e.preventDefault();
 					break;
 				case 38:  /* UP ARROW */
-					e.preventDefault();
 					/* doesnt have a correlating button */
 					this.increase_rotation_speed();
+					e.preventDefault();
 					break;
 				case 40:  /* DOWN ARROW */
-					e.preventDefault();
 					/* doesnt have a correlating button */
 					this.decrease_rotation_speed();
+					e.preventDefault();
 					break;
 				case 27:  /* ESCAPE */
-					e.preventDefault();
 					/* doesnt have a correlating button */
 					this.stop_rotation();
 					this.stop_zoom();
+					e.preventDefault();
 					this.quit_fullpage();
 					break;
 				case 70:  /* F */
-					e.preventDefault();
 					/* correlate to click on fullpage button */
 					this.size_button_event_click();
+					e.preventDefault();
 					break;
 				case 71:  /* G */
-					e.preventDefault();
 					/* correlate to click on zoom button */
 					this.zoom_button_event_click();
+					e.preventDefault();
 					break;
 				case 33:  /* PAGEUP */
 				case 34:  /* PAGEDOWN */
@@ -1013,21 +1089,32 @@
 		};
 		/*** Buttons ***/
 			Thrixty.Player.prototype.load_button_event_click = function(e){
-				e.stopPropagation();
-				this.root_element.removeChild(this.DOM_obj.load_overlay);
+				/* window.setTimeout( this.load_all_small_images.bind(this), 10 ); */
 				this.load_all_small_images();
+				this.root_element.removeChild(this.DOM_obj.load_overlay);
+				e.stopPropagation();
 			};
-			Thrixty.Player.prototype.prev_button_event_click = function(e){
+			Thrixty.Player.prototype.prev_button_event_mousehold = function(e){
 				this.stop_rotation();
 				this.draw_previous_image();
 			};
-			Thrixty.Player.prototype.play_button_event_click = function(e){
+
+
+
+
+
+			Thrixty.Player.prototype.play_button_event_mousedown = function(e){
 				this.toggle_rotation();
 			};
-			Thrixty.Player.prototype.next_button_event_click = function(e){
+
+
+
+			Thrixty.Player.prototype.next_button_event_mousehold = function(e){
 				this.stop_rotation();
 				this.draw_next_image();
 			};
+
+
 			Thrixty.Player.prototype.zoom_button_event_click = function(e){
 				this.toggle_zoom();
 			};
@@ -1035,8 +1122,8 @@
 				this.toggle_fullpage();
 			};
 			Thrixty.Player.prototype.main_canvas_dblclick = function(e){
-				e.preventDefault();
 				this.toggle_zoom();
+				e.preventDefault();
 			};
 		/*** /Buttons ***/
 		/*** Interaction ***/
@@ -1353,7 +1440,7 @@
 				if( this.rotation_count != 0 ){
 					/* animation is playing */
 					this.is_rotating = true;
-					this.DOM_obj.play_btn.setAttribute('state', 'play');
+					this.DOM_obj.play_btn.setAttribute("thrixty-state", "play");
 					/**/
 					this.rotation();
 					this.rotation_id = setInterval(this.rotation.bind(this), this.rotation_delay);
@@ -1367,7 +1454,7 @@
 				this.rotation_id = 0;
 				/* animation is paused */
 				this.is_rotating = false;
-				this.DOM_obj.play_btn.setAttribute('state', 'pause');
+				this.DOM_obj.play_btn.setAttribute("thrixty-state", "pause");
 			}
 		};
 		Thrixty.Player.prototype.toggle_rotation = function(){
@@ -1484,7 +1571,7 @@
 
 				/* do main_class's part of start_zoom routine: */
 				/* set zoom button to zoomout */
-				this.DOM_obj.zoom_btn.setAttribute('state', 'zoomed_in');
+				this.DOM_obj.zoom_btn.setAttribute("thrixty-state", "zoomed_in");
 
 				/* simulate zoom start at the center of the canvas */
 				var click_x = main_canvas.getBoundingClientRect().left + ( main_canvas.offsetWidth / 2 );
@@ -1512,7 +1599,7 @@
 		Thrixty.Player.prototype.stop_zoom = function(){
 			/* turn off zoom */
 			this.is_zoomed = false;
-			this.DOM_obj.zoom_btn.setAttribute('state', 'zoomed_out');
+			this.DOM_obj.zoom_btn.setAttribute("thrixty-state", "zoomed_out");
 			/* hide zoombox */
 			this.DOM_obj.zoom_canvas.style.display = "none";
 			/* hide minimap_box */
@@ -1577,7 +1664,7 @@
 		Thrixty.Player.prototype.enter_fullpage = function(){
 			/* set fullpage state */
 			this.is_fullpage = true;
-			this.DOM_obj.size_btn.setAttribute('state', 'fullpaged');
+			this.DOM_obj.size_btn.setAttribute("thrixty-state", "fullpaged");
 
 			/* set refreshing styles at start */
 			this.refresh_player_sizings();
@@ -1587,7 +1674,7 @@
 		Thrixty.Player.prototype.quit_fullpage = function(){
 			/* reset fullpage state */
 			this.is_fullpage = false;
-			this.DOM_obj.size_btn.setAttribute('state', 'normalsized');
+			this.DOM_obj.size_btn.setAttribute("thrixty-state", "normalsized");
 
 			/* unset canvas_container size modification */
 			this.refresh_player_sizings();
@@ -2124,8 +2211,8 @@
 			/* MARK: SHOULD BE FINE NOW! Now testing... */
 
 			return {
-				x: ( ( coords.x - this.root_element.getBoundingClientRect().left ) / size_ratio_w ) + this.root_element.getBoundingClientRect().left,
-				y: ( ( coords.y - this.root_element.getBoundingClientRect().top ) / size_ratio_h ) + this.root_element.getBoundingClientRect().top,
+				x: ( ( coords.x - this.DOM_obj.minimap_canvas.getBoundingClientRect().left ) / size_ratio_w ) + this.DOM_obj.minimap_canvas.getBoundingClientRect().left,
+				y: ( ( coords.y - this.DOM_obj.minimap_canvas.getBoundingClientRect().top ) / size_ratio_h ) + this.DOM_obj.minimap_canvas.getBoundingClientRect().top,
 			};
 		};
 	/**** /GETTER & SETTER ****/

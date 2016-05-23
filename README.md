@@ -307,7 +307,7 @@ A short explanation, what Thrixty is doing:
 		* Holding next and previous button rotates the image.
 			* The speed is fixed for now.
 		* Tried to implement an SVG Sprite.
-			* The "<use>"-Tag is not widely supported on mobile browsers (they are being stupid again...).
+			* The "use"-Tag is not widely supported on mobile browsers (they are being stupid again...).
 			* Therefore the code for the SVG-Icons is now saved in the Thrixty namespace (Thrixty.icons) and is being used to write the SVGs right into the HTML.
 			* SVG Icons are styled by CSS.
 		* Fixed logging and Safari's filelist parsing.
@@ -417,13 +417,14 @@ A short explanation, what Thrixty is doing:
 	* HTML5 Contextmenus are awesome!
 	* User settings.
 * README additions:
-		* Add detailed information about filelists and their purpose.
-		* Add a concept describing picture. <!-- ![](http://www.360shots.de/wp-content/uploads/2012/07/logo7.png) -->
-		* Add a proper example for player customization (look changes & icon replacement).
-		* Proofread.
-* Image Export. (???)
+	* Add detailed information about filelists and their purpose.
+	* Add a concept describing picture.
+		* Notation: `![alt_text](image/path.png)`
+	* Add a proper example for player customization (look changes & icon replacement).
+	* Proofread.
 * Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
-* Button Hold Rotation should be dependant on the current speed.
+* Rotation speed selection should be more accessible.
+* Button holding rotation speed should be dependant on the current speed.
 
 
 ### 12.) License

@@ -71,6 +71,45 @@
 			insertAfter: function (newNode, referenceNode) {
 				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 			},
+			addTouchClickEvent: function(elem, callback){
+				var is_clicked = false;
+				elem.addEventListener( "touchstart", function(e){
+					is_clicked = true;
+					e.preventDefault();
+				} );
+				elem.addEventListener( "touchend", function(e){
+					callback();
+					is_clicked = false;
+					e.preventDefault();
+				} );
+			},
+			addMouseHoldEvent: function(elem, callback, interval, delay){
+				var i_id = 0;
+				elem.addEventListener( "mouseup",   function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "mouseout",  function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "mousedown", function(e){
+					/* (maybe) create custom event object 'custom_e' here */
+					var custom_e = e;
+					callback(custom_e);
+					/* start interval which calls 'callback(custom_e)' */
+					i_id = setInterval(callback, interval);
+					/**/
+					e.preventDefault();
+				} );
+			},
+			addTouchHoldEvent: function(elem, callback, interval, delay){
+				var i_id = 0;
+				elem.addEventListener( "touchend",   function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "touchstart", function(e){
+					/* (maybe) create custom event object 'custom_e' here */
+					var custom_e = e;
+					callback(custom_e);
+					/* start interval which calls 'callback(custom_e)' */
+					i_id = setInterval(callback, interval);
+					/**/
+					e.preventDefault();
+				} );
+			},
 			debounce: function(callback, wait, immediate){
 				immediate = immediate || false;
 				var context = null;
@@ -122,17 +161,6 @@
 					}
 				}
 				return exec_func;
-			},
-			addMouseholdEvent: function(elem, callback, interval, delay){
-				var i_id = 0;
-				elem.addEventListener( "mouseup",   function(e){ clearInterval(i_id); } );
-				elem.addEventListener( "mouseout",  function(e){ clearInterval(i_id); } );
-				elem.addEventListener( "mousedown", function(e){
-					/* (maybe) create custom event object 'custom_e' here */
-					var custom_e = e;
-					callback(custom_e);
-					/* start interval which calls 'callback(custom_e)' */
-				} );
 			},
 			init: function(){
 				Thrixty.log("initializing Thrixty");
@@ -922,24 +950,18 @@
 				this.root_element.addEventListener("keydown", this.keypresses.bind(this));
 
 				/* Buttons */
-					/* TODO: touch */
-					Thrixty.addMouseholdEvent(
-						this.DOM_obj.prev_btn,
-						this.prev_button_event_mousehold.bind(this),
-						100,
-						500
-					);
+					Thrixty.addMouseHoldEvent( this.DOM_obj.prev_btn, this.prev_button_event_mousehold.bind(this), 100, 500 );
+					Thrixty.addTouchHoldEvent( this.DOM_obj.prev_btn, this.prev_button_event_mousehold.bind(this), 100, 500 );
 
 					/* TODO: touch */
 					this.DOM_obj.play_btn.addEventListener("mousedown", this.play_button_event_mousedown.bind(this));
+					Thrixty.addTouchClickEvent( this.DOM_obj.play_btn, this.play_button_event_mousedown.bind(this) );
 
-					/* TODO: touch */
-					Thrixty.addMouseholdEvent(
-						this.DOM_obj.next_btn,
-						this.next_button_event_mousehold.bind(this),
-						100,
-						500
-					);
+					Thrixty.addMouseHoldEvent( this.DOM_obj.next_btn, this.next_button_event_mousehold.bind(this), 100, 500 );
+					Thrixty.addTouchHoldEvent( this.DOM_obj.next_btn, this.next_button_event_mousehold.bind(this), 100, 500 );
+
+
+
 					this.DOM_obj.zoom_btn.addEventListener("click", this.zoom_button_event_click.bind(this));
 					this.DOM_obj.size_btn.addEventListener("click", this.size_button_event_click.bind(this));
 				/* /Buttons */

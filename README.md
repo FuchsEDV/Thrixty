@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.2.1 | 23.05.2016
+Version: 2.2.2 | 23.06.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -303,6 +303,12 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
+	* V2.3:
+		* (planned)
+		* (done)
+		* Fixed left and right arrows.
+	* V2.2.2:
+		* Bugfix resizing
 	* V2.2.1:
 		* Fix of incorrect use of redraw throttle.
 	* V2.2:
@@ -427,6 +433,7 @@ A short explanation, what Thrixty is doing:
 * Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
 * Rotation speed selection should be more accessible.
 * Button holding rotation speed should be dependant on the current speed.
+* When using a Shortcut, show an icon of the associated function with a fast flash effect. (Inspiration: Youtube)
 
 
 ### 12.) License

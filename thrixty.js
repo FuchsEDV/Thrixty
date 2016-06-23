@@ -68,7 +68,7 @@
 				el.innerHTML = str;
 				return el.children[0];
 			},
-			insertAfter: function (newNode, referenceNode) {
+			insertAfter: function (newNode, referenceNode){
 				referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 			},
 			addTouchClickEvent: function(elem, callback){
@@ -379,6 +379,34 @@
 		Thrixty.players[this.player_id] = null;
 	};
 
+/**** BEISPIEL DESTROY VON SCROLLMAGIC ****/
+/**
+ * Destroy the Controller, all Scenes and everything.
+ * @public
+ *
+ * @example
+ * // without resetting the scenes
+ * controller = controller.destroy();
+ *
+	 * // with scene reset
+ * controller = controller.destroy(true);
+ *
+ * @param {boolean} [resetScenes=false] - If `true` the pins and tweens (if existent) of all scenes will be reset.
+ * @returns {null} Null to unset handler variables.
+ */
+/*this.destroy = function (resetScenes) {
+	window.clearTimeout(_refreshTimeout);
+	var i = _sceneObjects.length;
+	while (i--) {
+		_sceneObjects[i].destroy(resetScenes);
+	}
+	_options.container.removeEventListener("resize", onChange);
+	_options.container.removeEventListener("scroll", onChange);
+	_util.cAF(_updateTimeout);
+	log(3, "destroyed " + NAMESPACE + " (reset: " + (resetScenes ? "true" : "false") + ")");
+	return null;
+};
+*/
 
 
 	/**** INITIALIZATION ****/
@@ -1045,14 +1073,12 @@
 					break;
 				case 37:  /* LEFT ARROW */
 					/* correlate to click on left button */
-/* TODO */
-/* this.prev_button_event_click(); */
+					this.prev_button_event_mousehold();
 					e.preventDefault();
 					break;
 				case 39:  /* RIGHT ARROW */
 					/* correlate to click on right button */
-/* TODO */
-/* this.next_button_event_click(); */
+					this.next_button_event_mousehold();
 					e.preventDefault();
 					break;
 				case 38:  /* UP ARROW */
@@ -1104,23 +1130,13 @@
 				this.stop_rotation();
 				this.draw_previous_image();
 			};
-
-
-
-
-
 			Thrixty.Player.prototype.play_button_event_mousedown = function(e){
 				this.toggle_rotation();
 			};
-
-
-
 			Thrixty.Player.prototype.next_button_event_mousehold = function(e){
 				this.stop_rotation();
 				this.draw_next_image();
 			};
-
-
 			Thrixty.Player.prototype.zoom_button_event_click = function(e){
 				this.toggle_zoom();
 			};
@@ -2037,6 +2053,12 @@
 				this.root_element.style.border = "5px solid gray";
 				this.root_element.style.background = "white";
 				this.root_element.style.zIndex = "9999";
+				this.DOM_obj.showroom.style.width = "";
+				this.DOM_obj.showroom.style.height = "";
+				this.DOM_obj.canvas_container.style.width = "";
+				this.DOM_obj.canvas_container.style.height = "";
+				this.DOM_obj.canvas_container.style.marginLeft = "";
+				this.DOM_obj.canvas_container.style.marginTop = "";
 
 				/* measure available space */
 				var root_width  = this.root_element.clientWidth;
@@ -2058,6 +2080,12 @@
 				this.root_element.style.border = "";
 				this.root_element.style.background = "";
 				this.root_element.style.zIndex = "";
+				this.DOM_obj.showroom.style.width = "";
+				this.DOM_obj.showroom.style.height = "";
+				this.DOM_obj.canvas_container.style.width = "";
+				this.DOM_obj.canvas_container.style.height = "";
+				this.DOM_obj.canvas_container.style.marginLeft = "";
+				this.DOM_obj.canvas_container.style.marginTop = "";
 
 				/* calculate players sizing upon avaible space */
 				var root_width = this.root_element.clientWidth;

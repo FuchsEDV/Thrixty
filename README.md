@@ -109,7 +109,7 @@ For semantics you should put it into the head-section.
 	```
 
 ##### Typical problems at this stage:
-* Not reading the [documentation](#4-installation-tutorial).
+* Not reading the [documentation](#9-documentation).
 * thrixty.js not found | path incorrect; resource not accessible.
 * thrixty.css not found | path incorrect; resource not accessible.
 * thrixty_custom.css not found | path incorrect; resource not accessible.
@@ -430,6 +430,13 @@ A short explanation, what Thrixty is doing:
 		* Notation: `![alt_text](image/path.png)`
 	* Add a proper example for player customization (look changes & icon replacement).
 	* Proofread.
+* Settings Button
+	* Intented for Users to select zoom-style, design etc..
+	* Is thought of to be designed like an extra window.
+	* Options will beshown in select boxes.
+* Loading state should be visible to CSS, in case smt happens with the animation.
+	* Also every load should be aborted, when some core function failed.
+	* This could also be improved by implementing a replace picture, that is being showed instead of an animation, when something failed.
 * Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
 * Rotation speed selection should be more accessible.
 * Button holding rotation speed should be dependant on the current speed.

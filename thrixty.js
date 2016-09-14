@@ -77,6 +77,11 @@
 					is_clicked = true;
 					e.preventDefault();
 				} );
+				// TODO: folgendes überpruefen
+				//elem.addEventListener( "touchmove",function(e){
+				//	is_clicked = false;
+				//	e.preventDefault();
+				//} );
 				elem.addEventListener( "touchend", function(e){
 					callback();
 					is_clicked = false;
@@ -162,6 +167,8 @@
 				}
 				return exec_func;
 			},
+		/**** /namespace methods ****/
+		/**** init ****/
 			init: function(){
 				Thrixty.log("initializing Thrixty");
 				var player_candidates = document.querySelectorAll("div.thrixty");
@@ -177,7 +184,7 @@
 					}
 				}
 			},
-		/**** /namespace methods ****/
+		/**** /init ****/
 	};
 	/** Init Thrixty on load **/
 	window.addEventListener( "DOMContentLoaded", Thrixty.init );
@@ -637,6 +644,7 @@
 			Thrixty.Player.prototype.check_init_b = function(){
 				/* (gets called 2 times,; trying to load 2 filelists) */
 				/* trigger function on the last call (when all filelist loads got a result */
+							// TODO: error, when no large filelist given?
 				if( this.small.filelist_loaded !== null && this.large.filelist_loaded !== null ){
 					this.init_b();
 				}

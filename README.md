@@ -27,7 +27,7 @@ It is using HTML5 CANVAS to display sequences.
 ### 2.) Example
 
 To view an example, download both this and the [example repository](https://github.com/FuchsEDV/Thrixty_example).<br>
-Unzip them into the same folder, then start up the index.html.
+Unzip this repository into the 'thrixty' folder of the example and start up the 'index.html'.
 
 
 ### 3.) Usage
@@ -62,7 +62,7 @@ In this example we are using the index.html as a substitute for whatever you are
 	* The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
 * Create a directory "360_objects".<br>
 	* This folder is where you are gonna put all your objects.
-	* For example purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
+	* For example purposes download and extract the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and move the contents of the "360_objects" folder into this one.
 	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
 * Your final folder structure should look like this:
 
@@ -71,8 +71,6 @@ In this example we are using the index.html as a substitute for whatever you are
 	|- [index.html]
 	|- [thrixty_custom.css]
 	|- thrixty/
-	|  |- icons/
-	|  |  |- [look_at_all_the_icons.svg]
 	|  |- thrixty.js
 	|  |- thrixty.css
 	|- 360_objects/
@@ -96,33 +94,42 @@ For semantics you should put it into the head-section.
 	<!DOCTYPE html>
 	<html>
 		<head>
-			<script type="text/javascript" src="/thrixty/thrixty.js"></script>
-			<link type="text/css" rel="stylesheet" href="/thrixty/thrixty.css">
-			<link type="text/css" rel="stylesheet" href="/thrixty_custom.css">
+			<script type="text/javascript" src="thrixty/thrixty.js"></script>
+			<link type="text/css" rel="stylesheet" href="thrixty/thrixty.css">
+			<!-- uncomment the following line, when customizing the player -->
+			<!--<link type="text/css" rel="stylesheet" href="/thrixty_custom.css">-->
 		</head>
 		<body>
 			<div class="thrixty"
-				thrixty-basepath="/360_objects/example/"
+				thrixty-basepath="360_objects/example/"
 			></div>
 		</body>
 	</html>
 	```
 
-##### Typical problems at this stage:
-* Not reading the [documentation](#9-documentation).
-* thrixty.js not found | path incorrect; resource not accessible.
-* thrixty.css not found | path incorrect; resource not accessible.
-* thrixty_custom.css not found | path incorrect; resource not accessible.
-* Filelists not found | paths incorrect; resources not accessible.
-* Images referenced in the filelists not found | paths incorrect; resources not accessible.
-* div:
-	* not properly labeled with class="thrixty".
-	* tabindex attribute manually set and using the same value multiple times.
-	* not setting the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly.
+* This tutorial neglects the possible need for absolute paths.
+	* Depending on your server configuration and your path to that 'index.html' you may find relative paths to be wrong.
+	* You absolutely need to know about relative and absolute paths anyway when dealing with websites. Please educate yourself, if you dont.
 
-##### To solve those problems, start your browsers developer tools.
+
+##### When encountering a problem, check the following points in the given order:
+* Read the [documentation](#9-documentation)...
+* Was "thrixty.js" found and loaded?   (path incorrect?; resource not accessible?)
+* Was "thrixty.css" found and loaded?  (path incorrect?; resource not accessible?)
+* Same with "thrixty_custom.css"?
+* Was the div written properly?
+	* Properly labeled with class="thrixty"?
+	* Have you set the "tabindex"-attribute without using the same value multiple times?
+	* Have you set the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly?
+* Were the Filelists found and loaded? (path incorrect?; resource not accessible?)
+* Were the images referenced in the filelists found and loaded? Especially the first small image is critical!
+
+##### Its easier to detect and solve those problems by using your browsers developer tools.
 * Look into your console and files sections for any files not being loaded.
 * Look into the global object "Thrixty" and read the log. (Thrixty.logs)
+	* What is the last action in main_log?
+	* Are there any player_logs?
+	* Was the first small image loaded?
 
 ### Are you using Wordpress?
 Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
@@ -441,6 +448,7 @@ A short explanation, what Thrixty is doing:
 * Rotation speed selection should be more accessible.
 * Button holding rotation speed should be dependant on the current speed.
 * When using a Shortcut, show an icon of the associated function with a fast flash effect. (Inspiration: Youtube)
+* Log amount of found images.
 
 
 ### 12.) License

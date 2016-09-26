@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.3 | 22.09.2016
+Version: 2.3dev | 22.09.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -162,7 +162,7 @@ large:  http://www.example.com/large/Filelist.txt
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.3</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.3dev</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -453,7 +453,7 @@ A short explanation, what Thrixty is doing:
 * Improvements in Touch Zooming
 	* Continuous zoom. (Think about a concept, to make this easily usable with touch gestures. In the end, there already is a great zoom function on most phones.)
 		* Maybe a detection of resolution can be useful?
-	* Fix the way, multi-fingered touch events work currently. (Should they be used anyway? Maybe just ignore any events with multiple fingers?)
+	* Fix the way multi-fingered touch events work currently. (Should they be used anyway? Maybe just ignore any events with multiple fingers?)
 * Context menu.
 	* HTML5 Contextmenus are awesome!
 	* User settings
@@ -476,7 +476,19 @@ A short explanation, what Thrixty is doing:
 * Log amount of found images.
 
 
-### 12.) License
+### 12.) Discarded ideas
+* Prepend "data-" to the HTML-attributes to be konform.
+	* For now there is no reason to, as the change would destroy current installations.
+	* "data-" is silly anyway.
+* Make Thrixty compatible with 3D-Models.
+	* The idea itself is great - though I haven't seen any proper solutions yet.
+	* Its more likely i will create a whole 3D Version, then extending Thrixty.
+* Position markers with links or pop ups.
+	* Great idea - though its impractical to use.
+	* Taking care of the data would be waaay too much manual work, so it's not even implemented in our 360Shots Software.
+
+
+### 13.) License
 
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots

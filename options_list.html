@@ -17,17 +17,17 @@
 	<body>
 		<table border="1" style="margin: 0 auto;">
 			<tr>
-				<td colspan="3" style="padding-left: 3em;">Version 2.2.1</td>
+				<td colspan="3" style="padding-left: 3em;">Version 2.3</td>
 			</tr>
 			<tr>
 				<th>option</th>
-				<th>Description</th>
+				<th>description</th>
 				<th>possible values</th>
 			</tr>
 			<tr>
 				<td class="">thrixty-basepath</td>
 				<td class="" rowspan="3">
-					These are telling the game where to find the Filelists.<br>"[basepath/][filelist-path-small.txt]"<br>"[basepath/][filelist-path-large.txt]"<br>
+					These are telling the player where to find the Filelists.<br>"[basepath/][filelist-path-small.txt]"<br>"[basepath/][filelist-path-large.txt]"<br>
 				</td>
 				<td class="">
 					<b>[empty]</b>, [mainpath]
@@ -44,6 +44,50 @@
 				<td class="">
 					<b>large/Filelist.txt</b>, [subpath]
 				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-play-direction</td>
+				<td class="">
+					The direction the object is turning in automatic rotation.
+				</td>
+				<td class="">
+					<b>normal</b>, reverse[d]
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-drag-direction</td>
+				<td class="">
+					The direction the object is turning when dragging it.
+				</td>
+				<td class="">
+					<b>normal</b>, reverse[d]
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-autoload</td>
+				<td class="">
+					When autoload is on, it will automatically start loading all images, when ready.<br>
+					When off, a load-button will be shown.<br>
+					Will always be off on mobile devies (decided on user-agent).
+				</td>
+				<td class="">
+					<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-autoplay</td>
+				<td class="">
+					When autoplay is on, the animation will start playing as soon as all images were loaded.<br>
+					When off, nothing happens.
+				</td>
+				<td class="">
+					<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
+				</td>
+			</tr>
+			<tr>
+				<td class="">thrixty-cycle-duration</td>
+				<td class="">Duration of each whole turn in seconds.</td>
+				<td class=""><b>5</b>, [integer]</td>
 			</tr>
 			<tr>
 				<td class="">thrixty-zoom-control</td>
@@ -77,53 +121,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="">thrixty-reversion</td>
-				<td class="">Activate this to reverse filelist order.</td>
-				<td class="">
-					<b>0&nbsp;/&nbsp;false&nbsp;/&nbsp;forward</b>, 1&nbsp;/&nbsp;true&nbsp;/&nbsp;backward
-				</td>
-			</tr>
-			<tr>
-				<td class="">thrixty-cycle-duration</td>
-				<td class="">Duration of each whole turn in seconds.</td>
-				<td class=""><b>5</b>, [integer]</td>
-			</tr>
-			<tr>
 				<td class="">thrixty-sensitivity-x</td>
 				<td class="">
 					How sensitive the Player will react horizontally to touch gestures.<br>
 					The cursor/finger needs to be moved at least X pixel.
 				</td>
 				<td class=""><b>20</b>, [integer]</td>
-			</tr>
-			<!--<tr>
-				<td class="">
-					thrixty-sensitivity-y<br>
-					(<b>This option is not yet used!</b>)
-				</td>
-				<td class="">How sensitive the Player will react vertically to touch gestures.<br>The finger needs to be moved at least Y pixel.</td>
-				<td class=""><b>50</b>, [integer]</td>
-			</tr>-->
-			<tr>
-				<td class="">thrixty-autoplay</td>
-				<td class="">
-					Tells the Player to automatically start the animation.<br>
-					When given a number, will play the animation N-times then stop.
-				</td>
-				<td class="">
-					<b>-1&nbsp;/&nbsp;on&nbsp;(infinite)</b>, [integer] (finite), 0&nbsp;/&nbsp;off
-				</td>
-			</tr>
-			<tr>
-				<td class="">thrixty-autoload</td>
-				<td class="">
-					Tells the Player to automatically load images.<br>
-					To save bandwidth this is always off on mobile phones.
-				</td>
-				<td class="">
-					<b>on</b>, off<br>
-				</td>
-			</tr>
-		</table>
+			</tr>		</table>
 	</body>
 </html>

@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.2.1 | 23.05.2016
+Version: 2.3 | 22.09.2016
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -27,7 +27,7 @@ It is using HTML5 CANVAS to display sequences.
 ### 2.) Example
 
 To view an example, download both this and the [example repository](https://github.com/FuchsEDV/Thrixty_example).<br>
-Unzip them into the same folder, then start up the index.html.
+Unzip this repository into the 'thrixty' folder of the example and start up the 'index.html'.
 
 
 ### 3.) Usage
@@ -62,7 +62,7 @@ In this example we are using the index.html as a substitute for whatever you are
 	* The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
 * Create a directory "360_objects".<br>
 	* This folder is where you are gonna put all your objects.
-	* For example purposes download the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and extract the "example" folder into the "360_objects" folder.
+	* For example purposes download and extract the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and move the contents of the "360_objects" folder into this one.
 	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
 * Your final folder structure should look like this:
 
@@ -71,8 +71,6 @@ In this example we are using the index.html as a substitute for whatever you are
 	|- [index.html]
 	|- [thrixty_custom.css]
 	|- thrixty/
-	|  |- icons/
-	|  |  |- [look_at_all_the_icons.svg]
 	|  |- thrixty.js
 	|  |- thrixty.css
 	|- 360_objects/
@@ -96,33 +94,43 @@ For semantics you should put it into the head-section.
 	<!DOCTYPE html>
 	<html>
 		<head>
-			<script type="text/javascript" src="/thrixty/thrixty.js"></script>
-			<link type="text/css" rel="stylesheet" href="/thrixty/thrixty.css">
-			<link type="text/css" rel="stylesheet" href="/thrixty_custom.css">
+			<script type="text/javascript" src="thrixty/thrixty.js"></script>
+			<link type="text/css" rel="stylesheet" href="thrixty/thrixty.css">
+			<!-- uncomment the following line, when customizing the player -->
+			<!--<link type="text/css" rel="stylesheet" href="/thrixty_custom.css">-->
 		</head>
 		<body>
 			<div class="thrixty"
-				thrixty-basepath="/360_objects/example/"
+				thrixty-basepath="360_objects/example/"
 			></div>
 		</body>
 	</html>
 	```
 
-##### Typical problems at this stage:
-* Not reading the [documentation](#4-installation-tutorial).
-* thrixty.js not found | path incorrect; resource not accessible.
-* thrixty.css not found | path incorrect; resource not accessible.
-* thrixty_custom.css not found | path incorrect; resource not accessible.
-* Filelists not found | paths incorrect; resources not accessible.
-* Images referenced in the filelists not found | paths incorrect; resources not accessible.
-* div:
-	* not properly labeled with class="thrixty".
-	* tabindex attribute manually set and using the same value multiple times.
-	* not setting the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly.
+* This tutorial neglects the possible need for absolute paths.
+	* Depending on your server configuration and your path to that 'index.html' you may find relative paths to be wrong.
+	* When dealing with websites you absolutely need to know about relative and absolute paths anyway. Please educate yourself, if you dont.
 
-##### To solve those problems, start your browsers developer tools.
+
+##### When encountering a problem, check the following points in the given order:
+* Read the [documentation](#9-documentation)...
+* Was "thrixty.js" found and loaded?   (path incorrect?; resource not accessible?)
+* Was "thrixty.css" found and loaded?  (path incorrect?; resource not accessible?)
+* Was "thrixty_custom.css" found and loaded if needed?
+* Was the div written properly?
+	* Properly labeled with class="thrixty"?
+	* Have you set the "tabindex"-attribute without using the same value multiple times?
+	* Have you set the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly?
+* Were the Filelists found and loaded? (path incorrect?; resource not accessible?)
+* Were the images referenced in the filelists found and loaded? Especially the first small image is critical!
+
+##### Its easier to detect and solve those problems by using your browsers developer tools.
 * Look into your console and files sections for any files not being loaded.
 * Look into the global object "Thrixty" and read the log. (Thrixty.logs)
+	* What is the last action in main_log?
+	* Are there any player_logs?
+	* Was the first small image loaded?
+
 
 ### Are you using Wordpress?
 Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
@@ -154,7 +162,7 @@ large:  http://www.example.com/large/Filelist.txt
 Here is a list of the usable params (in the form of HTML-attributes):
 <table border="1" style="margin: 0 auto;">
 	<tr>
-		<td colspan="3" style="padding-left: 3em;">Version 2.2.1</td>
+		<td colspan="3" style="padding-left: 3em;">Version 2.3</td>
 	</tr>
 	<tr>
 		<th>option</th>
@@ -181,6 +189,50 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		<td class="">
 			<b>large/Filelist.txt</b>, [subpath]
 		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-play-direction</td>
+		<td class="">
+			The direction the object is turning in automatic rotation.
+		</td>
+		<td class="">
+			<b>normal</b>, reverse[d]
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-drag-direction</td>
+		<td class="">
+			The direction the object is turning when dragging it.
+		</td>
+		<td class="">
+			<b>normal</b>, reverse[d]
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-autoload</td>
+		<td class="">
+			When autoload is on, it will automatically start loading all images, when ready.<br>
+			When off, a load-button will be shown.<br>
+			Will always be off on mobile devies (decided on user-agent).
+		</td>
+		<td class="">
+			<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-autoplay</td>
+		<td class="">
+			When autoplay is on, the animation will start playing as soon as all images were loaded.<br>
+			When off, nothing happens.
+		</td>
+		<td class="">
+			<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-cycle-duration</td>
+		<td class="">Duration of each whole turn in seconds.</td>
+		<td class=""><b>5</b>, [integer]</td>
 	</tr>
 	<tr>
 		<td class="">thrixty-zoom-control</td>
@@ -214,34 +266,12 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-reversion</td>
-		<td class="">Activate this to reverse filelist order.</td>
-		<td class="">
-			<b>0 / false / forward</b>, 1 / true / backward
-		</td>
-	</tr>
-	<tr>
-		<td class="">thrixty-cycle-duration</td>
-		<td class="">Duration of each whole turn in seconds.</td>
-		<td class=""><b>5</b>, [integer]</td>
-	</tr>
-	<tr>
 		<td class="">thrixty-sensitivity-x</td>
 		<td class="">
 			How sensitive the Player will react horizontally to touch gestures.<br>
 			The finger needs to be move at least X pixel.
 		</td>
 		<td class=""><b>20</b>, [integer]</td>
-	</tr>
-	<tr>
-		<td class="">thrixty-autoplay</td>
-		<td class="">
-			Will this player automatically play its animation upon load.<br>
-			The finger needs to be move at least X pixel.
-		</td>
-		<td class="">
-			<b>on&nbsp;/&nbsp;1</b>, off&nbsp;/&nbsp;0<br>
-		</td>
 	</tr>
 </table>
 
@@ -303,6 +333,15 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
+	* V2.3:
+		* Fixed left and right arrows.
+		* Improvements in documentation.
+		* Improvements to "filelist-reversion".
+			* Split up into two params "thrixty-play-direction" and "thrixty-drag-direction".
+			* play-direction is the direction the object will turn during automatic turns.
+			* drag-direction is the direction the object will turn when dragging the object.
+	* V2.2.2:
+		* Bugfix resizing
 	* V2.2.1:
 		* Fix of incorrect use of redraw throttle.
 	* V2.2:
@@ -417,16 +456,24 @@ A short explanation, what Thrixty is doing:
 	* Fix the way, multi-fingered touch events work currently. (Should they be used anyway? Maybe just ignore any events with multiple fingers?)
 * Context menu.
 	* HTML5 Contextmenus are awesome!
-	* User settings.
-* README additions:
+	* User settings
+		* Intented for Users to select zoom-style, design etc..
+		* Is thought of to be designed like an extra window.
+		* Options in select boxes(?).
+	* Log Export to make it easier for users to report errors.
+	* Rotation speed selection
+		* Button holding rotation speed should be dependant on the current speed.
+* README improvements:
 	* Add detailed information about filelists and their purpose.
 	* Add a concept describing picture.
 		* Notation: `![alt_text](image/path.png)`
 	* Add a proper example for player customization (look changes & icon replacement).
 	* Proofread.
-* Rethink Log Export to make it easier to use for users. (Intended for bug reports.)
-* Rotation speed selection should be more accessible.
-* Button holding rotation speed should be dependant on the current speed.
+* Loading state should be visible to CSS, in case smt happens with the animation.
+	* Also every load should be aborted, when some core function failed.
+	* This could also be improved by implementing a replace picture, that is being showed instead of an animation, when something failed.
+* When using a Shortcut, show an icon of the associated function with a fast little flash effect. (Inspiration: Youtube)
+* Log amount of found images.
 
 
 ### 12.) License

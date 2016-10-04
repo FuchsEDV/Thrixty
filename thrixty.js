@@ -93,12 +93,17 @@
 				elem.addEventListener( "mouseup",   function(e){ clearInterval(i_id); e.preventDefault(); } );
 				elem.addEventListener( "mouseout",  function(e){ clearInterval(i_id); e.preventDefault(); } );
 				elem.addEventListener( "mousedown", function(e){
-					/* (maybe) create custom event object 'custom_e' here */
-					var custom_e = e;
-					callback(custom_e);
-					/* start interval which calls 'callback(custom_e)' */
-					i_id = setInterval(callback, interval);
-					/**/
+					if (e.button > 1){
+						/* clear interval when other then left button down */
+						clearInterval(i_id);
+					} else {
+						/* (maybe) create custom event object 'custom_e' here */
+						var custom_e = e;
+						callback(custom_e);
+						/* start interval which calls 'callback(custom_e)' */
+						i_id = setInterval(callback, interval);
+						/**/
+					}
 					e.preventDefault();
 				} );
 			},
@@ -1577,7 +1582,7 @@
 				this.large.active_image_id = this.small.images[id].to_large;
 			}
 			/* calc position */
-			id = (id + amount) % count;
+			id = Math.floor((id + amount) % count);
 			if( id < 0 ){
 				id = id + count;
 			}

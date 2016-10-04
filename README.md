@@ -22,8 +22,12 @@ ToC:
 
 
 ### 1.) Thrixty Player
+
 The Thrixty Player is a tool to show off your 360° Photography.<br>
 It is using HTML5 CANVAS to display sequences.
+
+#### Are you using Wordpress?
+Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 2.) Example
@@ -132,10 +136,6 @@ For semantics you should put it into the head-section.
 	* What is the last action in main_log?
 	* Are there any player_logs?
 	* Was the first small image loaded?
-
-
-### Are you using Wordpress?
-Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 5.) Filelists
@@ -496,9 +496,10 @@ A short explanation, what Thrixty is doing:
 
 
 ### 13.) Contribution
-You are very welcome to contribute to this project!
-If you do, please pull-request to the main development branch. (currently "development1"...)
-I will try to always review and test the code before releasing.
+
+You are very welcome to contribute to this project!<br>
+If you do, please pull-request to the main development branch. (currently "development1"...)<br>
+I will try to always review and test the code before releasing.<br>
 Thank you. :)
 
 

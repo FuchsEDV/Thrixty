@@ -15,7 +15,9 @@ ToC:
 * 9.: <a href="#9-documentation">Documentation</a>
 * 10.: <a href="#10-change-log">Change Log</a>
 * 11.: <a href="#11-planned-features-and-changes-unordered">Planned Features and Changes</a>
-* 12.: <a href="#12-license">License</a>
+* 12.: <a href="#12-discarded-ideas">Discarded Ideas</a>
+* 13.: <a href="#13-contribution">Contribution</a>
+* 14.: <a href="#14-license">License</a>
 
 
 
@@ -333,6 +335,10 @@ A short explanation, what Thrixty is doing:
 
 ### 10.) Change Log
 * V2:
+	* V2.3.1dev:
+		* Fixed hold events for prev and next buttons. (thanks to 'hanneskuettner')
+			* Fixed another similar bug regarding arrow keys.
+		* Fixed position calculation (thanks to 'hanneskuettner').
 	* V2.3:
 		* Fixed left and right arrows.
 		* Improvements in documentation.
@@ -464,6 +470,7 @@ A short explanation, what Thrixty is doing:
 	* Rotation speed selection
 		* Button holding rotation speed should be dependant on the current speed.
 * README improvements:
+	* (Is there a way to collapse lists with GitHubs Markdown?)
 	* Add detailed information about filelists and their purpose.
 	* Add a concept describing picture.
 		* Notation: `![alt_text](image/path.png)`
@@ -476,7 +483,7 @@ A short explanation, what Thrixty is doing:
 * Log amount of found images.
 
 
-### 12.) Discarded ideas
+### 12.) Discarded Ideas
 * Prepend "data-" to the HTML-attributes to be konform.
 	* For now there is no reason to, as the change would destroy current installations.
 	* "data-" is silly anyway.
@@ -488,7 +495,14 @@ A short explanation, what Thrixty is doing:
 	* Taking care of the data would be waaay too much manual work, so it's not even implemented in our 360Shots Software.
 
 
-### 13.) License
+### 13.) Contribution
+You are very welcome to contribute to this project!
+If you do, please pull-request to the main development branch. (currently "development1"...)
+I will try to always review and test the code before releasing.
+Thank you. :)
+
+
+### 14.) License
 
 ```txt
 Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots

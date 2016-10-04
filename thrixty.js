@@ -77,7 +77,7 @@
 					is_clicked = true;
 					e.preventDefault();
 				} );
-				// TODO: folgendes überpruefen
+				// TODO: check following:
 				//elem.addEventListener( "touchmove",function(e){
 				//	is_clicked = false;
 				//	e.preventDefault();
@@ -88,30 +88,57 @@
 					e.preventDefault();
 				} );
 			},
+			// TODO: maybe these hold-events are better off being proper custom events?
 			addMouseHoldEvent: function(elem, callback, interval, delay){
+				// TODO: actually use 'delay' param. It is intended to be used for an initial delay before starting the loops.
 				var i_id = 0;
-				elem.addEventListener( "mouseup",   function(e){ clearInterval(i_id); e.preventDefault(); } );
-				elem.addEventListener( "mouseout",  function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "mouseup", function(e){
+					clearInterval(i_id);
+					i_id=0;
+					e.preventDefault();
+				} );
+				elem.addEventListener( "mouseout", function(e){
+					clearInterval(i_id);
+					i_id=0;
+					e.preventDefault();
+				} );
 				elem.addEventListener( "mousedown", function(e){
-					/* (maybe) create custom event object 'custom_e' here */
-					var custom_e = e;
-					callback(custom_e);
-					/* start interval which calls 'callback(custom_e)' */
-					i_id = setInterval(callback, interval);
-					/**/
+					/* clear old interval loops */
+					clearInterval(i_id);
+					i_id = 0;
+					/* restart loop, if main mousebutton is pressed. (which button is main is up for the browser to decide) */
+					if( e.button === 0 ){
+						/* TODO: check: (maybe) create custom event object 'custom_e' here */
+						var custom_e = e;
+						/* start interval which calls 'callback(custom_e)' */
+						callback(custom_e);
+						i_id = setInterval(callback, interval);
+					}
 					e.preventDefault();
 				} );
 			},
 			addTouchHoldEvent: function(elem, callback, interval, delay){
+				// TODO: actually use 'delay' param. It is intended to be used for an initial delay before starting the loops.
 				var i_id = 0;
-				elem.addEventListener( "touchend",   function(e){ clearInterval(i_id); e.preventDefault(); } );
+				elem.addEventListener( "touchend", function(e){
+					clearInterval(i_id);
+					i_id=0;
+					e.preventDefault();
+				} );
+				// TODO: "touchleave"?
 				elem.addEventListener( "touchstart", function(e){
-					/* (maybe) create custom event object 'custom_e' here */
-					var custom_e = e;
-					callback(custom_e);
-					/* start interval which calls 'callback(custom_e)' */
-					i_id = setInterval(callback, interval);
-					/**/
+					/* clear old interval loops */
+					clearInterval(i_id);
+					i_id = 0;
+
+					/* restart loop. if using only a single finger */
+					if( e.touches.length === 1 ){
+						/* TODO: check: (maybe) create custom event object 'custom_e' here */
+						var custom_e = e;
+						/* start interval which calls 'callback(custom_e)' */
+						callback(custom_e);
+						i_id = setInterval(callback, interval);
+					}
 					e.preventDefault();
 				} );
 			},
@@ -387,7 +414,7 @@
 		Thrixty.players[this.player_id] = null;
 	};
 
-/**** BEISPIEL DESTROY VON SCROLLMAGIC ****/
+/**** BEISPIEL DESTRUCT VON SCROLLMAGIC ****/
 /**
  * Destroy the Controller, all Scenes and everything.
  * @public
@@ -1093,11 +1120,13 @@
 					break;
 				case 37:  /* LEFT ARROW */
 					/* correlate to click on left button */
+					// TODO: the button and the mouse holding should not stack upon each other
 					this.prev_button_event_mousehold();
 					e.preventDefault();
 					break;
 				case 39:  /* RIGHT ARROW */
 					/* correlate to click on right button */
+					// TODO: the button and the mouse holding should not stack upon each other
 					this.next_button_event_mousehold();
 					e.preventDefault();
 					break;
@@ -1172,37 +1201,31 @@
 			/** mousedown **/
 				Thrixty.Player.prototype.document_mousedown = function(e){/**/};
 				Thrixty.Player.prototype.main_canvas_mousedown = function(e){
-					/* A1 | user wants to turn the object */
-					if( this.settings.zoom_control == "progressive" ){
-						/* left click only */
-						if( e.which == 1 ){
+					/* left click only */
+					if( e.button === 0 ){
+						/* A1 | user wants to turn the object */
+						if( this.settings.zoom_control == "progressive" ){
 							this.prepare_object_turn(e.clientX, e.clientY);
 							e.preventDefault();
 						}
-					}
-					/* B1 | user wants to turn the object */
-					if( this.settings.zoom_control == "classic" ){
-						/* left click only */
-						if( e.which == 1 ){
+						/* B1 | user wants to turn the object */
+						if( this.settings.zoom_control == "classic" ){
 							this.prepare_object_turn(e.clientX, e.clientY);
 							e.preventDefault();
 						}
+						this.is_click = true;
 					}
-					this.is_click = true;
 				};
 				Thrixty.Player.prototype.minimap_canvas_mousedown = function(e){
-					/* A1 | user wants to turn the object */
-					if( this.settings.zoom_control == "progressive" ){
-						/* left click only */
-						if( e.which == 1 ){
+					/* left click only */
+					if( e.button === 0 ){
+						/* A1 | user wants to turn the object */
+						if( this.settings.zoom_control == "progressive" ){
 							this.prepare_object_turn(e.clientX, e.clientY);
 							e.preventDefault();
 						}
-					}
-					/* B2 | user wants to move the section | minimap variation */
-					if( this.settings.zoom_control == "classic" ){
-						/* left click only */
-						if( e.which == 1 ){
+						/* B2 | user wants to move the section | minimap variation */
+						if( this.settings.zoom_control == "classic" ){
 							this.prepare_section_move("minimap");
 							this.execute_section_move(e.clientX, e.clientY); /* instantly snap to target position */
 							e.preventDefault();
@@ -1210,18 +1233,15 @@
 					}
 				};
 				Thrixty.Player.prototype.marker_mousedown = function(e){
-					/* A1 | user wants to turn the object */
-					if( this.settings.zoom_control == "progressive" ){
-						/* left click only */
-						if( e.which == 1 ){
+					/* left click only */
+					if( e.button === 0 ){
+						/* A1 | user wants to turn the object */
+						if( this.settings.zoom_control == "progressive" ){
 							this.prepare_object_turn(e.clientX, e.clientY);
 							e.preventDefault();
 						}
-					}
-					/* B2 | user wants to move the section */
-					if( this.settings.zoom_control == "classic" ){
-						/* left click only */
-						if( e.which == 1 ){
+						/* B2 | user wants to move the section */
+						if( this.settings.zoom_control == "classic" ){
 							this.prepare_section_move("marker");
 							this.execute_section_move(e.clientX, e.clientY); /* instantly snap to target position */
 							e.preventDefault();
@@ -1577,7 +1597,7 @@
 				this.large.active_image_id = this.small.images[id].to_large;
 			}
 			/* calc position */
-			id = (id + amount) % count;
+			id = Math.floor( (id + amount) % count );
 			if( id < 0 ){
 				id = id + count;
 			}

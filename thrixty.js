@@ -1,4 +1,5 @@
 ;"use strict";
+// Kommentar.
 /***** Thrixty Namespace *****/
 	/* start script by checking for already existing Thrixty namespace */
 	if( typeof(Thrixty) !== "undefined" ){

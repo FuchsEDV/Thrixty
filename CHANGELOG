@@ -1,0 +1,37 @@
+v3.2.0
+------
+* Removed zoom button and added zoom functionality on mouse / touch events ("hovering")
+* Changed fullpage view to occupy only 90% of the document width / height, and added a way to leave fullpage mode by clicking outside the "modal"
+* Added close button to fullpage view
+* Changed resize_dom_objects() to resize zoom canvas properly in accord with the canvas container size
+* Added a new marker mode (with setting "new"/"old") for zooming; NB. setting "new" loads all large images on initialization (otherwise, zoom view would flicker)
+* Added start-image-id setting to make the player start rotating from a different image (to avoid autoplay ending on a frontal view)
+
+v3.1.0
+------
+* Split zoom-mode property into mobile and desktop variants
+* Set "marker" as the default zoom pointer and "outbox" as the default zoom mode on desktop, "inbox" on mobile
+* zoom_canvas is now a separate element from the thrixty div in the DOM, and acquired by its ID thrixty_zoom_canvas_N (where N is player_id + 1)
+* Added rotation speed gauge that also responds to ArrowUp/ArrowDown events
+* is_mobile is now based on client width/height instead of user-agent
+* Zoom now stops on window resizing (to get rid of the outbox when orientation changes to portrait)
+* Fixed ID generation on initialized DOM objects such that IDs are actually unique in the case of multiple players, and reworked CSS to operate on classes instead
+* Removed outbox-position setting (should be handled by CSS)
+
+v3.0.7
+------
+* Integrated express
+* Minor corrections to readme file
+
+v3.0.0
+------
+* Rewrote the player in TypeScript
+* Removed some unused methods and parameters; rewrote parts of the code to be functionally equivalent
+* Fixed keypresses method to use KeyboardEvent.key instead of the deprecated keyCode/which
+* Fixed mouse events to use MouseEvent.button instead of the deprecated which
+* Made pixel_per_degree a property of the ThrixtyPlayer (was a local variable)
+* Fixed various is_zoomed checks to check for is_fullpage as well
+* Fixed bug in set_marker_position() erroneously using width instead of height
+* Rewrote the throttle decorator to work without a Date object
+* Changed start_rotation() such that holding the ArrowDown key no longer causes the image to move too fast (instead, makes the image stand still)
+* (CSS) Set max-height on #showroom so that mobile devices don't move the controls offscreen in fullpage mode

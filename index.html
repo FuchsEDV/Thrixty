@@ -1,0 +1,32 @@
+<html lang="en">
+    <head>
+        <title>Thrixty Example</title>
+		<script src="./thrixty/thrixty.js"></script>
+        <link rel="stylesheet" href="./thrixty/thrixty.css"/>
+    </head>
+    <body style="background: #444;">
+		<div style="width: 100%; margin: auto; margin-left: 20px; display: grid; grid-template-columns: auto auto; align-items: center;
+		background: white; border: 5px solid blue; width: 600px; height: 483px;">
+			<!-- Thrixty player root element: modify this as needed. class="thrixty" is important. -->
+				<div id="thrixty_box_1" class="thrixty" tabindex="0"
+					thrixty-basepath="example/"
+					thrixty-localization-path="./thrixty/text.json"
+					thrixty-filelist-path-small="small/Filelist.txt"
+					thrixty-filelist-path-large="large/Filelist.txt"
+					thrixty-cycle-duration="5"
+					thrixty-direction="forward"
+					thrixty-sensitivity-x="20"
+					thrixty-zoom-mode="outbox"
+					thrixty-zoom-mode-mobile="inbox"
+					thrixty-zoom-control="progressive"
+					thrixty-zoom-pointer="marker"
+					thrixty-outbox-position="left"
+					thrixty-autoplay="1"
+					thrixty-autoload="on"
+				></div>
+			<!-- /Thrixty player root element -->
+			<!-- Thrixty player zoom canvas; the id and class are important! -->
+				<canvas id="thrixty_zoom_canvas_1" class="thrixty_zoom_canvas" style="margin: 0px 10px; border: 5px solid grey;">
+		</div>
+	</body>
+</html>

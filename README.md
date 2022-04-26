@@ -1,7 +1,7 @@
 # Thrixty
 360° Photography Player
 
-Version: 2.3 | 22.09.2016
+Version: 3.2 | Apr 26, 2022
 
 ToC:
 * 1.: <a href="#1-thrixty-player">Thrixty Player</a>
@@ -21,12 +21,12 @@ ToC:
 
 ### 1.) Thrixty Player
 The Thrixty Player is a tool to show off your 360° Photography.<br>
-It is using HTML5 CANVAS to display sequences.
+It uses HTML5 CANVAS to display sequences.
 
 
 ### 2.) Example
 
-To view an example, download both this and the [example repository](https://github.com/FuchsEDV/Thrixty_example).<br>
+As an example, we have included the ./example folder.<br>
 Unzip this repository into the 'thrixty' folder of the example and start up the 'index.html'.
 
 
@@ -38,14 +38,14 @@ __Mouse/Touch:__<br>
 [Click/Tap](double) => Zoom on/off
 [Drag/Swipe] => Stop automatic rotation and turn the object. Also works in Zoom mode. | Drag the marker or minimap in classic mode to move the expanded area.
 ```
-__Keboard:__<br>
-(To use these, the Player needs to be focused - click once inside the Player.)
+__Keyboard:__<br>
+(To use these, the player needs to be focused - click once inside the player.)
 ```txt
 [Spacebar] => Play/Pause
 [Arrow Left] => Step Backward
 [Arrow Right] => Step Forward
-[Arrow Up] => Increase Speed
-[Arrow Down] => Decrease Speed
+[Arrow Up] => Increase Rotation Speed
+[Arrow Down] => Decrease Rotation Speed
 [G] => Zoom on/off
 [F] => Fullscreen on/off
 [ESC] => Stop Zoom, Rotation, Fullscreen all at once.
@@ -54,38 +54,33 @@ __Keboard:__<br>
 
 ### 4.) Installation Tutorial
 
-In this example we are using the index.html as a substitute for whatever you are using to generate the HTML.
-* Create an "index.html" in your websites root folder.
-* If you want to customize the players look, also create a "thrixty_custom.css" here.
-* Create a directory named "thrixty".
-* Extract this repository into "thrixty".<br>
-	* The files "<b>LICENSE</b>", "<b>README.md</b>" and "<b>options_list.html</b>" are not needed and <b>can be deleted</b>.
-* Create a directory "360_objects".<br>
-	* This folder is where you are gonna put all your objects.
-	* For example purposes download and extract the [Thrixty_example](https://github.com/FuchsEDV/Thrixty_example) and move the contents of the "360_objects" folder into this one.
-	* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
-* Your final folder structure should look like this:
+-- UNDER CONSTRUCTION --
 
-	```txt
-	[website-mainfolder of your.domain.com]/
-	|- [index.html]
-	|- [thrixty_custom.css]
-	|- thrixty/
-	|  |- thrixty.js
-	|  |- thrixty.css
-	|- 360_objects/
-	|  |- example/
-	|  |  |- large/
-	|  |  |  |- Filelist.txt
-	|  |  |  |- [lots_of_large_images.jpg]
-	|  |  |- small/
-	|  |  |  |- Filelist.txt
-	|  |  |  |- [lots_of_small_images.jpg]
-	```
+[...]
+
+* Install Node.js and npm.
+* Open a terminal in an empty folder and enter the following commands:
+```txt
+npm i thrixty
+cd ./node_modules/thrixty
+npm run build
+```
+* Congratulations, you have transpiled the output file ./node_modules/thrixty/thrixty/thrixty.js. Now to run a webserver (optional; allows you to test the program):
+```txt
+node app.js
+```
+* Open "localhost:3000/index.html" in your browser and admire the view!
+* Once you wish to terminate the webserver, press Ctrl + C in the terminal.
+
+[...]
+
+* <i>When using the 360Shots Software to generate the files, you should only copy and paste the object folder; ignore the rest of the files!</i>
+
+[...]
 
 * For the Player to be able to do anything, you need to include both "thrixty.js" and "thrixty.css" in the DOM.<br>
 For semantics you should put it into the head-section.
-	* When you choose to include a "thrixty_custom.css", include it <b>after both "thrixty.js" and "thrixty.css"</b>!
+* When you choose to include a "thrixty_custom.css", include it <b>after both "thrixty.js" and "thrixty.css"</b>!
 * Now create a div somewhere in the body with 'class="thrixty"' as seen in the following example.
 	* The HTML-attribute "thrixty-basepath" is one of the options, referencing the basepath for the Filelists.
 	* The Player will be generated into each of these divs, while using the corresponding attributes as parameters.
@@ -103,13 +98,14 @@ For semantics you should put it into the head-section.
 			<div class="thrixty"
 				thrixty-basepath="360_objects/example/"
 			></div>
+			<canvas id="thrixty_zoom_canvas_1" class="thrixty_zoom_canvas">
 		</body>
 	</html>
 	```
 
 * This tutorial neglects the possible need for absolute paths.
 	* Depending on your server configuration and your path to that 'index.html' you may find relative paths to be wrong.
-	* When dealing with websites you absolutely need to know about relative and absolute paths anyway. Please educate yourself, if you dont.
+	* When dealing with websites you absolutely need to know about relative and absolute paths anyway. Please educate yourself, if you don't.
 
 
 ##### When encountering a problem, check the following points in the given order:
@@ -123,17 +119,6 @@ For semantics you should put it into the head-section.
 	* Have you set the [parameters](#5-parameters) (like "thrixty-basepath", "thrixty-filelist-path-small" or "thrixty-filelist-path-large") correctly?
 * Were the Filelists found and loaded? (path incorrect?; resource not accessible?)
 * Were the images referenced in the filelists found and loaded? Especially the first small image is critical!
-
-##### Its easier to detect and solve those problems by using your browsers developer tools.
-* Look into your console and files sections for any files not being loaded.
-* Look into the global object "Thrixty" and read the log. (Thrixty.logs)
-	* What is the last action in main_log?
-	* Are there any player_logs?
-	* Was the first small image loaded?
-
-
-### Are you using Wordpress?
-Look at our [Wordpress Plugin](https://github.com/FuchsEDV/Thrixty_Wordpress)!
 
 
 ### 5.) Filelists
@@ -172,7 +157,16 @@ Here is a list of the usable params (in the form of HTML-attributes):
 	<tr>
 		<td class="">thrixty-basepath</td>
 		<td class="" rowspan="3">
-			These are telling the game where to find the Filelists.<br>"[http://basepath][filelist-path-small.txt]"<br>"[http://basepath][filelist-path-large.txt]"<br>
+			These are telling the player where to find the Filelists.<br>"[http://basepath][filelist-path-small.txt]"<br>"[http://basepath][filelist-path-large.txt]"<br>
+		</td>
+		<td class="">
+			<b>[empty]</b>, [mainpath]
+		</td>
+	</tr>
+	<tr>
+		<td class="">thrixty-basepath</td>
+		<td class="" rowspan="3">
+			Location of localization (text) file. The default is "./thrixty/text.json".<br>
 		</td>
 		<td class="">
 			<b>[empty]</b>, [mainpath]
@@ -230,6 +224,15 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
+		<td class="">thrixty-start-image-id</td>
+		<td class="">
+			ID of image that the animation is meant to start with.
+		</td>
+		<td class="">
+			<b>0</b>, [integer]
+		</td>
+	</tr>
+	<tr>
 		<td class="">thrixty-cycle-duration</td>
 		<td class="">Duration of each whole turn in seconds.</td>
 		<td class=""><b>5</b>, [integer]</td>
@@ -252,6 +255,13 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
+		<td class="">thrixty-zoom-mode-mobile</td>
+		<td class="">Zoomed in images showing in the <b>same</b> or an extra window on mobile devices.</td>
+		<td class="">
+			<b>inbox</b>, outbox, none
+		</td>
+	</tr>
+	<tr>
 		<td class="">thrixty-zoom-pointer</td>
 		<td class="">How to point to the zoomed in position.</td>
 		<td class="">
@@ -259,10 +269,10 @@ Here is a list of the usable params (in the form of HTML-attributes):
 		</td>
 	</tr>
 	<tr>
-		<td class="">thrixty-outbox-position</td>
-		<td class="">Where the zoom box should spawn.</td>
+		<td class="">thrixty-marker-mode</td>
+		<td class="">How the marker size should be calculated (old version was kept for compability).</td>
 		<td class="">
-			<b>right</b>, bottom, left, top
+			<b>new</b>, old
 		</td>
 	</tr>
 	<tr>
@@ -316,7 +326,7 @@ The following examples are showing you some possibilities:
 
 ### 8.) General Description
 
-A short explanation, what Thrixty is doing:
+A short explanation of what Thrixty does:
 * After including and interpreting the JS, create namespace "Thrixty" and wait for the site to finish loading.
 * Look for all divs with a class of "thrixty" ("div.thrixty").
 * Initialize a Player instance for each div found.
@@ -332,6 +342,8 @@ A short explanation, what Thrixty is doing:
 
 
 ### 10.) Change Log
+* V3:
+	* [See the separate changelog.]
 * V2:
 	* V2.3:
 		* Fixed left and right arrows.
@@ -479,7 +491,7 @@ A short explanation, what Thrixty is doing:
 ### 12.) License
 
 ```txt
-Thrixty Player Copyright (C) 2015  F.Heitmann @ Fuchs EDV GmbH for 360Shots
+Thrixty Player Copyright (C) 2015-2022 Fuchs EDV GmbH for 360Shots
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
